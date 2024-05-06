@@ -23,7 +23,7 @@ public class ChatbotService {
         Map<String, Object> body = Map.of(
                 "model", "gpt-3.5-turbo",
                 "messages", List.of(
-                        Map.of("role", "system", "content", "You are a helpful assistant."),
+                        Map.of("role", "system", "content", "안녕하세요! 당신의 파이썬 교육을 책임질 가정교사입니다."),
                         Map.of("role", "user", "content", userMessage)
                 )
         );
