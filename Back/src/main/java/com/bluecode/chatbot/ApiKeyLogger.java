@@ -14,6 +14,7 @@ public class ApiKeyLogger {
     private String apiKey;
 
     public void logApiKey() {
-        logger.info("Current API Key: {}", apiKey);
+        String maskedApiKey = apiKey.substring(0, 3) + "*".repeat(apiKey.length() - 3);
+        logger.info("Current API Key: {}", maskedApiKey);
     }
 }
