@@ -1,8 +1,7 @@
 Backend
 =====
 
-<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/>
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/>
 <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat-square&logo=Spring Security&logoColor=white"/>
 <img src="https://img.shields.io/badge/Mysql-4479A1?style=flat-square&logo=Mysql&logoColor=white"/>
 <img src="https://img.shields.io/badge/H2 Database-4479A1?style=flat-square&logoColor=white"/>
@@ -11,18 +10,18 @@ Backend
 
 **GPT API Testing 방법**
 
-1. "API_KEY" 명으로 환경변수 설정
+1. **"API_KEY" 명으로 환경변수 설정**
 
  
-    시스템 환경 변수 편집 >> 고급 >> 환경 변수 >> 사용자 변수 또는 시스템 변수 새로 만들기 
+    시스템 환경 변수 편집 >> 고급 >> 환경 변수 >> 사용자 변수 또는 시스템 변수 새로 만들기 >> 
 
-    >> 변수이름: API_KEY, 변수 값: "자신의 GPT API key 문자열 전체" >> 저장
-
-
-2. Spring application 실행
+    변수이름: API_KEY, 변수 값: "자신의 GPT API key 문자열 전체" >> 저장
 
 
-3. http://localhost:8080/chat 으로 post 요청
+2. **Spring application 실행**
+
+
+3. **http://localhost:8080/chat 으로 post 요청**
 
 body **(Content-Type: application/json)**:
 
