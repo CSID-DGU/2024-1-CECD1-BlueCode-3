@@ -17,7 +17,6 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/chat/**").permitAll()
                         .anyRequest().authenticated());
-
         return http.build();
     }
 }
