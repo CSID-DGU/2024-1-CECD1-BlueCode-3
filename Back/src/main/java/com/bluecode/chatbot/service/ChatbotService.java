@@ -2,15 +2,16 @@ package com.bluecode.chatbot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
-import org.springframework.core.io.ClassPathResource;
-import java.nio.file.Files;
-import java.nio.charset.StandardCharsets;
-import java.io.IOException;
 
 @Service
 public class ChatbotService {
