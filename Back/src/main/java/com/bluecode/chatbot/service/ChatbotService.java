@@ -48,7 +48,6 @@ public class ChatbotService {
         if (message == null || message.isEmpty()) {
             return Mono.just("");  // 빈 메시지 처리
         }
-        String rules = loadRules();  // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
         messages.add(Map.of("role", "user", "content", message + " : 10자 이내 단어들만 가지고 요약해줘."));
         Map<String, Object> body = Map.of(
@@ -66,6 +65,7 @@ public class ChatbotService {
         for (String pastMessage : summarizedConversations) {
             messages.add(Map.of("role", "system", "content", "이전 대화 기록: " + pastMessage));
         }
+        messages.add(Map.of("role", "user", "content", "대화 규칙: "+rules));
         messages.add(Map.of("role", "user", "content", userMessage));
         Map<String, Object> body = Map.of(
                 "model", "gpt-3.5-turbo",
