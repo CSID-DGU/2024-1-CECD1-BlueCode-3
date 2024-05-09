@@ -33,4 +33,7 @@ public class Tests {
 
     // 통과 여부
     private int passed;
+
+    @Enumerated(EnumType.STRING)
+    private TestType tType;
 }

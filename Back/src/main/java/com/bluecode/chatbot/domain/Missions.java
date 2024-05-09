@@ -19,5 +19,5 @@ public class Missions {
     private String text;
 
     // 미션 달성 목표 횟수
-    private int count;
+    private int missionCount;
 }
