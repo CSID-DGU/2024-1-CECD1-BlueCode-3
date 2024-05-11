@@ -1,8 +1,10 @@
 package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class UserMissions {
 
     @Id @GeneratedValue

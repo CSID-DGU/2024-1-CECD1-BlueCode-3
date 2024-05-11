@@ -1,10 +1,12 @@
 package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
 @Entity
+@Getter
 public class Studys {
 
     @Id @GeneratedValue

@@ -1,8 +1,10 @@
 package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Missions {
 
     @Id @GeneratedValue
@@ -13,7 +15,7 @@ public class Missions {
     private int exp;
 
     @Enumerated(EnumType.STRING)
-    private MissionType m_type;
+    private MissionType mType;
 
     // 미션 내용
     private String text;
