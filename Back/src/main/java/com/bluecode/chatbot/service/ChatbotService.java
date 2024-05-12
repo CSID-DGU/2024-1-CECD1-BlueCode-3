@@ -86,10 +86,14 @@ public class ChatbotService {
                     logger.error("API call failed with status: {} and body: {}", response.statusCode(), errorBody);
                     return Mono.error(new RuntimeException("Error during API call with body: " + errorBody));
                 }))
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .map(response -> {
+                    logContent(response);
+                    return response;
+                });
     }
 
-    private String extractContentFromResponse(String response) {
+    private String extractContentFromResponse(String response) { // 요약된 content 반환
         try {
             JsonNode root = objectMapper.readTree(response);
             String content = root.path("choices").path(0).path("message").path("content").asText();
@@ -97,6 +101,16 @@ public class ChatbotService {
         } catch (IOException e) {
             logger.error("Error parsing response JSON", e);
             return ""; // 에러가 발생 시 빈 문자열 반환
+        }
+    }
+
+    private void logContent(String response) { // 요약되지 않은 content -> log 출력용
+        try {
+            JsonNode root = objectMapper.readTree(response);
+            String content = root.path("choices").path(0).path("message").path("content").asText();
+            logger.info("{}", content);
+        } catch (IOException e) {
+            logger.error("응답 JSON 파싱 에러", e);
         }
     }
 
