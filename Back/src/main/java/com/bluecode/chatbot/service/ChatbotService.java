@@ -54,7 +54,7 @@ public class ChatbotService {
         messages.add(Map.of("role", "system", "content", "대화 규칙: " + rules));
 
         Map<String, Object> body = Map.of(
-                "model", "gpt-3.5-turbo",
+                "model", "gpt-3.5-turbo-16k",
                 "messages", messages
         );
 
