@@ -24,7 +24,7 @@ public class ChatbotService {
     private final WebClient webClient;
     private final String apiKey;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private List<String> summarizedConversations = new ArrayList<>();
+    private List<Map<String, String>> conversationHistory = new ArrayList<>();
     private static final Logger logger = LoggerFactory.getLogger(ChatbotService.class);
 
     @Autowired
@@ -34,45 +34,31 @@ public class ChatbotService {
     }
 
     public Mono<String> getResponse(String userMessage) {
-        return summarizeConversation(userMessage)
-                .flatMap(summarized -> {
-                    if (!summarized.isEmpty()) {
-                        summarizedConversations.add(summarized);
-                    }
-                    logger.info("요약된 대화 기록: {}", summarizedConversations);
-                    return continueConversation(userMessage);
+        conversationHistory.add(Map.of("role", "user", "content", userMessage)); // 사용자의 메시지를 기록
+
+        return continueConversation()
+                .map(response -> {
+                    conversationHistory.add(Map.of("role", "assistant", "content", response)); // 챗봇의 응답을 기록
+                    return response;
                 });
     }
 
-    private Mono<String> summarizeConversation(String message) {
-        if (message == null || message.isEmpty()) {
-            return Mono.just("");  // 빈 메시지 처리
-        }
-        List<Map<String, String>> messages = new ArrayList<>();
-        messages.add(Map.of("role", "user", "content", message + " : 10자 이내 단어들만 가지고 요약해줘."));
-        Map<String, Object> body = Map.of(
-                "model", "gpt-3.5-turbo",
-                "messages", messages
-        );
-
-        return sendPostRequest(body)
-                .map(this::extractContentFromResponse);
-    }
-
-    private Mono<String> continueConversation(String userMessage) {
+    private Mono<String> continueConversation() {
         String rules = loadRules(); // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
-        for (String pastMessage : summarizedConversations) {
-            messages.add(Map.of("role", "system", "content", "이전 대화 기록: " + pastMessage));
+
+        for (Map<String, String> pastMessage : conversationHistory) {
+            messages.add(Map.of("role", pastMessage.get("role"), "content", "지난 대화 기록 : " + pastMessage.get("content")));
         }
-        messages.add(Map.of("role", "user", "content", "대화 규칙: "+rules));
-        messages.add(Map.of("role", "user", "content", userMessage));
+
+        messages.add(Map.of("role", "system", "content", "대화 규칙: " + rules));
+
         Map<String, Object> body = Map.of(
-                "model", "gpt-3.5-turbo",
+                "model", "gpt-3.5-turbo-16k",
                 "messages", messages
         );
 
-        return sendPostRequest(body);
+        return sendPostRequest(body).map(this::extractContentFromResponse);
     }
 
     private Mono<String> sendPostRequest(Map<String, Object> body) {
@@ -86,17 +72,30 @@ public class ChatbotService {
                     logger.error("API call failed with status: {} and body: {}", response.statusCode(), errorBody);
                     return Mono.error(new RuntimeException("Error during API call with body: " + errorBody));
                 }))
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .map(response -> {
+                    logContent(response);
+                    return response;
+                });
     }
 
     private String extractContentFromResponse(String response) {
         try {
             JsonNode root = objectMapper.readTree(response);
-            String content = root.path("choices").path(0).path("message").path("content").asText();
-            return content; // 추출된 'content' 반환
+            return root.path("choices").path(0).path("message").path("content").asText();
         } catch (IOException e) {
             logger.error("Error parsing response JSON", e);
-            return ""; // 에러가 발생 시 빈 문자열 반환
+            return "";
+        }
+    }
+
+    private void logContent(String response) {
+        try {
+            JsonNode root = objectMapper.readTree(response);
+            String content = root.path("choices").path(0).path("message").path("content").asText();
+            logger.info("Response from GPT: {}", content);
+        } catch (IOException e) {
+            logger.error("응답 JSON 파싱 에러", e);
         }
     }
 
