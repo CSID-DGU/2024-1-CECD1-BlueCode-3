@@ -33,7 +33,6 @@ public class Chats {
     private String answer;
 
     // 질문 유형
-    @Column(name = "q_type")
     @Enumerated(EnumType.STRING)
-    private QuestionType qType;
+    private QuestionType questionType;
 }

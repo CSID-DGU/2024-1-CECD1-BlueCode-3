@@ -23,6 +23,6 @@ public class UserMissions {
     private Missions mission;
 
     // 현재 달성 현황
-    @Column(name = "current_count", columnDefinition = "0")
+    @Column(name = "current_count")
     private int currentCount;
 }
