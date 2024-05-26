@@ -2,6 +2,7 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -31,10 +32,11 @@ public class Tests {
     private LocalDateTime solvedDate;
 
     // 점수
-    private int score;
+    @Column(name = "wrong_count", columnDefinition = "0")
+    private int wrongCount;
 
     // 통과 여부
-    private int passed;
+    private boolean passed;
 
     @Enumerated(EnumType.STRING)
     private TestType tType;

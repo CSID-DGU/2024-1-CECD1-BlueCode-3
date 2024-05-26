@@ -29,6 +29,12 @@ public class Curriculums {
     // 커리큘럼 이름
     private String curriculumName;
 
-    // 내용
-    private String text;
+    // 입문자 키워드
+    private String keywordLV0;
+
+    // 초급자 키워드
+    private String keywordLV1;
+
+    // 중급자 키워드
+    private String keywordLV2;
 }
