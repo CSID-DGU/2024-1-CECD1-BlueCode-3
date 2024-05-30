@@ -21,12 +21,15 @@ public class Studys {
     @JoinColumn(name = "curriculum_id")
     private Curriculums curriculum;
 
-    @Column(name = "recent_chap_id")
-    private Long recentChapId;
-
     @Column(name = "total_time")
     private Long totalTime;
 
     @Column(name = "start_day")
     private LocalDate startDay;
+
+    @Column(name = "text")
+    private String text;
+
+    @Column(name = "passed")
+    private boolean passed;
 }

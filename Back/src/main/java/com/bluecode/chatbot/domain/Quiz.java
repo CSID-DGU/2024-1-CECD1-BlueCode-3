@@ -16,7 +16,7 @@ public class Quiz {
     private Curriculums curriculum;
 
     @Enumerated(EnumType.STRING)
-    private QuizType qType;
+    private QuizType quizType;
 
     // 문제 내용
     private String text;

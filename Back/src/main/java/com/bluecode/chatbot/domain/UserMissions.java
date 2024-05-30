@@ -21,4 +21,8 @@ public class UserMissions {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Missions mission;
+
+    // 현재 달성 현황
+    @Column(name = "current_count")
+    private int currentCount;
 }

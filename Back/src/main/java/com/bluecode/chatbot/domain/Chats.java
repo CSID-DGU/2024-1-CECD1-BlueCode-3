@@ -23,7 +23,6 @@ public class Chats {
     @JoinColumn(name = "curriculum_id")
     private Curriculums curriculum;
 
-
     // 채팅한 시간
     private LocalDateTime chatDate;
 
@@ -33,6 +32,7 @@ public class Chats {
     // 답변
     private String answer;
 
-    // 질문 답변 내용 요약
-    private String summary;
+    // 질문 유형
+    @Enumerated(EnumType.STRING)
+    private QuestionType questionType;
 }

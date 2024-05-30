@@ -18,10 +18,8 @@ public class Users {
     // 유저 이름
     private String username;
 
-
     // 이메일
     private String email;
-
 
     // 유저 아이디
     private String id;
@@ -29,14 +27,11 @@ public class Users {
     // 유저 비밀번호
     private String password;
 
-
     // 유저 전화번호
     private String phoneNumber;
 
-
     // 최근 접속일
     private LocalDateTime recent_access;
-
 
     // 연속 접속일수
     private int streakCount;
