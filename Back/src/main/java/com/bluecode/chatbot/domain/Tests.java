@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 public class Tests {
 
+    // table id
     @Id @GeneratedValue
     @Column(name = "test_id")
     private Long testId;
@@ -37,6 +38,7 @@ public class Tests {
     // 통과 여부
     private boolean passed;
 
+    // 테스트 타입(초기, 이해도)
     @Enumerated(EnumType.STRING)
-    private TestType tType;
+    private TestType testType;
 }

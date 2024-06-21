@@ -9,16 +9,17 @@ import java.time.LocalDateTime;
 @Getter
 public class Chats {
 
+    // table id
     @Id @GeneratedValue
     @Column(name = "chat_id")
     private Long chatId;
 
-    // 사용 유저
+    // 대상 유저
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
 
-    // 사용 커리큘럼
+    // 대상 커리큘럼
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curriculum_id")
     private Curriculums curriculum;

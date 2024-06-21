@@ -7,8 +7,9 @@ import lombok.Getter;
 @Getter
 public class UserMissions {
 
+    // table id
     @Id @GeneratedValue
-    @Column(name = "usermission_id")
+    @Column(name = "user_mission_id")
     private Long userMissionId;
 
 

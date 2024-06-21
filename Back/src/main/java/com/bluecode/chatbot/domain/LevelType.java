@@ -1,10 +1,10 @@
 package com.bluecode.chatbot.domain;
 
 /**
- * 문제 난이도 지정용
+ * 커리큘럼 난이도 지정용
  * 입문자, 초급자, 중급자
  */
 
-public enum QuizLevel {
+public enum LevelType {
     EASY, NORMAL, HARD
 }

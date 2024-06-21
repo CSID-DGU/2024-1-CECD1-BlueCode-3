@@ -2,6 +2,7 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,8 +10,10 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class Users {
 
+    // table id
     @Id @GeneratedValue
     @Column(name = "user_id")
     private Long userId;
@@ -37,7 +40,7 @@ public class Users {
     private int streakCount;
 
     // 생년월일
-    private int birth;
+    private String birth;
 
     // 티어
     private int tier;
