@@ -2,6 +2,7 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,7 @@ public class Chats {
     private Curriculums curriculum;
 
     // 채팅한 시간
+    @CreationTimestamp
     private LocalDateTime chatDate;
 
     // 질문

@@ -2,6 +2,8 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -25,10 +27,12 @@ public class Tests {
     private Quiz quiz;
 
     // 시험 시작 시간
+    @CreationTimestamp
     private LocalDateTime testDate;
 
 
     // 완료 시간
+    @UpdateTimestamp
     private LocalDateTime solvedDate;
 
     // 점수

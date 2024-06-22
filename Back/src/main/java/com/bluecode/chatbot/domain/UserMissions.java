@@ -2,6 +2,9 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -12,6 +15,9 @@ public class UserMissions {
     @Column(name = "user_mission_id")
     private Long userMissionId;
 
+    // 제한 시간
+    @CreationTimestamp
+    private LocalDateTime startDate;
 
     // 대상 유저
     @ManyToOne(fetch = FetchType.LAZY)

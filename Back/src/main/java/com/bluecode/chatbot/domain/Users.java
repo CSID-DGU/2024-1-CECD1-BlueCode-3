@@ -3,6 +3,7 @@ package com.bluecode.chatbot.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,7 +35,8 @@ public class Users {
     private String phoneNumber;
 
     // 최근 접속일
-    private LocalDateTime recent_access;
+    @UpdateTimestamp
+    private LocalDateTime recentAccess;
 
     // 연속 접속일수
     private int streakCount;
