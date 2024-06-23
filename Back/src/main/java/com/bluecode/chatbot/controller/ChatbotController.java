@@ -4,7 +4,6 @@ import com.bluecode.chatbot.service.ChatbotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 @RestController
 public class ChatbotController {
@@ -16,20 +15,24 @@ public class ChatbotController {
     }
 
     @GetMapping("/chat/{prompt}")
-    public Mono<ResponseEntity<String>> getChatResponse(@PathVariable String prompt) {
-        return chatbotService.getResponse(prompt)
-                .map(response -> ResponseEntity.ok().body(response))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+    public ResponseEntity<String> getChatResponse(@PathVariable String prompt) {
+        String response = chatbotService.getResponse(prompt);
+        if (response != null && !response.isEmpty()) {
+            return ResponseEntity.ok().body(response);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/chat")
-    public Mono<ResponseEntity<String>> postChatResponse(@RequestBody String prompt) {
+    public ResponseEntity<String> postChatResponse(@RequestBody String prompt) {
         System.out.println("Received prompt: " + prompt);
-        return chatbotService.getResponse(prompt)
-                .map(response -> {
-                    System.out.println("Response from GPT: " + response);
-                    return ResponseEntity.ok().body(response);
-                })
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+        String response = chatbotService.getResponse(prompt);
+        if (response != null && !response.isEmpty()) {
+            System.out.println("Response from GPT: " + response);
+            return ResponseEntity.ok().body(response);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

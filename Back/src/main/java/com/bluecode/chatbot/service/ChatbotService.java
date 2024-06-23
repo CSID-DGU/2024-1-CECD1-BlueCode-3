@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -21,29 +23,27 @@ import org.slf4j.LoggerFactory;
 
 @Service
 public class ChatbotService {
-    private final WebClient webClient;
+    private final RestTemplate restTemplate;
     private final String apiKey;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private List<Map<String, String>> conversationHistory = new ArrayList<>();
     private static final Logger logger = LoggerFactory.getLogger(ChatbotService.class);
 
     @Autowired
-    public ChatbotService(WebClient.Builder webClientBuilder, @Value("${api.key}") String apiKey) {
-        this.webClient = webClientBuilder.baseUrl("https://api.openai.com/v1").build();
+    public ChatbotService(RestTemplate restTemplate, @Value("${api.key}") String apiKey) {
+        this.restTemplate = restTemplate;
         this.apiKey = apiKey;
     }
 
-    public Mono<String> getResponse(String userMessage) {
+    public String getResponse(String userMessage) {
         conversationHistory.add(Map.of("role", "user", "content", userMessage)); // 사용자의 메시지를 기록
 
-        return continueConversation()
-                .map(response -> {
-                    conversationHistory.add(Map.of("role", "assistant", "content", response)); // 챗봇의 응답을 기록
-                    return response;
-                });
+        String response = continueConversation();
+        conversationHistory.add(Map.of("role", "assistant", "content", response)); // 챗봇의 응답을 기록
+        return response;
     }
 
-    private Mono<String> continueConversation() {
+    private String continueConversation() {
         String rules = loadRules(); // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
 
@@ -58,25 +58,25 @@ public class ChatbotService {
                 "messages", messages
         );
 
-        return sendPostRequest(body).map(this::extractContentFromResponse);
+        return sendPostRequest(body);
     }
 
-    private Mono<String> sendPostRequest(Map<String, Object> body) {
-        return webClient.post()
-                .uri("/chat/completions")
-                .header("Authorization", "Bearer " + apiKey)
-                .header("Content-Type", "application/json")
-                .bodyValue(body)
-                .retrieve()
-                .onStatus(status -> status.isError(), response -> response.bodyToMono(String.class).flatMap(errorBody -> {
-                    logger.error("API call failed with status: {} and body: {}", response.statusCode(), errorBody);
-                    return Mono.error(new RuntimeException("Error during API call with body: " + errorBody));
-                }))
-                .bodyToMono(String.class)
-                .map(response -> {
-                    logContent(response);
-                    return response;
-                });
+    private String sendPostRequest(Map<String, Object> body) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+        headers.set("Content-Type", "application/json");
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity("https://api.openai.com/v1/chat/completions", entity, String.class);
+            String response = responseEntity.getBody();
+            logContent(response);
+            return extractContentFromResponse(response);
+        } catch (Exception e) {
+            logger.error("API call failed", e);
+            throw new RuntimeException("Error during API call", e);
+        }
     }
 
     private String extractContentFromResponse(String response) {
