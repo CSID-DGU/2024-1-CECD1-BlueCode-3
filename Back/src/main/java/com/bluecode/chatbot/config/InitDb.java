@@ -128,10 +128,10 @@ public class InitDb {
                         Tests test = createTest(user2, quizList.get(j), 0, true, TestType.INIT);
                         em.persist(test);
                     }
-                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. -초기 시험  합격", idx), true, LevelType.HARD);
+                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. -초기 시험 합격", idx), true, LevelType.HARD);
                     em.persist(studies);
                 } else {
-                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " -초기 시험 미대상", idx), true, LevelType.HARD);
+                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. +  -초기 시험 미대상", idx), true, LevelType.HARD);
                     em.persist(studies);
                 }
                 idx++;
