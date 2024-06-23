@@ -2,11 +2,14 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
+@Setter
 public class Studies {
 
     // table id
@@ -30,6 +33,7 @@ public class Studies {
 
     // 시작 날짜
     @Column(name = "start_day")
+    @CreationTimestamp
     private LocalDate startDay;
 
     // 학습 내용 전문

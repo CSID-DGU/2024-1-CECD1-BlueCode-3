@@ -43,4 +43,7 @@ public class Curriculums {
 
     // 테스트 진행 커리큘럼 여부
     private boolean testable;
+
+    // 챕터 순서
+    private int chapterNum;
 }
