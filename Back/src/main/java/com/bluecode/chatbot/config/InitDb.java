@@ -30,7 +30,7 @@ public class InitDb {
         private final EntityManager em;
 
         public void userInit() {
-            Users user1 = createUser("testName", "testEmail", "testId", "000-0000-0000", "11110033");
+            Users user1 = createUser("testName", "testEmail", "testId", "1111", "11110033", false); // 초기 테스트 미진행 유저
             em.persist(user1);
         }
 
@@ -38,15 +38,17 @@ public class InitDb {
                 String username,
                 String email,
                 String id,
-                String phoneNumber,
-                String birth) {
+                String password,
+                String birth,
+                boolean initTest) {
 
             Users user = new Users();
             user.setUsername(username);
             user.setId(id);
             user.setEmail(email);
-            user.setPhoneNumber(phoneNumber);
+            user.setPassword(password);
             user.setBirth(birth);
+            user.setInitTest(initTest);
 
             return user;
         }
