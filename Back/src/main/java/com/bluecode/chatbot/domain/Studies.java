@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-public class Studys {
+public class Studies {
 
     // table id
     @Id @GeneratedValue

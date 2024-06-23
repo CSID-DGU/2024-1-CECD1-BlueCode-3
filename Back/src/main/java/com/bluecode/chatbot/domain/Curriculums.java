@@ -38,4 +38,7 @@ public class Curriculums {
 
     // 중급자 키워드
     private String keywordHard;
+
+    // 테스트 진행 커리큘럼 여부
+    private boolean testable;
 }
