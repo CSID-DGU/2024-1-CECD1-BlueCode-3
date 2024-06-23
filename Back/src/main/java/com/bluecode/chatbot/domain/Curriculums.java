@@ -10,11 +10,12 @@ import java.util.List;
 @Getter
 public class Curriculums {
 
+    // table id
     @Id @GeneratedValue
     @Column(name = "curriculum_id")
     private Long curriculumId;
 
-    // 부모 정의
+    // 부모 커리큘럼 정의
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Curriculums parent;
@@ -30,11 +31,14 @@ public class Curriculums {
     private String curriculumName;
 
     // 입문자 키워드
-    private String keywordLV0;
+    private String keywordEasy;
 
     // 초급자 키워드
-    private String keywordLV1;
+    private String keywordNormal;
 
     // 중급자 키워드
-    private String keywordLV2;
+    private String keywordHard;
+
+    // 테스트 진행 커리큘럼 여부
+    private boolean testable;
 }

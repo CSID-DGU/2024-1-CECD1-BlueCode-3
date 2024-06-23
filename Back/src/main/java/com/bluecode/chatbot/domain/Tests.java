@@ -2,6 +2,8 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 public class Tests {
 
+    // table id
     @Id @GeneratedValue
     @Column(name = "test_id")
     private Long testId;
@@ -24,10 +27,11 @@ public class Tests {
     private Quiz quiz;
 
     // 시험 시작 시간
+    @CreationTimestamp
     private LocalDateTime testDate;
 
-
     // 완료 시간
+    @UpdateTimestamp
     private LocalDateTime solvedDate;
 
     // 점수
@@ -37,6 +41,7 @@ public class Tests {
     // 통과 여부
     private boolean passed;
 
+    // 테스트 타입(초기, 이해도)
     @Enumerated(EnumType.STRING)
-    private TestType tType;
+    private TestType testType;
 }

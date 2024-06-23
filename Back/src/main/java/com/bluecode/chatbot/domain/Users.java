@@ -2,6 +2,8 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,8 +11,10 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class Users {
 
+    // table id
     @Id @GeneratedValue
     @Column(name = "user_id")
     private Long userId;
@@ -27,17 +31,15 @@ public class Users {
     // 유저 비밀번호
     private String password;
 
-    // 유저 전화번호
-    private String phoneNumber;
-
     // 최근 접속일
-    private LocalDateTime recent_access;
+    @UpdateTimestamp
+    private LocalDateTime recentAccess;
 
     // 연속 접속일수
     private int streakCount;
 
     // 생년월일
-    private int birth;
+    private String birth;
 
     // 티어
     private int tier;
@@ -50,7 +52,7 @@ public class Users {
 
     // 진행중인 커리큘럼
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Studys> studys = new ArrayList<>();
+    private List<Studies> studies = new ArrayList<>();
 
     // 진행한 테스트
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

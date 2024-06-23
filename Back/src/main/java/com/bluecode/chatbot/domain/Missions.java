@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class Missions {
 
+    // table id
     @Id @GeneratedValue
     @Column(name = "mission_id")
     private Long missionId;
@@ -14,8 +15,9 @@ public class Missions {
     // 클리어시 제공하는 경험치
     private int exp;
 
+    // 미션 타입
     @Enumerated(EnumType.STRING)
-    private MissionType mType;
+    private MissionType missionType;
 
     // 미션 내용
     private String text;

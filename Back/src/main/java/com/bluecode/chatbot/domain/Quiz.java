@@ -7,14 +7,17 @@ import lombok.Getter;
 @Getter
 public class Quiz {
 
+    // table id
     @Id @GeneratedValue
     @Column(name = "quiz_id")
     private Long quizId;
 
+    // 대상 커리큘럼
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curriculum_id")
     private Curriculums curriculum;
 
+    // 문제 타입(객관식, 코드작성식)
     @Enumerated(EnumType.STRING)
     private QuizType quizType;
 
@@ -24,15 +27,21 @@ public class Quiz {
     // 문제 정답
     private String answer;
 
-    // 문제 수준
+    // 문제 난이도
     @Enumerated(EnumType.STRING)
     private QuizLevel level;
 
-    private int q1;
+    // 객관식 전용 선지(1 - 4)
+    private String q1;
 
-    private int q2;
+    private String q2;
 
-    private int q3;
+    private String q3;
 
-    private int q4;
+    private String q4;
+
+    // 코드작성식 전용
+    private String inputs;
+
+    private String outputs;
 }
