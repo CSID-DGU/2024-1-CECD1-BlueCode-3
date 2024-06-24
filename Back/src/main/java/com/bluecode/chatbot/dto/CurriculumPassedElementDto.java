@@ -9,6 +9,7 @@ import lombok.ToString;
 @ToString
 public class CurriculumPassedElementDto {
 
+    private Long curriculumId;
     private String curriculumName;
     private Boolean passed;
 }
