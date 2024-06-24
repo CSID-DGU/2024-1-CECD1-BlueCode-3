@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CurriculumTextDto {
+public class StudyTextDto {
 
     private String text;
 }
