@@ -19,7 +19,9 @@ public class CurriculumRepositoryCustomImpl implements CurriculumRepositoryCusto
 
     @Override
     public Curriculums findByRootIdAndChapterNum(Long rootCurriculumId, int chapterNum) {
-        return em.createQuery("select c from Curriculums c where c.parent.curriculumId = :rootId and c.chapterNum = :chapNum", Curriculums.class)
+        return em.createQuery("select c from Curriculums c " +
+                                 "join fetch c.parent " +
+                                 "where c.parent.curriculumId = :rootId and c.chapterNum = :chapNum", Curriculums.class)
                 .setParameter("rootId", rootCurriculumId)
                 .setParameter("chapNum", chapterNum)
                 .getSingleResult();

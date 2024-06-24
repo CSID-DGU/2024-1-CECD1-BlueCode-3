@@ -15,10 +15,10 @@ public class StudyRepositoryCustomImpl implements StudyRepositoryCustom {
     public List<Studies> findAllByCurriculumIdAndUserId(Long curriculumId, Long userId) {
 
         return em.createQuery("select s from Studies s " +
-                                 "join fetch Curriculums c " +
-                                 "join fetch Users u " +
-                                 "where c.curriculumId = :curriculumId " +
-                                 "and u.userId = :userId", Studies.class)
+                                 "join fetch s.curriculum " +
+                                 "join fetch s.user " +
+                                 "where s.curriculum.curriculumId = :curriculumId " +
+                                 "and s.user.userId = :userId", Studies.class)
                 .setParameter("curriculumId", curriculumId)
                 .setParameter("userId", userId)
                 .getResultList();

@@ -11,5 +11,5 @@ import java.util.List;
 @ToString
 public class TestResponseDto {
 
-    private List<QuestionListResponseElementDto> tests;
+    private List<TestResponseElementDto> tests;
 }
