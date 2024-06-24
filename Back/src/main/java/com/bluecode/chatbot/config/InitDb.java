@@ -113,6 +113,7 @@ public class InitDb {
         public void testInit() {
 
             Users user2 = userRepository.findById(2L).get();
+            Curriculums root = curriculumRepository.findById(1L).get();
             int idx = 1;
             int count = 0;
 
@@ -120,7 +121,7 @@ public class InitDb {
 
             while (count < 2) {
 
-                curriculum = curriculumRepository.findByChapterNum(idx);
+                curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
                 if (curriculum.isTestable()) {
                     count++;
                     List<Quiz> quizList = quizRepository.findAllByChapNum(curriculum.getChapterNum());
