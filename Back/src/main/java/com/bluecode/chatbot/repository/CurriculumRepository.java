@@ -7,11 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CurriculumRepository extends JpaRepository<Curriculums, Long> {
+public interface CurriculumRepository extends JpaRepository<Curriculums, Long>, CurriculumRepositoryCustom {
 
-    // 부모 커리큘럼으로 커리큘럼 검색
+    // 부모 커리큘럼 class 기반 커리큘럼 chapterNum 순서로 전체 챕터 커리큘럼 검색
     List<Curriculums> findAllByParentOrderByChapterNum(Curriculums parent);
-
-    // 챕터 순번(chapterNum)으로 커리큘럼 검색
-    Curriculums findByChapterNum(int chapterNum);
 }
