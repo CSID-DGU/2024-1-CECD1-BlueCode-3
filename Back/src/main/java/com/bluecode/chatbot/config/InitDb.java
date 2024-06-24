@@ -138,16 +138,16 @@ public class InitDb {
                 idx++;
             }
 
-            curriculum = curriculumRepository.findByChapterNum(idx);
+            curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
             while (curriculum != null && !curriculum.isTestable()) {
-                curriculum = curriculumRepository.findByChapterNum(idx);
+                curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
                 Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 미대상", idx), true, LevelType.HARD);
 //                log.info("{}" + studies.getText(), idx);
                 em.persist(studies);
                 idx++;
             }
 
-            curriculum = curriculumRepository.findByChapterNum(idx);
+            curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
             if (curriculum != null) {
                 List<Quiz> quizList = quizRepository.findAllByChapNum(curriculum.getChapterNum());
                 for (int j = 0; j < quizList.size(); j++) {
