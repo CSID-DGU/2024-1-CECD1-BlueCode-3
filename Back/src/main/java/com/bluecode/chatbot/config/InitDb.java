@@ -95,7 +95,7 @@ public class InitDb {
         public void quizInit() {
 
             Curriculums root = curriculumRepository.findById(1L).get();
-            List<Curriculums> lists = curriculumRepository.findAllByParentOrderByCurriculumId(root);
+            List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
 
             for (int i = 0; i < lists.size(); i++) {
                 Quiz quizHard1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째", i + 1), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "");
@@ -128,10 +128,10 @@ public class InitDb {
                         Tests test = createTest(user2, quizList.get(j), 0, true, TestType.INIT);
                         em.persist(test);
                     }
-                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. -초기 시험 합격", idx), true, LevelType.HARD);
+                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 합격", idx), true, LevelType.HARD);
                     em.persist(studies);
                 } else {
-                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. +  -초기 시험 미대상", idx), true, LevelType.HARD);
+                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", idx), true, LevelType.HARD);
                     em.persist(studies);
                 }
                 idx++;
@@ -140,8 +140,8 @@ public class InitDb {
             curriculum = curriculumRepository.findByChapterNum(idx);
             while (curriculum != null && !curriculum.isTestable()) {
                 curriculum = curriculumRepository.findByChapterNum(idx);
-                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다.-초기 시험 미대상", idx), true, LevelType.HARD);
-                log.info("{}" + studies.getText(), idx);
+                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 미대상", idx), true, LevelType.HARD);
+//                log.info("{}" + studies.getText(), idx);
                 em.persist(studies);
                 idx++;
             }
@@ -153,7 +153,7 @@ public class InitDb {
                     Tests test = createTest(user2, quizList.get(j), 2, false, TestType.INIT);
                     em.persist(test);
                 }
-                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다.-초기 시험 불합격", idx), false, LevelType.NORMAL);
+                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 불합격", idx), false, LevelType.NORMAL);
                 em.persist(studies);
             }
         }

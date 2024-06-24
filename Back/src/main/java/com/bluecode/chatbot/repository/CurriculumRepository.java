@@ -9,7 +9,9 @@ import java.util.List;
 @Repository
 public interface CurriculumRepository extends JpaRepository<Curriculums, Long> {
 
-    List<Curriculums> findAllByParentOrderByCurriculumId(Curriculums parent);
+    // 부모 커리큘럼으로 커리큘럼 검색
+    List<Curriculums> findAllByParentOrderByChapterNum(Curriculums parent);
 
+    // 챕터 순번(chapterNum)으로 커리큘럼 검색
     Curriculums findByChapterNum(int chapterNum);
 }
