@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 
 @Component
+@Profile("dev")
 @RequiredArgsConstructor
 public class InitDb {
 
@@ -27,6 +29,7 @@ public class InitDb {
         initService.curriculumInit();
         initService.quizInit();
         initService.testInit();
+        initService.test();
     }
 
     @Component
@@ -47,6 +50,24 @@ public class InitDb {
             Users user2 = createUser("testName2", "testEmail2", "testId2", "1111", "22223344", true); // 초기 테스트 진행 유저 (3챕터에서 시작)
             em.persist(user1);
             em.persist(user2);
+        }
+
+        public void test() {
+
+            Users user = userRepository.findByUserId(2L);
+            Curriculums root = curriculumRepository.findById(1L).get();
+            List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
+
+            List<Studies> result = studyRepository.findAllByCurriculumIdAndUserId(lists.get(3).getCurriculumId(), user.getUserId());
+
+            for (Studies study : result) {
+                log.info(study.getText());
+            }
+
+            Curriculums res = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), 7);
+            log.info(res.getCurriculumName());
+
+
         }
 
         public void curriculumInit() {
@@ -142,7 +163,6 @@ public class InitDb {
             while (curriculum != null && !curriculum.isTestable()) {
                 curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
                 Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 미대상", idx), true, LevelType.HARD);
-//                log.info("{}" + studies.getText(), idx);
                 em.persist(studies);
                 idx++;
             }
