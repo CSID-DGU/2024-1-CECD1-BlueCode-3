@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 
 @Component
+@Profile("dev")
 @RequiredArgsConstructor
 public class InitDb {
 
@@ -27,6 +29,7 @@ public class InitDb {
         initService.curriculumInit();
         initService.quizInit();
         initService.testInit();
+        initService.test();
     }
 
     @Component
@@ -47,6 +50,24 @@ public class InitDb {
             Users user2 = createUser("testName2", "testEmail2", "testId2", "1111", "22223344", true); // 초기 테스트 진행 유저 (3챕터에서 시작)
             em.persist(user1);
             em.persist(user2);
+        }
+
+        public void test() {
+
+            Users user = userRepository.findByUserId(2L);
+            Curriculums root = curriculumRepository.findById(1L).get();
+            List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
+
+            List<Studies> result = studyRepository.findAllByCurriculumIdAndUserId(lists.get(3).getCurriculumId(), user.getUserId());
+
+            for (Studies study : result) {
+                log.info(study.getText());
+            }
+
+            Curriculums res = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), 7);
+            log.info(res.getCurriculumName());
+
+
         }
 
         public void curriculumInit() {
@@ -95,7 +116,7 @@ public class InitDb {
         public void quizInit() {
 
             Curriculums root = curriculumRepository.findById(1L).get();
-            List<Curriculums> lists = curriculumRepository.findAllByParentOrderByCurriculumId(root);
+            List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
 
             for (int i = 0; i < lists.size(); i++) {
                 Quiz quizHard1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째", i + 1), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "");
@@ -113,6 +134,7 @@ public class InitDb {
         public void testInit() {
 
             Users user2 = userRepository.findById(2L).get();
+            Curriculums root = curriculumRepository.findById(1L).get();
             int idx = 1;
             int count = 0;
 
@@ -120,7 +142,7 @@ public class InitDb {
 
             while (count < 2) {
 
-                curriculum = curriculumRepository.findByChapterNum(idx);
+                curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
                 if (curriculum.isTestable()) {
                     count++;
                     List<Quiz> quizList = quizRepository.findAllByChapNum(curriculum.getChapterNum());
@@ -128,32 +150,31 @@ public class InitDb {
                         Tests test = createTest(user2, quizList.get(j), 0, true, TestType.INIT);
                         em.persist(test);
                     }
-                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. -초기 시험 합격", idx), true, LevelType.HARD);
+                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 합격", idx), true, LevelType.HARD);
                     em.persist(studies);
                 } else {
-                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. +  -초기 시험 미대상", idx), true, LevelType.HARD);
+                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", idx), true, LevelType.HARD);
                     em.persist(studies);
                 }
                 idx++;
             }
 
-            curriculum = curriculumRepository.findByChapterNum(idx);
+            curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
             while (curriculum != null && !curriculum.isTestable()) {
-                curriculum = curriculumRepository.findByChapterNum(idx);
-                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다.-초기 시험 미대상", idx), true, LevelType.HARD);
-                log.info("{}" + studies.getText(), idx);
+                curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
+                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 미대상", idx), true, LevelType.HARD);
                 em.persist(studies);
                 idx++;
             }
 
-            curriculum = curriculumRepository.findByChapterNum(idx);
+            curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
             if (curriculum != null) {
                 List<Quiz> quizList = quizRepository.findAllByChapNum(curriculum.getChapterNum());
                 for (int j = 0; j < quizList.size(); j++) {
                     Tests test = createTest(user2, quizList.get(j), 2, false, TestType.INIT);
                     em.persist(test);
                 }
-                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다.-초기 시험 불합격", idx), false, LevelType.NORMAL);
+                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 불합격", idx), false, LevelType.NORMAL);
                 em.persist(studies);
             }
         }

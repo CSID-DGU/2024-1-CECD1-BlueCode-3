@@ -9,5 +9,7 @@ import lombok.ToString;
 @ToString
 public class TestAnswerCallDto {
 
-    private Boolean passed;
+    private Long userId;
+    private Long quizId;
+    private String answer;
 }
