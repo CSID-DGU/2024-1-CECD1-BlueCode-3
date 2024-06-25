@@ -12,7 +12,7 @@ public class CurriculumRepositoryCustomImpl implements CurriculumRepositoryCusto
     private final EntityManager em;
 
     @Override
-    public List<Curriculums> findAllRootCurriculumList(int chapNum) {
+    public List<Curriculums> findAllRootCurriculumList() {
 
         return em.createQuery("select c from Curriculums c where c.chapterNum = 0", Curriculums.class).getResultList();
     }

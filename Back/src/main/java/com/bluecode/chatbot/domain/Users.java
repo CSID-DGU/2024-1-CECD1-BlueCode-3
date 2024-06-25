@@ -61,4 +61,24 @@ public class Users {
     // 진행중인 미션
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserMissions> userMissions = new ArrayList<>();
+
+    // Users 생성 로직
+    public static Users createUser(
+            String username,
+            String email,
+            String id,
+            String password,
+            String birth,
+            boolean initTest) {
+
+        Users user = new Users();
+        user.setUsername(username);
+        user.setId(id);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setBirth(birth);
+        user.setInitTest(initTest);
+
+        return user;
+    }
 }
