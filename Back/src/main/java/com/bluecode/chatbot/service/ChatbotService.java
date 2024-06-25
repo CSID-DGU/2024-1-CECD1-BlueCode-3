@@ -61,7 +61,7 @@ public class ChatbotService {
         return sendPostRequest(body);
     }
 
-    private String sendPostRequest(Map<String, Object> body) {
+    public String sendPostRequest(Map<String, Object> body) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
         headers.set("Content-Type", "application/json");
