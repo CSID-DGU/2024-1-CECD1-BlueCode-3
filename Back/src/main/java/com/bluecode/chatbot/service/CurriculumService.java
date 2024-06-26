@@ -38,11 +38,29 @@ public class CurriculumService {
     @Value("${api.key}")
     private String apiKey;
 
+    // 커리큘럼 루트노드(프로그래밍 언어) 로드
+    private Curriculums findRootNode(Curriculums curriculum) {
+        while (curriculum.getParent() != null) {
+            curriculum = curriculum.getParent();
+        }
+        Curriculums rootNode = curriculum;
+        return rootNode;
+    }
+
     // 커리큘럼 챕터 목록 로드
     public CurriculumChapResponseDto getCurriculumChapters(CurriculumChapCallDto dto) {
-        Curriculums rootCurriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
+        Curriculums curriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
+        if (curriculum == null) {
+            throw new IllegalArgumentException("Invalid curriculum ID: " + dto.getCurriculumId());
+        }
+
+        // 루트 노드를 찾음
+        Curriculums rootCurriculum = findRootNode(curriculum);
+
+        // 루트 노드의 curriculumId를 부모로 가지는 챕터들을 가져옴
         List<Curriculums> chapters = curriculumRepository.findAllByParentOrderByChapterNum(rootCurriculum);
 
+        // 챕터 리스트를 DTO로 변환
         List<CurriculumChapElementDto> chapterList = chapters.stream().map(chapter -> {
             CurriculumChapElementDto elementDto = new CurriculumChapElementDto();
             elementDto.setCurriculumId(chapter.getCurriculumId());
@@ -50,6 +68,7 @@ public class CurriculumService {
             return elementDto;
         }).toList();
 
+        // 결과를 담아 반환
         CurriculumChapResponseDto responseDto = new CurriculumChapResponseDto();
         responseDto.setList(chapterList);
 
@@ -72,15 +91,6 @@ public class CurriculumService {
         responseDto.setList(progressList);
 
         return responseDto;
-    }
-
-    // 커리큘럼 루트노드(프로그래밍 언어) 로드
-    private Curriculums findRootNode(Curriculums curriculum) {
-        while (curriculum.getParent() != null) {
-            curriculum = curriculum.getParent();
-        }
-        Curriculums rootNode = curriculum;
-        return rootNode;
     }
 
     // 유저의 커리큘럼 학습 내용 로드
