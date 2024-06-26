@@ -41,7 +41,7 @@ public class CurriculumService {
     // 커리큘럼 챕터 목록 로드
     public CurriculumChapResponseDto getCurriculumChapters(CurriculumChapCallDto dto) {
         Curriculums rootCurriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
-        List<Curriculums> chapters = curriculumRepository.findAllByParentOrderByCurriculumId(rootCurriculum);
+        List<Curriculums> chapters = curriculumRepository.findAllByParentOrderByChapterNum(rootCurriculum);
 
         List<CurriculumChapElementDto> chapterList = chapters.stream().map(chapter -> {
             CurriculumChapElementDto elementDto = new CurriculumChapElementDto();
@@ -58,10 +58,11 @@ public class CurriculumService {
 
     // 유저의 커리큘럼 진행 현황 로드
     public CurriculumPassedDto getCurriculumProgress(DataCallDto dto) {
-        List<Studies> studies = studyRepository.findAllByUserIdAndCurriculumId(dto.getUserId(), dto.getCurriculumId());
+        List<Studies> studies = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
 
         List<CurriculumPassedElementDto> progressList = studies.stream().map(study -> {
             CurriculumPassedElementDto elementDto = new CurriculumPassedElementDto();
+            elementDto.setCurriculumId(study.getCurriculum().getCurriculumId());
             elementDto.setCurriculumName(study.getCurriculum().getCurriculumName());
             elementDto.setPassed(study.isPassed());
             return elementDto;
@@ -73,16 +74,28 @@ public class CurriculumService {
         return responseDto;
     }
 
+    // 커리큘럼 루트노드(프로그래밍 언어) 로드
+    private Curriculums findRootNode(Curriculums curriculum) {
+        while (curriculum.getParent() != null) {
+            curriculum = curriculum.getParent();
+        }
+        Curriculums rootNode = curriculum;
+        return rootNode;
+    }
+
     // 유저의 커리큘럼 학습 내용 로드
     @Transactional
-    public CurriculumTextDto getCurriculumText(DataCallDto dto, LevelType levelType) {
-        Studies study = studyRepository.findByUserIdAndCurriculumId(dto.getUserId(), dto.getCurriculumId());
+    public StudyTextDto getCurriculumText(DataCallDto dto, LevelType levelType) {
+        List<Studies> studiesList = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
+        Studies study = studiesList.isEmpty() ? null : studiesList.get(0);
 
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         if (study == null || study.getText() == null) {
             Curriculums curriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
+            Curriculums rootNode = findRootNode(curriculum);
             String keyword = getKeywordForLevel(curriculum, levelType);
-            String generatedText = requestGptText(keyword);
+            String fullKeyword = rootNode.getCurriculumName() + ": " + keyword;
+            String generatedText = requestGptText(fullKeyword);
 
             if (study == null) {
                 study = new Studies();
@@ -97,7 +110,7 @@ public class CurriculumService {
             }
         }
 
-        CurriculumTextDto responseDto = new CurriculumTextDto();
+        StudyTextDto responseDto = new StudyTextDto();
         responseDto.setText(study.getText());
 
         return responseDto;
@@ -120,7 +133,7 @@ public class CurriculumService {
     // GPT API를 호출하여 학습 내용 생성
     private String requestGptText(String keyword) {
         Map<String, Object> body = Map.of(
-                "model", "gpt-4-omni",
+                "model", "gpt-4o",
                 "prompt", "Create detailed learning content for the following keyword: " + keyword,
                 "max_tokens", 1000
         );
