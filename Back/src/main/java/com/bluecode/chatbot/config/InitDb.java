@@ -17,7 +17,6 @@ import java.util.List;
  */
 
 @Component
-@Profile("dev")
 @RequiredArgsConstructor
 public class InitDb {
 
