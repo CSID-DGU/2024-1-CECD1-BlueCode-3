@@ -41,6 +41,10 @@ class StudyRepositoryTest {
         Curriculums chap2 = createCurriculum(root, "2. 파이썬 설치 환경", "2챕터 키워드 easy", "2챕터 키워드 normal", "2챕터 키워드 hard", false, 2);
         Curriculums chap3 = createCurriculum(root, "3. 파이썬 실행 원리", "3챕터 키워드 easy", "3챕터 키워드 normal", "3챕터 키워드 hard", true, 3);
 
+        curriculumRepository.save(chap1);
+        curriculumRepository.save(chap2);
+        curriculumRepository.save(chap3);
+
         chaps.add(chap1);
         chaps.add(chap2);
         chaps.add(chap3);
@@ -71,7 +75,6 @@ class StudyRepositoryTest {
             List<Studies> studies = result.get(i);
             Assertions.assertThat(studies.size()).isEqualTo(2);
         }
-
     }
 
     private Curriculums createCurriculum(
