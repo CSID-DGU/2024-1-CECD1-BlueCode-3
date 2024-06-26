@@ -121,7 +121,7 @@ class StudyRepositoryTest {
         }
         //when
         Users findUser = userRepository.findByUserId(user.getUserId());
-        Studies result = studyRepository.findByUserIdAndCurriculumIdAndLevel(findUser.getUserId(), chap1.getCurriculumId(), LevelType.NORMAL);
+        Studies result = studyRepository.findByUserIdAndCurriculumIdAndLevel(findUser.getUserId(), chap1.getCurriculumId(), LevelType.NORMAL).get();
 
         //then
         Assertions.assertThat(result).isEqualTo(studiesNormal.get(0));

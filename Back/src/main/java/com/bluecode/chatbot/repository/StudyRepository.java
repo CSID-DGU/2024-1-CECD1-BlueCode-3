@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface StudyRepository extends JpaRepository<Studies, Long>, StudyRepositoryCustom {
 
@@ -17,5 +19,5 @@ public interface StudyRepository extends JpaRepository<Studies, Long>, StudyRepo
             "where s.user.userId = :userId " +
             "and s.curriculum.curriculumId = :curriculumId" +
             " and s.level = :levelType")
-    Studies findByUserIdAndCurriculumIdAndLevel(@Param("userId") Long userId, @Param("curriculumId") Long curriculumId, @Param("levelType") LevelType levelType);
+    Optional<Studies> findByUserIdAndCurriculumIdAndLevel(@Param("userId") Long userId, @Param("curriculumId") Long curriculumId, @Param("levelType") LevelType levelType);
 }
