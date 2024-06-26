@@ -1,6 +1,5 @@
 package com.bluecode.chatbot.repository;
 
-import com.bluecode.chatbot.config.InitDb;
 import com.bluecode.chatbot.domain.Curriculums;
 import com.bluecode.chatbot.domain.LevelType;
 import com.bluecode.chatbot.domain.Studies;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +25,6 @@ class StudyRepositoryTest {
     @Autowired private UserRepository userRepository;
     @Autowired private CurriculumRepository curriculumRepository;
     @Autowired private StudyRepository studyRepository;
-
-    @MockBean
-    private InitDb initDb;
 
     @Test
     @DisplayName("findAllByCurriculumIdAndUserId 쿼리 테스트")
@@ -82,6 +77,7 @@ class StudyRepositoryTest {
         }
     }
     @Test
+    @DisplayName("findByUserIdAndCurriculumIdAndLevel 쿼리 테스트")
     void findByUserIdAndCurriculumIdAndLevel() throws Exception {
         //given
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "22223344", true); // 초기 테스트 진행 유저 (3챕터에서 시작))
@@ -125,7 +121,7 @@ class StudyRepositoryTest {
         }
         //when
         Users findUser = userRepository.findByUserId(user.getUserId());
-        Studies result = studyRepository.findByUserIdAndCurriculumIdAndLevel(findUser.getUserId(), chap1.getCurriculumId(), LevelType.NORMAL);
+        Studies result = studyRepository.findByUserIdAndCurriculumIdAndLevel(findUser.getUserId(), chap1.getCurriculumId(), LevelType.NORMAL).get();
 
         //then
         Assertions.assertThat(result).isEqualTo(studiesNormal.get(0));
