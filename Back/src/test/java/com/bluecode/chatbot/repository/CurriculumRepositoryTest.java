@@ -1,5 +1,6 @@
 package com.bluecode.chatbot.repository;
 
+import com.bluecode.chatbot.config.InitDb;
 import com.bluecode.chatbot.domain.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,9 @@ import java.util.List;
 class CurriculumRepositoryTest {
 
     @Autowired private CurriculumRepository curriculumRepository;
+
+    @MockBean
+    private InitDb initDb;
 
     @Test
     @DisplayName("findByRootIdAndChapterNum 쿼리 테스트")
@@ -87,6 +92,33 @@ class CurriculumRepositoryTest {
 
         for (int i = 0; i < 4; i++) {
             Assertions.assertThat(result.get(i)).isEqualTo(roots.get(i));
+        }
+    }
+
+    @Test
+    @DisplayName("curriculum update 테스트")
+    void changeTest() throws Exception {
+        //given
+        List<Curriculums> roots = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            Curriculums root = createCurriculum(null, String.format("Test용 root 커리큘럼명 %d", i + 1), "", "", "", false, 0);
+            roots.add(root);
+            curriculumRepository.save(root);
+        }
+
+        //when
+        List<Curriculums> result = curriculumRepository.findAllRootCurriculumList();
+        result.get(0).setCurriculumName(String.format("변경된 Test용 root 커리큘럼명 %d", 1));
+        curriculumRepository.save(result.get(0));
+
+        List<Curriculums> changedResult = curriculumRepository.findAllRootCurriculumList();
+
+        //then
+        Assertions.assertThat(result.size()).isEqualTo(roots.size());
+
+        for (int i = 0; i < 4; i++) {
+            Assertions.assertThat(result.get(i)).isEqualTo(changedResult.get(i));
         }
     }
 
