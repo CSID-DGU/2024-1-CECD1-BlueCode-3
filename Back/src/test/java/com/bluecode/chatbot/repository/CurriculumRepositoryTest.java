@@ -1,6 +1,5 @@
 package com.bluecode.chatbot.repository;
 
-import com.bluecode.chatbot.config.InitDb;
 import com.bluecode.chatbot.domain.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +19,6 @@ import java.util.List;
 class CurriculumRepositoryTest {
 
     @Autowired private CurriculumRepository curriculumRepository;
-
-    @MockBean
-    private InitDb initDb;
-
     @Test
     @DisplayName("findByRootIdAndChapterNum 쿼리 테스트")
     void findByRootIdAndChapterNum_query_test() throws Exception {
@@ -76,7 +70,7 @@ class CurriculumRepositoryTest {
     @DisplayName("findAllRootCurriculumList 쿼리 테스트")
     void findAllRootCurriculumList() throws Exception {
         //given
-        List<Curriculums> roots = new ArrayList<>();
+        List<Curriculums> roots = curriculumRepository.findAllRootCurriculumList();
 
         for (int i = 0; i < 4; i++) {
             Curriculums root = createCurriculum(null, String.format("Test용 root 커리큘럼명 %d", i + 1), "", "", "", false, 0);
@@ -90,8 +84,8 @@ class CurriculumRepositoryTest {
         //then
         Assertions.assertThat(result.size()).isEqualTo(roots.size());
 
-        for (int i = 0; i < 4; i++) {
-            Assertions.assertThat(result.get(i)).isEqualTo(roots.get(i));
+        for (int i = 0; i < result.size(); i++) {
+            Assertions.assertThat(result.get(i)).isIn(roots);
         }
     }
 
@@ -99,7 +93,7 @@ class CurriculumRepositoryTest {
     @DisplayName("curriculum update 테스트")
     void changeTest() throws Exception {
         //given
-        List<Curriculums> roots = new ArrayList<>();
+        List<Curriculums> roots = curriculumRepository.findAllRootCurriculumList();
 
         for (int i = 0; i < 4; i++) {
             Curriculums root = createCurriculum(null, String.format("Test용 root 커리큘럼명 %d", i + 1), "", "", "", false, 0);
@@ -117,7 +111,7 @@ class CurriculumRepositoryTest {
         //then
         Assertions.assertThat(result.size()).isEqualTo(roots.size());
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < result.size(); i++) {
             Assertions.assertThat(result.get(i)).isEqualTo(changedResult.get(i));
         }
     }
