@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,51 +23,28 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class CurriculumService {
+public class StudiesService {
 
-    private final CurriculumRepository curriculumRepository;
     private final StudyRepository studyRepository;
+    private final CurriculumRepository curriculumRepository;
+    private final CurriculumsService curriculumsService;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static final Logger logger = LoggerFactory.getLogger(CurriculumService.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudiesService.class);
 
     @Value("${api.key}")
     private String apiKey;
 
-    // 커리큘럼 루트노드(프로그래밍 언어) 로드
-    private Curriculums findRootNode(Curriculums curriculum) {
-        while (curriculum.getParent() != null) {
-            curriculum = curriculum.getParent();
-        }
-        Curriculums rootNode = curriculum;
-        return rootNode;
-    }
-
-    // 커리큘럼 챕터 목록 로드
-    public CurriculumChapResponseDto getCurriculumChapters(CurriculumChapCallDto dto) {
-        Curriculums rootCurriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
-        List<Curriculums> chapters = curriculumRepository.findAllByParentOrderByChapterNum(rootCurriculum);
-
-        List<CurriculumChapElementDto> chapterList = chapters.stream().map(chapter -> {
-            CurriculumChapElementDto elementDto = new CurriculumChapElementDto();
-            elementDto.setCurriculumId(chapter.getCurriculumId());
-            elementDto.setText(chapter.getCurriculumName());
-            return elementDto;
-        }).toList();
-
-        CurriculumChapResponseDto responseDto = new CurriculumChapResponseDto();
-        responseDto.setList(chapterList);
-
-        return responseDto;
-    }
-
     // 유저의 커리큘럼 진행 현황 로드
     public CurriculumPassedDto getCurriculumProgress(DataCallDto dto) {
+        logger.info("getCurriculumProgress called with dto: {}", dto);
+
         List<Studies> studies = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
 
         List<CurriculumPassedElementDto> progressList = studies.stream().map(study -> {
@@ -75,27 +53,30 @@ public class CurriculumService {
             elementDto.setCurriculumName(study.getCurriculum().getCurriculumName());
             elementDto.setPassed(study.isPassed());
             return elementDto;
-        }).toList();
+        }).collect(Collectors.toList());
 
         CurriculumPassedDto responseDto = new CurriculumPassedDto();
         responseDto.setList(progressList);
 
+        logger.info("getCurriculumProgress returning: {}", responseDto);
         return responseDto;
     }
 
     // 유저의 커리큘럼 학습 내용 로드
     @Transactional
     public StudyTextDto getCurriculumText(DataCallDto dto, LevelType levelType) {
+        logger.info("getCurriculumText called with dto: {}, levelType: {}", dto, levelType);
+
         List<Studies> studiesList = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
         Studies study = studiesList.isEmpty() ? null : studiesList.get(0);
 
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         if (study == null || study.getText() == null) {
             Curriculums curriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
-            Curriculums rootNode = findRootNode(curriculum);
-            String keyword = getKeywordForLevel(curriculum, levelType);
+            Curriculums rootNode = curriculumRepository.findByRootIdAndChapterNum(dto.getCurriculumId(), 0);
+            String keyword = curriculumsService.getKeywordForLevel(curriculum, levelType); // CurriculumsService의 메서드 사용
             String fullKeyword = rootNode.getCurriculumName() + ": " + keyword;
-            String generatedText = requestGptText(fullKeyword);
+            String generatedText = requestGptText(fullKeyword, rootNode.getCurriculumName());
 
             if (study == null) {
                 study = new Studies();
@@ -113,28 +94,18 @@ public class CurriculumService {
         StudyTextDto responseDto = new StudyTextDto();
         responseDto.setText(study.getText());
 
+        logger.info("getCurriculumText returning: {}", responseDto);
         return responseDto;
     }
 
-    // 유저 학습 수준에 맞춘 챕터의 키워드 출력(GPT API 학습내용 생성용)
-    private String getKeywordForLevel(Curriculums curriculum, LevelType levelType) {
-        switch (levelType) {
-            case EASY:
-                return curriculum.getKeywordEasy();
-            case NORMAL:
-                return curriculum.getKeywordNormal();
-            case HARD:
-                return curriculum.getKeywordHard();
-            default:
-                throw new IllegalArgumentException("Unknown level type: " + levelType);
-        }
-    }
-
     // GPT API를 호출하여 학습 내용 생성
-    private String requestGptText(String keyword) {
+    private String requestGptText(String keyword, String pLang) {
         Map<String, Object> body = Map.of(
-                "model", "gpt-4o",
-                "prompt", "Create detailed learning content for the following keyword: " + keyword,
+                "model", "gpt-4",
+                "messages", List.of(
+                        Map.of("role", "system", "content", "너는 " + pLang + "의 전문 튜터야."),
+                        Map.of("role", "user", "content", "다음 키워드에 대해 자세한 학습 내용을 생성해줘. (키워드: " + keyword + ")")
+                ),
                 "max_tokens", 1000
         );
 
@@ -145,9 +116,15 @@ public class CurriculumService {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
         try {
-            ResponseEntity<String> responseEntity = restTemplate.postForEntity("https://api.openai.com/v1/completions", entity, String.class);
-            String response = responseEntity.getBody();
-            return extractContentFromResponse(response);
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity("https://api.openai.com/v1/chat/completions", entity, String.class);
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                String response = responseEntity.getBody();
+                logger.info("requestGptText response: {}", response);
+                return extractContentFromResponse(response);
+            } else {
+                logger.error("API call failed with status: {}", responseEntity.getStatusCode());
+                throw new RuntimeException("Error during API call");
+            }
         } catch (Exception e) {
             logger.error("API call failed", e);
             throw new RuntimeException("Error during API call", e);
@@ -158,7 +135,7 @@ public class CurriculumService {
     private String extractContentFromResponse(String response) {
         try {
             JsonNode root = objectMapper.readTree(response);
-            return root.path("choices").path(0).path("text").asText();
+            return root.path("choices").path(0).path("message").path("content").asText();
         } catch (IOException e) {
             logger.error("Error parsing response JSON", e);
             return "";
