@@ -59,7 +59,7 @@ class TestRepositoryTest {
         List<Tests> result2 = testRepository.findAllByUserId(user2.getUserId());
 
         //then
-        Assertions.assertThat(result.size()).isEqualTo(11);
+        Assertions.assertThat(result.size()).isEqualTo(12);
         Assertions.assertThat(result2.size()).isEqualTo(0);
     }
 
@@ -74,7 +74,7 @@ class TestRepositoryTest {
         List<Tests> normalTest = testRepository.findAllByUserIdAndTestType(user.get().getUserId(), TestType.NORMAL);
 
         //then
-        Assertions.assertThat(initTest.size()).isEqualTo(11);
+        Assertions.assertThat(initTest.size()).isEqualTo(12);
         Assertions.assertThat(normalTest.size()).isEqualTo(0);
     }
 
