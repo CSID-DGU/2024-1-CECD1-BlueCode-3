@@ -101,7 +101,7 @@ public class StudiesService {
     // GPT API를 호출하여 학습 내용 생성
     private String requestGptText(String keyword, String pLang) {
         Map<String, Object> body = Map.of(
-                "model", "gpt-4",
+                "model", "gpt-4o",
                 "messages", List.of(
                         Map.of("role", "system", "content", "너는 " + pLang + "의 전문 튜터야."),
                         Map.of("role", "user", "content", "다음 키워드에 대해 자세한 학습 내용을 생성해줘. (키워드: " + keyword + ")")
