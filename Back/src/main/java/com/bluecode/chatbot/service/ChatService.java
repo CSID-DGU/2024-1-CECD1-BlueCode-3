@@ -22,15 +22,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-public class ChatbotService {
+public class ChatService {
     private final RestTemplate restTemplate;
     private final String apiKey;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private List<Map<String, String>> conversationHistory = new ArrayList<>();
-    private static final Logger logger = LoggerFactory.getLogger(ChatbotService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
 
     @Autowired
-    public ChatbotService(RestTemplate restTemplate, @Value("${api.key}") String apiKey) {
+    public ChatService(RestTemplate restTemplate, @Value("${api.key}") String apiKey) {
         this.restTemplate = restTemplate;
         this.apiKey = apiKey;
     }
@@ -54,14 +54,14 @@ public class ChatbotService {
         messages.add(Map.of("role", "system", "content", "대화 규칙: " + rules));
 
         Map<String, Object> body = Map.of(
-                "model", "gpt-3.5-turbo-16k",
+                "model", "gpt-4o",
                 "messages", messages
         );
 
         return sendPostRequest(body);
     }
 
-    private String sendPostRequest(Map<String, Object> body) {
+    public String sendPostRequest(Map<String, Object> body) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
         headers.set("Content-Type", "application/json");
