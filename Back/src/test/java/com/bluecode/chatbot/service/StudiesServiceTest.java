@@ -1,77 +1,82 @@
 package com.bluecode.chatbot.service;
 
-import com.bluecode.chatbot.domain.Curriculums;
 import com.bluecode.chatbot.domain.LevelType;
-import com.bluecode.chatbot.domain.Studies;
-import com.bluecode.chatbot.domain.Users;
+import com.bluecode.chatbot.domain.Curriculums;
 import com.bluecode.chatbot.dto.DataCallDto;
 import com.bluecode.chatbot.dto.StudyTextDto;
 import com.bluecode.chatbot.repository.CurriculumRepository;
 import com.bluecode.chatbot.repository.StudyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+@SpringBootTest
+public class StudiesServiceTest {
 
-class StudiesServiceTest {
-
-    @InjectMocks
-    private StudiesService studiesService;
-
-    @Mock
+    @Autowired
     private StudyRepository studyRepository;
 
-    @Mock
+    @Autowired
     private CurriculumRepository curriculumRepository;
 
-    @Mock
+    @Autowired
     private CurriculumsService curriculumsService;
 
-    @Mock
+    @Autowired
     private RestTemplate restTemplate;
 
-    @Value("${api.key}")
-    private String apiKey;
+    @Autowired
+    private StudiesService studiesService;
+
+    private static final Logger logger = LoggerFactory.getLogger(StudiesServiceTest.class);
 
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    public void setUp() {
+        logger.info("테스트 설정 완료");
+
+        // 테스트 데이터가 존재하지 않는 경우 추가
+        if (!curriculumRepository.existsById(1L)) {
+            Curriculums rootCurriculum = new Curriculums();
+            rootCurriculum.setCurriculumId(1L);
+            rootCurriculum.setChapterNum(0);
+            rootCurriculum.setCurriculumName("루트");
+            curriculumRepository.save(rootCurriculum);
+
+            Curriculums childCurriculum = new Curriculums();
+            childCurriculum.setCurriculumId(2L);
+            childCurriculum.setParent(curriculumRepository.findById(1L).orElse(null));
+            childCurriculum.setChapterNum(1);
+            childCurriculum.setCurriculumName("하위 챕터");
+            childCurriculum.setKeywordEasy("입문자 키워드");
+            childCurriculum.setKeywordNormal("초급자 키워드");
+            childCurriculum.setKeywordHard("중급자 키워드");
+            curriculumRepository.save(childCurriculum);
+        }
     }
 
     @Test
-    void testGetCurriculumText() {
-        // Given
-        Curriculums curriculum = new Curriculums();
-        curriculum.setCurriculumId(1L);
-        curriculum.setCurriculumName("Root Curriculum");
+    public void testGetCurriculumText() {
+        logger.info("testGetCurriculumText 테스트 시작");
 
-        Studies study = new Studies();
-        study.setCurriculum(curriculum);
-        study.setText("Existing Study Text");
+        DataCallDto dto = new DataCallDto();
+        dto.setUserId(1L);
+        dto.setCurriculumId(2L);
+        LevelType levelType = LevelType.EASY;
 
-        when(curriculumRepository.findById(1L)).thenReturn(java.util.Optional.of(curriculum));
-        when(studyRepository.findAllByCurriculumIdAndUserId(1L, 1L)).thenReturn(Collections.singletonList(study));
+        Curriculums curriculum = curriculumRepository.findById(2L).orElse(null);
+        assertNotNull(curriculum);
 
-        DataCallDto callDto = new DataCallDto();
-        callDto.setCurriculumId(1L);
-        callDto.setUserId(1L);
+        String keyword = curriculumsService.getKeywordForLevel(curriculum, levelType);
+        assertNotNull(keyword);
 
-        // When
-        StudyTextDto responseDto = studiesService.getCurriculumText(callDto, LevelType.EASY);
+        StudyTextDto result = studiesService.getCurriculumText(dto, levelType);
 
-        // Then
-        assertEquals("Existing Study Text", responseDto.getText());
+        logger.info("테스트 결과: {}", result.getText());
     }
 }

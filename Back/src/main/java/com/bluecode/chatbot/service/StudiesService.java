@@ -120,7 +120,9 @@ public class StudiesService {
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
                 String response = responseEntity.getBody();
                 logger.info("requestGptText response: {}", response);
-                return extractContentFromResponse(response);
+                String content = extractContentFromResponse(response);
+                logger.info("Extracted content from GPT response: {}", content);
+                return content;
             } else {
                 logger.error("API call failed with status: {}", responseEntity.getStatusCode());
                 throw new RuntimeException("Error during API call");
