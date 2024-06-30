@@ -73,7 +73,7 @@ public class StudiesService {
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         if (study == null || study.getText() == null) {
             Curriculums curriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
-            Curriculums rootNode = curriculumRepository.findByRootIdAndChapterNum(dto.getCurriculumId(), 0);
+            Curriculums rootNode = curriculum.getParent();
             String keyword = curriculumsService.getKeywordForLevel(curriculum, levelType); // CurriculumsService의 메서드 사용
             String fullKeyword = rootNode.getCurriculumName() + ": " + keyword;
             String generatedText = requestGptText(fullKeyword, rootNode.getCurriculumName());
