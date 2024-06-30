@@ -5,8 +5,6 @@ import com.bluecode.chatbot.dto.CurriculumChapCallDto;
 import com.bluecode.chatbot.repository.CurriculumRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,18 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class CurriculumsServiceTest {
+public class CurriculumServiceTest {
 
     @Autowired
     private CurriculumRepository curriculumRepository;
 
     @Autowired
-    private CurriculumsService curriculumsService;
+    private CurriculumService curriculumService;
 
-    private static final Logger logger = LoggerFactory.getLogger(CurriculumsServiceTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(CurriculumServiceTest.class);
 
     @BeforeEach
     public void setUp() {
@@ -43,7 +40,7 @@ public class CurriculumsServiceTest {
         Curriculums rootCurriculum = curriculumRepository.findById(1L).orElse(null);
         assertNotNull(rootCurriculum);
 
-        var result = curriculumsService.getCurriculumChapters(dto);
+        var result = curriculumService.getCurriculumChapters(dto);
 
         logger.info("테스트 결과: {}", result.getList());
     }

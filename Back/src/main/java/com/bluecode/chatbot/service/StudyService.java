@@ -28,15 +28,15 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class StudiesService {
+public class StudyService {
 
     private final StudyRepository studyRepository;
     private final CurriculumRepository curriculumRepository;
-    private final CurriculumsService curriculumsService;
+    private final CurriculumService curriculumService;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static final Logger logger = LoggerFactory.getLogger(StudiesService.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudyService.class);
 
     @Value("${api.key}")
     private String apiKey;
@@ -73,8 +73,8 @@ public class StudiesService {
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         if (study == null || study.getText() == null) {
             Curriculums curriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
-            Curriculums rootNode = curriculumRepository.findByRootIdAndChapterNum(dto.getCurriculumId(), 0);
-            String keyword = curriculumsService.getKeywordForLevel(curriculum, levelType); // CurriculumsService의 메서드 사용
+            Curriculums rootNode = curriculum.getParent();
+            String keyword = curriculumService.getKeywordForLevel(curriculum, levelType); // CurriculumsService의 메서드 사용
             String fullKeyword = rootNode.getCurriculumName() + ": " + keyword;
             String generatedText = requestGptText(fullKeyword, rootNode.getCurriculumName());
 

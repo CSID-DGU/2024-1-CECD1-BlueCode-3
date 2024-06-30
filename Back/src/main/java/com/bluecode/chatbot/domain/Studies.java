@@ -37,7 +37,7 @@ public class Studies {
     private LocalDate startDay;
 
     // 학습 내용 전문
-    @Column(name = "text")
+    @Column(name = "text", columnDefinition = "MEDIUMTEXT")
     private String text;
 
     // 해당 학습 통과 여부

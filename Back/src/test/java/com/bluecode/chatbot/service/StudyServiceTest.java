@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class StudiesServiceTest {
+public class StudyServiceTest {
 
     @Autowired
     private StudyRepository studyRepository;
@@ -26,15 +26,15 @@ public class StudiesServiceTest {
     private CurriculumRepository curriculumRepository;
 
     @Autowired
-    private CurriculumsService curriculumsService;
+    private CurriculumService curriculumService;
 
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
-    private StudiesService studiesService;
+    private StudyService studyService;
 
-    private static final Logger logger = LoggerFactory.getLogger(StudiesServiceTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudyServiceTest.class);
 
     @BeforeEach
     public void setUp() {
@@ -72,10 +72,10 @@ public class StudiesServiceTest {
         Curriculums curriculum = curriculumRepository.findById(2L).orElse(null);
         assertNotNull(curriculum);
 
-        String keyword = curriculumsService.getKeywordForLevel(curriculum, levelType);
+        String keyword = curriculumService.getKeywordForLevel(curriculum, levelType);
         assertNotNull(keyword);
 
-        StudyTextDto result = studiesService.getCurriculumText(dto, levelType);
+        StudyTextDto result = studyService.getCurriculumText(dto, levelType);
 
         logger.info("테스트 결과: {}", result.getText());
     }
