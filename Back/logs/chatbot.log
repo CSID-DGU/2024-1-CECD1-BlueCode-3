@@ -1,4 +1,4 @@
-2024-06-30T14:03:40.892+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 19876 (started by ewoo2 in C:\Users\ewoo2\OneDrive\¹®¼­\GitHub\°ø°³SWÇÁ·ÎÁ§Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
+2024-06-30T14:03:40.892+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 19876 (started by ewoo2 in C:\Users\ewoo2\OneDrive\ï¿½ï¿½ï¿½ï¿½\GitHub\ï¿½ï¿½ï¿½ï¿½SWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
 2024-06-30T14:03:40.899+09:00 DEBUG 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Running with Spring Boot v3.2.5, Spring v6.1.6
 2024-06-30T14:03:40.900+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : The following 1 profile is active: "dev"
 2024-06-30T14:03:40.938+09:00 DEBUG 19876 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52
@@ -15,8 +15,8 @@
 2024-06-30T14:03:44.352+09:00  INFO 19876 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2024-06-30T14:03:45.140+09:00  INFO 19876 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2024-06-30T14:03:45.634+09:00  INFO 19876 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-06-30T14:03:46.681+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ÅÍ 4: HARDÇÐ½ÀÀÚ·á: 4. Ç¥Çö½Ä Å×½ºÆ® ³»¿ë ÀÔ´Ï´Ù. - ÃÊ±â ½ÃÇè ÇÕ°Ý
-2024-06-30T14:03:46.685+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ
+2024-06-30T14:03:46.681+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ï¿½ï¿½ 4: HARDï¿½Ð½ï¿½ï¿½Ú·ï¿½: 4. Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½. - ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½
+2024-06-30T14:03:46.685+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:03:46.834+09:00  WARN 19876 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2024-06-30T14:03:46.875+09:00  WARN 19876 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
@@ -31,22 +31,22 @@ This generated password is for development use only. Your security configuration
 2024-06-30T14:03:47.524+09:00 DEBUG 19876 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
 2024-06-30T14:03:47.716+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Started StudiesServiceTest in 7.104 seconds (process running for 8.304)
 2024-06-30T14:03:47.720+09:00  INFO 19876 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-06-30T14:03:48.234+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Å×½ºÆ® ¼³Á¤ ¿Ï·á
-2024-06-30T14:03:48.249+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText Å×½ºÆ® ½ÃÀÛ
+2024-06-30T14:03:48.234+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+2024-06-30T14:03:48.249+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:03:48.259+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@728c3a0e, levelType: EASY
 2024-06-30T14:03:48.260+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText called with dto: DataCallDto(userId=1, curriculumId=2), levelType: EASY
-2024-06-30T14:03:48.288+09:00  INFO 19876 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumsServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-06-30T14:03:48.290+09:00  INFO 19876 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumsServiceTest
-2024-06-30T14:03:48.314+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : Å×½ºÆ® ¼³Á¤ ¿Ï·á
-2024-06-30T14:03:48.315+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters Å×½ºÆ® ½ÃÀÛ
+2024-06-30T14:03:48.288+09:00  INFO 19876 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-06-30T14:03:48.290+09:00  INFO 19876 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumServiceTest
+2024-06-30T14:03:48.314+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+2024-06-30T14:03:48.315+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:03:48.319+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters called with dto: CurriculumChapCallDto(curriculumId=1)
-2024-06-30T14:03:48.346+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ÇÁ·Î±×·¡¹Ö Á¤ÀÇ), CurriculumChapElementDto(curriculumId=3, text=2. ÆÄÀÌ½ã ¼³Ä¡ È¯°æ), CurriculumChapElementDto(curriculumId=4, text=3. ÆÄÀÌ½ã ½ÇÇà ¿ø¸®), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥Çö½Ä), CurriculumChapElementDto(curriculumId=6, text=5. º¯¼ö¿Í ¸Þ¸ð¸®), CurriculumChapElementDto(curriculumId=7, text=6. ÆÄÀÌ½ã ¿À·ù), CurriculumChapElementDto(curriculumId=8, text=7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ), CurriculumChapElementDto(curriculumId=9, text=8. ÇÔ¼ö), CurriculumChapElementDto(curriculumId=10, text=9. ¹®ÀÚ¿­), CurriculumChapElementDto(curriculumId=11, text=10. Á¶°Ç¹®), CurriculumChapElementDto(curriculumId=12, text=11. ¸ðµâÈ­), CurriculumChapElementDto(curriculumId=13, text=12. ¸Þ¼­µå), CurriculumChapElementDto(curriculumId=14, text=13. ¸®½ºÆ®), CurriculumChapElementDto(curriculumId=15, text=14. ¹Ýº¹¹®), CurriculumChapElementDto(curriculumId=16, text=15. ÆÄÀÏ Ã³¸®), CurriculumChapElementDto(curriculumId=17, text=16. ÄÃ·º¼Ç), CurriculumChapElementDto(curriculumId=18, text=17. °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö)])
-2024-06-30T14:03:48.348+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : Å×½ºÆ® °á°ú: [CurriculumChapElementDto(curriculumId=2, text=1. ÇÁ·Î±×·¡¹Ö Á¤ÀÇ), CurriculumChapElementDto(curriculumId=3, text=2. ÆÄÀÌ½ã ¼³Ä¡ È¯°æ), CurriculumChapElementDto(curriculumId=4, text=3. ÆÄÀÌ½ã ½ÇÇà ¿ø¸®), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥Çö½Ä), CurriculumChapElementDto(curriculumId=6, text=5. º¯¼ö¿Í ¸Þ¸ð¸®), CurriculumChapElementDto(curriculumId=7, text=6. ÆÄÀÌ½ã ¿À·ù), CurriculumChapElementDto(curriculumId=8, text=7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ), CurriculumChapElementDto(curriculumId=9, text=8. ÇÔ¼ö), CurriculumChapElementDto(curriculumId=10, text=9. ¹®ÀÚ¿­), CurriculumChapElementDto(curriculumId=11, text=10. Á¶°Ç¹®), CurriculumChapElementDto(curriculumId=12, text=11. ¸ðµâÈ­), CurriculumChapElementDto(curriculumId=13, text=12. ¸Þ¼­µå), CurriculumChapElementDto(curriculumId=14, text=13. ¸®½ºÆ®), CurriculumChapElementDto(curriculumId=15, text=14. ¹Ýº¹¹®), CurriculumChapElementDto(curriculumId=16, text=15. ÆÄÀÏ Ã³¸®), CurriculumChapElementDto(curriculumId=17, text=16. ÄÃ·º¼Ç), CurriculumChapElementDto(curriculumId=18, text=17. °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö)]
+2024-06-30T14:03:48.346+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)])
+2024-06-30T14:03:48.348+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½: [CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)]
 2024-06-30T14:03:48.366+09:00 DEBUG 19876 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52, started on Sun Jun 30 14:03:40 KST 2024
 2024-06-30T14:03:48.401+09:00  INFO 19876 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-06-30T14:03:48.404+09:00  INFO 19876 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-06-30T14:03:48.412+09:00  INFO 19876 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-06-30T14:07:56.337+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 25512 (started by ewoo2 in C:\Users\ewoo2\OneDrive\¹®¼­\GitHub\°ø°³SWÇÁ·ÎÁ§Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
+2024-06-30T14:07:56.337+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 25512 (started by ewoo2 in C:\Users\ewoo2\OneDrive\ï¿½ï¿½ï¿½ï¿½\GitHub\ï¿½ï¿½ï¿½ï¿½SWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
 2024-06-30T14:07:56.339+09:00 DEBUG 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Running with Spring Boot v3.2.5, Spring v6.1.6
 2024-06-30T14:07:56.340+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : The following 1 profile is active: "dev"
 2024-06-30T14:07:56.381+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52
@@ -63,8 +63,8 @@ This generated password is for development use only. Your security configuration
 2024-06-30T14:08:00.252+09:00  INFO 25512 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2024-06-30T14:08:01.109+09:00  INFO 25512 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2024-06-30T14:08:01.652+09:00  INFO 25512 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-06-30T14:08:02.755+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ÅÍ 4: HARDÇÐ½ÀÀÚ·á: 4. Ç¥Çö½Ä Å×½ºÆ® ³»¿ë ÀÔ´Ï´Ù. - ÃÊ±â ½ÃÇè ÇÕ°Ý
-2024-06-30T14:08:02.759+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ
+2024-06-30T14:08:02.755+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ï¿½ï¿½ 4: HARDï¿½Ð½ï¿½ï¿½Ú·ï¿½: 4. Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½. - ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½
+2024-06-30T14:08:02.759+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:08:02.897+09:00  WARN 25512 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2024-06-30T14:08:02.927+09:00  WARN 25512 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
@@ -79,14 +79,14 @@ This generated password is for development use only. Your security configuration
 2024-06-30T14:08:03.793+09:00 DEBUG 25512 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
 2024-06-30T14:08:03.996+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Started StudiesServiceTest in 7.951 seconds (process running for 9.25)
 2024-06-30T14:08:04.001+09:00  INFO 25512 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-06-30T14:08:04.532+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Å×½ºÆ® ¼³Á¤ ¿Ï·á
-2024-06-30T14:08:04.561+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText Å×½ºÆ® ½ÃÀÛ
+2024-06-30T14:08:04.532+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+2024-06-30T14:08:04.561+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:08:04.578+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@55c14260, levelType: EASY
 2024-06-30T14:08:04.580+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText called with dto: DataCallDto(userId=1, curriculumId=2), levelType: EASY
 2024-06-30T14:08:04.585+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@1602b644, levelType: EASY
 2024-06-30T14:08:04.677+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
 2024-06-30T14:08:04.685+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-06-30T14:08:04.694+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Writing [{messages=[{role=system, content=³Ê´Â ÆÄÀÌ½ãÀÇ Àü¹® Æ©ÅÍ¾ß.}, {role=user, content=´ÙÀ½ Å°¿öµå¿¡ ´ëÇØ ÀÚ¼¼ÇÑ ÇÐ½À ³»¿ëÀ» »ý¼ºÇØÁà. (Å°¿öµå: ÆÄÀÌ½ã: )}], max_tokens=1000, model=gpt-4o}] as "application/json"
+2024-06-30T14:08:04.694+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Writing [{messages=[{role=system, content=ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ©ï¿½Í¾ï¿½.}, {role=user, content=ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. (Å°ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½Ì½ï¿½: )}], max_tokens=1000, model=gpt-4o}] as "application/json"
 2024-06-30T14:08:15.478+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Response 200 OK
 2024-06-30T14:08:15.479+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
 2024-06-30T14:08:15.483+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : requestGptText response: {
@@ -99,7 +99,7 @@ This generated password is for development use only. Your security configuration
       "index": 0,
       "message": {
         "role": "assistant",
-        "content": "¹°·ÐÀÔ´Ï´Ù! ÆÄÀÌ½ã(Python)¿¡ ´ëÇÑ ÇÐ½À ³»¿ëÀ» ÀÚ¼¼È÷ Á¦°øÇÏ°Ú½À´Ï´Ù. ¿©±â¿¡ Æ÷ÇÔµÈ ³»¿ëÀº ±âÃÊºÎÅÍ °í±Þ ÁÖÁ¦±îÁö ¼øÂ÷ÀûÀ¸·Î ´Ù·ç¾î º¸°Ú½À´Ï´Ù.\n\n## ¸ñÂ÷:\n\n1. **ÆÄÀÌ½ã ¼Ò°³**\n2. **ÆÄÀÌ½ã ¼³Ä¡ ¹× ¼³Á¤**\n3. **±âÃÊ ¹®¹ý**\n4. **µ¥ÀÌÅÍ Å¸ÀÔ**\n5. **Á¦¾î¹®**\n6. **ÇÔ¼ö**\n7. **ÆÄÀÏ ÀÔÃâ·Â**\n8. **¿¹¿Ü Ã³¸®**\n9. **°´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö (OOP)**\n10. **¸ðµâ°ú ÆÐÅ°Áö**\n11. **µ¥ÀÌÅÍ ºÐ¼®°ú ½Ã°¢È­ ¶óÀÌºê·¯¸®**\n12. **À¥ °³¹ß**\n13. **±âÅ¸ °í±Þ ÁÖÁ¦**\n\n---\n\n### 1. ÆÄÀÌ½ã ¼Ò°³\nÆÄÀÌ½ãÀº 1991³â ±Íµµ ¹Ý ·Î¼¶(Guido van Rossum)ÀÌ ¹ßÇ¥ÇÑ °í±Þ ÇÁ·Î±×·¡¹Ö ¾ð¾îÀÔ´Ï´Ù. °£°áÇÏ°í ÀÐ±â ½¬¿î ÄÚµå ±¸Á¶¸¦ °¡Áö°í ÀÖ¾î ÃÊº¸ÀÚºÎÅÍ Àü¹®°¡±îÁö Æø³Ð°Ô »ç¿ëµË´Ï´Ù. ÆÄÀÌ½ãÀº ´ÙÀ½°ú °°Àº Æ¯Â¡À» °¡Áý´Ï´Ù:\n- **ÇØ¼®Çü ¾ð¾î**: º°µµÀÇ ÄÄÆÄÀÏ °úÁ¤ ¾øÀÌ ¹Ù·Î ½ÇÇà °¡´É\n- **´ÙÁß ÆÐ·¯´ÙÀÓ Áö¿ø**: °´Ã¼ ÁöÇâ, ÀýÂ÷ ÁöÇâ, ÇÔ¼öÇü ÇÁ·Î±×·¡¹Ö Áö¿ø\n- **¹æ´ëÇÑ ¶óÀÌºê·¯¸®**: µ¥ÀÌÅÍ ºÐ¼®, À¥ °³¹ß, ¸Ó½Å·¯´× µî ´Ù¾çÇÑ ºÐ¾ß¿¡¼­ È°¿ë °¡´É\n\n---\n\n### 2. ÆÄÀÌ½ã ¼³Ä¡ ¹× ¼³Á¤\n- °ø½Ä À¥»çÀÌÆ®¿¡¼­ ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå ¹× ¼³Ä¡ (https://www.python.org/)\n- ÆÐÅ°Áö ¸Å´ÏÀú `pip`¸¦ ÅëÇØ Ãß°¡ ¶óÀÌºê·¯¸® ¼³Ä¡\n- °¡»ó È¯°æ ¼³Á¤ (`venv` ÀÌ¿ë)\n\n---\n\n### 3. ±âÃÊ ¹®¹ý\n- **ÁÖ¼®**: `#`·Î ½ÃÀÛÇÏ´Â ºÎºÐÀº ÁÖ¼®\n- **º¯¼ö ¼±¾ð**: µ¥ÀÌÅÍ Å¸ÀÔÀ» ¸í½ÃÇÏÁö ¾Ê°í »ç¿ë °¡´É\n- **¿¬»êÀÚ**: »ê¼ú, ºñ±³, ³í¸® ¿¬»êÀÚ »ç¿ë¹ý\n- **Ãâ·Â**: `print()` ÇÔ¼ö »ç¿ë\n\n```python\n# º¯¼ö ¼±¾ð ¹× Ãâ·Â ¿¹Á¦\na = 10\nb = 20\nprint(a + b)  # 30\n```\n\n---\n\n### 4. µ¥ÀÌÅÍ Å¸ÀÔ\n- **±âº» Å¸ÀÔ**: `int`, `float`, `str`, `bool`\n- **ÀÚ·á ±¸Á¶**:\n  - ¸®½ºÆ® (List): `[]`\n  - Æ©ÇÃ (Tuple): `()`\n  - ¼¼Æ® (Set): `{}` È¤Àº `set()`\n  - µñ¼Å³Ê¸® (Dictionary): `{key: value}`\n\n```python\n# ¸®½ºÆ® ¿¹Á¦\nnumbers = [1, 2, 3, 4, 5]\nprint(numbers[0])  # 1\n\n# µñ¼Å³Ê¸® ¿¹Á¦\nstudent = { \"name\": \"Alice\", \"age\": 25 }\nprint(student[\"name\"])  # Alice\n```\n\n---\n\n### 5. Á¦¾î¹®\n- **Á¶°Ç¹®**: `if`, `elif`, `else`\n- **¹Ýº¹¹®**: `for`, `while`\n- **¸®½ºÆ® ³»Æ÷**: ¸®½ºÆ®¸¦ È¿À²ÀûÀ¸·Î »ý¼ºÇÏ´Â ¹æ¹ý\n\n```python\n# Á¶°Ç¹® ¿¹Á¦\nif a > b:\n    print(\"a is greater than b\")\nelse:\n    print(\"a is not greater than b\")\n\n# ¹Ýº¹¹® ¿¹Á¦\nfor number in numbers:\n    print(number)\n\n# ¸®½ºÆ® ³»Æ÷ ¿¹Á¦\nsquares = [x**2 for x in range(10)]\n```\n\n---\n\n### 6. ÇÔ¼ö\n- **ÇÔ¼ö Á¤ÀÇ ¹× È£Ãâ**: `def` Å°¿öµå »ç¿ë\n- **¸Å°³º¯¼ö ¹× ¹ÝÈ¯°ª**: ±âº»°ª, °¡º¯ ±æÀÌ ÀÎÀÚ\n- **¶÷´Ù ÇÔ¼ö**: ÀÍ¸í ÇÔ¼ö »ý¼º\n\n```python\n# ÇÔ¼ö Á¤ÀÇ\ndef add(a, b):\n    return a + b\n\nprint(add(3, 4))  # 7\n\n# ¶÷´Ù ÇÔ¼ö ¿¹Á¦\nmultiply = lambda x, y: x * y\nprint(multiply(3, 4))  # 12\n```\n\n---\n\n### 7. ÆÄÀÏ ÀÔÃâ·Â\n- **ÆÄÀÏ ¿­±â ¹× ´Ý±â**: `open()`, `close()`\n- **ÆÄÀÏ ÀÐ±â ¹× ¾²±â**: `read()`, `write()`, `with` ¹®\n\n```python\n# ÆÄÀÏ ¾²±â ¿¹Á¦\nwith open('example.txt', 'w') as f:\n    f.write('Hello, World!')\n\n# ÆÄÀÏ ÀÐ±â ¿¹Á¦\nwith open('example.txt', 'r') as f:\n   "
+        "content": "ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ï¿½ ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ï´ï¿½.\n\n## ï¿½ï¿½ï¿½ï¿½:\n\n1. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½**\n2. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**\n3. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**\n4. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**\n5. **ï¿½ï¿½ï¿½î¹®**\n6. **ï¿½Ô¼ï¿½**\n7. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½**\n8. **ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½**\n9. **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ (OOP)**\n10. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½**\n11. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½È­ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**\n12. **ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**\n13. **ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**\n\n---\n\n### 1. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½\nï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Êºï¿½ï¿½Úºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð°ï¿½ ï¿½ï¿½ï¿½Ë´Ï´ï¿½. ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¯Â¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½:\n- **ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ó½Å·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n---\n\n### 2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ (https://www.python.org/)\n- ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ `pip`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½ï¿½Ä¡\n- ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (`venv` ï¿½Ì¿ï¿½)\n\n---\n\n### 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½Ö¼ï¿½**: `#`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½**: `print()` ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½\n\n```python\n# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\na = 10\nb = 20\nprint(a + b)  # 30\n```\n\n---\n\n### 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½\n- **ï¿½âº» Å¸ï¿½ï¿½**: `int`, `float`, `str`, `bool`\n- **ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½**:\n  - ï¿½ï¿½ï¿½ï¿½Æ® (List): `[]`\n  - Æ©ï¿½ï¿½ (Tuple): `()`\n  - ï¿½ï¿½Æ® (Set): `{}` È¤ï¿½ï¿½ `set()`\n  - ï¿½ï¿½Å³Ê¸ï¿½ (Dictionary): `{key: value}`\n\n```python\n# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½\nnumbers = [1, 2, 3, 4, 5]\nprint(numbers[0])  # 1\n\n# ï¿½ï¿½Å³Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½\nstudent = { \"name\": \"Alice\", \"age\": 25 }\nprint(student[\"name\"])  # Alice\n```\n\n---\n\n### 5. ï¿½ï¿½ï¿½î¹®\n- **ï¿½ï¿½ï¿½Ç¹ï¿½**: `if`, `elif`, `else`\n- **ï¿½Ýºï¿½ï¿½ï¿½**: `for`, `while`\n- **ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½\n\n```python\n# ï¿½ï¿½ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½\nif a > b:\n    print(\"a is greater than b\")\nelse:\n    print(\"a is not greater than b\")\n\n# ï¿½Ýºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\nfor number in numbers:\n    print(number)\n\n# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\nsquares = [x**2 for x in range(10)]\n```\n\n---\n\n### 6. ï¿½Ô¼ï¿½\n- **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½**: `def` Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½\n- **ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½**: ï¿½âº»ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**: ï¿½Í¸ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n```python\n# ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½\ndef add(a, b):\n    return a + b\n\nprint(add(3, 4))  # 7\n\n# ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½\nmultiply = lambda x, y: x * y\nprint(multiply(3, 4))  # 12\n```\n\n---\n\n### 7. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý±ï¿½**: `open()`, `close()`\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: `read()`, `write()`, `with` ï¿½ï¿½\n\n```python\n# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\nwith open('example.txt', 'w') as f:\n    f.write('Hello, World!')\n\n# ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½\nwith open('example.txt', 'r') as f:\n   "
       },
       "logprobs": null,
       "finish_reason": "length"
@@ -113,49 +113,49 @@ This generated password is for development use only. Your security configuration
   "system_fingerprint": "fp_d576307f90"
 }
 
-2024-06-30T14:08:15.493+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : Extracted content from GPT response: ¹°·ÐÀÔ´Ï´Ù! ÆÄÀÌ½ã(Python)¿¡ ´ëÇÑ ÇÐ½À ³»¿ëÀ» ÀÚ¼¼È÷ Á¦°øÇÏ°Ú½À´Ï´Ù. ¿©±â¿¡ Æ÷ÇÔµÈ ³»¿ëÀº ±âÃÊºÎÅÍ °í±Þ ÁÖÁ¦±îÁö ¼øÂ÷ÀûÀ¸·Î ´Ù·ç¾î º¸°Ú½À´Ï´Ù.
+2024-06-30T14:08:15.493+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : Extracted content from GPT response: ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ï¿½ ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ï´ï¿½.
 
-## ¸ñÂ÷:
+## ï¿½ï¿½ï¿½ï¿½:
 
-1. **ÆÄÀÌ½ã ¼Ò°³**
-2. **ÆÄÀÌ½ã ¼³Ä¡ ¹× ¼³Á¤**
-3. **±âÃÊ ¹®¹ý**
-4. **µ¥ÀÌÅÍ Å¸ÀÔ**
-5. **Á¦¾î¹®**
-6. **ÇÔ¼ö**
-7. **ÆÄÀÏ ÀÔÃâ·Â**
-8. **¿¹¿Ü Ã³¸®**
-9. **°´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö (OOP)**
-10. **¸ðµâ°ú ÆÐÅ°Áö**
-11. **µ¥ÀÌÅÍ ºÐ¼®°ú ½Ã°¢È­ ¶óÀÌºê·¯¸®**
-12. **À¥ °³¹ß**
-13. **±âÅ¸ °í±Þ ÁÖÁ¦**
-
----
-
-### 1. ÆÄÀÌ½ã ¼Ò°³
-ÆÄÀÌ½ãÀº 1991³â ±Íµµ ¹Ý ·Î¼¶(Guido van Rossum)ÀÌ ¹ßÇ¥ÇÑ °í±Þ ÇÁ·Î±×·¡¹Ö ¾ð¾îÀÔ´Ï´Ù. °£°áÇÏ°í ÀÐ±â ½¬¿î ÄÚµå ±¸Á¶¸¦ °¡Áö°í ÀÖ¾î ÃÊº¸ÀÚºÎÅÍ Àü¹®°¡±îÁö Æø³Ð°Ô »ç¿ëµË´Ï´Ù. ÆÄÀÌ½ãÀº ´ÙÀ½°ú °°Àº Æ¯Â¡À» °¡Áý´Ï´Ù:
-- **ÇØ¼®Çü ¾ð¾î**: º°µµÀÇ ÄÄÆÄÀÏ °úÁ¤ ¾øÀÌ ¹Ù·Î ½ÇÇà °¡´É
-- **´ÙÁß ÆÐ·¯´ÙÀÓ Áö¿ø**: °´Ã¼ ÁöÇâ, ÀýÂ÷ ÁöÇâ, ÇÔ¼öÇü ÇÁ·Î±×·¡¹Ö Áö¿ø
-- **¹æ´ëÇÑ ¶óÀÌºê·¯¸®**: µ¥ÀÌÅÍ ºÐ¼®, À¥ °³¹ß, ¸Ó½Å·¯´× µî ´Ù¾çÇÑ ºÐ¾ß¿¡¼­ È°¿ë °¡´É
+1. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½**
+2. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
+3. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
+4. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**
+5. **ï¿½ï¿½ï¿½î¹®**
+6. **ï¿½Ô¼ï¿½**
+7. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½**
+8. **ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½**
+9. **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ (OOP)**
+10. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½**
+11. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½È­ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**
+12. **ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
+13. **ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
 
 ---
 
-### 2. ÆÄÀÌ½ã ¼³Ä¡ ¹× ¼³Á¤
-- °ø½Ä À¥»çÀÌÆ®¿¡¼­ ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå ¹× ¼³Ä¡ (https://www.python.org/)
-- ÆÐÅ°Áö ¸Å´ÏÀú `pip`¸¦ ÅëÇØ Ãß°¡ ¶óÀÌºê·¯¸® ¼³Ä¡
-- °¡»ó È¯°æ ¼³Á¤ (`venv` ÀÌ¿ë)
+### 1. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½
+ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Êºï¿½ï¿½Úºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð°ï¿½ ï¿½ï¿½ï¿½Ë´Ï´ï¿½. ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¯Â¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½:
+- **ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ó½Å·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 ---
 
-### 3. ±âÃÊ ¹®¹ý
-- **ÁÖ¼®**: `#`·Î ½ÃÀÛÇÏ´Â ºÎºÐÀº ÁÖ¼®
-- **º¯¼ö ¼±¾ð**: µ¥ÀÌÅÍ Å¸ÀÔÀ» ¸í½ÃÇÏÁö ¾Ê°í »ç¿ë °¡´É
-- **¿¬»êÀÚ**: »ê¼ú, ºñ±³, ³í¸® ¿¬»êÀÚ »ç¿ë¹ý
-- **Ãâ·Â**: `print()` ÇÔ¼ö »ç¿ë
+### 2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ (https://www.python.org/)
+- ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ `pip`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½ï¿½Ä¡
+- ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (`venv` ï¿½Ì¿ï¿½)
+
+---
+
+### 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½Ö¼ï¿½**: `#`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½**: `print()` ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½
 
 ```python
-# º¯¼ö ¼±¾ð ¹× Ãâ·Â ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 a = 10
 b = 20
 print(a + b)  # 30
@@ -163,122 +163,122 @@ print(a + b)  # 30
 
 ---
 
-### 4. µ¥ÀÌÅÍ Å¸ÀÔ
-- **±âº» Å¸ÀÔ**: `int`, `float`, `str`, `bool`
-- **ÀÚ·á ±¸Á¶**:
-  - ¸®½ºÆ® (List): `[]`
-  - Æ©ÇÃ (Tuple): `()`
-  - ¼¼Æ® (Set): `{}` È¤Àº `set()`
-  - µñ¼Å³Ê¸® (Dictionary): `{key: value}`
+### 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+- **ï¿½âº» Å¸ï¿½ï¿½**: `int`, `float`, `str`, `bool`
+- **ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½**:
+  - ï¿½ï¿½ï¿½ï¿½Æ® (List): `[]`
+  - Æ©ï¿½ï¿½ (Tuple): `()`
+  - ï¿½ï¿½Æ® (Set): `{}` È¤ï¿½ï¿½ `set()`
+  - ï¿½ï¿½Å³Ê¸ï¿½ (Dictionary): `{key: value}`
 
 ```python
-# ¸®½ºÆ® ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 numbers = [1, 2, 3, 4, 5]
 print(numbers[0])  # 1
 
-# µñ¼Å³Ê¸® ¿¹Á¦
+# ï¿½ï¿½Å³Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 student = { "name": "Alice", "age": 25 }
 print(student["name"])  # Alice
 ```
 
 ---
 
-### 5. Á¦¾î¹®
-- **Á¶°Ç¹®**: `if`, `elif`, `else`
-- **¹Ýº¹¹®**: `for`, `while`
-- **¸®½ºÆ® ³»Æ÷**: ¸®½ºÆ®¸¦ È¿À²ÀûÀ¸·Î »ý¼ºÇÏ´Â ¹æ¹ý
+### 5. ï¿½ï¿½ï¿½î¹®
+- **ï¿½ï¿½ï¿½Ç¹ï¿½**: `if`, `elif`, `else`
+- **ï¿½Ýºï¿½ï¿½ï¿½**: `for`, `while`
+- **ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
 
 ```python
-# Á¶°Ç¹® ¿¹Á¦
+# ï¿½ï¿½ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 if a > b:
     print("a is greater than b")
 else:
     print("a is not greater than b")
 
-# ¹Ýº¹¹® ¿¹Á¦
+# ï¿½Ýºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 for number in numbers:
     print(number)
 
-# ¸®½ºÆ® ³»Æ÷ ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 squares = [x**2 for x in range(10)]
 ```
 
 ---
 
-### 6. ÇÔ¼ö
-- **ÇÔ¼ö Á¤ÀÇ ¹× È£Ãâ**: `def` Å°¿öµå »ç¿ë
-- **¸Å°³º¯¼ö ¹× ¹ÝÈ¯°ª**: ±âº»°ª, °¡º¯ ±æÀÌ ÀÎÀÚ
-- **¶÷´Ù ÇÔ¼ö**: ÀÍ¸í ÇÔ¼ö »ý¼º
+### 6. ï¿½Ô¼ï¿½
+- **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½**: `def` Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+- **ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½**: ï¿½âº»ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**: ï¿½Í¸ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 ```python
-# ÇÔ¼ö Á¤ÀÇ
+# ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 def add(a, b):
     return a + b
 
 print(add(3, 4))  # 7
 
-# ¶÷´Ù ÇÔ¼ö ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 multiply = lambda x, y: x * y
 print(multiply(3, 4))  # 12
 ```
 
 ---
 
-### 7. ÆÄÀÏ ÀÔÃâ·Â
-- **ÆÄÀÏ ¿­±â ¹× ´Ý±â**: `open()`, `close()`
-- **ÆÄÀÏ ÀÐ±â ¹× ¾²±â**: `read()`, `write()`, `with` ¹®
+### 7. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý±ï¿½**: `open()`, `close()`
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: `read()`, `write()`, `with` ï¿½ï¿½
 
 ```python
-# ÆÄÀÏ ¾²±â ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 with open('example.txt', 'w') as f:
     f.write('Hello, World!')
 
-# ÆÄÀÏ ÀÐ±â ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½
 with open('example.txt', 'r') as f:
    
-2024-06-30T14:08:15.495+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText returning: StudyTextDto(text=¹°·ÐÀÔ´Ï´Ù! ÆÄÀÌ½ã(Python)¿¡ ´ëÇÑ ÇÐ½À ³»¿ëÀ» ÀÚ¼¼È÷ Á¦°øÇÏ°Ú½À´Ï´Ù. ¿©±â¿¡ Æ÷ÇÔµÈ ³»¿ëÀº ±âÃÊºÎÅÍ °í±Þ ÁÖÁ¦±îÁö ¼øÂ÷ÀûÀ¸·Î ´Ù·ç¾î º¸°Ú½À´Ï´Ù.
+2024-06-30T14:08:15.495+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText returning: StudyTextDto(text=ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ï¿½ ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ï´ï¿½.
 
-## ¸ñÂ÷:
+## ï¿½ï¿½ï¿½ï¿½:
 
-1. **ÆÄÀÌ½ã ¼Ò°³**
-2. **ÆÄÀÌ½ã ¼³Ä¡ ¹× ¼³Á¤**
-3. **±âÃÊ ¹®¹ý**
-4. **µ¥ÀÌÅÍ Å¸ÀÔ**
-5. **Á¦¾î¹®**
-6. **ÇÔ¼ö**
-7. **ÆÄÀÏ ÀÔÃâ·Â**
-8. **¿¹¿Ü Ã³¸®**
-9. **°´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö (OOP)**
-10. **¸ðµâ°ú ÆÐÅ°Áö**
-11. **µ¥ÀÌÅÍ ºÐ¼®°ú ½Ã°¢È­ ¶óÀÌºê·¯¸®**
-12. **À¥ °³¹ß**
-13. **±âÅ¸ °í±Þ ÁÖÁ¦**
-
----
-
-### 1. ÆÄÀÌ½ã ¼Ò°³
-ÆÄÀÌ½ãÀº 1991³â ±Íµµ ¹Ý ·Î¼¶(Guido van Rossum)ÀÌ ¹ßÇ¥ÇÑ °í±Þ ÇÁ·Î±×·¡¹Ö ¾ð¾îÀÔ´Ï´Ù. °£°áÇÏ°í ÀÐ±â ½¬¿î ÄÚµå ±¸Á¶¸¦ °¡Áö°í ÀÖ¾î ÃÊº¸ÀÚºÎÅÍ Àü¹®°¡±îÁö Æø³Ð°Ô »ç¿ëµË´Ï´Ù. ÆÄÀÌ½ãÀº ´ÙÀ½°ú °°Àº Æ¯Â¡À» °¡Áý´Ï´Ù:
-- **ÇØ¼®Çü ¾ð¾î**: º°µµÀÇ ÄÄÆÄÀÏ °úÁ¤ ¾øÀÌ ¹Ù·Î ½ÇÇà °¡´É
-- **´ÙÁß ÆÐ·¯´ÙÀÓ Áö¿ø**: °´Ã¼ ÁöÇâ, ÀýÂ÷ ÁöÇâ, ÇÔ¼öÇü ÇÁ·Î±×·¡¹Ö Áö¿ø
-- **¹æ´ëÇÑ ¶óÀÌºê·¯¸®**: µ¥ÀÌÅÍ ºÐ¼®, À¥ °³¹ß, ¸Ó½Å·¯´× µî ´Ù¾çÇÑ ºÐ¾ß¿¡¼­ È°¿ë °¡´É
+1. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½**
+2. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
+3. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
+4. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**
+5. **ï¿½ï¿½ï¿½î¹®**
+6. **ï¿½Ô¼ï¿½**
+7. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½**
+8. **ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½**
+9. **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ (OOP)**
+10. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½**
+11. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½È­ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**
+12. **ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
+13. **ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
 
 ---
 
-### 2. ÆÄÀÌ½ã ¼³Ä¡ ¹× ¼³Á¤
-- °ø½Ä À¥»çÀÌÆ®¿¡¼­ ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå ¹× ¼³Ä¡ (https://www.python.org/)
-- ÆÐÅ°Áö ¸Å´ÏÀú `pip`¸¦ ÅëÇØ Ãß°¡ ¶óÀÌºê·¯¸® ¼³Ä¡
-- °¡»ó È¯°æ ¼³Á¤ (`venv` ÀÌ¿ë)
+### 1. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½
+ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Êºï¿½ï¿½Úºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð°ï¿½ ï¿½ï¿½ï¿½Ë´Ï´ï¿½. ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¯Â¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½:
+- **ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ó½Å·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 ---
 
-### 3. ±âÃÊ ¹®¹ý
-- **ÁÖ¼®**: `#`·Î ½ÃÀÛÇÏ´Â ºÎºÐÀº ÁÖ¼®
-- **º¯¼ö ¼±¾ð**: µ¥ÀÌÅÍ Å¸ÀÔÀ» ¸í½ÃÇÏÁö ¾Ê°í »ç¿ë °¡´É
-- **¿¬»êÀÚ**: »ê¼ú, ºñ±³, ³í¸® ¿¬»êÀÚ »ç¿ë¹ý
-- **Ãâ·Â**: `print()` ÇÔ¼ö »ç¿ë
+### 2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ (https://www.python.org/)
+- ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ `pip`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½ï¿½Ä¡
+- ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (`venv` ï¿½Ì¿ï¿½)
+
+---
+
+### 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½Ö¼ï¿½**: `#`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½**: `print()` ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½
 
 ```python
-# º¯¼ö ¼±¾ð ¹× Ãâ·Â ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 a = 10
 b = 20
 print(a + b)  # 30
@@ -286,93 +286,93 @@ print(a + b)  # 30
 
 ---
 
-### 4. µ¥ÀÌÅÍ Å¸ÀÔ
-- **±âº» Å¸ÀÔ**: `int`, `float`, `str`, `bool`
-- **ÀÚ·á ±¸Á¶**:
-  - ¸®½ºÆ® (List): `[]`
-  - Æ©ÇÃ (Tuple): `()`
-  - ¼¼Æ® (Set): `{}` È¤Àº `set()`
-  - µñ¼Å³Ê¸® (Dictionary): `{key: value}`
+### 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+- **ï¿½âº» Å¸ï¿½ï¿½**: `int`, `float`, `str`, `bool`
+- **ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½**:
+  - ï¿½ï¿½ï¿½ï¿½Æ® (List): `[]`
+  - Æ©ï¿½ï¿½ (Tuple): `()`
+  - ï¿½ï¿½Æ® (Set): `{}` È¤ï¿½ï¿½ `set()`
+  - ï¿½ï¿½Å³Ê¸ï¿½ (Dictionary): `{key: value}`
 
 ```python
-# ¸®½ºÆ® ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 numbers = [1, 2, 3, 4, 5]
 print(numbers[0])  # 1
 
-# µñ¼Å³Ê¸® ¿¹Á¦
+# ï¿½ï¿½Å³Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 student = { "name": "Alice", "age": 25 }
 print(student["name"])  # Alice
 ```
 
 ---
 
-### 5. Á¦¾î¹®
-- **Á¶°Ç¹®**: `if`, `elif`, `else`
-- **¹Ýº¹¹®**: `for`, `while`
-- **¸®½ºÆ® ³»Æ÷**: ¸®½ºÆ®¸¦ È¿À²ÀûÀ¸·Î »ý¼ºÇÏ´Â ¹æ¹ý
+### 5. ï¿½ï¿½ï¿½î¹®
+- **ï¿½ï¿½ï¿½Ç¹ï¿½**: `if`, `elif`, `else`
+- **ï¿½Ýºï¿½ï¿½ï¿½**: `for`, `while`
+- **ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
 
 ```python
-# Á¶°Ç¹® ¿¹Á¦
+# ï¿½ï¿½ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 if a > b:
     print("a is greater than b")
 else:
     print("a is not greater than b")
 
-# ¹Ýº¹¹® ¿¹Á¦
+# ï¿½Ýºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 for number in numbers:
     print(number)
 
-# ¸®½ºÆ® ³»Æ÷ ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 squares = [x**2 for x in range(10)]
 ```
 
 ---
 
-### 6. ÇÔ¼ö
-- **ÇÔ¼ö Á¤ÀÇ ¹× È£Ãâ**: `def` Å°¿öµå »ç¿ë
-- **¸Å°³º¯¼ö ¹× ¹ÝÈ¯°ª**: ±âº»°ª, °¡º¯ ±æÀÌ ÀÎÀÚ
-- **¶÷´Ù ÇÔ¼ö**: ÀÍ¸í ÇÔ¼ö »ý¼º
+### 6. ï¿½Ô¼ï¿½
+- **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½**: `def` Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+- **ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½**: ï¿½âº»ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**: ï¿½Í¸ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 ```python
-# ÇÔ¼ö Á¤ÀÇ
+# ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 def add(a, b):
     return a + b
 
 print(add(3, 4))  # 7
 
-# ¶÷´Ù ÇÔ¼ö ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 multiply = lambda x, y: x * y
 print(multiply(3, 4))  # 12
 ```
 
 ---
 
-### 7. ÆÄÀÏ ÀÔÃâ·Â
-- **ÆÄÀÏ ¿­±â ¹× ´Ý±â**: `open()`, `close()`
-- **ÆÄÀÏ ÀÐ±â ¹× ¾²±â**: `read()`, `write()`, `with` ¹®
+### 7. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý±ï¿½**: `open()`, `close()`
+- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: `read()`, `write()`, `with` ï¿½ï¿½
 
 ```python
-# ÆÄÀÏ ¾²±â ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 with open('example.txt', 'w') as f:
     f.write('Hello, World!')
 
-# ÆÄÀÏ ÀÐ±â ¿¹Á¦
+# ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½
 with open('example.txt', 'r') as f:
    )
 2024-06-30T14:08:15.509+09:00  WARN 25512 --- [chatbot] [Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 1406, SQLState: 22001
 2024-06-30T14:08:15.509+09:00 ERROR 25512 --- [chatbot] [Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Data truncation: Data too long for column 'text' at row 1
-2024-06-30T14:08:15.539+09:00  INFO 25512 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumsServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-06-30T14:08:15.540+09:00  INFO 25512 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumsServiceTest
-2024-06-30T14:08:15.564+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : Å×½ºÆ® ¼³Á¤ ¿Ï·á
-2024-06-30T14:08:15.565+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters Å×½ºÆ® ½ÃÀÛ
+2024-06-30T14:08:15.539+09:00  INFO 25512 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-06-30T14:08:15.540+09:00  INFO 25512 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumServiceTest
+2024-06-30T14:08:15.564+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+2024-06-30T14:08:15.565+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:08:15.568+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters called with dto: CurriculumChapCallDto(curriculumId=1)
-2024-06-30T14:08:15.602+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ÇÁ·Î±×·¡¹Ö Á¤ÀÇ), CurriculumChapElementDto(curriculumId=3, text=2. ÆÄÀÌ½ã ¼³Ä¡ È¯°æ), CurriculumChapElementDto(curriculumId=4, text=3. ÆÄÀÌ½ã ½ÇÇà ¿ø¸®), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥Çö½Ä), CurriculumChapElementDto(curriculumId=6, text=5. º¯¼ö¿Í ¸Þ¸ð¸®), CurriculumChapElementDto(curriculumId=7, text=6. ÆÄÀÌ½ã ¿À·ù), CurriculumChapElementDto(curriculumId=8, text=7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ), CurriculumChapElementDto(curriculumId=9, text=8. ÇÔ¼ö), CurriculumChapElementDto(curriculumId=10, text=9. ¹®ÀÚ¿­), CurriculumChapElementDto(curriculumId=11, text=10. Á¶°Ç¹®), CurriculumChapElementDto(curriculumId=12, text=11. ¸ðµâÈ­), CurriculumChapElementDto(curriculumId=13, text=12. ¸Þ¼­µå), CurriculumChapElementDto(curriculumId=14, text=13. ¸®½ºÆ®), CurriculumChapElementDto(curriculumId=15, text=14. ¹Ýº¹¹®), CurriculumChapElementDto(curriculumId=16, text=15. ÆÄÀÏ Ã³¸®), CurriculumChapElementDto(curriculumId=17, text=16. ÄÃ·º¼Ç), CurriculumChapElementDto(curriculumId=18, text=17. °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö)])
-2024-06-30T14:08:15.603+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : Å×½ºÆ® °á°ú: [CurriculumChapElementDto(curriculumId=2, text=1. ÇÁ·Î±×·¡¹Ö Á¤ÀÇ), CurriculumChapElementDto(curriculumId=3, text=2. ÆÄÀÌ½ã ¼³Ä¡ È¯°æ), CurriculumChapElementDto(curriculumId=4, text=3. ÆÄÀÌ½ã ½ÇÇà ¿ø¸®), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥Çö½Ä), CurriculumChapElementDto(curriculumId=6, text=5. º¯¼ö¿Í ¸Þ¸ð¸®), CurriculumChapElementDto(curriculumId=7, text=6. ÆÄÀÌ½ã ¿À·ù), CurriculumChapElementDto(curriculumId=8, text=7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ), CurriculumChapElementDto(curriculumId=9, text=8. ÇÔ¼ö), CurriculumChapElementDto(curriculumId=10, text=9. ¹®ÀÚ¿­), CurriculumChapElementDto(curriculumId=11, text=10. Á¶°Ç¹®), CurriculumChapElementDto(curriculumId=12, text=11. ¸ðµâÈ­), CurriculumChapElementDto(curriculumId=13, text=12. ¸Þ¼­µå), CurriculumChapElementDto(curriculumId=14, text=13. ¸®½ºÆ®), CurriculumChapElementDto(curriculumId=15, text=14. ¹Ýº¹¹®), CurriculumChapElementDto(curriculumId=16, text=15. ÆÄÀÏ Ã³¸®), CurriculumChapElementDto(curriculumId=17, text=16. ÄÃ·º¼Ç), CurriculumChapElementDto(curriculumId=18, text=17. °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö)]
+2024-06-30T14:08:15.602+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)])
+2024-06-30T14:08:15.603+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½: [CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)]
 2024-06-30T14:08:15.616+09:00 DEBUG 25512 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52, started on Sun Jun 30 14:07:56 KST 2024
 2024-06-30T14:08:15.641+09:00  INFO 25512 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-06-30T14:08:15.644+09:00  INFO 25512 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-06-30T14:08:15.650+09:00  INFO 25512 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-06-30T14:10:24.824+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 8596 (started by ewoo2 in C:\Users\ewoo2\OneDrive\¹®¼­\GitHub\°ø°³SWÇÁ·ÎÁ§Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
+2024-06-30T14:10:24.824+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 8596 (started by ewoo2 in C:\Users\ewoo2\OneDrive\ï¿½ï¿½ï¿½ï¿½\GitHub\ï¿½ï¿½ï¿½ï¿½SWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
 2024-06-30T14:10:24.825+09:00 DEBUG 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Running with Spring Boot v3.2.5, Spring v6.1.6
 2024-06-30T14:10:24.827+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : The following 1 profile is active: "dev"
 2024-06-30T14:10:24.865+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52
@@ -389,8 +389,8 @@ with open('example.txt', 'r') as f:
 2024-06-30T14:10:28.792+09:00  INFO 8596 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2024-06-30T14:10:29.672+09:00  INFO 8596 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2024-06-30T14:10:30.220+09:00  INFO 8596 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-06-30T14:10:31.389+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ÅÍ 4: HARDÇÐ½ÀÀÚ·á: 4. Ç¥Çö½Ä Å×½ºÆ® ³»¿ë ÀÔ´Ï´Ù. - ÃÊ±â ½ÃÇè ÇÕ°Ý
-2024-06-30T14:10:31.393+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ
+2024-06-30T14:10:31.389+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ï¿½ï¿½ 4: HARDï¿½Ð½ï¿½ï¿½Ú·ï¿½: 4. Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½. - ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½
+2024-06-30T14:10:31.393+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:10:31.524+09:00  WARN 8596 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2024-06-30T14:10:31.553+09:00  WARN 8596 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
@@ -405,14 +405,14 @@ This generated password is for development use only. Your security configuration
 2024-06-30T14:10:32.377+09:00 DEBUG 8596 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
 2024-06-30T14:10:32.574+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Started StudiesServiceTest in 8.057 seconds (process running for 9.421)
 2024-06-30T14:10:32.578+09:00  INFO 8596 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-06-30T14:10:33.075+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Å×½ºÆ® ¼³Á¤ ¿Ï·á
-2024-06-30T14:10:33.108+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText Å×½ºÆ® ½ÃÀÛ
+2024-06-30T14:10:33.075+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+2024-06-30T14:10:33.108+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:10:33.129+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@5ac92082, levelType: EASY
 2024-06-30T14:10:33.131+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText called with dto: DataCallDto(userId=1, curriculumId=2), levelType: EASY
 2024-06-30T14:10:33.136+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@3db32d5, levelType: EASY
 2024-06-30T14:10:33.214+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
 2024-06-30T14:10:33.226+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-06-30T14:10:33.234+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Writing [{messages=[{role=system, content=³Ê´Â ÆÄÀÌ½ãÀÇ Àü¹® Æ©ÅÍ¾ß.}, {role=user, content=´ÙÀ½ Å°¿öµå¿¡ ´ëÇØ ÀÚ¼¼ÇÑ ÇÐ½À ³»¿ëÀ» »ý¼ºÇØÁà. (Å°¿öµå: ÆÄÀÌ½ã: )}], max_tokens=1000, model=gpt-4o}] as "application/json"
+2024-06-30T14:10:33.234+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Writing [{messages=[{role=system, content=ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ©ï¿½Í¾ï¿½.}, {role=user, content=ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. (Å°ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½Ì½ï¿½: )}], max_tokens=1000, model=gpt-4o}] as "application/json"
 2024-06-30T14:10:43.548+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Response 200 OK
 2024-06-30T14:10:43.550+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
 2024-06-30T14:10:43.552+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : requestGptText response: {
@@ -425,7 +425,7 @@ This generated password is for development use only. Your security configuration
       "index": 0,
       "message": {
         "role": "assistant",
-        "content": "¹°·ÐÀÔ´Ï´Ù! ÆÄÀÌ½ã(Python)Àº ¿©·¯ ºÐ¾ß¿¡¼­ ³Î¸® »ç¿ëµÇ°í ÀÖ´Â °í±Þ ÇÁ·Î±×·¡¹Ö ¾ð¾îÀÔ´Ï´Ù. ±× ÀÌÀ¯´Â ÆÄÀÌ½ãÀÌ ¹è¿ì±â ½±°í, ´Ù¾çÇÑ ¶óÀÌºê·¯¸®¿Í ÇÁ·¹ÀÓ¿öÅ©¸¦ Á¦°øÇÏ¸ç, Ç³ºÎÇÑ Ä¿¹Â´ÏÆ¼ Áö¿øÀ» ¹Þ±â ¶§¹®ÀÔ´Ï´Ù. ´ÙÀ½Àº ÆÄÀÌ½ã¿¡ ´ëÇÑ ÀÚ¼¼ÇÑ ÇÐ½À ³»¿ëÀÔ´Ï´Ù.\n\n### ÆÄÀÌ½ã °³¿ä\n1. **¿ª»ç**:\n   - 1991³â ±Íµµ ¹Ý ·Î¼¶(Guido van Rossum)ÀÌ ¹ßÇ¥\n   - ÀÌ¸§Àº ÄÚ¹Ìµð ±×·ì ¸óÆ¼ ÆÄÀÌ½ã(Monty Python)¿¡¼­ µû¿È\n\n2. **Æ¯Â¡**:\n   - **µ¶¸³Àû ÇÃ·§Æû**: Windows, macOS, Linux µî ¿©·¯ ¿î¿µÃ¼Á¦¿¡¼­ ½ÇÇà °¡´É\n   - **ÀÎÅÍÇÁ¸®ÅÍ ¾ð¾î**: ÄÄÆÄÀÏ ¾øÀÌ ÄÚµå¸¦ ¹Ù·Î ½ÇÇà\n   - **µ¿Àû Å¸ÀÔ**: µ¥ÀÌÅÍ Å¸ÀÔÀ» ¸í½ÃÇÏÁö ¾Ê¾Æµµ ÀÚµ¿À¸·Î Ã³¸®\n   - **°´Ã¼ ÁöÇâ**°ú **Æã¼Å³Î ÇÁ·Î±×·¡¹Ö**À» Áö¿ø\n\n### ÆÄÀÌ½ã ¼³Ä¡ ¹× ±âº» ¼³Á¤\n1. **¼³Ä¡**:\n   - [Python °ø½Ä »çÀÌÆ®](https://www.python.org/)¿¡¼­ ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå\n   - Windows¿¡¼­´Â .exe ÆÄÀÏ·Î ¼³Ä¡, macOS¿Í Linux¿¡¼­´Â ÅÍ¹Ì³Î ¸í·É¾î·Î ¼³Ä¡ °¡´É\n\n2. **±âº» ¼³Á¤**:\n   - ÀÎÅÍÇÁ¸®ÅÍ ½ÇÇà: ÅÍ¹Ì³ÎÀÌ³ª ¸í·É ÇÁ·ÒÇÁÆ®¿¡ `python` ¶Ç´Â `python3` ÀÔ·Â\n   - ÄÚµå ÆíÁý±â: VS Code, PyCharm, Jupyter Notebook µî ´Ù¾çÇÑ µµ±¸ »ç¿ë °¡´É\n\n### ÆÄÀÌ½ã ±âº» ¹®¹ý\n1. **ÁÖ¼®**:\n   ```python\n   # ÇÑ ÁÙ ÁÖ¼®\n   \"\"\"\n   ¿©·¯ ÁÙ\n   ÁÖ¼®\n   \"\"\"\n   ```\n\n2. **º¯¼ö¿Í µ¥ÀÌÅÍ Å¸ÀÔ**:\n   ```python\n   x = 5            # Á¤¼öÇü\n   y = 3.14         # ½Ç¼öÇü\n   name = \"Python\"  # ¹®ÀÚ¿­Çü\n   is_active = True # ºÒ¸®¾ðÇü\n   ```\n\n3. **¿¬»êÀÚ**:\n   - »ê¼ú ¿¬»êÀÚ: `+`, `-`, `*`, `/`, `//`, `%`, `**`\n   - ºñ±³ ¿¬»êÀÚ: `==`, `!=`, `<`, `>`, `<=`, `>=`\n   - ³í¸® ¿¬»êÀÚ: `and`, `or`, `not`\n\n4. **Á¶°Ç¹®**:\n   ```python\n   if x > 0:\n       print(\"¾ç¼ö\")\n   elif x == 0:\n       print(\"0\")\n   else:\n       print(\"À½¼ö\")\n   ```\n\n5. **¹Ýº¹¹®**:\n   ```python\n   # while ¹®\n   i = 0\n   while i < 5:\n       print(i)\n       i += 1\n\n   # for ¹®\n   for i in range(5):\n       print(i)\n   ```\n\n### µ¥ÀÌÅÍ ±¸Á¶\n1. **¸®½ºÆ®**:\n   ```python\n   fruits = [\"apple\", \"banana\", \"cherry\"]\n   fruits.append(\"orange\") # ¾ÆÀÌÅÛ Ãß°¡\n   ```\n\n2. **Æ©ÇÃ**:\n   ```python\n   point = (10, 20)\n   x, y = point # ¾ðÆÐÅ·\n   ```\n\n3. **µñ¼Å³Ê¸®**:\n   ```python\n   student = {\"name\": \"John\", \"age\": 25}\n   age = student[\"age\"]  # °ª Á¢±Ù\n   ```\n\n4. **¼¼Æ®**:\n   ```python\n   unique_numbers = {1, 2, 3, 3, 2}\n   unique_numbers.add(4)  # °ª Ãß°¡\n   ```\n\n### ÇÔ¼ö\n1. **ÇÔ¼ö ¼±¾ð**:\n   ```python\n   def greet(name):\n       return f\"Hello, {name}!\"\n\n   print(greet(\"Alice\"))\n   ```\n\n2. **¶÷´Ù ÇÔ¼ö**:\n   ```python\n   square = lambda x: x ** 2\n   print(square(5))\n   ```\n\n### Å¬·¡½º¿Í °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö\n1. **Å¬·¡½º ¼±¾ð**:\n   ```python\n   class Person:\n       def __init__(self, name, age):\n           self.name = name\n           self.age = age\n\n       def greeting(self):\n           return f\"Hi, my name is {self.name}\"\n\n   john = Person(\"John\", 25)\n   print(john.greeting())\n   ```\n\n### ¿¹¿Ü Ã³¸®\n1. **try-except ºí·Ï**:\n   ```python\n   try:\n       result = 10 / 0"
+        "content": "ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, Ç³ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Â´ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ã¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.\n\n### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½\n1. **ï¿½ï¿½ï¿½ï¿½**:\n   - 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥\n   - ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ú¹Ìµï¿½ ï¿½×·ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Ì½ï¿½(Monty Python)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n2. **Æ¯Â¡**:\n   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½**: Windows, macOS, Linux ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½î¿µÃ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½\n   - **ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½\n   - **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½**ï¿½ï¿½ **ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½**ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½\n1. **ï¿½ï¿½Ä¡**:\n   - [Python ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®](https://www.python.org/)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½\n   - Windowsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .exe ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½Ä¡, macOSï¿½ï¿½ Linuxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¹Ì³ï¿½ ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½\n\n2. **ï¿½âº» ï¿½ï¿½ï¿½ï¿½**:\n   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Í¹Ì³ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ `python` ï¿½Ç´ï¿½ `python3` ï¿½Ô·ï¿½\n   - ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: VS Code, PyCharm, Jupyter Notebook ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½\n1. **ï¿½Ö¼ï¿½**:\n   ```python\n   # ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½\n   \"\"\"\n   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½\n   ï¿½Ö¼ï¿½\n   \"\"\"\n   ```\n\n2. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**:\n   ```python\n   x = 5            # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n   y = 3.14         # ï¿½Ç¼ï¿½ï¿½ï¿½\n   name = \"Python\"  # ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½\n   is_active = True # ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½\n   ```\n\n3. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**:\n   - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `+`, `-`, `*`, `/`, `//`, `%`, `**`\n   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `==`, `!=`, `<`, `>`, `<=`, `>=`\n   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `and`, `or`, `not`\n\n4. **ï¿½ï¿½ï¿½Ç¹ï¿½**:\n   ```python\n   if x > 0:\n       print(\"ï¿½ï¿½ï¿½\")\n   elif x == 0:\n       print(\"0\")\n   else:\n       print(\"ï¿½ï¿½ï¿½ï¿½\")\n   ```\n\n5. **ï¿½Ýºï¿½ï¿½ï¿½**:\n   ```python\n   # while ï¿½ï¿½\n   i = 0\n   while i < 5:\n       print(i)\n       i += 1\n\n   # for ï¿½ï¿½\n   for i in range(5):\n       print(i)\n   ```\n\n### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n1. **ï¿½ï¿½ï¿½ï¿½Æ®**:\n   ```python\n   fruits = [\"apple\", \"banana\", \"cherry\"]\n   fruits.append(\"orange\") # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½\n   ```\n\n2. **Æ©ï¿½ï¿½**:\n   ```python\n   point = (10, 20)\n   x, y = point # ï¿½ï¿½ï¿½ï¿½Å·\n   ```\n\n3. **ï¿½ï¿½Å³Ê¸ï¿½**:\n   ```python\n   student = {\"name\": \"John\", \"age\": 25}\n   age = student[\"age\"]  # ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n   ```\n\n4. **ï¿½ï¿½Æ®**:\n   ```python\n   unique_numbers = {1, 2, 3, 3, 2}\n   unique_numbers.add(4)  # ï¿½ï¿½ ï¿½ß°ï¿½\n   ```\n\n### ï¿½Ô¼ï¿½\n1. **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½**:\n   ```python\n   def greet(name):\n       return f\"Hello, {name}!\"\n\n   print(greet(\"Alice\"))\n   ```\n\n2. **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**:\n   ```python\n   square = lambda x: x ** 2\n   print(square(5))\n   ```\n\n### Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½\n1. **Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**:\n   ```python\n   class Person:\n       def __init__(self, name, age):\n           self.name = name\n           self.age = age\n\n       def greeting(self):\n           return f\"Hi, my name is {self.name}\"\n\n   john = Person(\"John\", 25)\n   print(john.greeting())\n   ```\n\n### ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½\n1. **try-except ï¿½ï¿½ï¿½**:\n   ```python\n   try:\n       result = 10 / 0"
       },
       "logprobs": null,
       "finish_reason": "length"
@@ -439,101 +439,101 @@ This generated password is for development use only. Your security configuration
   "system_fingerprint": "fp_d576307f90"
 }
 
-2024-06-30T14:10:43.562+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : Extracted content from GPT response: ¹°·ÐÀÔ´Ï´Ù! ÆÄÀÌ½ã(Python)Àº ¿©·¯ ºÐ¾ß¿¡¼­ ³Î¸® »ç¿ëµÇ°í ÀÖ´Â °í±Þ ÇÁ·Î±×·¡¹Ö ¾ð¾îÀÔ´Ï´Ù. ±× ÀÌÀ¯´Â ÆÄÀÌ½ãÀÌ ¹è¿ì±â ½±°í, ´Ù¾çÇÑ ¶óÀÌºê·¯¸®¿Í ÇÁ·¹ÀÓ¿öÅ©¸¦ Á¦°øÇÏ¸ç, Ç³ºÎÇÑ Ä¿¹Â´ÏÆ¼ Áö¿øÀ» ¹Þ±â ¶§¹®ÀÔ´Ï´Ù. ´ÙÀ½Àº ÆÄÀÌ½ã¿¡ ´ëÇÑ ÀÚ¼¼ÇÑ ÇÐ½À ³»¿ëÀÔ´Ï´Ù.
+2024-06-30T14:10:43.562+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : Extracted content from GPT response: ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, Ç³ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Â´ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ã¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 
-### ÆÄÀÌ½ã °³¿ä
-1. **¿ª»ç**:
-   - 1991³â ±Íµµ ¹Ý ·Î¼¶(Guido van Rossum)ÀÌ ¹ßÇ¥
-   - ÀÌ¸§Àº ÄÚ¹Ìµð ±×·ì ¸óÆ¼ ÆÄÀÌ½ã(Monty Python)¿¡¼­ µû¿È
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½ï¿½ï¿½**:
+   - 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥
+   - ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ú¹Ìµï¿½ ï¿½×·ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Ì½ï¿½(Monty Python)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 2. **Æ¯Â¡**:
-   - **µ¶¸³Àû ÇÃ·§Æû**: Windows, macOS, Linux µî ¿©·¯ ¿î¿µÃ¼Á¦¿¡¼­ ½ÇÇà °¡´É
-   - **ÀÎÅÍÇÁ¸®ÅÍ ¾ð¾î**: ÄÄÆÄÀÏ ¾øÀÌ ÄÚµå¸¦ ¹Ù·Î ½ÇÇà
-   - **µ¿Àû Å¸ÀÔ**: µ¥ÀÌÅÍ Å¸ÀÔÀ» ¸í½ÃÇÏÁö ¾Ê¾Æµµ ÀÚµ¿À¸·Î Ã³¸®
-   - **°´Ã¼ ÁöÇâ**°ú **Æã¼Å³Î ÇÁ·Î±×·¡¹Ö**À» Áö¿ø
+   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½**: Windows, macOS, Linux ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½î¿µÃ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
+   - **ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+   - **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½**ï¿½ï¿½ **ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½**ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-### ÆÄÀÌ½ã ¼³Ä¡ ¹× ±âº» ¼³Á¤
-1. **¼³Ä¡**:
-   - [Python °ø½Ä »çÀÌÆ®](https://www.python.org/)¿¡¼­ ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå
-   - Windows¿¡¼­´Â .exe ÆÄÀÏ·Î ¼³Ä¡, macOS¿Í Linux¿¡¼­´Â ÅÍ¹Ì³Î ¸í·É¾î·Î ¼³Ä¡ °¡´É
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½Ä¡**:
+   - [Python ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®](https://www.python.org/)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½
+   - Windowsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .exe ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½Ä¡, macOSï¿½ï¿½ Linuxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¹Ì³ï¿½ ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 
-2. **±âº» ¼³Á¤**:
-   - ÀÎÅÍÇÁ¸®ÅÍ ½ÇÇà: ÅÍ¹Ì³ÎÀÌ³ª ¸í·É ÇÁ·ÒÇÁÆ®¿¡ `python` ¶Ç´Â `python3` ÀÔ·Â
-   - ÄÚµå ÆíÁý±â: VS Code, PyCharm, Jupyter Notebook µî ´Ù¾çÇÑ µµ±¸ »ç¿ë °¡´É
+2. **ï¿½âº» ï¿½ï¿½ï¿½ï¿½**:
+   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Í¹Ì³ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ `python` ï¿½Ç´ï¿½ `python3` ï¿½Ô·ï¿½
+   - ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: VS Code, PyCharm, Jupyter Notebook ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-### ÆÄÀÌ½ã ±âº» ¹®¹ý
-1. **ÁÖ¼®**:
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½Ö¼ï¿½**:
    ```python
-   # ÇÑ ÁÙ ÁÖ¼®
+   # ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½
    """
-   ¿©·¯ ÁÙ
-   ÁÖ¼®
+   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+   ï¿½Ö¼ï¿½
    """
    ```
 
-2. **º¯¼ö¿Í µ¥ÀÌÅÍ Å¸ÀÔ**:
+2. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**:
    ```python
-   x = 5            # Á¤¼öÇü
-   y = 3.14         # ½Ç¼öÇü
-   name = "Python"  # ¹®ÀÚ¿­Çü
-   is_active = True # ºÒ¸®¾ðÇü
+   x = 5            # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+   y = 3.14         # ï¿½Ç¼ï¿½ï¿½ï¿½
+   name = "Python"  # ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
+   is_active = True # ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½
    ```
 
-3. **¿¬»êÀÚ**:
-   - »ê¼ú ¿¬»êÀÚ: `+`, `-`, `*`, `/`, `//`, `%`, `**`
-   - ºñ±³ ¿¬»êÀÚ: `==`, `!=`, `<`, `>`, `<=`, `>=`
-   - ³í¸® ¿¬»êÀÚ: `and`, `or`, `not`
+3. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**:
+   - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `+`, `-`, `*`, `/`, `//`, `%`, `**`
+   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `==`, `!=`, `<`, `>`, `<=`, `>=`
+   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `and`, `or`, `not`
 
-4. **Á¶°Ç¹®**:
+4. **ï¿½ï¿½ï¿½Ç¹ï¿½**:
    ```python
    if x > 0:
-       print("¾ç¼ö")
+       print("ï¿½ï¿½ï¿½")
    elif x == 0:
        print("0")
    else:
-       print("À½¼ö")
+       print("ï¿½ï¿½ï¿½ï¿½")
    ```
 
-5. **¹Ýº¹¹®**:
+5. **ï¿½Ýºï¿½ï¿½ï¿½**:
    ```python
-   # while ¹®
+   # while ï¿½ï¿½
    i = 0
    while i < 5:
        print(i)
        i += 1
 
-   # for ¹®
+   # for ï¿½ï¿½
    for i in range(5):
        print(i)
    ```
 
-### µ¥ÀÌÅÍ ±¸Á¶
-1. **¸®½ºÆ®**:
+### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½ï¿½ï¿½Æ®**:
    ```python
    fruits = ["apple", "banana", "cherry"]
-   fruits.append("orange") # ¾ÆÀÌÅÛ Ãß°¡
+   fruits.append("orange") # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
    ```
 
-2. **Æ©ÇÃ**:
+2. **Æ©ï¿½ï¿½**:
    ```python
    point = (10, 20)
-   x, y = point # ¾ðÆÐÅ·
+   x, y = point # ï¿½ï¿½ï¿½ï¿½Å·
    ```
 
-3. **µñ¼Å³Ê¸®**:
+3. **ï¿½ï¿½Å³Ê¸ï¿½**:
    ```python
    student = {"name": "John", "age": 25}
-   age = student["age"]  # °ª Á¢±Ù
+   age = student["age"]  # ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
    ```
 
-4. **¼¼Æ®**:
+4. **ï¿½ï¿½Æ®**:
    ```python
    unique_numbers = {1, 2, 3, 3, 2}
-   unique_numbers.add(4)  # °ª Ãß°¡
+   unique_numbers.add(4)  # ï¿½ï¿½ ï¿½ß°ï¿½
    ```
 
-### ÇÔ¼ö
-1. **ÇÔ¼ö ¼±¾ð**:
+### ï¿½Ô¼ï¿½
+1. **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½**:
    ```python
    def greet(name):
        return f"Hello, {name}!"
@@ -541,14 +541,14 @@ This generated password is for development use only. Your security configuration
    print(greet("Alice"))
    ```
 
-2. **¶÷´Ù ÇÔ¼ö**:
+2. **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**:
    ```python
    square = lambda x: x ** 2
    print(square(5))
    ```
 
-### Å¬·¡½º¿Í °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö
-1. **Å¬·¡½º ¼±¾ð**:
+### Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½
+1. **Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**:
    ```python
    class Person:
        def __init__(self, name, age):
@@ -562,106 +562,106 @@ This generated password is for development use only. Your security configuration
    print(john.greeting())
    ```
 
-### ¿¹¿Ü Ã³¸®
-1. **try-except ºí·Ï**:
+### ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+1. **try-except ï¿½ï¿½ï¿½**:
    ```python
    try:
        result = 10 / 0
-2024-06-30T14:10:43.564+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText returning: StudyTextDto(text=¹°·ÐÀÔ´Ï´Ù! ÆÄÀÌ½ã(Python)Àº ¿©·¯ ºÐ¾ß¿¡¼­ ³Î¸® »ç¿ëµÇ°í ÀÖ´Â °í±Þ ÇÁ·Î±×·¡¹Ö ¾ð¾îÀÔ´Ï´Ù. ±× ÀÌÀ¯´Â ÆÄÀÌ½ãÀÌ ¹è¿ì±â ½±°í, ´Ù¾çÇÑ ¶óÀÌºê·¯¸®¿Í ÇÁ·¹ÀÓ¿öÅ©¸¦ Á¦°øÇÏ¸ç, Ç³ºÎÇÑ Ä¿¹Â´ÏÆ¼ Áö¿øÀ» ¹Þ±â ¶§¹®ÀÔ´Ï´Ù. ´ÙÀ½Àº ÆÄÀÌ½ã¿¡ ´ëÇÑ ÀÚ¼¼ÇÑ ÇÐ½À ³»¿ëÀÔ´Ï´Ù.
+2024-06-30T14:10:43.564+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText returning: StudyTextDto(text=ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, Ç³ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Â´ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ã¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 
-### ÆÄÀÌ½ã °³¿ä
-1. **¿ª»ç**:
-   - 1991³â ±Íµµ ¹Ý ·Î¼¶(Guido van Rossum)ÀÌ ¹ßÇ¥
-   - ÀÌ¸§Àº ÄÚ¹Ìµð ±×·ì ¸óÆ¼ ÆÄÀÌ½ã(Monty Python)¿¡¼­ µû¿È
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½ï¿½ï¿½**:
+   - 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥
+   - ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ú¹Ìµï¿½ ï¿½×·ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Ì½ï¿½(Monty Python)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 2. **Æ¯Â¡**:
-   - **µ¶¸³Àû ÇÃ·§Æû**: Windows, macOS, Linux µî ¿©·¯ ¿î¿µÃ¼Á¦¿¡¼­ ½ÇÇà °¡´É
-   - **ÀÎÅÍÇÁ¸®ÅÍ ¾ð¾î**: ÄÄÆÄÀÏ ¾øÀÌ ÄÚµå¸¦ ¹Ù·Î ½ÇÇà
-   - **µ¿Àû Å¸ÀÔ**: µ¥ÀÌÅÍ Å¸ÀÔÀ» ¸í½ÃÇÏÁö ¾Ê¾Æµµ ÀÚµ¿À¸·Î Ã³¸®
-   - **°´Ã¼ ÁöÇâ**°ú **Æã¼Å³Î ÇÁ·Î±×·¡¹Ö**À» Áö¿ø
+   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½**: Windows, macOS, Linux ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½î¿µÃ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
+   - **ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+   - **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½**ï¿½ï¿½ **ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½**ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-### ÆÄÀÌ½ã ¼³Ä¡ ¹× ±âº» ¼³Á¤
-1. **¼³Ä¡**:
-   - [Python °ø½Ä »çÀÌÆ®](https://www.python.org/)¿¡¼­ ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå
-   - Windows¿¡¼­´Â .exe ÆÄÀÏ·Î ¼³Ä¡, macOS¿Í Linux¿¡¼­´Â ÅÍ¹Ì³Î ¸í·É¾î·Î ¼³Ä¡ °¡´É
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½Ä¡**:
+   - [Python ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®](https://www.python.org/)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½
+   - Windowsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .exe ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½Ä¡, macOSï¿½ï¿½ Linuxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¹Ì³ï¿½ ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 
-2. **±âº» ¼³Á¤**:
-   - ÀÎÅÍÇÁ¸®ÅÍ ½ÇÇà: ÅÍ¹Ì³ÎÀÌ³ª ¸í·É ÇÁ·ÒÇÁÆ®¿¡ `python` ¶Ç´Â `python3` ÀÔ·Â
-   - ÄÚµå ÆíÁý±â: VS Code, PyCharm, Jupyter Notebook µî ´Ù¾çÇÑ µµ±¸ »ç¿ë °¡´É
+2. **ï¿½âº» ï¿½ï¿½ï¿½ï¿½**:
+   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Í¹Ì³ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ `python` ï¿½Ç´ï¿½ `python3` ï¿½Ô·ï¿½
+   - ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: VS Code, PyCharm, Jupyter Notebook ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-### ÆÄÀÌ½ã ±âº» ¹®¹ý
-1. **ÁÖ¼®**:
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½Ö¼ï¿½**:
    ```python
-   # ÇÑ ÁÙ ÁÖ¼®
+   # ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½
    """
-   ¿©·¯ ÁÙ
-   ÁÖ¼®
+   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+   ï¿½Ö¼ï¿½
    """
    ```
 
-2. **º¯¼ö¿Í µ¥ÀÌÅÍ Å¸ÀÔ**:
+2. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**:
    ```python
-   x = 5            # Á¤¼öÇü
-   y = 3.14         # ½Ç¼öÇü
-   name = "Python"  # ¹®ÀÚ¿­Çü
-   is_active = True # ºÒ¸®¾ðÇü
+   x = 5            # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+   y = 3.14         # ï¿½Ç¼ï¿½ï¿½ï¿½
+   name = "Python"  # ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
+   is_active = True # ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½
    ```
 
-3. **¿¬»êÀÚ**:
-   - »ê¼ú ¿¬»êÀÚ: `+`, `-`, `*`, `/`, `//`, `%`, `**`
-   - ºñ±³ ¿¬»êÀÚ: `==`, `!=`, `<`, `>`, `<=`, `>=`
-   - ³í¸® ¿¬»êÀÚ: `and`, `or`, `not`
+3. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**:
+   - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `+`, `-`, `*`, `/`, `//`, `%`, `**`
+   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `==`, `!=`, `<`, `>`, `<=`, `>=`
+   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `and`, `or`, `not`
 
-4. **Á¶°Ç¹®**:
+4. **ï¿½ï¿½ï¿½Ç¹ï¿½**:
    ```python
    if x > 0:
-       print("¾ç¼ö")
+       print("ï¿½ï¿½ï¿½")
    elif x == 0:
        print("0")
    else:
-       print("À½¼ö")
+       print("ï¿½ï¿½ï¿½ï¿½")
    ```
 
-5. **¹Ýº¹¹®**:
+5. **ï¿½Ýºï¿½ï¿½ï¿½**:
    ```python
-   # while ¹®
+   # while ï¿½ï¿½
    i = 0
    while i < 5:
        print(i)
        i += 1
 
-   # for ¹®
+   # for ï¿½ï¿½
    for i in range(5):
        print(i)
    ```
 
-### µ¥ÀÌÅÍ ±¸Á¶
-1. **¸®½ºÆ®**:
+### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½ï¿½ï¿½Æ®**:
    ```python
    fruits = ["apple", "banana", "cherry"]
-   fruits.append("orange") # ¾ÆÀÌÅÛ Ãß°¡
+   fruits.append("orange") # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
    ```
 
-2. **Æ©ÇÃ**:
+2. **Æ©ï¿½ï¿½**:
    ```python
    point = (10, 20)
-   x, y = point # ¾ðÆÐÅ·
+   x, y = point # ï¿½ï¿½ï¿½ï¿½Å·
    ```
 
-3. **µñ¼Å³Ê¸®**:
+3. **ï¿½ï¿½Å³Ê¸ï¿½**:
    ```python
    student = {"name": "John", "age": 25}
-   age = student["age"]  # °ª Á¢±Ù
+   age = student["age"]  # ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
    ```
 
-4. **¼¼Æ®**:
+4. **ï¿½ï¿½Æ®**:
    ```python
    unique_numbers = {1, 2, 3, 3, 2}
-   unique_numbers.add(4)  # °ª Ãß°¡
+   unique_numbers.add(4)  # ï¿½ï¿½ ï¿½ß°ï¿½
    ```
 
-### ÇÔ¼ö
-1. **ÇÔ¼ö ¼±¾ð**:
+### ï¿½Ô¼ï¿½
+1. **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½**:
    ```python
    def greet(name):
        return f"Hello, {name}!"
@@ -669,14 +669,14 @@ This generated password is for development use only. Your security configuration
    print(greet("Alice"))
    ```
 
-2. **¶÷´Ù ÇÔ¼ö**:
+2. **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**:
    ```python
    square = lambda x: x ** 2
    print(square(5))
    ```
 
-### Å¬·¡½º¿Í °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö
-1. **Å¬·¡½º ¼±¾ð**:
+### Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½
+1. **Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**:
    ```python
    class Person:
        def __init__(self, name, age):
@@ -690,106 +690,106 @@ This generated password is for development use only. Your security configuration
    print(john.greeting())
    ```
 
-### ¿¹¿Ü Ã³¸®
-1. **try-except ºí·Ï**:
+### ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+1. **try-except ï¿½ï¿½ï¿½**:
    ```python
    try:
        result = 10 / 0)
-2024-06-30T14:10:43.573+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Å×½ºÆ® °á°ú: ¹°·ÐÀÔ´Ï´Ù! ÆÄÀÌ½ã(Python)Àº ¿©·¯ ºÐ¾ß¿¡¼­ ³Î¸® »ç¿ëµÇ°í ÀÖ´Â °í±Þ ÇÁ·Î±×·¡¹Ö ¾ð¾îÀÔ´Ï´Ù. ±× ÀÌÀ¯´Â ÆÄÀÌ½ãÀÌ ¹è¿ì±â ½±°í, ´Ù¾çÇÑ ¶óÀÌºê·¯¸®¿Í ÇÁ·¹ÀÓ¿öÅ©¸¦ Á¦°øÇÏ¸ç, Ç³ºÎÇÑ Ä¿¹Â´ÏÆ¼ Áö¿øÀ» ¹Þ±â ¶§¹®ÀÔ´Ï´Ù. ´ÙÀ½Àº ÆÄÀÌ½ã¿¡ ´ëÇÑ ÀÚ¼¼ÇÑ ÇÐ½À ³»¿ëÀÔ´Ï´Ù.
+2024-06-30T14:10:43.573+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, Ç³ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Â´ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ã¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 
-### ÆÄÀÌ½ã °³¿ä
-1. **¿ª»ç**:
-   - 1991³â ±Íµµ ¹Ý ·Î¼¶(Guido van Rossum)ÀÌ ¹ßÇ¥
-   - ÀÌ¸§Àº ÄÚ¹Ìµð ±×·ì ¸óÆ¼ ÆÄÀÌ½ã(Monty Python)¿¡¼­ µû¿È
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½ï¿½ï¿½**:
+   - 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥
+   - ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ú¹Ìµï¿½ ï¿½×·ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Ì½ï¿½(Monty Python)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 2. **Æ¯Â¡**:
-   - **µ¶¸³Àû ÇÃ·§Æû**: Windows, macOS, Linux µî ¿©·¯ ¿î¿µÃ¼Á¦¿¡¼­ ½ÇÇà °¡´É
-   - **ÀÎÅÍÇÁ¸®ÅÍ ¾ð¾î**: ÄÄÆÄÀÏ ¾øÀÌ ÄÚµå¸¦ ¹Ù·Î ½ÇÇà
-   - **µ¿Àû Å¸ÀÔ**: µ¥ÀÌÅÍ Å¸ÀÔÀ» ¸í½ÃÇÏÁö ¾Ê¾Æµµ ÀÚµ¿À¸·Î Ã³¸®
-   - **°´Ã¼ ÁöÇâ**°ú **Æã¼Å³Î ÇÁ·Î±×·¡¹Ö**À» Áö¿ø
+   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½**: Windows, macOS, Linux ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½î¿µÃ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
+   - **ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+   - **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½**ï¿½ï¿½ **ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½**ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-### ÆÄÀÌ½ã ¼³Ä¡ ¹× ±âº» ¼³Á¤
-1. **¼³Ä¡**:
-   - [Python °ø½Ä »çÀÌÆ®](https://www.python.org/)¿¡¼­ ¼³Ä¡ ÆÄÀÏ ´Ù¿î·Îµå
-   - Windows¿¡¼­´Â .exe ÆÄÀÏ·Î ¼³Ä¡, macOS¿Í Linux¿¡¼­´Â ÅÍ¹Ì³Î ¸í·É¾î·Î ¼³Ä¡ °¡´É
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½Ä¡**:
+   - [Python ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®](https://www.python.org/)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½
+   - Windowsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .exe ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½Ä¡, macOSï¿½ï¿½ Linuxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¹Ì³ï¿½ ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 
-2. **±âº» ¼³Á¤**:
-   - ÀÎÅÍÇÁ¸®ÅÍ ½ÇÇà: ÅÍ¹Ì³ÎÀÌ³ª ¸í·É ÇÁ·ÒÇÁÆ®¿¡ `python` ¶Ç´Â `python3` ÀÔ·Â
-   - ÄÚµå ÆíÁý±â: VS Code, PyCharm, Jupyter Notebook µî ´Ù¾çÇÑ µµ±¸ »ç¿ë °¡´É
+2. **ï¿½âº» ï¿½ï¿½ï¿½ï¿½**:
+   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Í¹Ì³ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ `python` ï¿½Ç´ï¿½ `python3` ï¿½Ô·ï¿½
+   - ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: VS Code, PyCharm, Jupyter Notebook ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-### ÆÄÀÌ½ã ±âº» ¹®¹ý
-1. **ÁÖ¼®**:
+### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½Ö¼ï¿½**:
    ```python
-   # ÇÑ ÁÙ ÁÖ¼®
+   # ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½
    """
-   ¿©·¯ ÁÙ
-   ÁÖ¼®
+   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+   ï¿½Ö¼ï¿½
    """
    ```
 
-2. **º¯¼ö¿Í µ¥ÀÌÅÍ Å¸ÀÔ**:
+2. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**:
    ```python
-   x = 5            # Á¤¼öÇü
-   y = 3.14         # ½Ç¼öÇü
-   name = "Python"  # ¹®ÀÚ¿­Çü
-   is_active = True # ºÒ¸®¾ðÇü
+   x = 5            # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+   y = 3.14         # ï¿½Ç¼ï¿½ï¿½ï¿½
+   name = "Python"  # ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
+   is_active = True # ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½
    ```
 
-3. **¿¬»êÀÚ**:
-   - »ê¼ú ¿¬»êÀÚ: `+`, `-`, `*`, `/`, `//`, `%`, `**`
-   - ºñ±³ ¿¬»êÀÚ: `==`, `!=`, `<`, `>`, `<=`, `>=`
-   - ³í¸® ¿¬»êÀÚ: `and`, `or`, `not`
+3. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**:
+   - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `+`, `-`, `*`, `/`, `//`, `%`, `**`
+   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `==`, `!=`, `<`, `>`, `<=`, `>=`
+   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `and`, `or`, `not`
 
-4. **Á¶°Ç¹®**:
+4. **ï¿½ï¿½ï¿½Ç¹ï¿½**:
    ```python
    if x > 0:
-       print("¾ç¼ö")
+       print("ï¿½ï¿½ï¿½")
    elif x == 0:
        print("0")
    else:
-       print("À½¼ö")
+       print("ï¿½ï¿½ï¿½ï¿½")
    ```
 
-5. **¹Ýº¹¹®**:
+5. **ï¿½Ýºï¿½ï¿½ï¿½**:
    ```python
-   # while ¹®
+   # while ï¿½ï¿½
    i = 0
    while i < 5:
        print(i)
        i += 1
 
-   # for ¹®
+   # for ï¿½ï¿½
    for i in range(5):
        print(i)
    ```
 
-### µ¥ÀÌÅÍ ±¸Á¶
-1. **¸®½ºÆ®**:
+### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+1. **ï¿½ï¿½ï¿½ï¿½Æ®**:
    ```python
    fruits = ["apple", "banana", "cherry"]
-   fruits.append("orange") # ¾ÆÀÌÅÛ Ãß°¡
+   fruits.append("orange") # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
    ```
 
-2. **Æ©ÇÃ**:
+2. **Æ©ï¿½ï¿½**:
    ```python
    point = (10, 20)
-   x, y = point # ¾ðÆÐÅ·
+   x, y = point # ï¿½ï¿½ï¿½ï¿½Å·
    ```
 
-3. **µñ¼Å³Ê¸®**:
+3. **ï¿½ï¿½Å³Ê¸ï¿½**:
    ```python
    student = {"name": "John", "age": 25}
-   age = student["age"]  # °ª Á¢±Ù
+   age = student["age"]  # ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
    ```
 
-4. **¼¼Æ®**:
+4. **ï¿½ï¿½Æ®**:
    ```python
    unique_numbers = {1, 2, 3, 3, 2}
-   unique_numbers.add(4)  # °ª Ãß°¡
+   unique_numbers.add(4)  # ï¿½ï¿½ ï¿½ß°ï¿½
    ```
 
-### ÇÔ¼ö
-1. **ÇÔ¼ö ¼±¾ð**:
+### ï¿½Ô¼ï¿½
+1. **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½**:
    ```python
    def greet(name):
        return f"Hello, {name}!"
@@ -797,14 +797,14 @@ This generated password is for development use only. Your security configuration
    print(greet("Alice"))
    ```
 
-2. **¶÷´Ù ÇÔ¼ö**:
+2. **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**:
    ```python
    square = lambda x: x ** 2
    print(square(5))
    ```
 
-### Å¬·¡½º¿Í °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö
-1. **Å¬·¡½º ¼±¾ð**:
+### Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½
+1. **Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**:
    ```python
    class Person:
        def __init__(self, name, age):
@@ -818,18 +818,18 @@ This generated password is for development use only. Your security configuration
    print(john.greeting())
    ```
 
-### ¿¹¿Ü Ã³¸®
-1. **try-except ºí·Ï**:
+### ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+1. **try-except ï¿½ï¿½ï¿½**:
    ```python
    try:
        result = 10 / 0
-2024-06-30T14:10:43.593+09:00  INFO 8596 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumsServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-06-30T14:10:43.595+09:00  INFO 8596 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumsServiceTest
-2024-06-30T14:10:43.610+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : Å×½ºÆ® ¼³Á¤ ¿Ï·á
-2024-06-30T14:10:43.611+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters Å×½ºÆ® ½ÃÀÛ
+2024-06-30T14:10:43.593+09:00  INFO 8596 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-06-30T14:10:43.595+09:00  INFO 8596 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumServiceTest
+2024-06-30T14:10:43.610+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+2024-06-30T14:10:43.611+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 2024-06-30T14:10:43.614+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters called with dto: CurriculumChapCallDto(curriculumId=1)
-2024-06-30T14:10:43.646+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ÇÁ·Î±×·¡¹Ö Á¤ÀÇ), CurriculumChapElementDto(curriculumId=3, text=2. ÆÄÀÌ½ã ¼³Ä¡ È¯°æ), CurriculumChapElementDto(curriculumId=4, text=3. ÆÄÀÌ½ã ½ÇÇà ¿ø¸®), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥Çö½Ä), CurriculumChapElementDto(curriculumId=6, text=5. º¯¼ö¿Í ¸Þ¸ð¸®), CurriculumChapElementDto(curriculumId=7, text=6. ÆÄÀÌ½ã ¿À·ù), CurriculumChapElementDto(curriculumId=8, text=7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ), CurriculumChapElementDto(curriculumId=9, text=8. ÇÔ¼ö), CurriculumChapElementDto(curriculumId=10, text=9. ¹®ÀÚ¿­), CurriculumChapElementDto(curriculumId=11, text=10. Á¶°Ç¹®), CurriculumChapElementDto(curriculumId=12, text=11. ¸ðµâÈ­), CurriculumChapElementDto(curriculumId=13, text=12. ¸Þ¼­µå), CurriculumChapElementDto(curriculumId=14, text=13. ¸®½ºÆ®), CurriculumChapElementDto(curriculumId=15, text=14. ¹Ýº¹¹®), CurriculumChapElementDto(curriculumId=16, text=15. ÆÄÀÏ Ã³¸®), CurriculumChapElementDto(curriculumId=17, text=16. ÄÃ·º¼Ç), CurriculumChapElementDto(curriculumId=18, text=17. °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö)])
-2024-06-30T14:10:43.647+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : Å×½ºÆ® °á°ú: [CurriculumChapElementDto(curriculumId=2, text=1. ÇÁ·Î±×·¡¹Ö Á¤ÀÇ), CurriculumChapElementDto(curriculumId=3, text=2. ÆÄÀÌ½ã ¼³Ä¡ È¯°æ), CurriculumChapElementDto(curriculumId=4, text=3. ÆÄÀÌ½ã ½ÇÇà ¿ø¸®), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥Çö½Ä), CurriculumChapElementDto(curriculumId=6, text=5. º¯¼ö¿Í ¸Þ¸ð¸®), CurriculumChapElementDto(curriculumId=7, text=6. ÆÄÀÌ½ã ¿À·ù), CurriculumChapElementDto(curriculumId=8, text=7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ), CurriculumChapElementDto(curriculumId=9, text=8. ÇÔ¼ö), CurriculumChapElementDto(curriculumId=10, text=9. ¹®ÀÚ¿­), CurriculumChapElementDto(curriculumId=11, text=10. Á¶°Ç¹®), CurriculumChapElementDto(curriculumId=12, text=11. ¸ðµâÈ­), CurriculumChapElementDto(curriculumId=13, text=12. ¸Þ¼­µå), CurriculumChapElementDto(curriculumId=14, text=13. ¸®½ºÆ®), CurriculumChapElementDto(curriculumId=15, text=14. ¹Ýº¹¹®), CurriculumChapElementDto(curriculumId=16, text=15. ÆÄÀÏ Ã³¸®), CurriculumChapElementDto(curriculumId=17, text=16. ÄÃ·º¼Ç), CurriculumChapElementDto(curriculumId=18, text=17. °´Ã¼ ÁöÇâ ÇÁ·Î±×·¡¹Ö)]
+2024-06-30T14:10:43.646+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)])
+2024-06-30T14:10:43.647+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½: [CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)]
 2024-06-30T14:10:43.660+09:00 DEBUG 8596 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52, started on Sun Jun 30 14:10:24 KST 2024
 2024-06-30T14:10:43.683+09:00  INFO 8596 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-06-30T14:10:43.685+09:00  INFO 8596 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...

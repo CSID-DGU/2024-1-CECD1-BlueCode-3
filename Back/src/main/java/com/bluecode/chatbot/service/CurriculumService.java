@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CurriculumsService {
+public class CurriculumService {
 
     private final CurriculumRepository curriculumRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(CurriculumsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CurriculumService.class);
 
     // 커리큘럼 챕터 목록 로드
     public CurriculumChapResponseDto getCurriculumChapters(CurriculumChapCallDto dto) {
