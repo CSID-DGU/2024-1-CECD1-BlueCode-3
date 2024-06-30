@@ -74,8 +74,8 @@ public class StudyService {
         if (study == null || study.getText() == null) {
             Curriculums curriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
             Curriculums rootNode = curriculum.getParent();
-            String keyword = curriculumService.getKeywordForLevel(curriculum, levelType); // CurriculumsService의 메서드 사용
-            String fullKeyword = rootNode.getCurriculumName() + ": " + keyword;
+            String keyword = curriculumService.getKeywordForLevel(curriculum, levelType); // CurriculumService의 메서드 사용
+            String fullKeyword = curriculum.getCurriculumName() + ": " + keyword;
             String generatedText = requestGptText(fullKeyword, rootNode.getCurriculumName());
 
             if (study == null) {
