@@ -52,7 +52,7 @@ public class InitDb {
 
         public void test() {
 
-            Users user = userRepository.findByUserId(2L);
+            Users user = userRepository.findByUserId(2L).get();
             Curriculums root = curriculumRepository.findById(1L).get();
             List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
 
@@ -132,48 +132,64 @@ public class InitDb {
         public void testInit() {
 
             Users user2 = userRepository.findById(2L).get();
-            Curriculums root = curriculumRepository.findById(1L).get();
-            int idx = 1;
-            int count = 0;
+            Curriculums root = curriculumRepository.findAllRootCurriculumList().get(0);
 
-            Curriculums curriculum;
+            List<Curriculums> chapters = curriculumRepository.findAllByParentOrderByChapterNum(root);
+            int testedChap = 2;
+            int current = 0;
+            Curriculums curriculum = chapters.get(0);
 
-            while (count < 2) {
+            for (int i = 0; i < chapters.size(); i++) {
 
-                curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
-                if (curriculum.isTestable()) {
-                    count++;
-                    List<Quiz> quizList = quizRepository.findAllByChapNum(curriculum.getChapterNum());
-                    for (int j = 0; j < quizList.size(); j++) {
-                        Tests test = createTest(user2, quizList.get(j), 0, true, TestType.INIT);
-                        em.persist(test);
+                curriculum = chapters.get(i);
+
+                if (current < testedChap) {
+                    if (curriculum.isTestable()) {
+                        current++;
+                        List<Quiz> quizListHard = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.HARD);
+                        List<Quiz> quizListNormal = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.NORMAL);
+                        List<Quiz> quizListEasy = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.EASY);
+
+                        Tests testHard1 = createTest(user2, quizListHard.get(0), 0, true, TestType.INIT);
+                        Tests testHard2 = createTest(user2, quizListHard.get(1), 0, true, TestType.INIT);
+                        Tests testNormal1 = createTest(user2, quizListNormal.get(0), 0, true, TestType.INIT);
+                        Tests testEasy1 = createTest(user2, quizListEasy.get(0), 0, true, TestType.INIT);
+
+                        testRepository.save(testHard1);
+                        testRepository.save(testHard2);
+                        testRepository.save(testNormal1);
+                        testRepository.save(testEasy1);
+
+                        Studies studies = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", i + 1), true, LevelType.HARD);
+                        studyRepository.save(studies);
+                    } else {
+                        Studies studies = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", i + 1), true, LevelType.HARD);
+                        studyRepository.save(studies);
                     }
-                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 합격", idx), true, LevelType.HARD);
-                    em.persist(studies);
                 } else {
-                    Studies studies = createStudy(user2, curriculum, 60L + idx, String.format("챕터 %d: " + LevelType.HARD.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", idx), true, LevelType.HARD);
-                    em.persist(studies);
-                }
-                idx++;
-            }
+                    if (curriculum.isTestable()) {
+                        List<Quiz> quizListHard = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.HARD);
+                        List<Quiz> quizListNormal = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.NORMAL);
+                        List<Quiz> quizListEasy = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.EASY);
 
-            curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
-            while (curriculum != null && !curriculum.isTestable()) {
-                curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
-                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 미대상", idx), true, LevelType.HARD);
-                em.persist(studies);
-                idx++;
-            }
+                        Tests testHard1 = createTest(user2, quizListHard.get(0), 2, false, TestType.INIT);
+                        Tests testHard2 = createTest(user2, quizListHard.get(1), 0, false, TestType.INIT);
+                        Tests testNormal1 = createTest(user2, quizListNormal.get(0), 2, false, TestType.INIT);
+                        Tests testEasy1 = createTest(user2, quizListEasy.get(0), 0, true, TestType.INIT);
 
-            curriculum = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), idx);
-            if (curriculum != null) {
-                List<Quiz> quizList = quizRepository.findAllByChapNum(curriculum.getChapterNum());
-                for (int j = 0; j < quizList.size(); j++) {
-                    Tests test = createTest(user2, quizList.get(j), 2, false, TestType.INIT);
-                    em.persist(test);
+                        testRepository.save(testHard1);
+                        testRepository.save(testHard2);
+                        testRepository.save(testNormal1);
+                        testRepository.save(testEasy1);
+
+                        Studies studies = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", i + 1), false, LevelType.HARD);
+                        studyRepository.save(studies);
+                        break;
+                    } else {
+                        Studies studies = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", i + 1), true, LevelType.HARD);
+                        studyRepository.save(studies);
+                    }
                 }
-                Studies studies = createStudy(user2, curriculum, 0L, String.format("챕터 %d: " + LevelType.NORMAL.toString() + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용 입니다. - 초기 시험 불합격", idx), false, LevelType.NORMAL);
-                em.persist(studies);
             }
         }
 
