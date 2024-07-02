@@ -1,6 +1,8 @@
 package com.bluecode.chatbot.controller;
 
 
+import com.bluecode.chatbot.domain.LevelType;
+import com.bluecode.chatbot.dto.CurriculumTextCallDto;
 import com.bluecode.chatbot.dto.DataCallDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,6 +67,54 @@ class StudyControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestBody_2));
         result_2.andExpect(status().isOk()).andDo(print());
+
+    }
+
+    //초기 테스트 중테스트 통과한 챕터의 내용 생성 후 호출 테스트
+    @DisplayName("학습 텍스트 생성 후 호출 테스트")
+    @Test
+    public void createText() throws Exception{
+        final String url="/curriculum/curriculumcreate";
+
+        final long curriculum_Id=9;
+        final long user_Id= 2;
+        final LevelType levelType=LevelType.EASY;
+        final CurriculumTextCallDto curriculumTextCallDto=new CurriculumTextCallDto();
+        curriculumTextCallDto.setCurriculumId(curriculum_Id);
+        curriculumTextCallDto.setUserId(user_Id);
+        curriculumTextCallDto.setLevelType(levelType);
+
+        final String reqeustBody=objectMapper.writeValueAsString(curriculumTextCallDto);
+        ResultActions resultActions=mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(reqeustBody));
+        resultActions.andExpect(status().isOk()).andDo(print());
+
+        final String url_2="/curriculum/chaptertext";
+
+        resultActions=mockMvc.perform(post(url_2)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(reqeustBody));
+        resultActions.andExpect(status().isOk()).andDo(print());
+    }
+
+    @DisplayName("기존 학습 텍스트 호출 테스트")
+    @Test
+    public void callCurriculumText() throws Exception{
+        final String url="/curriculum/chaptertext";
+        final long curriculum_Id=5;
+        final long user_Id= 2;
+        final LevelType levelType=LevelType.EASY;
+        final CurriculumTextCallDto curriculumTextCallDto=new CurriculumTextCallDto();
+        curriculumTextCallDto.setCurriculumId(curriculum_Id);
+        curriculumTextCallDto.setUserId(user_Id);
+        curriculumTextCallDto.setLevelType(levelType);
+
+        final String reqeustBody=objectMapper.writeValueAsString(curriculumTextCallDto);
+        ResultActions resultActions=mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(reqeustBody));
+        resultActions.andExpect(status().isOk()).andDo(print());
 
     }
 
