@@ -17,7 +17,7 @@ public class CurriculumController {
     private final CurriculumService curriculumService;
 
     //유저가 선택한 커리큘럼의 챕터들 정보(챕터 명) 요청
-    @GetMapping("/api/curriculum/{curriculumId}")
+    @GetMapping("/curriculum/{curriculumId}")
     public ResponseEntity<CurriculumChapResponseDto> findCurriculumName(@PathVariable long curriculumId){
         CurriculumChapCallDto callDto=new CurriculumChapCallDto();
         callDto.setCurriculumId(curriculumId);

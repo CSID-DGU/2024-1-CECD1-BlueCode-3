@@ -16,7 +16,7 @@ public class StudyController {
     private final StudyService studyService;
 
     //유저의 커리큘럼 진행 현황 요청
-    @PostMapping("/api/curriculum/chapters")
+    @PostMapping("/curriculum/chapters")
     public ResponseEntity<CurriculumPassedDto> findCurriculumProgress(@RequestBody DataCallDto dataCallDto){
         CurriculumPassedDto curriculumPassedDto=studyService.getCurriculumProgress(dataCallDto);
 
