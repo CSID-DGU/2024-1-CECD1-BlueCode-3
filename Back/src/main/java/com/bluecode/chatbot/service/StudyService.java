@@ -45,7 +45,10 @@ public class StudyService {
     public CurriculumPassedDto getCurriculumProgress(DataCallDto dto) {
         logger.info("getCurriculumProgress called with dto: {}", dto);
 
-        List<Studies> studies = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
+
+        //List<Studies> studies = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
+
+        List<Studies> studies=studyRepository.findAllByUserId(dto.getUserId());
 
         List<CurriculumPassedElementDto> progressList = studies.stream().map(study -> {
             CurriculumPassedElementDto elementDto = new CurriculumPassedElementDto();
