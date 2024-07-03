@@ -45,7 +45,7 @@ class StudyControllerTest {
         final String url="/curriculum/chapters";
 
         final long user1_name= 1;
-        final long curriculumId_1=0;
+        final long curriculumId_1=3;
         final DataCallDto userDto_1=new DataCallDto();
         userDto_1.setUserId(user1_name);
         userDto_1.setCurriculumId(curriculumId_1);
@@ -57,7 +57,7 @@ class StudyControllerTest {
         result_1.andExpect(status().isOk()).andDo(print());
 
         final long user2_name= 2;
-        final long curriculumId_2=5;
+        final long curriculumId_2=4;
         final DataCallDto userDto_2=new DataCallDto();
         userDto_2.setUserId(user2_name);
         userDto_2.setCurriculumId(curriculumId_2);
@@ -76,9 +76,9 @@ class StudyControllerTest {
     public void createText() throws Exception{
         final String url="/curriculum/curriculumcreate";
 
-        final long curriculum_Id=9;
+        final long curriculum_Id=11;
         final long user_Id= 2;
-        final LevelType levelType=LevelType.EASY;
+        final LevelType levelType=LevelType.HARD;
         final CurriculumTextCallDto curriculumTextCallDto=new CurriculumTextCallDto();
         curriculumTextCallDto.setCurriculumId(curriculum_Id);
         curriculumTextCallDto.setUserId(user_Id);
@@ -102,9 +102,9 @@ class StudyControllerTest {
     @Test
     public void callCurriculumText() throws Exception{
         final String url="/curriculum/chaptertext";
-        final long curriculum_Id=5;
+        final long curriculum_Id=7;
         final long user_Id= 2;
-        final LevelType levelType=LevelType.EASY;
+        final LevelType levelType=LevelType.HARD;
         final CurriculumTextCallDto curriculumTextCallDto=new CurriculumTextCallDto();
         curriculumTextCallDto.setCurriculumId(curriculum_Id);
         curriculumTextCallDto.setUserId(user_Id);
