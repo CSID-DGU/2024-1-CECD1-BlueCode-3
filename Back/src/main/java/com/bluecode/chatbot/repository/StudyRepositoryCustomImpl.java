@@ -23,4 +23,13 @@ public class StudyRepositoryCustomImpl implements StudyRepositoryCustom {
                 .setParameter("userId", userId)
                 .getResultList();
     }
+
+    @Override
+    public List<Studies> findAllByUserId(Long userId){
+
+        return em.createQuery("select s from Studies s " +
+                                 "where s.user.userId = :userId ", Studies.class)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
 }
