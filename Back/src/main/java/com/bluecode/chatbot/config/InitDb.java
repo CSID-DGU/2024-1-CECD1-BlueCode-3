@@ -22,12 +22,13 @@ public class InitDb {
     private final InitService initService;
 
     @PostConstruct
-    public void init() {
+    public void init() throws InterruptedException {
         initService.userInit();
         initService.curriculumInit();
         initService.quizInit();
         initService.testInit();
         initService.test();
+        initService.chatInit();
     }
 
     @Component
@@ -42,6 +43,7 @@ public class InitDb {
         private final QuizRepository quizRepository;
         private final TestRepository testRepository;
         private final StudyRepository studyRepository;
+        private final ChatRepository chatRepository;
 
         public void userInit() {
             Users user1 = createUser("testName", "testEmail", "testId", "1111", "11110033", false); // 초기 테스트 미진행 유저
@@ -193,6 +195,29 @@ public class InitDb {
             }
         }
 
+        public void chatInit() throws InterruptedException {
+
+            Users user = userRepository.findById(2L).get();
+
+            Curriculums root = curriculumRepository.findAllRootCurriculumList().get(0);
+            List<Curriculums> chapters = curriculumRepository.findAllByParentOrderByChapterNum(root);
+
+            // 챕터 4에서 질문 1개
+            Chats chat = createChat(user, chapters.get(3), "챕터 4에서의 질문1: 개념질문", "챕터 4에서의 답변1: 단일 답변", QuestionType.DEF, 1);
+            chatRepository.save(chat);
+            Thread.sleep(1000); // 생성 시간 구분을 위한 1초 대기
+
+            // 챕터 6에서 질문 3개
+            chat = createChat(user, chapters.get(5), "챕터 6에서의 질문1: 개념질문", "챕터 6에서의 답변1: 단일 답변", QuestionType.DEF, 1);
+            chatRepository.save(chat);
+            Thread.sleep(1000);
+            chat = createChat(user, chapters.get(5), "챕터 6에서의 질문2: 코드질문(1단계 부터 시작)", "단계적 답변 진행도 1단계, 단계적 답변 진행도 2단계, 단계적 답변 진행도 3단계, 단계적 답변 진행도 4단계", QuestionType.CODE, 1);
+            chatRepository.save(chat);
+            Thread.sleep(1000);
+            chat = createChat(user, chapters.get(5), "챕터 6에서의 질문3: 에러질문(3단계 까지 진행)", "에러 단계적 답변 진행도 1단계, 에러 단계적 답변 진행도 2단계, 에러 단계적 답변 진행도 3단계, 에러 단계적 답변 진행도 4단계", QuestionType.ERRORS, 3);
+            chatRepository.save(chat);
+        }
+
         private Curriculums createCurriculum(
                 Curriculums parent,
                 String curriculumName,
@@ -296,6 +321,23 @@ public class InitDb {
             studies.setLevel(level);
 
             return studies;
+        }
+
+        private Chats createChat(Users user,
+                                 Curriculums curriculum,
+                                 String question,
+                                 String answer,
+                                 QuestionType questionType,
+                                 int level) {
+            Chats chat = new Chats();
+            chat.setUser(user);
+            chat.setCurriculum(curriculum);
+            chat.setQuestion(question);
+            chat.setAnswer(answer);
+            chat.setQuestionType(questionType);
+            chat.setLevel(level);
+
+            return chat;
         }
     }
 }
