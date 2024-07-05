@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chats, Long> {
@@ -43,4 +44,7 @@ public interface ChatRepository extends JpaRepository<Chats, Long> {
             "order by c.curriculum.chapterNum, c.chatDate")
     List<Chats> findAllByUserIdAndParentIdOrderByChapterNumAndChatDate(@Param("userId") Long userId,
                                                                        @Param("parentId") Long curriculumId);
+
+    // chat 테이블 id 기반 단일 Chat 검색
+    Optional<Chats> findById(Long chatId);
 }
