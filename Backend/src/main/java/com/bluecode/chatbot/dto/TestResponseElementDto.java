@@ -1,6 +1,6 @@
 package com.bluecode.chatbot.dto;
 
-import com.bluecode.chatbot.domain.LevelType;
+import com.bluecode.chatbot.domain.QuizLevel;
 import com.bluecode.chatbot.domain.QuizType;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ public class TestResponseElementDto {
 
     private Long quizId;
     private String text;
-    private LevelType level;
+    private QuizLevel level;
     private QuizType quizType;
     private String q1;
     private String q2;
