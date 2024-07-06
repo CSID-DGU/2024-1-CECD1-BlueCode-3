@@ -120,7 +120,7 @@ class StudyRepositoryTest {
             studiesHard.add(studies);
         }
         //when
-        Users findUser = userRepository.findByUserId(user.getUserId());
+        Users findUser = userRepository.findByUserId(user.getUserId()).get();
         Studies result = studyRepository.findByUserIdAndCurriculumIdAndLevel(findUser.getUserId(), chap1.getCurriculumId(), LevelType.NORMAL).get();
 
         //then
