@@ -49,7 +49,7 @@ public class TestService {
             TestResponseElementDto element = new TestResponseElementDto();
             element.setQuizId(quiz.getQuizId());
             element.setText(quiz.getText());
-            element.setLevel(quizLevelToLevelType(quiz.getLevel()));
+            element.setLevel(quiz.getLevel());
             element.setQuizType(quiz.getQuizType());
             element.setQ1(quiz.getQ1());
             element.setQ2(quiz.getQ2());
@@ -95,19 +95,5 @@ public class TestService {
 
         logger.info("submitAnswer response: {}", responseDto);
         return responseDto;
-    }
-
-    // QuizLevel을 LevelType으로 변경
-    private LevelType quizLevelToLevelType(QuizLevel quizLevel) {
-        switch (quizLevel) {
-            case EASY:
-                return LevelType.EASY;
-            case NORMAL:
-                return LevelType.NORMAL;
-            case HARD:
-                return LevelType.HARD;
-            default:
-                throw new IllegalArgumentException("Unknown QuizLevel: " + quizLevel);
-        }
     }
 }

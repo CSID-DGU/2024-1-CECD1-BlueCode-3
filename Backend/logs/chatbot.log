@@ -52,3 +52,57 @@ This generated password is for development use only. Your security configuration
 2024-07-04T12:03:24.912+09:00  INFO 11912 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-07-04T12:03:24.914+09:00  INFO 11912 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-07-04T12:03:24.920+09:00  INFO 11912 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-06T18:25:53.387+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Starting TestServiceTest using Java 17.0.9 with PID 25212 (started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-06T18:25:53.389+09:00 DEBUG 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Running with Spring Boot v3.2.5, Spring v6.1.6
+2024-07-06T18:25:53.390+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : The following 1 profile is active: "dev"
+2024-07-06T18:25:53.437+09:00 DEBUG 25212 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@27fde870
+2024-07-06T18:25:54.287+09:00  INFO 25212 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-06T18:25:54.474+09:00  INFO 25212 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 176 ms. Found 8 JPA repository interfaces.
+2024-07-06T18:25:54.993+09:00  INFO 25212 --- [chatbot] [Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-06T18:25:55.061+09:00  INFO 25212 --- [chatbot] [Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-06T18:25:55.095+09:00  INFO 25212 --- [chatbot] [Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-06T18:25:55.388+09:00  INFO 25212 --- [chatbot] [Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-06T18:25:55.412+09:00  INFO 25212 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-06T18:25:55.650+09:00  INFO 25212 --- [chatbot] [Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@c1a74d
+2024-07-06T18:25:55.652+09:00  INFO 25212 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-06T18:25:55.698+09:00  WARN 25212 --- [chatbot] [Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-06T18:25:56.678+09:00  INFO 25212 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-06T18:25:57.320+09:00  INFO 25212 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-06T18:25:57.855+09:00  INFO 25212 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-06T18:25:58.873+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용 입니다. - 초기 시험 합격
+2024-07-06T18:25:58.877+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
+2024-07-06T18:25:59.020+09:00  WARN 25212 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-06T18:25:59.050+09:00  WARN 25212 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 792a2d81-9999-418b-a124-0c0f6822cdfb
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-07-06T18:25:59.242+09:00 DEBUG 25212 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in 'requestMappingHandlerMapping'
+2024-07-06T18:25:59.414+09:00 DEBUG 25212 --- [chatbot] [Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-06T18:25:59.456+09:00  INFO 25212 --- [chatbot] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6852c3d2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5967b3ce, org.springframework.security.web.context.SecurityContextHolderFilter@11fa5334, org.springframework.security.web.header.HeaderWriterFilter@61f26cba, org.springframework.web.filter.CorsFilter@18de84f0, org.springframework.security.web.authentication.logout.LogoutFilter@1334a246, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2c476b8f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2e5affb3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@34408f1b, org.springframework.security.web.access.ExceptionTranslationFilter@367026f, org.springframework.security.web.access.intercept.AuthorizationFilter@4d8f917f]
+2024-07-06T18:25:59.647+09:00 DEBUG 25212 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-06T18:25:59.689+09:00 DEBUG 25212 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-06T18:25:59.866+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Started TestServiceTest in 6.755 seconds (process running for 8.095)
+2024-07-06T18:25:59.870+09:00  INFO 25212 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-06T18:26:00.306+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : testForInitialTest 테스트 시작
+2024-07-06T18:26:00.307+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : forInitialTest with userId: 2, chapterNum: 1
+2024-07-06T18:26:00.307+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 2
+2024-07-06T18:26:00.333+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@6cd79426, com.bluecode.chatbot.domain.Quiz@f04b315]
+2024-07-06T18:26:00.333+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 1
+2024-07-06T18:26:00.336+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@5e6dcfa]
+2024-07-06T18:26:00.337+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 1
+2024-07-06T18:26:00.340+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@2e706bc6]
+2024-07-06T18:26:00.341+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : forInitialTest response: TestResponseDto(tests=[TestResponseElementDto(quizId=3, text=테스트 문제-챕터 1: 초급자 1번째, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4), TestResponseElementDto(quizId=1, text=테스트 문제-챕터 1: 중급자 1번째, level=HARD, quizType=NUM, q1=정답1, q2=오답2, q3=오답3, q4=오답4), TestResponseElementDto(quizId=3, text=테스트 문제-챕터 1: 초급자 1번째, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4), TestResponseElementDto(quizId=1, text=테스트 문제-챕터 1: 중급자 1번째, level=HARD, quizType=NUM, q1=정답1, q2=오답2, q3=오답3, q4=오답4)])
+2024-07-06T18:26:00.350+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initial test: TestResponseElementDto(quizId=3, text=테스트 문제-챕터 1: 초급자 1번째, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4)
+2024-07-06T18:26:00.350+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initial test: TestResponseElementDto(quizId=1, text=테스트 문제-챕터 1: 중급자 1번째, level=HARD, quizType=NUM, q1=정답1, q2=오답2, q3=오답3, q4=오답4)
+2024-07-06T18:26:00.350+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initial test: TestResponseElementDto(quizId=3, text=테스트 문제-챕터 1: 초급자 1번째, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4)
+2024-07-06T18:26:00.350+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initial test: TestResponseElementDto(quizId=1, text=테스트 문제-챕터 1: 중급자 1번째, level=HARD, quizType=NUM, q1=정답1, q2=오답2, q3=오답3, q4=오답4)
+2024-07-06T18:26:00.365+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : testSubmitAnswer 테스트 시작
+2024-07-06T18:26:00.365+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : submitAnswer with dto: TestAnswerCallDto(userId=2, quizId=1, answer=정답)
+2024-07-06T18:26:00.379+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : submitAnswer response: TestAnswerResponseDto(passed=false)
+2024-07-06T18:26:00.380+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Submit answer response: TestAnswerResponseDto(passed=false)
+2024-07-06T18:26:00.391+09:00 DEBUG 25212 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@27fde870, started on Sat Jul 06 18:25:53 KST 2024
+2024-07-06T18:26:00.407+09:00  INFO 25212 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-06T18:26:00.408+09:00  INFO 25212 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-06T18:26:00.414+09:00  INFO 25212 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
