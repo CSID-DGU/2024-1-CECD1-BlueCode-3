@@ -3,6 +3,7 @@ package com.bluecode.chatbot.repository;
 import com.bluecode.chatbot.domain.Curriculums;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CurriculumRepositoryCustom {
 
@@ -10,5 +11,5 @@ public interface CurriculumRepositoryCustom {
     List<Curriculums> findAllRootCurriculumList();
 
     // 챕터 순번(chapterNum) & root 커리큘럼 id 기반으로 커리큘럼 검색
-    Curriculums findByRootIdAndChapterNum(Long rootCurriculumId, int chapterNum);
+    Optional<Curriculums> findByRootIdAndChapterNum(Long rootCurriculumId, int chapterNum);
 }

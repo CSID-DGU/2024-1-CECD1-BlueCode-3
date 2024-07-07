@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 테스트용 데이터를 DB에 저장하는 class 입니다.
@@ -64,8 +65,8 @@ public class InitDb {
                 log.info(study.getText());
             }
 
-            Curriculums res = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), 7);
-            log.info(res.getCurriculumName());
+            Optional<Curriculums> res = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), 7);
+            log.info(res.get().getCurriculumName());
 
 
         }

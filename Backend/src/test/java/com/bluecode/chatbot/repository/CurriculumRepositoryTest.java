@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -31,10 +32,10 @@ class CurriculumRepositoryTest {
         curriculumRepository.save(chapTest);
 
         //when
-        Curriculums res = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), chapNum);
+        Optional<Curriculums> res = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), chapNum);
 
         //then
-        Assertions.assertThat(res).isEqualTo(chapTest);
+        Assertions.assertThat(res.get()).isEqualTo(chapTest);
 
     }
 
