@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CurriculumRepositoryCustomImpl implements CurriculumRepositoryCustom {
@@ -18,12 +19,12 @@ public class CurriculumRepositoryCustomImpl implements CurriculumRepositoryCusto
     }
 
     @Override
-    public Curriculums findByRootIdAndChapterNum(Long rootCurriculumId, int chapterNum) {
-        return em.createQuery("select c from Curriculums c " +
-                                 "join fetch c.parent " +
-                                 "where c.parent.curriculumId = :rootId and c.chapterNum = :chapNum", Curriculums.class)
+    public Optional<Curriculums> findByRootIdAndChapterNum(Long rootCurriculumId, int chapterNum) {
+        return Optional.ofNullable(em.createQuery("select c from Curriculums c " +
+                        "join fetch c.parent " +
+                        "where c.parent.curriculumId = :rootId and c.chapterNum = :chapNum", Curriculums.class)
                 .setParameter("rootId", rootCurriculumId)
                 .setParameter("chapNum", chapterNum)
-                .getSingleResult();
+                .getSingleResult());
     }
 }

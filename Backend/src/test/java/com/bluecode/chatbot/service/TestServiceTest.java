@@ -1,13 +1,17 @@
 package com.bluecode.chatbot.service;
 
+import com.bluecode.chatbot.dto.DataCallDto;
 import com.bluecode.chatbot.dto.TestAnswerCallDto;
 import com.bluecode.chatbot.dto.TestAnswerResponseDto;
 import com.bluecode.chatbot.dto.TestResponseDto;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -24,12 +28,18 @@ public class TestServiceTest {
         logger.info("testForInitialTest 테스트 시작");
 
         Long userId = 2L;
-        int chapterNum = 1;
+        Long curriculumId = 4L;
 
-        TestResponseDto testResponse = testService.forInitialTest(userId, chapterNum);
+        DataCallDto dto = new DataCallDto();
+        dto.setUserId(userId);
+        dto.setCurriculumId(curriculumId);
 
-        assertNotNull(testResponse);
-        testResponse.getTests().forEach(test -> logger.info("Initial test: {}", test));
+        try {
+            TestResponseDto testResponse = testService.forInitialTest(dto);
+            Assertions.assertThat(testResponse.getTests().size()).isEqualTo(4);
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage());
+        }
     }
 
     @Test
