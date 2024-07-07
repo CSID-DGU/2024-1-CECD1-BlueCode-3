@@ -1,836 +1,108 @@
-2024-06-30T14:03:40.892+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 19876 (started by ewoo2 in C:\Users\ewoo2\OneDrive\ï¿½ï¿½ï¿½ï¿½\GitHub\ï¿½ï¿½ï¿½ï¿½SWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
-2024-06-30T14:03:40.899+09:00 DEBUG 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Running with Spring Boot v3.2.5, Spring v6.1.6
-2024-06-30T14:03:40.900+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : The following 1 profile is active: "dev"
-2024-06-30T14:03:40.938+09:00 DEBUG 19876 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52
-2024-06-30T14:03:41.800+09:00  INFO 19876 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-06-30T14:03:41.982+09:00  INFO 19876 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 171 ms. Found 8 JPA repository interfaces.
-2024-06-30T14:03:42.491+09:00  INFO 19876 --- [chatbot] [Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-06-30T14:03:42.588+09:00  INFO 19876 --- [chatbot] [Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2024-06-30T14:03:42.630+09:00  INFO 19876 --- [chatbot] [Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-06-30T14:03:42.936+09:00  INFO 19876 --- [chatbot] [Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-06-30T14:03:42.968+09:00  INFO 19876 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-06-30T14:03:43.241+09:00  INFO 19876 --- [chatbot] [Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@a63643e
-2024-06-30T14:03:43.243+09:00  INFO 19876 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-06-30T14:03:43.292+09:00  WARN 19876 --- [chatbot] [Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-06-30T14:03:44.352+09:00  INFO 19876 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-06-30T14:03:45.140+09:00  INFO 19876 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-06-30T14:03:45.634+09:00  INFO 19876 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-06-30T14:03:46.681+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ï¿½ï¿½ 4: HARDï¿½Ð½ï¿½ï¿½Ú·ï¿½: 4. Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½. - ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½
-2024-06-30T14:03:46.685+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:03:46.834+09:00  WARN 19876 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-06-30T14:03:46.875+09:00  WARN 19876 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2024-07-04T12:03:17.614+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Starting TestServiceTest using Java 17.0.9 with PID 11912 (started by ewoo2 in C:\Users\ewoo2\OneDrive\¹®¼­\GitHub\°ø°³SWÇÁ·ÎÁ§Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
+2024-07-04T12:03:17.620+09:00 DEBUG 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Running with Spring Boot v3.2.5, Spring v6.1.6
+2024-07-04T12:03:17.621+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : The following 1 profile is active: "dev"
+2024-07-04T12:03:17.655+09:00 DEBUG 11912 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1d12b024
+2024-07-04T12:03:18.395+09:00  INFO 11912 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-04T12:03:18.594+09:00  INFO 11912 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 188 ms. Found 8 JPA repository interfaces.
+2024-07-04T12:03:19.083+09:00  INFO 11912 --- [chatbot] [Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-04T12:03:19.162+09:00  INFO 11912 --- [chatbot] [Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-04T12:03:19.200+09:00  INFO 11912 --- [chatbot] [Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-04T12:03:19.510+09:00  INFO 11912 --- [chatbot] [Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-04T12:03:19.540+09:00  INFO 11912 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-04T12:03:19.828+09:00  INFO 11912 --- [chatbot] [Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@f42336c
+2024-07-04T12:03:19.830+09:00  INFO 11912 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-04T12:03:19.883+09:00  WARN 11912 --- [chatbot] [Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-04T12:03:20.935+09:00  INFO 11912 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-04T12:03:21.618+09:00  INFO 11912 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-04T12:03:22.141+09:00  INFO 11912 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-04T12:03:23.170+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ÅÍ 4: HARDÇÐ½ÀÀÚ·á: 4. Ç¥Çö½Ä Å×½ºÆ® ³»¿ë ÀÔ´Ï´Ù. - ÃÊ±â ½ÃÇè ÇÕ°Ý
+2024-07-04T12:03:23.175+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ
+2024-07-04T12:03:23.350+09:00  WARN 11912 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-04T12:03:23.393+09:00  WARN 11912 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: d48a6397-0ea4-452e-bc87-a13991b28f4c
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2024-06-30T14:03:47.061+09:00 DEBUG 19876 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in 'requestMappingHandlerMapping'
-2024-06-30T14:03:47.219+09:00 DEBUG 19876 --- [chatbot] [Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2024-06-30T14:03:47.264+09:00  INFO 19876 --- [chatbot] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7ff89dc0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6f798e5a, org.springframework.security.web.context.SecurityContextHolderFilter@3d8bf514, org.springframework.security.web.header.HeaderWriterFilter@62a1bc26, org.springframework.web.filter.CorsFilter@cbbc0ac, org.springframework.security.web.authentication.logout.LogoutFilter@339cedbb, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@32be0ebd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6174ff60, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@570fc662, org.springframework.security.web.access.ExceptionTranslationFilter@4d0042eb, org.springframework.security.web.access.intercept.AuthorizationFilter@427a4d68]
-2024-06-30T14:03:47.467+09:00 DEBUG 19876 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2024-06-30T14:03:47.524+09:00 DEBUG 19876 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2024-06-30T14:03:47.716+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Started StudiesServiceTest in 7.104 seconds (process running for 8.304)
-2024-06-30T14:03:47.720+09:00  INFO 19876 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-06-30T14:03:48.234+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
-2024-06-30T14:03:48.249+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:03:48.259+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@728c3a0e, levelType: EASY
-2024-06-30T14:03:48.260+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText called with dto: DataCallDto(userId=1, curriculumId=2), levelType: EASY
-2024-06-30T14:03:48.288+09:00  INFO 19876 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-06-30T14:03:48.290+09:00  INFO 19876 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumServiceTest
-2024-06-30T14:03:48.314+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
-2024-06-30T14:03:48.315+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:03:48.319+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters called with dto: CurriculumChapCallDto(curriculumId=1)
-2024-06-30T14:03:48.346+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)])
-2024-06-30T14:03:48.348+09:00  INFO 19876 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½: [CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)]
-2024-06-30T14:03:48.366+09:00 DEBUG 19876 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52, started on Sun Jun 30 14:03:40 KST 2024
-2024-06-30T14:03:48.401+09:00  INFO 19876 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-06-30T14:03:48.404+09:00  INFO 19876 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-06-30T14:03:48.412+09:00  INFO 19876 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-06-30T14:07:56.337+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 25512 (started by ewoo2 in C:\Users\ewoo2\OneDrive\ï¿½ï¿½ï¿½ï¿½\GitHub\ï¿½ï¿½ï¿½ï¿½SWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
-2024-06-30T14:07:56.339+09:00 DEBUG 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Running with Spring Boot v3.2.5, Spring v6.1.6
-2024-06-30T14:07:56.340+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : The following 1 profile is active: "dev"
-2024-06-30T14:07:56.381+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52
-2024-06-30T14:07:57.303+09:00  INFO 25512 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-06-30T14:07:57.519+09:00  INFO 25512 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 201 ms. Found 8 JPA repository interfaces.
-2024-06-30T14:07:58.185+09:00  INFO 25512 --- [chatbot] [Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-06-30T14:07:58.269+09:00  INFO 25512 --- [chatbot] [Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2024-06-30T14:07:58.314+09:00  INFO 25512 --- [chatbot] [Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-06-30T14:07:58.670+09:00  INFO 25512 --- [chatbot] [Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-06-30T14:07:58.706+09:00  INFO 25512 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-06-30T14:07:58.965+09:00  INFO 25512 --- [chatbot] [Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3e28af44
-2024-06-30T14:07:58.969+09:00  INFO 25512 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-06-30T14:07:59.032+09:00  WARN 25512 --- [chatbot] [Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-06-30T14:08:00.252+09:00  INFO 25512 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-06-30T14:08:01.109+09:00  INFO 25512 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-06-30T14:08:01.652+09:00  INFO 25512 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-06-30T14:08:02.755+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ï¿½ï¿½ 4: HARDï¿½Ð½ï¿½ï¿½Ú·ï¿½: 4. Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½. - ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½
-2024-06-30T14:08:02.759+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:08:02.897+09:00  WARN 25512 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-06-30T14:08:02.927+09:00  WARN 25512 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
-
-Using generated security password: 6ea8a72c-70c1-4866-a1f8-7411752e0f5a
+Using generated security password: 7838d083-0b2c-4184-95e3-20fa73171f96
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-06-30T14:08:03.173+09:00 DEBUG 25512 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in 'requestMappingHandlerMapping'
-2024-06-30T14:08:03.383+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2024-06-30T14:08:03.467+09:00  INFO 25512 --- [chatbot] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4d8f917f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@125a6446, org.springframework.security.web.context.SecurityContextHolderFilter@61f26cba, org.springframework.security.web.header.HeaderWriterFilter@5b7ee413, org.springframework.web.filter.CorsFilter@2be0ea4a, org.springframework.security.web.authentication.logout.LogoutFilter@21d08148, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@50ea4eaa, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@11fa5334, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6852c3d2, org.springframework.security.web.access.ExceptionTranslationFilter@419e46bb, org.springframework.security.web.access.intercept.AuthorizationFilter@33bd86fe]
-2024-06-30T14:08:03.719+09:00 DEBUG 25512 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2024-06-30T14:08:03.793+09:00 DEBUG 25512 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2024-06-30T14:08:03.996+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Started StudiesServiceTest in 7.951 seconds (process running for 9.25)
-2024-06-30T14:08:04.001+09:00  INFO 25512 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-06-30T14:08:04.532+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
-2024-06-30T14:08:04.561+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:08:04.578+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@55c14260, levelType: EASY
-2024-06-30T14:08:04.580+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText called with dto: DataCallDto(userId=1, curriculumId=2), levelType: EASY
-2024-06-30T14:08:04.585+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@1602b644, levelType: EASY
-2024-06-30T14:08:04.677+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
-2024-06-30T14:08:04.685+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-06-30T14:08:04.694+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Writing [{messages=[{role=system, content=ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ©ï¿½Í¾ï¿½.}, {role=user, content=ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. (Å°ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½Ì½ï¿½: )}], max_tokens=1000, model=gpt-4o}] as "application/json"
-2024-06-30T14:08:15.478+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Response 200 OK
-2024-06-30T14:08:15.479+09:00 DEBUG 25512 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
-2024-06-30T14:08:15.483+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : requestGptText response: {
-  "id": "chatcmpl-9fh5BCM6QXBIyZ23UetFKqGi5f7gd",
-  "object": "chat.completion",
-  "created": 1719724085,
-  "model": "gpt-4o-2024-05-13",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-        "content": "ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ï¿½ ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ï´ï¿½.\n\n## ï¿½ï¿½ï¿½ï¿½:\n\n1. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½**\n2. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**\n3. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**\n4. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**\n5. **ï¿½ï¿½ï¿½î¹®**\n6. **ï¿½Ô¼ï¿½**\n7. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½**\n8. **ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½**\n9. **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ (OOP)**\n10. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½**\n11. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½È­ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**\n12. **ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**\n13. **ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**\n\n---\n\n### 1. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½\nï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Êºï¿½ï¿½Úºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð°ï¿½ ï¿½ï¿½ï¿½Ë´Ï´ï¿½. ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¯Â¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½:\n- **ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ó½Å·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n---\n\n### 2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ (https://www.python.org/)\n- ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ `pip`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½ï¿½Ä¡\n- ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (`venv` ï¿½Ì¿ï¿½)\n\n---\n\n### 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½Ö¼ï¿½**: `#`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½**: `print()` ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½\n\n```python\n# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\na = 10\nb = 20\nprint(a + b)  # 30\n```\n\n---\n\n### 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½\n- **ï¿½âº» Å¸ï¿½ï¿½**: `int`, `float`, `str`, `bool`\n- **ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½**:\n  - ï¿½ï¿½ï¿½ï¿½Æ® (List): `[]`\n  - Æ©ï¿½ï¿½ (Tuple): `()`\n  - ï¿½ï¿½Æ® (Set): `{}` È¤ï¿½ï¿½ `set()`\n  - ï¿½ï¿½Å³Ê¸ï¿½ (Dictionary): `{key: value}`\n\n```python\n# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½\nnumbers = [1, 2, 3, 4, 5]\nprint(numbers[0])  # 1\n\n# ï¿½ï¿½Å³Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½\nstudent = { \"name\": \"Alice\", \"age\": 25 }\nprint(student[\"name\"])  # Alice\n```\n\n---\n\n### 5. ï¿½ï¿½ï¿½î¹®\n- **ï¿½ï¿½ï¿½Ç¹ï¿½**: `if`, `elif`, `else`\n- **ï¿½Ýºï¿½ï¿½ï¿½**: `for`, `while`\n- **ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½\n\n```python\n# ï¿½ï¿½ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½\nif a > b:\n    print(\"a is greater than b\")\nelse:\n    print(\"a is not greater than b\")\n\n# ï¿½Ýºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\nfor number in numbers:\n    print(number)\n\n# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\nsquares = [x**2 for x in range(10)]\n```\n\n---\n\n### 6. ï¿½Ô¼ï¿½\n- **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½**: `def` Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½\n- **ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½**: ï¿½âº»ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**: ï¿½Í¸ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n```python\n# ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½\ndef add(a, b):\n    return a + b\n\nprint(add(3, 4))  # 7\n\n# ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½\nmultiply = lambda x, y: x * y\nprint(multiply(3, 4))  # 12\n```\n\n---\n\n### 7. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý±ï¿½**: `open()`, `close()`\n- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: `read()`, `write()`, `with` ï¿½ï¿½\n\n```python\n# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\nwith open('example.txt', 'w') as f:\n    f.write('Hello, World!')\n\n# ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½\nwith open('example.txt', 'r') as f:\n   "
-      },
-      "logprobs": null,
-      "finish_reason": "length"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 51,
-    "completion_tokens": 1000,
-    "total_tokens": 1051
-  },
-  "system_fingerprint": "fp_d576307f90"
-}
+2024-07-04T12:03:23.573+09:00 DEBUG 11912 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in 'requestMappingHandlerMapping'
+2024-07-04T12:03:23.813+09:00 DEBUG 11912 --- [chatbot] [Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-04T12:03:23.853+09:00  INFO 11912 --- [chatbot] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6f798e5a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@cbbc0ac, org.springframework.security.web.context.SecurityContextHolderFilter@52a42e0f, org.springframework.security.web.header.HeaderWriterFilter@1bff70a6, org.springframework.web.filter.CorsFilter@570fc662, org.springframework.security.web.authentication.logout.LogoutFilter@62f11904, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6174ff60, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3b5950f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6ca257de, org.springframework.security.web.access.ExceptionTranslationFilter@50ea4eaa, org.springframework.security.web.access.intercept.AuthorizationFilter@72722a6b]
+2024-07-04T12:03:24.043+09:00 DEBUG 11912 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-04T12:03:24.088+09:00 DEBUG 11912 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-04T12:03:24.259+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Started TestServiceTest in 6.882 seconds (process running for 8.155)
+2024-07-04T12:03:24.262+09:00  INFO 11912 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-04T12:03:24.795+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : testForInitialTest Å×½ºÆ® ½ÃÀÛ
+2024-07-04T12:03:24.795+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : forInitialTest with userId: 2, chapterNum: 1
+2024-07-04T12:03:24.795+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 2
+2024-07-04T12:03:24.837+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@2e7da886, com.bluecode.chatbot.domain.Quiz@60ca607]
+2024-07-04T12:03:24.837+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 1
+2024-07-04T12:03:24.841+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@653bfc3d]
+2024-07-04T12:03:24.841+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 1
+2024-07-04T12:03:24.844+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@5b4e1899]
+2024-07-04T12:03:24.845+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : forInitialTest response: TestResponseDto(tests=[TestResponseElementDto(quizId=2, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: Áß±ÞÀÚ 2¹øÂ°, level=HARD, quizType=NUM, q1=¿À´ä1, q2=Á¤´ä2, q3=¿À´ä3, q4=¿À´ä4), TestResponseElementDto(quizId=4, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: ÀÔ¹®ÀÚ 1¹øÂ°, level=EASY, quizType=NUM, q1=¿À´ä1, q2=¿À´ä2, q3=¿À´ä3, q4=Á¤´ä4), TestResponseElementDto(quizId=2, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: Áß±ÞÀÚ 2¹øÂ°, level=HARD, quizType=NUM, q1=¿À´ä1, q2=Á¤´ä2, q3=¿À´ä3, q4=¿À´ä4), TestResponseElementDto(quizId=3, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: ÃÊ±ÞÀÚ 1¹øÂ°, level=NORMAL, quizType=NUM, q1=¿À´ä1, q2=¿À´ä2, q3=Á¤´ä3, q4=¿À´ä4)])
+2024-07-04T12:03:24.853+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initialized test: TestResponseElementDto(quizId=2, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: Áß±ÞÀÚ 2¹øÂ°, level=HARD, quizType=NUM, q1=¿À´ä1, q2=Á¤´ä2, q3=¿À´ä3, q4=¿À´ä4)
+2024-07-04T12:03:24.853+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initialized test: TestResponseElementDto(quizId=4, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: ÀÔ¹®ÀÚ 1¹øÂ°, level=EASY, quizType=NUM, q1=¿À´ä1, q2=¿À´ä2, q3=¿À´ä3, q4=Á¤´ä4)
+2024-07-04T12:03:24.853+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initialized test: TestResponseElementDto(quizId=2, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: Áß±ÞÀÚ 2¹øÂ°, level=HARD, quizType=NUM, q1=¿À´ä1, q2=Á¤´ä2, q3=¿À´ä3, q4=¿À´ä4)
+2024-07-04T12:03:24.854+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initialized test: TestResponseElementDto(quizId=3, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: ÃÊ±ÞÀÚ 1¹øÂ°, level=NORMAL, quizType=NUM, q1=¿À´ä1, q2=¿À´ä2, q3=Á¤´ä3, q4=¿À´ä4)
+2024-07-04T12:03:24.866+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : testSubmitAnswer Å×½ºÆ® ½ÃÀÛ
+2024-07-04T12:03:24.866+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : submitAnswer with dto: TestAnswerCallDto(userId=2, quizId=1, answer=Á¤´ä)
+2024-07-04T12:03:24.882+09:00  INFO 11912 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : submitAnswer response: TestAnswerResponseDto(passed=false)
+2024-07-04T12:03:24.882+09:00  INFO 11912 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Submit answer response: TestAnswerResponseDto(passed=false)
+2024-07-04T12:03:24.894+09:00 DEBUG 11912 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@1d12b024, started on Thu Jul 04 12:03:17 KST 2024
+2024-07-04T12:03:24.912+09:00  INFO 11912 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-04T12:03:24.914+09:00  INFO 11912 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-04T12:03:24.920+09:00  INFO 11912 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-06T18:25:53.387+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Starting TestServiceTest using Java 17.0.9 with PID 25212 (started by ewoo2 in C:\Users\ewoo2\OneDrive\¹®¼­\GitHub\°ø°³SWÇÁ·ÎÁ§Æ®-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-06T18:25:53.389+09:00 DEBUG 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Running with Spring Boot v3.2.5, Spring v6.1.6
+2024-07-06T18:25:53.390+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : The following 1 profile is active: "dev"
+2024-07-06T18:25:53.437+09:00 DEBUG 25212 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@27fde870
+2024-07-06T18:25:54.287+09:00  INFO 25212 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-06T18:25:54.474+09:00  INFO 25212 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 176 ms. Found 8 JPA repository interfaces.
+2024-07-06T18:25:54.993+09:00  INFO 25212 --- [chatbot] [Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-06T18:25:55.061+09:00  INFO 25212 --- [chatbot] [Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-06T18:25:55.095+09:00  INFO 25212 --- [chatbot] [Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-06T18:25:55.388+09:00  INFO 25212 --- [chatbot] [Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-06T18:25:55.412+09:00  INFO 25212 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-06T18:25:55.650+09:00  INFO 25212 --- [chatbot] [Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@c1a74d
+2024-07-06T18:25:55.652+09:00  INFO 25212 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-06T18:25:55.698+09:00  WARN 25212 --- [chatbot] [Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-06T18:25:56.678+09:00  INFO 25212 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-06T18:25:57.320+09:00  INFO 25212 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-06T18:25:57.855+09:00  INFO 25212 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-06T18:25:58.873+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ÅÍ 4: HARDÇÐ½ÀÀÚ·á: 4. Ç¥Çö½Ä Å×½ºÆ® ³»¿ë ÀÔ´Ï´Ù. - ÃÊ±â ½ÃÇè ÇÕ°Ý
+2024-07-06T18:25:58.877+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ÁÖ¼®,ÆÄÀÌ½ã¿¡¼­ ´ë°ýÈ£, Áß°ýÈ£, ¼Ò°ýÈ£ °£ Â÷ÀÌ
+2024-07-06T18:25:59.020+09:00  WARN 25212 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-06T18:25:59.050+09:00  WARN 25212 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-2024-06-30T14:08:15.493+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : Extracted content from GPT response: ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ï¿½ ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ï´ï¿½.
-
-## ï¿½ï¿½ï¿½ï¿½:
-
-1. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½**
-2. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
-3. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
-4. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**
-5. **ï¿½ï¿½ï¿½î¹®**
-6. **ï¿½Ô¼ï¿½**
-7. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½**
-8. **ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½**
-9. **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ (OOP)**
-10. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½**
-11. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½È­ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**
-12. **ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
-13. **ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
-
----
-
-### 1. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½
-ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Êºï¿½ï¿½Úºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð°ï¿½ ï¿½ï¿½ï¿½Ë´Ï´ï¿½. ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¯Â¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½:
-- **ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ó½Å·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
----
-
-### 2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ (https://www.python.org/)
-- ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ `pip`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½ï¿½Ä¡
-- ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (`venv` ï¿½Ì¿ï¿½)
-
----
-
-### 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½Ö¼ï¿½**: `#`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½**: `print()` ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½
-
-```python
-# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-a = 10
-b = 20
-print(a + b)  # 30
-```
-
----
-
-### 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
-- **ï¿½âº» Å¸ï¿½ï¿½**: `int`, `float`, `str`, `bool`
-- **ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½**:
-  - ï¿½ï¿½ï¿½ï¿½Æ® (List): `[]`
-  - Æ©ï¿½ï¿½ (Tuple): `()`
-  - ï¿½ï¿½Æ® (Set): `{}` È¤ï¿½ï¿½ `set()`
-  - ï¿½ï¿½Å³Ê¸ï¿½ (Dictionary): `{key: value}`
-
-```python
-# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-numbers = [1, 2, 3, 4, 5]
-print(numbers[0])  # 1
-
-# ï¿½ï¿½Å³Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½
-student = { "name": "Alice", "age": 25 }
-print(student["name"])  # Alice
-```
-
----
-
-### 5. ï¿½ï¿½ï¿½î¹®
-- **ï¿½ï¿½ï¿½Ç¹ï¿½**: `if`, `elif`, `else`
-- **ï¿½Ýºï¿½ï¿½ï¿½**: `for`, `while`
-- **ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
-
-```python
-# ï¿½ï¿½ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½
-if a > b:
-    print("a is greater than b")
-else:
-    print("a is not greater than b")
-
-# ï¿½Ýºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-for number in numbers:
-    print(number)
-
-# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-squares = [x**2 for x in range(10)]
-```
-
----
-
-### 6. ï¿½Ô¼ï¿½
-- **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½**: `def` Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
-- **ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½**: ï¿½âº»ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**: ï¿½Í¸ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-```python
-# ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
-def add(a, b):
-    return a + b
-
-print(add(3, 4))  # 7
-
-# ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
-multiply = lambda x, y: x * y
-print(multiply(3, 4))  # 12
-```
-
----
-
-### 7. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý±ï¿½**: `open()`, `close()`
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: `read()`, `write()`, `with` ï¿½ï¿½
-
-```python
-# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-with open('example.txt', 'w') as f:
-    f.write('Hello, World!')
-
-# ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½
-with open('example.txt', 'r') as f:
-   
-2024-06-30T14:08:15.495+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText returning: StudyTextDto(text=ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ï¿½ ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ï´ï¿½.
-
-## ï¿½ï¿½ï¿½ï¿½:
-
-1. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½**
-2. **ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
-3. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
-4. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**
-5. **ï¿½ï¿½ï¿½î¹®**
-6. **ï¿½Ô¼ï¿½**
-7. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½**
-8. **ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½**
-9. **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ (OOP)**
-10. **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½**
-11. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½È­ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**
-12. **ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
-13. **ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**
-
----
-
-### 1. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ò°ï¿½
-ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Êºï¿½ï¿½Úºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð°ï¿½ ï¿½ï¿½ï¿½Ë´Ï´ï¿½. ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¯Â¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½:
-- **ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¼ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ó½Å·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
----
-
-### 2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ (https://www.python.org/)
-- ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ `pip`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½ï¿½Ä¡
-- ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (`venv` ï¿½Ì¿ï¿½)
-
----
-
-### 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½Ö¼ï¿½**: `#`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½**: `print()` ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½
-
-```python
-# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-a = 10
-b = 20
-print(a + b)  # 30
-```
-
----
-
-### 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
-- **ï¿½âº» Å¸ï¿½ï¿½**: `int`, `float`, `str`, `bool`
-- **ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½**:
-  - ï¿½ï¿½ï¿½ï¿½Æ® (List): `[]`
-  - Æ©ï¿½ï¿½ (Tuple): `()`
-  - ï¿½ï¿½Æ® (Set): `{}` È¤ï¿½ï¿½ `set()`
-  - ï¿½ï¿½Å³Ê¸ï¿½ (Dictionary): `{key: value}`
-
-```python
-# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-numbers = [1, 2, 3, 4, 5]
-print(numbers[0])  # 1
-
-# ï¿½ï¿½Å³Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½
-student = { "name": "Alice", "age": 25 }
-print(student["name"])  # Alice
-```
-
----
-
-### 5. ï¿½ï¿½ï¿½î¹®
-- **ï¿½ï¿½ï¿½Ç¹ï¿½**: `if`, `elif`, `else`
-- **ï¿½Ýºï¿½ï¿½ï¿½**: `for`, `while`
-- **ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
-
-```python
-# ï¿½ï¿½ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½
-if a > b:
-    print("a is greater than b")
-else:
-    print("a is not greater than b")
-
-# ï¿½Ýºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-for number in numbers:
-    print(number)
-
-# ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-squares = [x**2 for x in range(10)]
-```
-
----
-
-### 6. ï¿½Ô¼ï¿½
-- **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½**: `def` Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
-- **ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½**: ï¿½âº»ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**: ï¿½Í¸ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-```python
-# ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
-def add(a, b):
-    return a + b
-
-print(add(3, 4))  # 7
-
-# ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
-multiply = lambda x, y: x * y
-print(multiply(3, 4))  # 12
-```
-
----
-
-### 7. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý±ï¿½**: `open()`, `close()`
-- **ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**: `read()`, `write()`, `with` ï¿½ï¿½
-
-```python
-# ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-with open('example.txt', 'w') as f:
-    f.write('Hello, World!')
-
-# ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½
-with open('example.txt', 'r') as f:
-   )
-2024-06-30T14:08:15.509+09:00  WARN 25512 --- [chatbot] [Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 1406, SQLState: 22001
-2024-06-30T14:08:15.509+09:00 ERROR 25512 --- [chatbot] [Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Data truncation: Data too long for column 'text' at row 1
-2024-06-30T14:08:15.539+09:00  INFO 25512 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-06-30T14:08:15.540+09:00  INFO 25512 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumServiceTest
-2024-06-30T14:08:15.564+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
-2024-06-30T14:08:15.565+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:08:15.568+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters called with dto: CurriculumChapCallDto(curriculumId=1)
-2024-06-30T14:08:15.602+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)])
-2024-06-30T14:08:15.603+09:00  INFO 25512 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½: [CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)]
-2024-06-30T14:08:15.616+09:00 DEBUG 25512 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52, started on Sun Jun 30 14:07:56 KST 2024
-2024-06-30T14:08:15.641+09:00  INFO 25512 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-06-30T14:08:15.644+09:00  INFO 25512 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-06-30T14:08:15.650+09:00  INFO 25512 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-06-30T14:10:24.824+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Starting StudiesServiceTest using Java 17.0.9 with PID 8596 (started by ewoo2 in C:\Users\ewoo2\OneDrive\ï¿½ï¿½ï¿½ï¿½\GitHub\ï¿½ï¿½ï¿½ï¿½SWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®-Win\2024-1-CECD1-BlueCode-3\Back)
-2024-06-30T14:10:24.825+09:00 DEBUG 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Running with Spring Boot v3.2.5, Spring v6.1.6
-2024-06-30T14:10:24.827+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : The following 1 profile is active: "dev"
-2024-06-30T14:10:24.865+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52
-2024-06-30T14:10:25.833+09:00  INFO 8596 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-06-30T14:10:26.036+09:00  INFO 8596 --- [chatbot] [Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 192 ms. Found 8 JPA repository interfaces.
-2024-06-30T14:10:26.668+09:00  INFO 8596 --- [chatbot] [Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-06-30T14:10:26.742+09:00  INFO 8596 --- [chatbot] [Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2024-06-30T14:10:26.781+09:00  INFO 8596 --- [chatbot] [Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-06-30T14:10:27.155+09:00  INFO 8596 --- [chatbot] [Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-06-30T14:10:27.190+09:00  INFO 8596 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-06-30T14:10:27.474+09:00  INFO 8596 --- [chatbot] [Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@e993715
-2024-06-30T14:10:27.477+09:00  INFO 8596 --- [chatbot] [Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-06-30T14:10:27.538+09:00  WARN 8596 --- [chatbot] [Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-06-30T14:10:28.792+09:00  INFO 8596 --- [chatbot] [Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-06-30T14:10:29.672+09:00  INFO 8596 --- [chatbot] [Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-06-30T14:10:30.220+09:00  INFO 8596 --- [chatbot] [Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-06-30T14:10:31.389+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : Ã©ï¿½ï¿½ 4: HARDï¿½Ð½ï¿½ï¿½Ú·ï¿½: 4. Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½. - ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½
-2024-06-30T14:10:31.393+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.config.InitDb$InitService    : 7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:10:31.524+09:00  WARN 8596 --- [chatbot] [Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-06-30T14:10:31.553+09:00  WARN 8596 --- [chatbot] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
-
-Using generated security password: bc2c4350-b1e4-40de-8ce4-e87abfb6cba9
+Using generated security password: 792a2d81-9999-418b-a124-0c0f6822cdfb
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-06-30T14:10:31.779+09:00 DEBUG 8596 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in 'requestMappingHandlerMapping'
-2024-06-30T14:10:31.973+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2024-06-30T14:10:32.041+09:00  INFO 8596 --- [chatbot] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@73f94f48, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@27dc95b9, org.springframework.security.web.context.SecurityContextHolderFilter@2227fa03, org.springframework.security.web.header.HeaderWriterFilter@29beac4e, org.springframework.web.filter.CorsFilter@4d8f917f, org.springframework.security.web.authentication.logout.LogoutFilter@763ff91, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@61f26cba, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4d0042eb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@125a6446, org.springframework.security.web.access.ExceptionTranslationFilter@6224872f, org.springframework.security.web.access.intercept.AuthorizationFilter@339cedbb]
-2024-06-30T14:10:32.330+09:00 DEBUG 8596 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2024-06-30T14:10:32.377+09:00 DEBUG 8596 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2024-06-30T14:10:32.574+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : Started StudiesServiceTest in 8.057 seconds (process running for 9.421)
-2024-06-30T14:10:32.578+09:00  INFO 8596 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-06-30T14:10:33.075+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
-2024-06-30T14:10:33.108+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : testGetCurriculumText ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:10:33.129+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@5ac92082, levelType: EASY
-2024-06-30T14:10:33.131+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText called with dto: DataCallDto(userId=1, curriculumId=2), levelType: EASY
-2024-06-30T14:10:33.136+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getKeywordForLevel called with curriculum: com.bluecode.chatbot.domain.Curriculums@3db32d5, levelType: EASY
-2024-06-30T14:10:33.214+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
-2024-06-30T14:10:33.226+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-06-30T14:10:33.234+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Writing [{messages=[{role=system, content=ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ©ï¿½Í¾ï¿½.}, {role=user, content=ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. (Å°ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½Ì½ï¿½: )}], max_tokens=1000, model=gpt-4o}] as "application/json"
-2024-06-30T14:10:43.548+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Response 200 OK
-2024-06-30T14:10:43.550+09:00 DEBUG 8596 --- [chatbot] [Test worker] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
-2024-06-30T14:10:43.552+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : requestGptText response: {
-  "id": "chatcmpl-9fh7Z1TEpVAJ6iUTNbAkdz1EScrFV",
-  "object": "chat.completion",
-  "created": 1719724233,
-  "model": "gpt-4o-2024-05-13",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-        "content": "ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, Ç³ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Â´ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ã¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.\n\n### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½\n1. **ï¿½ï¿½ï¿½ï¿½**:\n   - 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥\n   - ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ú¹Ìµï¿½ ï¿½×·ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Ì½ï¿½(Monty Python)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n2. **Æ¯Â¡**:\n   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½**: Windows, macOS, Linux ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½î¿µÃ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½\n   - **ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½\n   - **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½**ï¿½ï¿½ **ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½**ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½\n1. **ï¿½ï¿½Ä¡**:\n   - [Python ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®](https://www.python.org/)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½\n   - Windowsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .exe ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½Ä¡, macOSï¿½ï¿½ Linuxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¹Ì³ï¿½ ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½\n\n2. **ï¿½âº» ï¿½ï¿½ï¿½ï¿½**:\n   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Í¹Ì³ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ `python` ï¿½Ç´ï¿½ `python3` ï¿½Ô·ï¿½\n   - ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: VS Code, PyCharm, Jupyter Notebook ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n\n### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½\n1. **ï¿½Ö¼ï¿½**:\n   ```python\n   # ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½\n   \"\"\"\n   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½\n   ï¿½Ö¼ï¿½\n   \"\"\"\n   ```\n\n2. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**:\n   ```python\n   x = 5            # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n   y = 3.14         # ï¿½Ç¼ï¿½ï¿½ï¿½\n   name = \"Python\"  # ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½\n   is_active = True # ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½\n   ```\n\n3. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**:\n   - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `+`, `-`, `*`, `/`, `//`, `%`, `**`\n   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `==`, `!=`, `<`, `>`, `<=`, `>=`\n   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `and`, `or`, `not`\n\n4. **ï¿½ï¿½ï¿½Ç¹ï¿½**:\n   ```python\n   if x > 0:\n       print(\"ï¿½ï¿½ï¿½\")\n   elif x == 0:\n       print(\"0\")\n   else:\n       print(\"ï¿½ï¿½ï¿½ï¿½\")\n   ```\n\n5. **ï¿½Ýºï¿½ï¿½ï¿½**:\n   ```python\n   # while ï¿½ï¿½\n   i = 0\n   while i < 5:\n       print(i)\n       i += 1\n\n   # for ï¿½ï¿½\n   for i in range(5):\n       print(i)\n   ```\n\n### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n1. **ï¿½ï¿½ï¿½ï¿½Æ®**:\n   ```python\n   fruits = [\"apple\", \"banana\", \"cherry\"]\n   fruits.append(\"orange\") # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½\n   ```\n\n2. **Æ©ï¿½ï¿½**:\n   ```python\n   point = (10, 20)\n   x, y = point # ï¿½ï¿½ï¿½ï¿½Å·\n   ```\n\n3. **ï¿½ï¿½Å³Ê¸ï¿½**:\n   ```python\n   student = {\"name\": \"John\", \"age\": 25}\n   age = student[\"age\"]  # ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n   ```\n\n4. **ï¿½ï¿½Æ®**:\n   ```python\n   unique_numbers = {1, 2, 3, 3, 2}\n   unique_numbers.add(4)  # ï¿½ï¿½ ï¿½ß°ï¿½\n   ```\n\n### ï¿½Ô¼ï¿½\n1. **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½**:\n   ```python\n   def greet(name):\n       return f\"Hello, {name}!\"\n\n   print(greet(\"Alice\"))\n   ```\n\n2. **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**:\n   ```python\n   square = lambda x: x ** 2\n   print(square(5))\n   ```\n\n### Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½\n1. **Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**:\n   ```python\n   class Person:\n       def __init__(self, name, age):\n           self.name = name\n           self.age = age\n\n       def greeting(self):\n           return f\"Hi, my name is {self.name}\"\n\n   john = Person(\"John\", 25)\n   print(john.greeting())\n   ```\n\n### ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½\n1. **try-except ï¿½ï¿½ï¿½**:\n   ```python\n   try:\n       result = 10 / 0"
-      },
-      "logprobs": null,
-      "finish_reason": "length"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 51,
-    "completion_tokens": 1000,
-    "total_tokens": 1051
-  },
-  "system_fingerprint": "fp_d576307f90"
-}
-
-2024-06-30T14:10:43.562+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : Extracted content from GPT response: ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, Ç³ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Â´ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ã¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½ï¿½ï¿½**:
-   - 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥
-   - ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ú¹Ìµï¿½ ï¿½×·ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Ì½ï¿½(Monty Python)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-2. **Æ¯Â¡**:
-   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½**: Windows, macOS, Linux ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½î¿µÃ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
-   - **ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
-   - **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½**ï¿½ï¿½ **ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½**ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½Ä¡**:
-   - [Python ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®](https://www.python.org/)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½
-   - Windowsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .exe ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½Ä¡, macOSï¿½ï¿½ Linuxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¹Ì³ï¿½ ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
-
-2. **ï¿½âº» ï¿½ï¿½ï¿½ï¿½**:
-   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Í¹Ì³ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ `python` ï¿½Ç´ï¿½ `python3` ï¿½Ô·ï¿½
-   - ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: VS Code, PyCharm, Jupyter Notebook ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½Ö¼ï¿½**:
-   ```python
-   # ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½
-   """
-   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
-   ï¿½Ö¼ï¿½
-   """
-   ```
-
-2. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**:
-   ```python
-   x = 5            # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-   y = 3.14         # ï¿½Ç¼ï¿½ï¿½ï¿½
-   name = "Python"  # ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
-   is_active = True # ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½
-   ```
-
-3. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**:
-   - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `+`, `-`, `*`, `/`, `//`, `%`, `**`
-   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `==`, `!=`, `<`, `>`, `<=`, `>=`
-   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `and`, `or`, `not`
-
-4. **ï¿½ï¿½ï¿½Ç¹ï¿½**:
-   ```python
-   if x > 0:
-       print("ï¿½ï¿½ï¿½")
-   elif x == 0:
-       print("0")
-   else:
-       print("ï¿½ï¿½ï¿½ï¿½")
-   ```
-
-5. **ï¿½Ýºï¿½ï¿½ï¿½**:
-   ```python
-   # while ï¿½ï¿½
-   i = 0
-   while i < 5:
-       print(i)
-       i += 1
-
-   # for ï¿½ï¿½
-   for i in range(5):
-       print(i)
-   ```
-
-### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½ï¿½ï¿½Æ®**:
-   ```python
-   fruits = ["apple", "banana", "cherry"]
-   fruits.append("orange") # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
-   ```
-
-2. **Æ©ï¿½ï¿½**:
-   ```python
-   point = (10, 20)
-   x, y = point # ï¿½ï¿½ï¿½ï¿½Å·
-   ```
-
-3. **ï¿½ï¿½Å³Ê¸ï¿½**:
-   ```python
-   student = {"name": "John", "age": 25}
-   age = student["age"]  # ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   ```
-
-4. **ï¿½ï¿½Æ®**:
-   ```python
-   unique_numbers = {1, 2, 3, 3, 2}
-   unique_numbers.add(4)  # ï¿½ï¿½ ï¿½ß°ï¿½
-   ```
-
-### ï¿½Ô¼ï¿½
-1. **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½**:
-   ```python
-   def greet(name):
-       return f"Hello, {name}!"
-
-   print(greet("Alice"))
-   ```
-
-2. **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**:
-   ```python
-   square = lambda x: x ** 2
-   print(square(5))
-   ```
-
-### Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½
-1. **Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**:
-   ```python
-   class Person:
-       def __init__(self, name, age):
-           self.name = name
-           self.age = age
-
-       def greeting(self):
-           return f"Hi, my name is {self.name}"
-
-   john = Person("John", 25)
-   print(john.greeting())
-   ```
-
-### ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
-1. **try-except ï¿½ï¿½ï¿½**:
-   ```python
-   try:
-       result = 10 / 0
-2024-06-30T14:10:43.564+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesService       : getCurriculumText returning: StudyTextDto(text=ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, Ç³ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Â´ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ã¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½ï¿½ï¿½**:
-   - 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥
-   - ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ú¹Ìµï¿½ ï¿½×·ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Ì½ï¿½(Monty Python)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-2. **Æ¯Â¡**:
-   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½**: Windows, macOS, Linux ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½î¿µÃ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
-   - **ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
-   - **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½**ï¿½ï¿½ **ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½**ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½Ä¡**:
-   - [Python ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®](https://www.python.org/)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½
-   - Windowsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .exe ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½Ä¡, macOSï¿½ï¿½ Linuxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¹Ì³ï¿½ ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
-
-2. **ï¿½âº» ï¿½ï¿½ï¿½ï¿½**:
-   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Í¹Ì³ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ `python` ï¿½Ç´ï¿½ `python3` ï¿½Ô·ï¿½
-   - ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: VS Code, PyCharm, Jupyter Notebook ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½Ö¼ï¿½**:
-   ```python
-   # ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½
-   """
-   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
-   ï¿½Ö¼ï¿½
-   """
-   ```
-
-2. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**:
-   ```python
-   x = 5            # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-   y = 3.14         # ï¿½Ç¼ï¿½ï¿½ï¿½
-   name = "Python"  # ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
-   is_active = True # ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½
-   ```
-
-3. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**:
-   - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `+`, `-`, `*`, `/`, `//`, `%`, `**`
-   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `==`, `!=`, `<`, `>`, `<=`, `>=`
-   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `and`, `or`, `not`
-
-4. **ï¿½ï¿½ï¿½Ç¹ï¿½**:
-   ```python
-   if x > 0:
-       print("ï¿½ï¿½ï¿½")
-   elif x == 0:
-       print("0")
-   else:
-       print("ï¿½ï¿½ï¿½ï¿½")
-   ```
-
-5. **ï¿½Ýºï¿½ï¿½ï¿½**:
-   ```python
-   # while ï¿½ï¿½
-   i = 0
-   while i < 5:
-       print(i)
-       i += 1
-
-   # for ï¿½ï¿½
-   for i in range(5):
-       print(i)
-   ```
-
-### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½ï¿½ï¿½Æ®**:
-   ```python
-   fruits = ["apple", "banana", "cherry"]
-   fruits.append("orange") # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
-   ```
-
-2. **Æ©ï¿½ï¿½**:
-   ```python
-   point = (10, 20)
-   x, y = point # ï¿½ï¿½ï¿½ï¿½Å·
-   ```
-
-3. **ï¿½ï¿½Å³Ê¸ï¿½**:
-   ```python
-   student = {"name": "John", "age": 25}
-   age = student["age"]  # ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   ```
-
-4. **ï¿½ï¿½Æ®**:
-   ```python
-   unique_numbers = {1, 2, 3, 3, 2}
-   unique_numbers.add(4)  # ï¿½ï¿½ ï¿½ß°ï¿½
-   ```
-
-### ï¿½Ô¼ï¿½
-1. **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½**:
-   ```python
-   def greet(name):
-       return f"Hello, {name}!"
-
-   print(greet("Alice"))
-   ```
-
-2. **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**:
-   ```python
-   square = lambda x: x ** 2
-   print(square(5))
-   ```
-
-### Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½
-1. **Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**:
-   ```python
-   class Person:
-       def __init__(self, name, age):
-           self.name = name
-           self.age = age
-
-       def greeting(self):
-           return f"Hi, my name is {self.name}"
-
-   john = Person("John", 25)
-   print(john.greeting())
-   ```
-
-### ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
-1. **try-except ï¿½ï¿½ï¿½**:
-   ```python
-   try:
-       result = 10 / 0)
-2024-06-30T14:10:43.573+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.StudiesServiceTest   : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ï¿½ï¿½ï¿½Ì½ï¿½(Python)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ß¿ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, Ç³ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Â´ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ã¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½ï¿½ï¿½**:
-   - 1991ï¿½ï¿½ ï¿½Íµï¿½ ï¿½ï¿½ ï¿½Î¼ï¿½(Guido van Rossum)ï¿½ï¿½ ï¿½ï¿½Ç¥
-   - ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ú¹Ìµï¿½ ï¿½×·ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Ì½ï¿½(Monty Python)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-2. **Æ¯Â¡**:
-   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½**: Windows, macOS, Linux ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½î¿µÃ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   - **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
-   - **ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
-   - **ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½**ï¿½ï¿½ **ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½**ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½Ä¡**:
-   - [Python ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®](https://www.python.org/)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½
-   - Windowsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .exe ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½Ä¡, macOSï¿½ï¿½ Linuxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¹Ì³ï¿½ ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
-
-2. **ï¿½âº» ï¿½ï¿½ï¿½ï¿½**:
-   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Í¹Ì³ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ `python` ï¿½Ç´ï¿½ `python3` ï¿½Ô·ï¿½
-   - ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: VS Code, PyCharm, Jupyter Notebook ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-### ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½Ö¼ï¿½**:
-   ```python
-   # ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½
-   """
-   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
-   ï¿½Ö¼ï¿½
-   """
-   ```
-
-2. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½**:
-   ```python
-   x = 5            # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-   y = 3.14         # ï¿½Ç¼ï¿½ï¿½ï¿½
-   name = "Python"  # ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
-   is_active = True # ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½
-   ```
-
-3. **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**:
-   - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `+`, `-`, `*`, `/`, `//`, `%`, `**`
-   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `==`, `!=`, `<`, `>`, `<=`, `>=`
-   - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: `and`, `or`, `not`
-
-4. **ï¿½ï¿½ï¿½Ç¹ï¿½**:
-   ```python
-   if x > 0:
-       print("ï¿½ï¿½ï¿½")
-   elif x == 0:
-       print("0")
-   else:
-       print("ï¿½ï¿½ï¿½ï¿½")
-   ```
-
-5. **ï¿½Ýºï¿½ï¿½ï¿½**:
-   ```python
-   # while ï¿½ï¿½
-   i = 0
-   while i < 5:
-       print(i)
-       i += 1
-
-   # for ï¿½ï¿½
-   for i in range(5):
-       print(i)
-   ```
-
-### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-1. **ï¿½ï¿½ï¿½ï¿½Æ®**:
-   ```python
-   fruits = ["apple", "banana", "cherry"]
-   fruits.append("orange") # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
-   ```
-
-2. **Æ©ï¿½ï¿½**:
-   ```python
-   point = (10, 20)
-   x, y = point # ï¿½ï¿½ï¿½ï¿½Å·
-   ```
-
-3. **ï¿½ï¿½Å³Ê¸ï¿½**:
-   ```python
-   student = {"name": "John", "age": 25}
-   age = student["age"]  # ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   ```
-
-4. **ï¿½ï¿½Æ®**:
-   ```python
-   unique_numbers = {1, 2, 3, 3, 2}
-   unique_numbers.add(4)  # ï¿½ï¿½ ï¿½ß°ï¿½
-   ```
-
-### ï¿½Ô¼ï¿½
-1. **ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½**:
-   ```python
-   def greet(name):
-       return f"Hello, {name}!"
-
-   print(greet("Alice"))
-   ```
-
-2. **ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½**:
-   ```python
-   square = lambda x: x ** 2
-   print(square(5))
-   ```
-
-### Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½
-1. **Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½**:
-   ```python
-   class Person:
-       def __init__(self, name, age):
-           self.name = name
-           self.age = age
-
-       def greeting(self):
-           return f"Hi, my name is {self.name}"
-
-   john = Person("John", 25)
-   print(john.greeting())
-   ```
-
-### ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
-1. **try-except ï¿½ï¿½ï¿½**:
-   ```python
-   try:
-       result = 10 / 0
-2024-06-30T14:10:43.593+09:00  INFO 8596 --- [chatbot] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.bluecode.chatbot.service.CurriculumServiceTest]: CurriculumsServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-06-30T14:10:43.595+09:00  INFO 8596 --- [chatbot] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.bluecode.chatbot.ChatbotApplication for test class com.bluecode.chatbot.service.CurriculumServiceTest
-2024-06-30T14:10:43.610+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
-2024-06-30T14:10:43.611+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : testGetCurriculumChapters ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-2024-06-30T14:10:43.614+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters called with dto: CurriculumChapCallDto(curriculumId=1)
-2024-06-30T14:10:43.646+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.chatbot.service.CurriculumsService   : getCurriculumChapters returning: CurriculumChapResponseDto(list=[CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)])
-2024-06-30T14:10:43.647+09:00  INFO 8596 --- [chatbot] [Test worker] c.b.c.service.CurriculumsServiceTest     : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½: [CurriculumChapElementDto(curriculumId=2, text=1. ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=3, text=2. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Ä¡ È¯ï¿½ï¿½), CurriculumChapElementDto(curriculumId=4, text=3. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=5, text=4. Ç¥ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=6, text=5. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½), CurriculumChapElementDto(curriculumId=7, text=6. ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=8, text=7. ï¿½Ö¼ï¿½,ï¿½ï¿½ï¿½Ì½ã¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½È£, ï¿½ß°ï¿½È£, ï¿½Ò°ï¿½È£ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=9, text=8. ï¿½Ô¼ï¿½), CurriculumChapElementDto(curriculumId=10, text=9. ï¿½ï¿½ï¿½Ú¿ï¿½), CurriculumChapElementDto(curriculumId=11, text=10. ï¿½ï¿½ï¿½Ç¹ï¿½), CurriculumChapElementDto(curriculumId=12, text=11. ï¿½ï¿½ï¿½È­), CurriculumChapElementDto(curriculumId=13, text=12. ï¿½Þ¼ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=14, text=13. ï¿½ï¿½ï¿½ï¿½Æ®), CurriculumChapElementDto(curriculumId=15, text=14. ï¿½Ýºï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=16, text=15. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½), CurriculumChapElementDto(curriculumId=17, text=16. ï¿½Ã·ï¿½ï¿½ï¿½), CurriculumChapElementDto(curriculumId=18, text=17. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½)]
-2024-06-30T14:10:43.660+09:00 DEBUG 8596 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@4e628b52, started on Sun Jun 30 14:10:24 KST 2024
-2024-06-30T14:10:43.683+09:00  INFO 8596 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-06-30T14:10:43.685+09:00  INFO 8596 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-06-30T14:10:43.692+09:00  INFO 8596 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-06T18:25:59.242+09:00 DEBUG 25212 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in 'requestMappingHandlerMapping'
+2024-07-06T18:25:59.414+09:00 DEBUG 25212 --- [chatbot] [Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-06T18:25:59.456+09:00  INFO 25212 --- [chatbot] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6852c3d2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5967b3ce, org.springframework.security.web.context.SecurityContextHolderFilter@11fa5334, org.springframework.security.web.header.HeaderWriterFilter@61f26cba, org.springframework.web.filter.CorsFilter@18de84f0, org.springframework.security.web.authentication.logout.LogoutFilter@1334a246, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2c476b8f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2e5affb3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@34408f1b, org.springframework.security.web.access.ExceptionTranslationFilter@367026f, org.springframework.security.web.access.intercept.AuthorizationFilter@4d8f917f]
+2024-07-06T18:25:59.647+09:00 DEBUG 25212 --- [chatbot] [Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-06T18:25:59.689+09:00 DEBUG 25212 --- [chatbot] [Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-06T18:25:59.866+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Started TestServiceTest in 6.755 seconds (process running for 8.095)
+2024-07-06T18:25:59.870+09:00  INFO 25212 --- [chatbot] [Test worker] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-06T18:26:00.306+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : testForInitialTest Å×½ºÆ® ½ÃÀÛ
+2024-07-06T18:26:00.307+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : forInitialTest with userId: 2, chapterNum: 1
+2024-07-06T18:26:00.307+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 2
+2024-07-06T18:26:00.333+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@6cd79426, com.bluecode.chatbot.domain.Quiz@f04b315]
+2024-07-06T18:26:00.333+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 1
+2024-07-06T18:26:00.336+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@5e6dcfa]
+2024-07-06T18:26:00.337+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType chapterNum: 1, type: NUM, count: 1
+2024-07-06T18:26:00.340+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@2e706bc6]
+2024-07-06T18:26:00.341+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : forInitialTest response: TestResponseDto(tests=[TestResponseElementDto(quizId=3, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: ÃÊ±ÞÀÚ 1¹øÂ°, level=NORMAL, quizType=NUM, q1=¿À´ä1, q2=¿À´ä2, q3=Á¤´ä3, q4=¿À´ä4), TestResponseElementDto(quizId=1, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: Áß±ÞÀÚ 1¹øÂ°, level=HARD, quizType=NUM, q1=Á¤´ä1, q2=¿À´ä2, q3=¿À´ä3, q4=¿À´ä4), TestResponseElementDto(quizId=3, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: ÃÊ±ÞÀÚ 1¹øÂ°, level=NORMAL, quizType=NUM, q1=¿À´ä1, q2=¿À´ä2, q3=Á¤´ä3, q4=¿À´ä4), TestResponseElementDto(quizId=1, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: Áß±ÞÀÚ 1¹øÂ°, level=HARD, quizType=NUM, q1=Á¤´ä1, q2=¿À´ä2, q3=¿À´ä3, q4=¿À´ä4)])
+2024-07-06T18:26:00.350+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initial test: TestResponseElementDto(quizId=3, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: ÃÊ±ÞÀÚ 1¹øÂ°, level=NORMAL, quizType=NUM, q1=¿À´ä1, q2=¿À´ä2, q3=Á¤´ä3, q4=¿À´ä4)
+2024-07-06T18:26:00.350+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initial test: TestResponseElementDto(quizId=1, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: Áß±ÞÀÚ 1¹øÂ°, level=HARD, quizType=NUM, q1=Á¤´ä1, q2=¿À´ä2, q3=¿À´ä3, q4=¿À´ä4)
+2024-07-06T18:26:00.350+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initial test: TestResponseElementDto(quizId=3, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: ÃÊ±ÞÀÚ 1¹øÂ°, level=NORMAL, quizType=NUM, q1=¿À´ä1, q2=¿À´ä2, q3=Á¤´ä3, q4=¿À´ä4)
+2024-07-06T18:26:00.350+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Initial test: TestResponseElementDto(quizId=1, text=Å×½ºÆ® ¹®Á¦-Ã©ÅÍ 1: Áß±ÞÀÚ 1¹øÂ°, level=HARD, quizType=NUM, q1=Á¤´ä1, q2=¿À´ä2, q3=¿À´ä3, q4=¿À´ä4)
+2024-07-06T18:26:00.365+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : testSubmitAnswer Å×½ºÆ® ½ÃÀÛ
+2024-07-06T18:26:00.365+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : submitAnswer with dto: TestAnswerCallDto(userId=2, quizId=1, answer=Á¤´ä)
+2024-07-06T18:26:00.379+09:00  INFO 25212 --- [chatbot] [Test worker] c.bluecode.chatbot.service.TestService   : submitAnswer response: TestAnswerResponseDto(passed=false)
+2024-07-06T18:26:00.380+09:00  INFO 25212 --- [chatbot] [Test worker] c.b.chatbot.service.TestServiceTest      : Submit answer response: TestAnswerResponseDto(passed=false)
+2024-07-06T18:26:00.391+09:00 DEBUG 25212 --- [chatbot] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@27fde870, started on Sat Jul 06 18:25:53 KST 2024
+2024-07-06T18:26:00.407+09:00  INFO 25212 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-06T18:26:00.408+09:00  INFO 25212 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-06T18:26:00.414+09:00  INFO 25212 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
