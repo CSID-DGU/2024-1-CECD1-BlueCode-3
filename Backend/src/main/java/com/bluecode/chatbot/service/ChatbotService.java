@@ -22,15 +22,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-public class ChatService {
+public class ChatbotService {
     private final RestTemplate restTemplate;
     private final String apiKey;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private List<Map<String, String>> conversationHistory = new ArrayList<>();
-    private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChatbotService.class);
 
     @Autowired
-    public ChatService(RestTemplate restTemplate, @Value("${api.key}") String apiKey) {
+    public ChatbotService(RestTemplate restTemplate, @Value("${api.key}") String apiKey) {
         this.restTemplate = restTemplate;
         this.apiKey = apiKey;
     }
