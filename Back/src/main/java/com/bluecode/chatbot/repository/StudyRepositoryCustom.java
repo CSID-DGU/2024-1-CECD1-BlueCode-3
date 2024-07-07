@@ -8,4 +8,7 @@ public interface StudyRepositoryCustom {
 
     // 커리큘럼 id 와 유저 id 기반 Studies 리스트 검색
     List<Studies> findAllByCurriculumIdAndUserId(Long curriculumId, Long userId);
+
+    // 유저 id 기반 Studies 리스트 검색
+    List<Studies> findAllByUserId(Long userId);
 }
