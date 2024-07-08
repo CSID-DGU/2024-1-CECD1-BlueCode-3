@@ -172,15 +172,15 @@ public class TestService {
         Optional<Quiz> quiz = quizRepository.findById(dto.getQuizId());
 
         if (quiz.isEmpty()) {
-            throw new IllegalArgumentException("유효하지 않은 quizId 입니다.");
+            throw new IllegalArgumentException("유효하지 않은 퀴즈 id 입니다.");
         }
 
         if (user.isEmpty()) {
-            throw new IllegalArgumentException("유효하지 않은 userId 입니다.");
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
         }
 
         if (test.isEmpty()) {
-            throw new IllegalArgumentException("유효하지 않은 testId 입니다.");
+            throw new IllegalArgumentException("유효하지 않은 테스트 id 입니다.");
         }
 
         // 사용자 답안 채점
@@ -199,4 +199,6 @@ public class TestService {
         log.info("submitAnswer response: {}", responseDto);
         return responseDto;
     }
+
+
 }
