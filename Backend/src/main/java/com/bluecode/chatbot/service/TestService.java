@@ -27,7 +27,7 @@ public class TestService {
 
     // 초기 테스트 구성
     public TestResponseDto createInitTest(DataCallDto dto) throws Exception {
-        log.info("forInitialTest with userId: {}, chapterNum: {}", dto.getUserId(), dto.getCurriculumId());
+        log.info("createInitTest with userId: {}, curriculumId: {}", dto.getUserId(), dto.getCurriculumId());
 
         Optional<Users> user = userRepository.findByUserId(dto.getUserId());
         Optional<Curriculums> chapter = curriculumRepository.findById(dto.getCurriculumId());
@@ -95,7 +95,7 @@ public class TestService {
 
         responseDto.setTests(testElements);
 
-        log.info("forInitialTest response: {}", responseDto);
+        log.info("createInitTest response: {}", responseDto);
         return responseDto;
     }
 
@@ -128,6 +128,8 @@ public class TestService {
         testQuizzes.add(normalQuizzes.get(0));
         testQuizzes.add(hardQuizzes.get(0));
 
+        List<Tests> tests = new ArrayList<>();
+
         // tests 테이블에 생성된 초기 테스트 현황 생성 및 저장
         for (Quiz quiz : testQuizzes) {
             Tests test = new Tests();
@@ -138,22 +140,24 @@ public class TestService {
             test.setWrongCount(0);
 
             testRepository.save(test);
+            tests.add(test);
         }
 
         TestResponseDto responseDto = new TestResponseDto();
         List<TestResponseElementDto> testElements = new ArrayList<>();
 
-        // 선택한 퀴즈를 DTO 요소로 변환
-        for (Quiz quiz : testQuizzes) {
+        for (int i = 0; i < tests.size(); i++) {
+
             TestResponseElementDto element = new TestResponseElementDto();
-            element.setQuizId(quiz.getQuizId());
-            element.setText(quiz.getText());
-            element.setLevel(quiz.getLevel());
-            element.setQuizType(quiz.getQuizType());
-            element.setQ1(quiz.getQ1());
-            element.setQ2(quiz.getQ2());
-            element.setQ3(quiz.getQ3());
-            element.setQ4(quiz.getQ4());
+            element.setTestId(tests.get(i).getTestId());
+            element.setQuizId(testQuizzes.get(i).getQuizId());
+            element.setText(testQuizzes.get(i).getText());
+            element.setLevel(testQuizzes.get(i).getLevel());
+            element.setQuizType(testQuizzes.get(i).getQuizType());
+            element.setQ1(testQuizzes.get(i).getQ1());
+            element.setQ2(testQuizzes.get(i).getQ2());
+            element.setQ3(testQuizzes.get(i).getQ3());
+            element.setQ4(testQuizzes.get(i).getQ4());
             testElements.add(element);
         }
 
@@ -163,8 +167,8 @@ public class TestService {
         return responseDto;
     }
 
-    // 답안 판정
-    public TestAnswerResponseDto submitAnswer(TestAnswerCallDto dto) {
+    // 객관식 문제 답안 판정
+    public TestAnswerResponseDto submitAnswerNum(TestAnswerCallDto dto) {
         log.info("submitAnswer with dto: {}", dto);
 
         Optional<Users> user = userRepository.findById(dto.getUserId());
@@ -200,5 +204,23 @@ public class TestService {
         return responseDto;
     }
 
+    // 초기 테스트 완료 판정
+    public String completeInitTest(Long userId) {
 
+        Optional<Users> user = userRepository.findByUserId(userId);
+
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (user.get().isInitTest()) {
+            throw new IllegalArgumentException("이미 초기 테스트 완료 처리 되었습니다.");
+        }
+
+        // 초기 테스트 완료 표시
+        user.get().setInitTest(true);
+        userRepository.save(user.get());
+
+        return "초기 테스트 완료";
+    }
 }
