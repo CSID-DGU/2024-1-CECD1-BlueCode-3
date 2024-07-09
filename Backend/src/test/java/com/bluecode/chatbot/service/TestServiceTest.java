@@ -529,7 +529,7 @@ class TestServiceTest {
         dto.setAnswer("정답");
 
         //when
-        TestAnswerResponseDto result = testService.submitAnswer(dto);
+        TestAnswerResponseDto result = testService.submitAnswerNum(dto);
 
         //then
 
@@ -594,7 +594,7 @@ class TestServiceTest {
         dto.setAnswer("오답");
 
         //when
-        TestAnswerResponseDto result = testService.submitAnswer(dto);
+        TestAnswerResponseDto result = testService.submitAnswerNum(dto);
 
         //then
 
@@ -663,9 +663,9 @@ class TestServiceTest {
         dto.setAnswer("오답");
 
         try {
-            testService.submitAnswer(dto);
+            testService.submitAnswerNum(dto);
         } catch (Exception e) {
-            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 userId 입니다.");
+            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 유저 테이블 id 입니다.");
         }
 
     }
@@ -727,9 +727,9 @@ class TestServiceTest {
         dto.setAnswer("오답");
 
         try {
-            testService.submitAnswer(dto);
+            testService.submitAnswerNum(dto);
         } catch (Exception e) {
-            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 quizId 입니다.");
+            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 퀴즈 id 입니다.");
         }
     }
 
@@ -790,9 +790,55 @@ class TestServiceTest {
         dto.setAnswer("오답");
 
         try {
-            testService.submitAnswer(dto);
+            testService.submitAnswerNum(dto);
         } catch (Exception e) {
-            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 testId 입니다.");
+            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 테스트 id 입니다.");
+        }
+    }
+
+    @Test
+    @DisplayName("completeInitTest 정상 작동 테스트")
+    public void completeInitTest() throws Exception {
+        //given
+        Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
+        userRepository.save(userA);
+
+        //when
+        String result = testService.completeInitTest(userA.getUserId());
+
+        //then
+        Assertions.assertThat(result).isEqualTo("초기 테스트 완료");
+    }
+
+    @Test
+    @DisplayName("유효하지 않은 userId일 시, Exception 발생")
+    public void invalidUserId() throws Exception {
+        //given
+        // DB에 존재하지 않는 user 가정
+        Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
+
+        try {
+            //when
+            String result = testService.completeInitTest(userA.getUserId());
+        } catch (IllegalArgumentException e) {
+            //then
+            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 유저 테이블 id 입니다.");
+        }
+    }
+
+    @Test
+    @DisplayName("이미 initTest == true 일 경우, Exception 발생")
+    public void alreadyCompletedInitTest() throws Exception {
+        //given
+        Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
+        userRepository.save(userA);
+
+        try {
+            //when
+            String result = testService.completeInitTest(userA.getUserId());
+        } catch (IllegalArgumentException e) {
+            //then
+            Assertions.assertThat(e.getMessage()).isEqualTo("이미 초기 테스트 완료 처리 되었습니다.");
         }
     }
 }
