@@ -8,6 +8,7 @@ import com.bluecode.chatbot.repository.TestRepository;
 import com.bluecode.chatbot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class TestService {
     private final TestRepository testRepository;
     private final UserRepository userRepository;
     private final QuizRepository quizRepository;
+
+    // 미션 처리를 위한 클래스
+    private final ApplicationEventPublisher eventPublisher;
 
     // 초기 테스트 구성
     public TestResponseDto createInitTest(DataCallDto dto) throws Exception {
@@ -163,7 +167,7 @@ public class TestService {
 
         responseDto.setTests(testElements);
 
-        log.info("forInitialTest response: {}", responseDto);
+        log.info("createNormalTest response: {}", responseDto);
         return responseDto;
     }
 
@@ -199,6 +203,9 @@ public class TestService {
 
         TestAnswerResponseDto responseDto = new TestAnswerResponseDto();
         responseDto.setPassed(passed);
+
+        // test 관련 미션 처리 로직
+        eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST));
 
         log.info("submitAnswer response: {}", responseDto);
         return responseDto;
