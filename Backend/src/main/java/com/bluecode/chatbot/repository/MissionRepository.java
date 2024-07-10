@@ -13,6 +13,7 @@ import java.util.List;
 public interface MissionRepository extends JpaRepository<Missions, Long> {
 
     // 미션 타입 기반 리스트 검색
-    @Query("select m from Missions m where m.missionType = :missionType")
+    @Query("select m from Missions m " +
+            "where m.missionType = :missionType")
     List<Missions> findAllByMissionType(@Param("missionType")MissionType missionType);
 }
