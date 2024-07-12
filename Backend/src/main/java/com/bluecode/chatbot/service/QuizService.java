@@ -27,7 +27,7 @@ public class QuizService {
 
         // 루트 커리큘럼을 대상으로 호출 시 Exception 발생
         if (curriculums.getChapterNum() == 0) {
-            throw new Exception("루트 커리큘럼은 유효하지 않습니다.");
+            throw new IllegalArgumentException("루트 커리큘럼은 유효하지 않습니다.");
         }
 
         // 주어진 챕터와 유형에 맞는 모든 퀴즈를 담은 리스트
@@ -56,7 +56,7 @@ public class QuizService {
 
         // 루트 커리큘럼을 대상으로 호출 시 Exception 발생
         if (curriculums.getChapterNum() == 0) {
-            throw new Exception("루트 커리큘럼은 유효하지 않습니다.");
+            throw new IllegalArgumentException("루트 커리큘럼은 유효하지 않습니다.");
         }
 
         List<Quiz> quizzes = quizRepository.findByCurriculumIdAndLevel(curriculums.getCurriculumId(), quizLevel);
