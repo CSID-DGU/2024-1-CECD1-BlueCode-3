@@ -3,7 +3,9 @@ package com.bluecode.chatbot.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,11 +23,15 @@ public class UserMissions {
     @JoinColumn(name = "user_id")
     private Users user;
 
-    // 생성 날짜
-    private LocalDateTime startDate;
+    // 시작 날짜
+    private LocalDate startDate;
 
-    // 클리어 날짜
-    private LocalDateTime endDate;
+    // 완료해야 할 날짜
+    private LocalDate endDate;
+
+    // 클리어한 날짜
+    @UpdateTimestamp
+    private LocalDateTime clearDateTime;
 
     // 할당된 미션
     @ManyToOne(fetch = FetchType.LAZY)

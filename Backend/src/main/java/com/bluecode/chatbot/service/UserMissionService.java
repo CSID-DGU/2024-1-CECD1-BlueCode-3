@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +68,7 @@ public class UserMissionService {
             userMission.setUser(user);
             userMission.setMission(mission);
             userMission.setCurrentCount(0);
-            userMission.setStartDate(LocalDateTime.now());
+            userMission.setStartDate(LocalDate.now());
             userMission.setEndDate(calculateEndTime(missionType));
             userMission.setMissionStatus(MissionStatus.PROGRESS);
             userMissionRepository.save(userMission);
@@ -77,11 +77,11 @@ public class UserMissionService {
     }
 
     // 미션 제한 시간 계산
-    private LocalDateTime calculateEndTime(MissionType missionType) {
+    private LocalDate calculateEndTime(MissionType missionType) {
         if (missionType == MissionType.DAILY) {
-            return LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+            return LocalDate.now().plusDays(1);
         } else if (missionType == MissionType.WEEKLY) {
-            return LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(0).withMinute(0).withSecond(0).withNano(0);
+            return LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
         } else {
             return null; // challenge 미션은 종료 시간 없음
         }
@@ -92,8 +92,9 @@ public class UserMissionService {
         // 진행중인 (일일 / 주간)미션 검색
         List<UserMissions> userMissions = userMissionRepository.findByMissionTypeAndMissionStatus(missionType, MissionStatus.PROGRESS);
         for (UserMissions userMission : userMissions) {
-            if (LocalDateTime.now().isAfter(userMission.getEndDate())) {
+            if (LocalDate.now().isAfter(userMission.getEndDate())) {
                 userMission.setMissionStatus(MissionStatus.FAILED); // 완료하지 못한 미션 실패 처리 진행
+                userMission.setClearDateTime(null);
                 userMissionRepository.save(userMission);
             }
         }

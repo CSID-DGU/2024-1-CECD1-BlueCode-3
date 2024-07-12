@@ -6,11 +6,33 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UserMissionRepository extends JpaRepository<UserMissions, Long> {
+
+    // user, missionType 기반 진행중인 미션 리스트 검색
+    @Query("select um from UserMissions um " +
+            "join fetch um.user " +
+            "join fetch um.mission " +
+            "where um.user = :user " +
+            "and um.missionStatus = com.bluecode.chatbot.domain.MissionStatus.PROGRESS " +
+            "and um.mission.missionType = :missionType")
+    List<UserMissions> findAllProgressMissionByUser(@Param("user") Users user,
+                                                    @Param("missionType") MissionType missionType);
+
+    // user, missionType, 미션 시작 날짜 기반 완료한 미션 리스트 검색
+    @Query("select um from UserMissions um " +
+            "join fetch um.user " +
+            "join fetch um.mission " +
+            "where um.user = :user " +
+            "and um.missionStatus = com.bluecode.chatbot.domain.MissionStatus.COMPLETED " +
+            "and um.mission.missionType = :missionType " +
+            "and um.startDate = :startDate")
+    List<UserMissions> findAllCompleteMissionByUserAndStartDate(@Param("user") Users user,
+                                                    @Param("startDate") LocalDate startDate);
 
 
     // 유저 테이블 id와 미션 테이블 id 기반 단일 검색
@@ -43,9 +65,6 @@ public interface UserMissionRepository extends JpaRepository<UserMissions, Long>
             "and um.mission.missionType = :missionType")
     List<UserMissions> findByMissionTypeAndMissionStatus(@Param("missionType") MissionType missionType,
                                                          @Param("missionStatus") MissionStatus missionStatus);
-
-    // 유저, 대상 service, 미션 진행 현황 기반 리스트 검색
-    List<UserMissions> findAllByUserAndMissionStatus(Users user, MissionStatus missionStatus);
 
     @Query("select um from UserMissions um " +
             "join fetch um.user " +
