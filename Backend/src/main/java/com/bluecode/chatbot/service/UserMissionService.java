@@ -76,6 +76,29 @@ public class UserMissionService {
         }
     }
 
+    // 도전 과제 미션 할당 method
+    public void assignChallengeMission(Users user) {
+
+        List<Missions> missions = missionRepository.findAllByMissionType(MissionType.CHALLENGE);
+
+        Optional<UserMissions> valid = userMissionRepository.findByUserIdAndMissionId(user.getUserId(), missions.get(0).getMissionId());
+
+        if (valid.isPresent()) {
+            throw new IllegalArgumentException("이미 해당 유저는 도전과제를 생성하였습니다.");
+        }
+
+        for (Missions mission : missions) {
+            UserMissions userMission = new UserMissions();
+            userMission.setUser(user);
+            userMission.setMission(mission);
+            userMission.setCurrentCount(0);
+            userMission.setStartDate(LocalDate.now());
+            userMission.setEndDate(calculateEndTime(MissionType.CHALLENGE));
+            userMission.setMissionStatus(MissionStatus.PROGRESS);
+            userMissionRepository.save(userMission);
+        }
+    }
+
     // 미션 제한 시간 계산
     private LocalDate calculateEndTime(MissionType missionType) {
         if (missionType == MissionType.DAILY) {
