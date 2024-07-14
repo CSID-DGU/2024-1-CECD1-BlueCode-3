@@ -7,10 +7,49 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 
+const extractAndReplaceInputs = (str, replacements) => {
+  // 정규 표현식으로 모든 input() 내의 문자열을 추출
+  const regex = /input\(([^)]*)\)/g;
+  const extractedContents = [];
+  
+  // 모든 매치를 찾고 대체
+  let replaceIndex = 0;
+  const replacedStr = str.replace(regex, (fullMatch, group1) => {
+    extractedContents.push(group1);
+    const replacement = replacements[replaceIndex] || fullMatch; // 대체 문자열이 없으면 원본 유지
+    replaceIndex++;
+    return replacement;
+  });
+
+  return { extracted: extractedContents, replaced: replacedStr };
+};
+
+
+
 function Study_training() {
   const [pyodide, setPyodide] = useState(null);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
+
+  const [savedCode, setSavedCode] = useState("");
+  const [output, setOutput] = useState({ extracted: [], replaced: '' });
+  const [replacements, setReplacements] = useState([]);
+
+  const replaceCode = () => {
+    // 모든 input() 부분에 대해 대체 문자열을 입력받음
+    const newReplacements = [];
+    const regex = /input\(([^)]*)\)/g;
+    let match;
+    while ((match = regex.exec(savedCode)) !== null) {
+      const replacement = prompt(`Replace ${match[0]} with:`);
+      newReplacements.push("'" + replacement + "'");
+    }
+    setReplacements(newReplacements);
+
+    const result = extractAndReplaceInputs(savedCode, newReplacements);
+    setOutput(result);
+  };
+
   
 const codeSended =
 `
@@ -50,9 +89,26 @@ print_collected()
   const runPythonCode = async () => {
     if (pyodide) {
       try {
-        console.log(codeSended);
         const res = await pyodide.runPython(codeSended);
         setResult(res);
+        setSavedCode(codeSended);
+      } catch (err) {
+        setResult(err.message);
+      }
+    }
+  };
+
+  const checkCode = async () => {
+    if (pyodide) {
+      try {
+        const res = await pyodide.runPython(output.replaced);
+
+        if(Number(res) === 5 || res === "5") {
+          alert("정답입니다.");
+        }
+        else {
+          alert("오답입니다.");
+        }
       } catch (err) {
         setResult(err.message);
       }
@@ -96,7 +152,6 @@ print_collected()
   }
 
   const nav_style = {color : '#008BFF', background : 'rgba(0, 139, 255, 0.25)'};
-  const type_style = {background : 'rgba(0, 139, 255, 0.25)'}
   const styled = {};
   const AddToNavContent = () => {
     if (navValue)
@@ -122,8 +177,8 @@ print_collected()
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/Mypage"><Nav> 마이페이지 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/"><Nav> 로그아웃 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Dynamic>
             <Nav id="1" style={navValue ? nav_style : styled} onClick={AddToNavContent}> 제 1장 </Nav>
@@ -156,15 +211,16 @@ print_collected()
             <GPT onClick={ShowGpt}> GPT </GPT>
           </Buttons>
           <Train height={height} width={contentWidth}>
-          <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
-          <Buttons_>
-            <Interpret onClick={runPythonCode}> 실행 </Interpret>
-            <Submit> 제출 </Submit>
-          </Buttons_>
+            <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
+            <Buttons_>
+              <Interpret onClick={runPythonCode}> 실행 </Interpret>
+              <Save onClick={replaceCode}> 저장 </Save>
+              <Submit onClick={checkCode}> 제출 </Submit>
+            </Buttons_>
           <CodeResult>
             <p>--- 코드 실행 결과 ---</p>
             <ResultPre>
-              <Result width={contentWidth} > {result} </Result>
+              <Result width={contentWidth}> {result} </Result>
             </ResultPre>
           </CodeResult> 
         </Train>
@@ -216,8 +272,8 @@ const Content = styled.div`
 `
 
 const NavSection = styled.div`
-  width : 15rem;
   display : flex;
+  min-width : 15rem;
   flex-direction : column;
   border-right : 0.125rem solid rgba(0, 0, 0, 0.125);
   height : ${(props) => `${(props.height - 68) / 16}rem`};
@@ -230,10 +286,10 @@ const Static = styled.div`
 
 const Nav = styled.div`
   display : flex;
-  flex-direction : column;
   font-weight : bold;
   padding : 0.625rem;
-  align-items : center;
+  align-items : left;
+  flex-direction : column;
   justify-content : center;
   color : rgba(0, 0, 0, 0.25);
 
@@ -249,12 +305,12 @@ const NavContent = styled.div`
 
 const NavItem = styled.div`
   display : flex;
-  flex-direction : column;
   font-weight : bold;
-  padding : 0.375rem;
   align-items : left;
+  flex-direction : column;
   justify-content : center;
   color : rgba(0, 0, 0, 0.25);
+  padding : 0.375rem 0.375rem 0.375rem 1.75rem;
 
   &:hover {
     color : #008BFF;
@@ -262,8 +318,9 @@ const NavItem = styled.div`
 `
 
 const Dynamic = styled.div`
-  padding : 0.625rem;
   overflow : scroll;
+  padding : 0.625rem;
+
   &::-webkit-scrollbar {
     display : none;
   }
@@ -277,9 +334,9 @@ const ContentSection = styled.div`
 `
 
 const Instruction = styled.div`
-  background : rgba(0, 0, 0, 0.25);
-  margin : 1rem 1rem 0.5rem;
   height : 3.75rem;
+  margin : 1rem 1rem 0.5rem;
+  background : rgba(0, 0, 0, 0.25);
 `
 
 const Buttons = styled.div`
@@ -289,11 +346,11 @@ const Buttons = styled.div`
 `
 
 const Before = styled.button`
-  border : none;
   width : 2rem;
-  margin : 0 0.25rem;
-  color : #008BFF;
+  border : none;
   height : 2rem;
+  color : #008BFF;
+  margin : 0 0.25rem;
   font-weight : bold;
   font-size : 1.25rem;
   background : #FFFFFF;
@@ -306,11 +363,11 @@ const Before = styled.button`
 `
 
 const After = styled.button`
-  border : none;
   width : 2rem;
+  border : none;
+  height : 2rem;
   color : #008BFF;
   margin : 0 0.25rem;
-  height : 2rem;
   font-weight : bold;
   font-size : 1.25rem;
   background : #FFFFFF;
@@ -323,15 +380,15 @@ const After = styled.button`
 `
 
 const GPT = styled.button`
-  border : none;
   width : 4rem;
-  color : #FFFFFF;
+  border : none;
   height : 2rem;
-  font-weight : bold;
+  color : #FFFFFF;
   font-size : 1rem;
+  font-weight : bold;
   background : #008BFF;
-  border-radius : 1rem;
   margin-left : 0.5rem;
+  border-radius : 1rem;
 `
 
 const Train = styled.div`
@@ -341,8 +398,8 @@ const Train = styled.div`
 
 const CodeArea = styled.textarea`
   resize : none;
-  font-size : 1rem;
   padding : 1rem;
+  font-size : 1rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
   width : ${(props) => `${(props.width - 370) / 16}rem`};
   height : ${(props) => `${(props.height - 464) / 16}rem`};
@@ -354,10 +411,10 @@ const Buttons_ = styled.div`
 `
 
 const Interpret = styled.button`
-  border : none;
   width : 4rem;
-  color : #008BFF;
+  border : none;
   height : 2rem;
+  color : #008BFF;
   font-weight : bold;
   font-size : 0.875rem;
   background : #FFFFFF;
@@ -365,12 +422,25 @@ const Interpret = styled.button`
   border : 0.125rem solid #008BFF;
 `
 
-const Submit = styled.button`
-  border : none;
+const Save = styled.button`
   width : 4rem;
-  margin : 0 0.5rem;
-  color : #008BFF;
+  border : none;
   height : 2rem;
+  color : #008BFF;
+  font-weight : bold;
+  margin-left : 0.5rem;
+  font-size : 0.875rem;
+  background : #FFFFFF;
+  border-radius : 1rem;
+  border : 0.125rem solid #008BFF;
+`
+
+const Submit = styled.button`
+  width : 4rem;
+  border : none;
+  height : 2rem;
+  color : #008BFF;
+  margin : 0 0.5rem;
   font-weight : bold;
   font-size : 0.875rem;
   background : #FFFFFF;
@@ -379,14 +449,14 @@ const Submit = styled.button`
 `
 
 const CodeResult = styled.div`
-  width : ${(props) => `${(props.width - 304) / 16}rem`};
   height : 9rem;
-  border : 1px solid rgba(0, 0, 0, 0.5);
   background : #FFFFFF;
+  border : 1px solid rgba(0, 0, 0, 0.5);
+  width : ${(props) => `${(props.width - 304) / 16}rem`};
 
   p {
-    color : rgba(0, 0, 0, 0.5);
     margin : 0.5rem 1rem 0rem;
+    color : rgba(0, 0, 0, 0.5);
   }
 `
 
@@ -397,25 +467,30 @@ const ResultPre = styled.pre`
 const Result = styled.div`
   padding : 0 1rem;
   font-size : 1rem;
-  width : ${(props) => `${(props.width - 388) / 16}rem`};
   height : 5.375rem;
   overflow : scroll;
+  width : ${(props) => `${(props.width - 388) / 16}rem`};
+
   &::-webkit-scrollbar {
     display : none;
   }
 `
 
 const ChatbotSection = styled.div`
-  margin : 2rem 2rem 2rem 0;
   width : 25rem;
   border-radius : 1rem;
+  margin : 2rem 2rem 2rem 0;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
 `
 
 const Chat = styled.div`
   margin : 1rem;
-  height : ${(props) => `${(props.height - 277.5) / 16}rem`};
+  display : flex;
   overflow : scroll;
+  align-items : flex-end;
+  flex-direction : column;
+  height : ${(props) => `${(props.height - 277.5) / 16}rem`};
+
   &::-webkit-scrollbar {
     display : none;
   }
@@ -423,10 +498,11 @@ const Chat = styled.div`
 
 const Dialog = styled.p`
   margin : 0.5rem 0;
-  padding : 0.875rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  border-radius : 1rem 0rem 1rem 1rem;
+  width : fit-content;
   background : #FFFFFF;
+  padding : 0.75rem 1rem;
+  border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  border-radius : 1.5rem 1.5rem 0rem 1.5rem;
 `
 
 const ChatType = styled.div`
@@ -439,10 +515,10 @@ const ChatType = styled.div`
 `
 
 const Type = styled.div`
-  font-weight : bold;
-  padding : 0.25rem 0.5rem;
-  margin : 0.5rem 1rem;
   color : #008BFF;
+  font-weight : bold;
+  margin : 0.5rem 1rem;
+  padding : 0.25rem 0.5rem;
 
   &:hover {
     background : rgba(0, 139, 255, 0.25);
@@ -457,25 +533,25 @@ const ChatInput = styled.div`
 `
 
 const InputArea = styled.input`
-  margin : 0.375rem 0.75rem;
-  font-size : 1rem;
-  padding : 0 1rem;
+  border : none;
   height : 2.5rem;
   width : 18.25rem;
-  border : none;
+  padding : 0 1rem;
+  font-size : 1rem;
   border-radius : 1.25rem;
+  margin : 0.375rem 0.75rem;
 `
 
 const InputButton = styled.button`
-  border : 0.125rem solid #FFFFFF;
   width : 2.5rem;
   color : #FFFFFF;
-  margin : 0.375rem 0;
   height : 2.5rem;
   font-weight : bold;
+  margin : 0.375rem 0;
   font-size : 1.25rem;
   background : #008BFF;
   border-radius : 1.25rem;
+  border : 0.125rem solid #FFFFFF;
 
   img {
     margin : auto 0;
