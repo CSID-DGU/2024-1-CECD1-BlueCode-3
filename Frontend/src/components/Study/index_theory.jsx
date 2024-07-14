@@ -104,8 +104,8 @@ function Study_theory() {
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/Mypage"><Nav> 마이페이지 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/"><Nav> 로그아웃 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
         <Dynamic>
           <Nav id="1" style={navValue ? style : styled} onClick={AddToNavContent}> 제 1장 </Nav>
@@ -185,8 +185,8 @@ const Content = styled.div`
 `
 
 const NavSection = styled.div`
-  width : 15rem;
   display : flex;
+  min-width : 15rem;
   flex-direction : column;
   border-right : 0.125rem solid rgba(0, 0, 0, 0.125);
   height : ${(props) => `${(props.height - 68) / 16}rem`};
@@ -199,10 +199,10 @@ const Static = styled.div`
 
 const Nav = styled.div`
   display : flex;
-  flex-direction : column;
-  font-weight : bold;
   padding : 0.625rem;
-  align-items : center;
+  font-weight : bold;
+  align-items : left;
+  flex-direction : column;
   justify-content : center;
   color : rgba(0, 0, 0, 0.25);
 
@@ -218,12 +218,12 @@ const NavContent = styled.div`
 
 const NavItem = styled.div`
   display : flex;
-  flex-direction : column;
   font-weight : bold;
-  padding : 0.375rem;
   align-items : left;
+  flex-direction : column;
   justify-content : center;
   color : rgba(0, 0, 0, 0.25);
+  padding : 0.375rem 0.375rem 0.375rem 1.75rem;
 
   &:hover {
     color : #008BFF;
@@ -231,8 +231,9 @@ const NavItem = styled.div`
 `
 
 const Dynamic = styled.div`
-  padding : 0.625rem;
   overflow : scroll;
+  padding : 0.625rem;
+
   &::-webkit-scrollbar {
     display : none;
   }
@@ -246,8 +247,8 @@ const ContentSection = styled.div`
 `
 
 const Instruction = styled.div`
-  background : rgba(0, 0, 0, 0.25);
   margin : 1rem 1rem 0.5rem;
+  background : rgba(0, 0, 0, 0.25);
   height : ${(props) => `${(props.height - 200) / 16}rem`};
 `
 
@@ -257,11 +258,11 @@ const Buttons = styled.div`
 `
 
 const Before = styled.button`
-  border : none;
   width : 2rem;
-  margin : 0 0.25rem;
-  color : #008BFF;
+  border : none;
   height : 2rem;
+  color : #008BFF;
+  margin : 0 0.25rem;
   font-weight : bold;
   font-size : 1.25rem;
   background : #FFFFFF;
@@ -274,11 +275,11 @@ const Before = styled.button`
 `
 
 const After = styled.button`
-  border : none;
   width : 2rem;
+  border : none;
+  height : 2rem;
   color : #008BFF;
   margin : 0 0.25rem;
-  height : 2rem;
   font-weight : bold;
   font-size : 1.25rem;
   background : #FFFFFF;
@@ -291,28 +292,32 @@ const After = styled.button`
 `
 
 const GPT = styled.button`
-  border : none;
   width : 4rem;
-  color : #FFFFFF;
+  border : none;
   height : 2rem;
-  font-weight : bold;
+  color : #FFFFFF;
   font-size : 1rem;
+  font-weight : bold;
   background : #008BFF;
-  border-radius : 1rem;
   margin-left : 0.5rem;
+  border-radius : 1rem;
 `
 
 const ChatbotSection = styled.div`
-  margin : 2rem 2rem 2rem 0;
   width : 25rem;
   border-radius : 1rem;
+  margin : 2rem 2rem 2rem 0;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
 `
 
 const Chat = styled.div`
   margin : 1rem;
-  height : ${(props) => `${(props.height - 277.5) / 16}rem`};
+  display : flex;
   overflow : scroll;
+  align-items : flex-end;
+  flex-direction : column;
+  height : ${(props) => `${(props.height - 277.5) / 16}rem`};
+
   &::-webkit-scrollbar {
     display : none;
   }
@@ -320,10 +325,11 @@ const Chat = styled.div`
 
 const Dialog = styled.p`
   margin : 0.5rem 0;
-  padding : 0.875rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  border-radius : 1rem 0rem 1rem 1rem;
+  width : fit-content;
   background : #FFFFFF;
+  padding : 0.75rem 1rem;
+  border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  border-radius : 1.5rem 1.5rem 0rem 1.5rem;
 `
 
 const ChatType = styled.div`
@@ -336,14 +342,14 @@ const ChatType = styled.div`
 `
 
 const Type = styled.div`
-  font-weight : bold;
-  padding : 0.25rem 0.5rem;
-  margin : 0.5rem 1rem;
   color : #008BFF;
+  font-weight : bold;
+  margin : 0.5rem 1rem;
+  padding : 0.25rem 0.5rem;
 
   &:hover {
-    background : rgba(0, 139, 255, 0.25);
     border-radius : 0.5rem;
+    background : rgba(0, 139, 255, 0.25);
   }
 `
 
@@ -355,25 +361,25 @@ const ChatInput = styled.div`
 `
 
 const InputArea = styled.input`
-  margin : 0.375rem 0.75rem;
-  font-size : 1rem;
-  padding : 0 1rem;
+  border : none;
   height : 2.5rem;
   width : 18.25rem;
-  border : none;
+  padding : 0 1rem;
+  font-size : 1rem;
   border-radius : 1.25rem;
+  margin : 0.375rem 0.75rem;
 `
 
 const InputButton = styled.button`
-  border : 0.125rem solid #FFFFFF;
   width : 2.5rem;
   color : #FFFFFF;
-  margin : 0.375rem 0;
   height : 2.5rem;
   font-weight : bold;
+  margin : 0.375rem 0;
   font-size : 1.25rem;
   background : #008BFF;
   border-radius : 1.25rem;
+  border : 0.125rem solid #FFFFFF;
 
   img {
     margin : auto 0;

@@ -1,221 +1,170 @@
 import styled from 'styled-components';
-import BCODE from '../../logo_b.png'
+import BCODE from '../../logo_w.png'
 import React, { useState } from 'react';
 
-
-function Test() {
-
+function Study_theory() {
   const [option, setOption] = useState('');
-  const [correct, setCorrect] = useState(0);
-  const [current, setCurrent] = useState(1);
 
-  const Progression = () => {
-    setCorrect(correct + 1);
-    setCurrent(current + 1);
-  }
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useState(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const [contentWidth, setContentWidth] = useState(width);
+
+
+    // 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
 
   return (
     <TestSection>
-      <Centering>
+      <SectionBar>
         <Logo>
           <img src={BCODE} alt="Logo"></img>
         </Logo>
-        <Section>
-          <ProgressArea>
-            <Time> 남은 시간 </Time>
-            <Progress>
-              <svg viewBox="0 0 200 200">
-                <CircleLeft></CircleLeft>
-                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * current / 10} ${2 * Math.PI * 75 * (10 - current) / 10}`}
-                           transform={`rotate(-90, 100, 100)`}>
-                </CircleCur>
-                <CircleProg strokeDasharray={`${2 * Math.PI * 75 * correct / 10} ${2 * Math.PI * 75 * (10 - correct) / 10}`}
-                            transform={`rotate(-90, 100, 100)`}>
-                </CircleProg>
-              </svg>
-            </Progress>
-            <Button onClick={Progression}> 제출하기 </Button>
-          </ProgressArea>
-          <QuestionArea>
-            <Question>
-              <QuestionNum> {current} </QuestionNum>
-              <QuestionCntnt> Q{current}. </QuestionCntnt>
-            </Question>
-            <View> 보기 </View>
-            <AnswerArea>
-              <Answer> 답안 </Answer>
-                <SelectionArea>
-                <Selection>
-                  <input type="radio" id="first" value="1" checked={option==="1"} onChange={(e)=>setOption(e.target.value)}></input>
-                  <Label for="first"> first </Label>
-                </Selection>
-                <Selection>
-                  <input type="radio" id="second" value="2" checked={option==="2"} onChange={(e)=>setOption(e.target.value)}></input>
-                  <Label for="second"> second </Label>
-                </Selection>
-                <Selection>
-                  <input type="radio" id="third" value="3" checked={option==="3"} onChange={(e)=>setOption(e.target.value)}></input>
-                  <Label for="third"> third </Label>
-                </Selection>
-                <Selection>
-                  <input type="radio" id="fourth" value="4" checked={option==="4"} onChange={(e)=>setOption(e.target.value)}></input>
-                  <Label for="fourth"> fourth </Label>
-                </Selection>
-              </SelectionArea>
-            </AnswerArea>
-          </QuestionArea>
-        </Section>
-      </Centering>
+      </SectionBar>
+      <Content>
+        <NavSection height={height}>
+          <Dynamic>
+            <Nav> 1번 문제 </Nav>
+          </Dynamic>
+        </NavSection>
+        <ContentSection width={contentWidth}>
+          <Question> 1번. 구체적인 문제 </Question>
+          <View> 보기 </View>
+          <AnswerArea>
+            <Answer> 답안 </Answer>
+              <SelectionArea>
+              <Selection>
+                <input type="radio" id="first" value="1" checked={option==="1"} onChange={(e)=>setOption(e.target.value)}></input>
+                <Label for="first"> first </Label>
+              </Selection>
+              <Selection>
+                <input type="radio" id="second" value="2" checked={option==="2"} onChange={(e)=>setOption(e.target.value)}></input>
+                <Label for="second"> second </Label>
+              </Selection>
+              <Selection>
+                <input type="radio" id="third" value="3" checked={option==="3"} onChange={(e)=>setOption(e.target.value)}></input>
+                <Label for="third"> third </Label>
+              </Selection>
+              <Selection>
+                <input type="radio" id="fourth" value="4" checked={option==="4"} onChange={(e)=>setOption(e.target.value)}></input>
+                <Label for="fourth"> fourth </Label>
+              </Selection>
+            </SelectionArea>
+          </AnswerArea>
+        </ContentSection>
+      </Content>
     </TestSection>
   );
 }
 
-export default Test;
+export default Study_theory;
 
 
 
 const TestSection = styled.div`
-  display : flex;
   height : 100vh;
-  justify-content : center;
-  align-items : center;
 `
 
-const Centering = styled.div`
+const SectionBar = styled.div`
+  width : 100vw;
+  display : flex;
+  background : #008BFF;
 `
 
 const Logo = styled.div`
-  display : flex;
-
   img {
-    margin : 0 auto 2.5rem 5rem;
-    width : 9.775rem;
-    height : 2.5rem;
+    height : 2rem;
+    width : 7.82rem;
+    margin : 1rem 4rem;
   }
 `
 
-const Section = styled.div`
+const Content = styled.div`
   display : flex;
 `
 
-const ProgressArea = styled.div`
-  height : 27.5rem;
-  width : 17.5rem;
-  padding : 2.5rem 1.25rem;
-  border-radius : 1.25rem;
+const NavSection = styled.div`
+  display : flex;
+  min-width : 15rem;
+  flex-direction : column;
+  border-right : 0.125rem solid rgba(0, 0, 0, 0.125);
+  height : ${(props) => `${(props.height - 68) / 16}rem`};
+`
+
+const Nav = styled.div`
+  display : flex;
+  color : #008BFF;
+  padding : 0.625rem;
+  font-weight : bold;
+  align-items : center;
   flex-direction : column;
   justify-content : center;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  background : rgba(0, 139, 255, 0.25);
 `
 
-const Time = styled.div`
-  font-weight : bold;
-  font-size : 1.25rem;
-  color : rgba(0, 0, 0, 0.375);
+const Dynamic = styled.div`
+  overflow : scroll;
+  padding : 0.625rem;
+
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `
 
-const Progress = styled.div`
-  margin : 2.5rem auto;
-  padding : 0.75rem;
-`
-
-const CircleLeft = styled.circle`
-  cx : 100;
-  cy : 100;
-  r : 75;
-  fill : none;
-  stroke : rgba(0, 0, 0, 0.125);
-  stroke-width : 50;
-`
-
-const CircleCur = styled.circle`
-  cx : 100;
-  cy : 100;
-  r : 75;
-  fill : none;
-  stroke : #8DF388;
-  stroke-width : 50; 
-`
-
-const CircleProg = styled.circle`
-  cx : 100;
-  cy : 100;
-  r : 75;
-  fill : none;
-  stroke : #00E5BA;
-  stroke-width : 50;
-`
-
-const Button = styled.button`
-  height : 3rem;
-  border : none;
-  width : 9.5rem;
-  margin : 0 4rem;
-  color : #FFFFFF;
-  font-weight : bold;
-  font-size : 1.25rem;
-  background : #008BFF;
-  border-radius : 0.5rem;
-`
-
-const QuestionArea = styled.div`
+const ContentSection = styled.div`
+  margin : 2rem;
   display : flex;
-  width : 52.5rem;
-  margin : 0 0 0 2.5rem;
+  padding : 2rem;
+  align-items : center;
+  border-radius : 1rem;
   flex-direction : column;
+  
+  border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  width : ${(props) => `${(props.width - 370) / 16}rem`};
 `
 
 const Question = styled.div`
-  display : flex;
-`
-
-const QuestionNum = styled.div`
-  height : 5.5rem;
-  display : flex;
-  width : 3.75rem;
-  font-size : 1.25rem;
-  align-items : center;
-  border-radius : 1.25rem;
-  justify-content : center;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-`
-
-const QuestionCntnt = styled.div`
-  height : 5.5rem;
   width : 45rem;
-  display : flex;
-  font-size : 1.25rem;
-  padding : 0 1.25rem;
-  align-items : center;
-  margin-left : 1.25rem;
-  justify-content : left;
-  border-radius : 1.25rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  font-size : 1.125rem;
+  padding : 0.75rem 0 0.5rem;
+  border-bottom : 0.05rem solid rgba(0, 0, 0, 0.5);
+  width : ${(props) => `${(props.width - 368) / 16}rem`};
 `
 
 const View = styled.div`
-  height : 15rem;
+  width : 42.5rem;
+  margin : 1.5rem 0;
+  height : 18.75rem;
   padding : 1.25rem;
   font-weight : bold;
-  font-size : 1.25rem;
-  margin : 1.25rem 15rem;
+  font-size : 1.125rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
 `
 
 const AnswerArea = styled.div`
   height : 5rem;
-  width : 49.875rem;
-  margin-top : 0.55rem;
-  padding : 0.625rem 1.25rem;
-  border-radius : 1.25rem;
+  width : 42.5rem;
+  padding :  1rem 1.25rem 0.25rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
 `
 
 const Answer = styled.div`
-  font-size : 1.25rem;
-  padding-bottom : 0.625rem;
-  color : rgba(0, 0, 0, 0.375);
-  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.375);
+  font-size : 1.125rem;
+  padding-bottom : 0.5rem;
+  color : rgba(0, 0, 0, 0.5);
+  border-bottom : 0.05rem solid rgba(0, 0, 0, 0.375);
 `
 
 const SelectionArea = styled.div`
@@ -227,18 +176,19 @@ const Selection = styled.div`
   display : flex;
   width : 7.5rem;
   margin : 0 auto;
-  font-size : 1.25rem;
+  font-size : 1.125rem;
 
   input[type='radio'] {
-    -webkit-appearance : none;
     -moz-appearance : none;
-    appearance : none;
-    width : 1.75rem;
-    height : 1.75rem;
-    border : 0.25rem solid rgba(0, 0, 0, 0.25);
-    border-radius : 1rem;
+    -webkit-appearance : none;
+
     outline : none;
+    width : 1.5rem;
+    height : 1.5rem;
     cursor : pointer;
+    appearance : none;
+    border-radius : 1rem;
+    border : 0.25rem solid rgba(0, 0, 0, 0.25);
   }
 
   input[type='radio']:checked {
