@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class TestResponseElementDto {
 
+    private Long testId;
     private Long quizId;
     private String text;
     private QuizLevel level;
