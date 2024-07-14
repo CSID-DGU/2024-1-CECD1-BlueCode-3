@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -275,8 +276,8 @@ public class InitDb {
             for (int i = 0; i < 3; i++) {
                 UserMissions userMission = createUserMission(
                                                 user,
-                                                LocalDateTime.now(),
-                                                LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0),
+                                                LocalDate.now(),
+                                                LocalDate.now(),
                                                 dailyMission.get(i),
                                                 0,
                                                 MissionStatus.PROGRESS);
@@ -286,8 +287,8 @@ public class InitDb {
             for (int i = 0; i < 3; i++) {
                 UserMissions userMission = createUserMission(
                         user,
-                        LocalDateTime.now(),
-                        LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(0).withMinute(0).withSecond(0).withNano(0),
+                        LocalDate.now(),
+                        LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)),
                         weeklyMission.get(i),
                         0,
                         MissionStatus.PROGRESS);
@@ -297,7 +298,7 @@ public class InitDb {
             for (Missions missions : challengeMission) {
                 UserMissions userMission = createUserMission(
                         user,
-                        LocalDateTime.now(),
+                        LocalDate.now(),
                         null,
                         missions,
                         0,
@@ -325,8 +326,8 @@ public class InitDb {
 
         private UserMissions createUserMission(
                 Users user,
-                LocalDateTime startDate,
-                LocalDateTime endDate,
+                LocalDate startDate,
+                LocalDate endDate,
                 Missions mission,
                 int currentCount,
                 MissionStatus missionStatus
