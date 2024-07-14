@@ -55,6 +55,7 @@ public class StudyService {
             elementDto.setCurriculumId(study.getCurriculum().getCurriculumId());
             elementDto.setCurriculumName(study.getCurriculum().getCurriculumName());
             elementDto.setPassed(study.isPassed());
+            elementDto.setLevelType(study.getLevel());
             return elementDto;
         }).collect(Collectors.toList());
 
