@@ -18,4 +18,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     @Query("select u from Users u " +
             "where u.id = :loginId")
     Optional<Users> findByLoginId(@Param("loginId") String loginId);
+
+    // 유저명, 유저 이메일, 유저 ID 중복 체킹 메소드
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
+    boolean existsById(String id);
 }
