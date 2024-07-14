@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ChatbotService {
+public class ChatService {
 
     private final RestTemplate restTemplate;
     private final String apiKey;
@@ -36,9 +36,9 @@ public class ChatbotService {
     private final UserRepository userRepository;
     private final CurriculumRepository curriculumRepository;
     private List<Map<String, String>> conversationHistory = new ArrayList<>();
-    private static final Logger logger = LoggerFactory.getLogger(ChatbotService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
 
-    public ChatbotService(
+    public ChatService(
             RestTemplate restTemplate,
             @Value("${api.key}") String apiKey,
             ChatRepository chatRepository,

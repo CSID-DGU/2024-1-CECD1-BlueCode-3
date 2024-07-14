@@ -14,9 +14,6 @@ import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
@@ -25,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class ChatbotServiceTest {
+public class ChatServiceTest {
 
     @MockBean
     private ChatRepository chatRepository;
@@ -37,7 +34,7 @@ public class ChatbotServiceTest {
     private CurriculumRepository curriculumRepository;
 
     @InjectMocks
-    private ChatbotService chatbotService;
+    private ChatService chatService;
 
     @Value("${api.key}")
     private String apiKey;
@@ -64,7 +61,7 @@ public class ChatbotServiceTest {
         String userMessage = "테스트 메세지입니다.";
 
         // 실제 API 호출
-        String response = chatbotService.getResponse(2L, 1L, userMessage, 1);
+        String response = chatService.getResponse(2L, 1L, userMessage, 1);
 
         // 응답 확인
         assertThat(response).isNotNull();
@@ -86,7 +83,7 @@ public class ChatbotServiceTest {
         String question = "print(hello)에서 왜 오류가 나는거야?";
 
         // 실제 API 호출
-        QuestionType questionType = chatbotService.setQuestionType(question);
+        QuestionType questionType = chatService.setQuestionType(question);
 
         // 응답 확인
         assertThat(questionType).isEqualTo(QuestionType.ERRORS);
@@ -96,10 +93,10 @@ public class ChatbotServiceTest {
     @Test
     public void testGetStepByStepResponse() {
         String gptResponse = "1단계\n\n2단계\n\n3단계";
-        String step1Response = chatbotService.getStepByStepResponse(gptResponse, 1);
-        String step2Response = chatbotService.getStepByStepResponse(gptResponse, 2);
-        String step3Response = chatbotService.getStepByStepResponse(gptResponse, 3);
-        String step4Response = chatbotService.getStepByStepResponse(gptResponse, 4);
+        String step1Response = chatService.getStepByStepResponse(gptResponse, 1);
+        String step2Response = chatService.getStepByStepResponse(gptResponse, 2);
+        String step3Response = chatService.getStepByStepResponse(gptResponse, 3);
+        String step4Response = chatService.getStepByStepResponse(gptResponse, 4);
 
         assertThat(step1Response).isEqualTo("1단계");
         assertThat(step2Response).isEqualTo("2단계");
