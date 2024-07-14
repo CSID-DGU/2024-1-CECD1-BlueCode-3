@@ -2,9 +2,11 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 public class Missions {
 
     // table id
@@ -18,6 +20,10 @@ public class Missions {
     // 미션 타입
     @Enumerated(EnumType.STRING)
     private MissionType missionType;
+
+    // 대상 Service 타입
+    @Enumerated(EnumType.STRING)
+    private ServiceType serviceType;
 
     // 미션 내용
     private String text;
