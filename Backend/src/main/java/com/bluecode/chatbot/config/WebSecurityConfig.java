@@ -15,7 +15,7 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/chat/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }

@@ -2,13 +2,15 @@ package com.bluecode.chatbot.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 public class UserMissions {
 
     // table id
@@ -21,13 +23,15 @@ public class UserMissions {
     @JoinColumn(name = "user_id")
     private Users user;
 
-    // 생성 날짜
-    @CreationTimestamp
-    private LocalDateTime creationDate;
+    // 시작 날짜
+    private LocalDate startDate;
 
-    // 클리어 날짜
+    // 완료해야 할 날짜
+    private LocalDate endDate;
+
+    // 클리어한 날짜
     @UpdateTimestamp
-    private LocalDateTime clearDate;
+    private LocalDateTime clearDateTime;
 
     // 할당된 미션
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,4 +41,24 @@ public class UserMissions {
     // 현재 달성 현황
     @Column(name = "current_count")
     private int currentCount;
+
+    // 미션 수행 현황(진행중, 클리어, 실패)
+    @Enumerated(EnumType.STRING)
+    private MissionStatus missionStatus;
+
+    // 미션 진행도 처리 method
+    public boolean incrementProgress() {
+        // 미션을 완료 또는 실패한 상태이면
+        if (missionStatus == MissionStatus.COMPLETED || missionStatus == MissionStatus.FAILED) {
+            return false;
+        }
+
+        currentCount++;
+
+        if (currentCount >= mission.getMissionCount()) {
+            missionStatus = MissionStatus.COMPLETED;
+            return true;
+        }
+        return false;
+    }
 }

@@ -9,6 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +35,8 @@ public class InitDb {
         initService.testInit();
         initService.test();
         initService.chatInit();
+        initService.missionInit();
+        initService.userMissionInit();
     }
 
     @Component
@@ -45,6 +52,8 @@ public class InitDb {
         private final TestRepository testRepository;
         private final StudyRepository studyRepository;
         private final ChatRepository chatRepository;
+        private final MissionRepository missionRepository;
+        private final UserMissionRepository userMissionRepository;
 
         public void userInit() {
             Users user1 = createUser("testName", "testEmail", "testId", "1111", "11110033", false); // 초기 테스트 미진행 유저
@@ -217,6 +226,121 @@ public class InitDb {
             Thread.sleep(1000);
             chat = createChat(user, chapters.get(5), "챕터 6에서의 질문3: 에러질문(3단계 까지 진행)", "에러 단계적 답변 진행도 1단계, 에러 단계적 답변 진행도 2단계, 에러 단계적 답변 진행도 3단계, 에러 단계적 답변 진행도 4단계", QuestionType.ERRORS, 3);
             chatRepository.save(chat);
+        }
+
+        public void missionInit() {
+
+            List<Missions> missions = new ArrayList<>();
+
+            Missions dailyMission1 = createMission(10, MissionType.DAILY, ServiceType.CHAT, "chat 일일 미션: 1회 달성 목표", 1);
+            Missions dailyMission2 = createMission(11, MissionType.DAILY, ServiceType.STUDY, "study 일일 미션: 2회 달성 목표", 2);
+            Missions dailyMission3 = createMission(12, MissionType.DAILY, ServiceType.TEST, "test 일일 미션: 3회 달성 목표", 3);
+            Missions dailyMission4 = createMission(13, MissionType.DAILY, ServiceType.TEST, "test 일일 미션: 1회 달성 목표", 1);
+
+            missions.add(dailyMission1);
+            missions.add(dailyMission2);
+            missions.add(dailyMission3);
+            missions.add(dailyMission4);
+
+            Missions weeklyMission1 = createMission(20, MissionType.WEEKLY, ServiceType.CHAT, "chat 주간 미션: 1회 달성 목표", 1);
+            Missions weeklyMission2 = createMission(21, MissionType.WEEKLY, ServiceType.STUDY, "study 주간 미션: 2회 달성 목표", 2);
+            Missions weeklyMission3 = createMission(22, MissionType.WEEKLY, ServiceType.TEST, "test 주간 미션: 3회 달성 목표", 3);
+            Missions weeklyMission4 = createMission(23, MissionType.WEEKLY, ServiceType.TEST, "test 주간 미션: 1회 달성 목표", 1);
+
+            missions.add(weeklyMission1);
+            missions.add(weeklyMission2);
+            missions.add(weeklyMission3);
+            missions.add(weeklyMission4);
+
+            Missions challengeMission1 = createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, "chat 도전 과제 미션: 1회 달성 목표", 1);
+            Missions challengeMission2 = createMission(21, MissionType.CHALLENGE, ServiceType.STUDY, "study 도전 과제 미션: 2회 달성 목표", 2);
+            Missions challengeMission3 = createMission(22, MissionType.CHALLENGE, ServiceType.TEST, "test 도전 과제 미션: 3회 달성 목표", 3);
+            Missions challengeMission4 = createMission(23, MissionType.CHALLENGE, ServiceType.TEST, "test 도전 과제 미션: 1회 달성 목표", 1);
+
+            missions.add(challengeMission1);
+            missions.add(challengeMission2);
+            missions.add(challengeMission3);
+            missions.add(challengeMission4);
+
+            missionRepository.saveAll(missions);
+        }
+
+        public void userMissionInit() {
+
+            Users user = userRepository.findById(2L).get();
+
+            List<Missions> dailyMission = missionRepository.findAllByMissionType(MissionType.DAILY);
+            List<Missions> weeklyMission = missionRepository.findAllByMissionType(MissionType.WEEKLY);
+            List<Missions> challengeMission = missionRepository.findAllByMissionType(MissionType.CHALLENGE);
+
+            for (int i = 0; i < 3; i++) {
+                UserMissions userMission = createUserMission(
+                                                user,
+                                                LocalDate.now(),
+                                                LocalDate.now(),
+                                                dailyMission.get(i),
+                                                0,
+                                                MissionStatus.PROGRESS);
+                userMissionRepository.save(userMission);
+            }
+
+            for (int i = 0; i < 3; i++) {
+                UserMissions userMission = createUserMission(
+                        user,
+                        LocalDate.now(),
+                        LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)),
+                        weeklyMission.get(i),
+                        0,
+                        MissionStatus.PROGRESS);
+                userMissionRepository.save(userMission);
+            }
+
+            for (Missions missions : challengeMission) {
+                UserMissions userMission = createUserMission(
+                        user,
+                        LocalDate.now(),
+                        null,
+                        missions,
+                        0,
+                        MissionStatus.PROGRESS);
+                userMissionRepository.save(userMission);
+            }
+        }
+
+        private Missions createMission(
+                int exp,
+                MissionType missionType,
+                ServiceType serviceType,
+                String text,
+                int missionCount
+        ) {
+            Missions mission = new Missions();
+            mission.setExp(exp);
+            mission.setMissionType(missionType);
+            mission.setServiceType(serviceType);
+            mission.setText(text);
+            mission.setMissionCount(missionCount);
+
+            return mission;
+        }
+
+        private UserMissions createUserMission(
+                Users user,
+                LocalDate startDate,
+                LocalDate endDate,
+                Missions mission,
+                int currentCount,
+                MissionStatus missionStatus
+        ) {
+            UserMissions userMission = new UserMissions();
+            userMission.setUser(user);
+            userMission.setStartDate(startDate);
+            userMission.setEndDate(endDate);
+            userMission.setMission(mission);
+            userMission.setCurrentCount(currentCount);
+            userMission.setMissionStatus(missionStatus);
+
+            return userMission;
         }
 
         private Curriculums createCurriculum(
