@@ -20,7 +20,7 @@ public interface UserMissionRepository extends JpaRepository<UserMissions, Long>
             "where um.user = :user " +
             "and um.missionStatus = com.bluecode.chatbot.domain.MissionStatus.PROGRESS " +
             "and um.mission.missionType = :missionType")
-    List<UserMissions> findAllProgressMissionByUser(@Param("user") Users user,
+    List<UserMissions> findAllProgressMissionByUserAndMissionType(@Param("user") Users user,
                                                     @Param("missionType") MissionType missionType);
 
     // user, missionType, 미션 시작 날짜 기반 완료한 미션 리스트 검색
@@ -31,9 +31,20 @@ public interface UserMissionRepository extends JpaRepository<UserMissions, Long>
             "and um.missionStatus = com.bluecode.chatbot.domain.MissionStatus.COMPLETED " +
             "and um.mission.missionType = :missionType " +
             "and um.startDate = :startDate")
-    List<UserMissions> findAllCompleteMissionByUserAndStartDate(@Param("user") Users user,
-                                                    @Param("startDate") LocalDate startDate);
+    List<UserMissions> findAllCompleteMissionByUserAndStartDateAndMissionType(@Param("user") Users user,
+                                                                              @Param("startDate") LocalDate startDate,
+                                                                              @Param("missionType") MissionType missionType);
 
+    // user, missionStatus, missionType 기반 리스트 검색
+    @Query("select um from UserMissions um " +
+            "join fetch um.user " +
+            "join fetch um.mission " +
+            "where um.user = :user " +
+            "and um.missionStatus = :missionStatus " +
+            "and um.mission.missionType = :missionType")
+    List<UserMissions> findAllByUserAndMissionStatusAndType(@Param("user") Users user,
+                                                            @Param("missionStatus") MissionStatus missionStatus,
+                                                            @Param("missionType") MissionType missionType);
 
     // 유저 테이블 id와 미션 테이블 id 기반 단일 검색
     @Query("select um from UserMissions um " +
@@ -43,19 +54,6 @@ public interface UserMissionRepository extends JpaRepository<UserMissions, Long>
             "and um.mission.missionId = :missionId")
     Optional<UserMissions> findByUserIdAndMissionId(@Param("userId") Long userId,
                                                     @Param("missionId") Long missionId);
-
-    // 유저 테이블 id, 미션 테이블 id, 미션 진행 현황, 미션 타입 기반 리스트 검색
-    @Query("select um from UserMissions um " +
-            "join fetch um.user " +
-            "join fetch um.mission " +
-            "where um.user.userId = :userId " +
-            "and um.mission.missionId = :missionId " +
-            "and um.missionStatus = :missionStatus " +
-            "and um.mission.missionType = :missionType")
-    List<UserMissions> findByUserIdAndMissionIdAndMissionStatusAndMissionType(@Param("userId") Long userId,
-                                                                    @Param("missionId") Long missionId,
-                                                                    @Param("missionStatus") MissionStatus missionStatus,
-                                                                    @Param("missionType") MissionType missionType);
 
     // 미션 타입, 미션 상태 기반 리스트 검색 (주기적 미션 초기화 용)
     @Query("select um from UserMissions um " +
