@@ -128,11 +128,38 @@ public class InitDb {
             Curriculums root = curriculumRepository.findById(1L).get();
             List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
 
+            // 객관식
             for (int i = 0; i < lists.size(); i++) {
-                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째", i + 1), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "");
-                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 2번째", i + 1), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "");
-                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째", i + 1), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "");
-                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째", i + 1), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "");
+                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 객관식", i + 1), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "", 0);
+                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 객관식", i + 1), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "", 0);
+                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 객관식", i + 1), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "", 0);
+                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 객관식", i + 1), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "", 0);
+
+                em.persist(quizHard1);
+                em.persist(quizHard2);
+                em.persist(quizNormal1);
+                em.persist(quizEasy1);
+            }
+
+            // 단답형
+            for (int i = 0; i < lists.size(); i++) {
+                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 단답형", i + 1), "정답", QuizLevel.HARD, "", "", "", "","","",2);
+                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 단답형", i + 1), "정답", QuizLevel.HARD, "", "", "", "","","",2);
+                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 단답형", i + 1), "정답", QuizLevel.NORMAL, "", "", "", "","","",2);
+                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 단답형", i + 1), "정답", QuizLevel.EASY, "", "", "", "","","",2);
+
+                em.persist(quizHard1);
+                em.persist(quizHard2);
+                em.persist(quizNormal1);
+                em.persist(quizEasy1);
+            }
+
+            // 코드 작성형
+            for (int i = 0; i < lists.size(); i++) {
+                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 코드작성형", i + 1), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0);
+                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 코드작성형", i + 1), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0);
+                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 코드작성형", i + 1), "", QuizLevel.NORMAL, "", "", "", "","1\n2","3",0);
+                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 코드작성형", i + 1), "", QuizLevel.EASY, "", "", "", "","1\n2","3",0);
 
                 em.persist(quizHard1);
                 em.persist(quizHard2);
@@ -408,7 +435,8 @@ public class InitDb {
                 String q3,
                 String q4,
                 String inputs,
-                String outputs
+                String outputs,
+                int wordCount
         ) {
             Quiz quiz = new Quiz();
             quiz.setCurriculum(curriculum);
@@ -422,6 +450,7 @@ public class InitDb {
             quiz.setQ4(q4);
             quiz.setInputs(inputs);
             quiz.setOutputs(outputs);
+            quiz.setWordCount(wordCount);
 
             return quiz;
         }
