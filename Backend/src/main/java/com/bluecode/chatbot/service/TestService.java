@@ -26,6 +26,10 @@ public class TestService {
     private final UserRepository userRepository;
     private final QuizRepository quizRepository;
 
+    private static final String TEST_SUBMIT = "TEST_SUBMIT";
+    private static final String TEST_PASS = "TEST_PASS";
+    private static final String TEST_FAIL = "TEST_FAIL";
+
     // 미션 처리를 위한 클래스
     private final ApplicationEventPublisher eventPublisher;
 
@@ -195,8 +199,17 @@ public class TestService {
         boolean passed = quiz.get().getAnswer().equals(dto.getAnswer());
         test.get().setPassed(passed);
 
-        if (!passed) {
+        if (passed) {
+
+            // test 정답 제출 미션 처리 로직
+            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, TEST_PASS));
+
+        } else {
+
+            // 오답 횟수 증가
             test.get().setWrongCount(test.get().getWrongCount() + 1);
+            // test 오답 제출 미션 처리 로직
+            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, TEST_FAIL));
         }
 
         testRepository.save(test.get());
@@ -204,8 +217,8 @@ public class TestService {
         TestAnswerResponseDto responseDto = new TestAnswerResponseDto();
         responseDto.setPassed(passed);
 
-        // test 관련 미션 처리 로직
-        eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST));
+        // test 제출 관련 미션 처리 로직
+        eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, TEST_SUBMIT));
 
         log.info("submitAnswer response: {}", responseDto);
         return responseDto;
