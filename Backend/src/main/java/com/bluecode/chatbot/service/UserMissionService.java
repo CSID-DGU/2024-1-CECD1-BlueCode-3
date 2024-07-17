@@ -50,7 +50,7 @@ public class UserMissionService {
         // 주기 내 진행중인 일일 미션
         daily.addAll(userMissionRepository.findAllProgressMissionByUserAndMissionType(user.get(), MissionType.DAILY));
         // 주기 내 완료 일일 미션
-        daily.addAll(userMissionRepository.findAllCompleteMissionByUserAndStartDateAndMissionType(user.get(), LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)), MissionType.DAILY));
+        daily.addAll(userMissionRepository.findAllCompleteMissionByUserAndStartDateAndMissionType(user.get(), LocalDate.now(), MissionType.DAILY));
 
         // 주기 내 진행중인 주간 미션
         weekly.addAll(userMissionRepository.findAllProgressMissionByUserAndMissionType(user.get(), MissionType.WEEKLY));
@@ -151,7 +151,12 @@ public class UserMissionService {
             userMission.setUser(user);
             userMission.setMission(mission);
             userMission.setCurrentCount(0);
-            userMission.setStartDate(LocalDate.now());
+            if (missionType == MissionType.DAILY || missionType == MissionType.CHALLENGE) {
+                userMission.setStartDate(LocalDate.now());
+            } else if (missionType == MissionType.WEEKLY) {
+                userMission.setStartDate(LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)));
+            }
+
             userMission.setEndDate(calculateEndTime(missionType));
             userMission.setMissionStatus(MissionStatus.PROGRESS);
             userMissionRepository.save(userMission);
