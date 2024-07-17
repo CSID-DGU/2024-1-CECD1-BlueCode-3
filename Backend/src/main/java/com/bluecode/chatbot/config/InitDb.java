@@ -232,35 +232,47 @@ public class InitDb {
 
             List<Missions> missions = new ArrayList<>();
 
-            Missions dailyMission1 = createMission(10, MissionType.DAILY, ServiceType.CHAT, "chat 일일 미션: 1회 달성 목표", 1);
-            Missions dailyMission2 = createMission(11, MissionType.DAILY, ServiceType.STUDY, "study 일일 미션: 2회 달성 목표", 2);
-            Missions dailyMission3 = createMission(12, MissionType.DAILY, ServiceType.TEST, "test 일일 미션: 3회 달성 목표", 3);
-            Missions dailyMission4 = createMission(13, MissionType.DAILY, ServiceType.TEST, "test 일일 미션: 1회 달성 목표", 1);
+            Missions dailyMission1 = createMission(10, MissionType.DAILY, ServiceType.CHAT, "CHAT_SUBMIT", "chat 일일 미션: 1회 달성 목표", 1);
+            Missions dailyMission2 = createMission(11, MissionType.DAILY, ServiceType.STUDY, "STUDY_COMPLETE", "study 일일 미션: 2회 달성 목표", 2);
+            Missions dailyMission3 = createMission(12, MissionType.DAILY, ServiceType.TEST, "TEST_SUBMIT", "test 일일 미션: 3회 제출 목표", 3);
+            Missions dailyMission4 = createMission(13, MissionType.DAILY, ServiceType.TEST, "TEST_SUBMIT", "test 일일 미션: 1회 제출 목표", 1);
+            Missions dailyMission5 = createMission(14, MissionType.DAILY, ServiceType.TEST, "TEST_PASS", "test 일일 미션: 2회 정답 제출 목표", 2);
+            Missions dailyMission6 = createMission(15, MissionType.DAILY, ServiceType.TEST, "TEST_FAIL", "test 일일 미션: 1회 오답 제출 목표", 1);
 
             missions.add(dailyMission1);
             missions.add(dailyMission2);
             missions.add(dailyMission3);
             missions.add(dailyMission4);
+            missions.add(dailyMission5);
+            missions.add(dailyMission6);
 
-            Missions weeklyMission1 = createMission(20, MissionType.WEEKLY, ServiceType.CHAT, "chat 주간 미션: 1회 달성 목표", 1);
-            Missions weeklyMission2 = createMission(21, MissionType.WEEKLY, ServiceType.STUDY, "study 주간 미션: 2회 달성 목표", 2);
-            Missions weeklyMission3 = createMission(22, MissionType.WEEKLY, ServiceType.TEST, "test 주간 미션: 3회 달성 목표", 3);
-            Missions weeklyMission4 = createMission(23, MissionType.WEEKLY, ServiceType.TEST, "test 주간 미션: 1회 달성 목표", 1);
+            Missions weeklyMission1 = createMission(20, MissionType.WEEKLY, ServiceType.CHAT, "CHAT_SUBMIT", "chat 주간 미션: 1회 달성 목표", 1);
+            Missions weeklyMission2 = createMission(21, MissionType.WEEKLY, ServiceType.STUDY, "STUDY_COMPLETE", "study 주간 미션: 2회 달성 목표", 2);
+            Missions weeklyMission3 = createMission(22, MissionType.WEEKLY, ServiceType.TEST, "TEST_SUBMIT", "test 주간 미션: 3회 제출 목표", 3);
+            Missions weeklyMission4 = createMission(23, MissionType.WEEKLY, ServiceType.TEST, "TEST_SUBMIT", "test 주간 미션: 1회 제출 목표", 1);
+            Missions weeklyMission5 = createMission(24, MissionType.WEEKLY, ServiceType.TEST, "TEST_PASS", "test 주간 미션: 2회 정답 제출 목표", 2);
+            Missions weeklyMission6 = createMission(25, MissionType.WEEKLY, ServiceType.TEST, "TEST_FAIL", "test 주간 미션: 1회 오답 제출 목표", 1);
 
             missions.add(weeklyMission1);
             missions.add(weeklyMission2);
             missions.add(weeklyMission3);
             missions.add(weeklyMission4);
+            missions.add(weeklyMission5);
+            missions.add(weeklyMission6);
 
-            Missions challengeMission1 = createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, "chat 도전 과제 미션: 1회 달성 목표", 1);
-            Missions challengeMission2 = createMission(21, MissionType.CHALLENGE, ServiceType.STUDY, "study 도전 과제 미션: 2회 달성 목표", 2);
-            Missions challengeMission3 = createMission(22, MissionType.CHALLENGE, ServiceType.TEST, "test 도전 과제 미션: 3회 달성 목표", 3);
-            Missions challengeMission4 = createMission(23, MissionType.CHALLENGE, ServiceType.TEST, "test 도전 과제 미션: 1회 달성 목표", 1);
+            Missions challengeMission1 = createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, "CHAT_SUBMIT", "chat 도전 과제 미션: 1회 달성 목표", 1);
+            Missions challengeMission2 = createMission(21, MissionType.CHALLENGE, ServiceType.STUDY, "STUDY_COMPLETE", "study 도전 과제 미션: 2회 달성 목표", 2);
+            Missions challengeMission3 = createMission(22, MissionType.CHALLENGE, ServiceType.TEST, "TEST_SUBMIT", "test 도전 과제 미션: 3회 제출 목표", 3);
+            Missions challengeMission4 = createMission(23, MissionType.CHALLENGE, ServiceType.TEST, "TEST_SUBMIT", "test 도전 과제 미션: 1회 제출 목표", 1);
+            Missions challengeMission5 = createMission(24, MissionType.CHALLENGE, ServiceType.TEST, "TEST_PASS", "test 도전 과제 미션: 2회 정답 제출 목표", 2);
+            Missions challengeMission6 = createMission(25, MissionType.CHALLENGE, ServiceType.TEST, "TEST_FAIL", "test 도전 과제 미션: 1회 오답 제출 목표", 1);
 
             missions.add(challengeMission1);
             missions.add(challengeMission2);
             missions.add(challengeMission3);
             missions.add(challengeMission4);
+            missions.add(challengeMission5);
+            missions.add(challengeMission6);
 
             missionRepository.saveAll(missions);
         }
@@ -311,6 +323,7 @@ public class InitDb {
                 int exp,
                 MissionType missionType,
                 ServiceType serviceType,
+                String actionType,
                 String text,
                 int missionCount
         ) {
@@ -318,6 +331,7 @@ public class InitDb {
             mission.setExp(exp);
             mission.setMissionType(missionType);
             mission.setServiceType(serviceType);
+            mission.setActionType(actionType);
             mission.setText(text);
             mission.setMissionCount(missionCount);
 
