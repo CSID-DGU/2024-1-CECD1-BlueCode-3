@@ -73,4 +73,14 @@ public interface UserMissionRepository extends JpaRepository<UserMissions, Long>
     List<UserMissions> findAllByUserAndServiceTypeAndMissionStatus(@Param("user") Users user,
                                                                    @Param("serviceType") ServiceType serviceType,
                                                                    @Param("missionStatus") MissionStatus missionStatus);
+
+    @Query("select um from UserMissions um " +
+            "join fetch um.user " +
+            "join fetch um.mission " +
+            "where um.missionStatus = :missionStatus " +
+            "and um.mission.actionType = :actionType " +
+            "and um.user = :user")
+    List<UserMissions> findAllByUserAndActionTypeAndMissionStatus(@Param("user") Users user,
+                                                                   @Param("actionType") String actionType,
+                                                                   @Param("missionStatus") MissionStatus missionStatus);
 }

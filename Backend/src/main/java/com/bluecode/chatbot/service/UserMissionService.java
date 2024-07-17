@@ -111,7 +111,7 @@ public class UserMissionService {
 
 
     // 미션 진행 현황 체크 및 보상 제공 method
-    public void checkAndCompleteMission(Users user, ServiceType serviceType, Long userMissionId) throws Exception {
+    public void checkAndCompleteMission(Users user, String actionType, Long userMissionId) throws Exception {
 
         Optional<UserMissions> userMission = userMissionRepository.findById(userMissionId);
 
@@ -120,14 +120,13 @@ public class UserMissionService {
             throw new IllegalArgumentException("userMission이 존재하지 않습니다.");
         }
 
-        if (!userMission.get().getMission().getServiceType().equals(serviceType)) {
-            log.error("mission 내의 serviceType과 제공된 serviceType이 일치하지 않습니다. userMission 내 ServiceType: {}, 주어진 ServiceType: {}", userMission.get().getMission().getServiceType(), serviceType);
-            throw new IllegalArgumentException("mission 내의 serviceType과 제공된 serviceType이 일치하지 않습니다.");
+        if (!userMission.get().getMission().getActionType().equals(actionType)) {
+            log.error("mission 내의 actionType과 제공된 actionType이 일치하지 않습니다. userMission 내 actionType: {}, 주어진 actionType: {}", userMission.get().getMission().getActionType(), actionType);
+            throw new IllegalArgumentException("mission 내의 actionType과 제공된 actionType이 일치하지 않습니다.");
         }
 
         if (userMission.get().incrementProgress()) {
             user.setExp(user.getExp() + userMission.get().getMission().getExp());
-
         }
 
         userMissionRepository.save(userMission.get());
