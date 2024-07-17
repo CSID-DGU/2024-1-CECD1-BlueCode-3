@@ -1,316 +1,749 @@
-2024-07-14T15:08:00.244+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 18092 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
-2024-07-14T15:08:00.252+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
-2024-07-14T15:08:00.317+09:00  INFO 18092 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2024-07-14T15:08:00.318+09:00  INFO 18092 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2024-07-14T15:08:01.401+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-07-14T15:08:01.667+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 255 ms. Found 8 JPA repository interfaces.
-2024-07-14T15:08:02.562+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-07-14T15:08:02.584+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-07-14T15:08:02.585+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
-2024-07-14T15:08:02.729+09:00  INFO 18092 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-07-14T15:08:02.730+09:00  INFO 18092 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2409 ms
-2024-07-14T15:08:02.791+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-07-14T15:08:03.342+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@79ffcc12
-2024-07-14T15:08:03.344+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-07-14T15:08:03.353+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
-2024-07-14T15:08:03.530+09:00  INFO 18092 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-07-14T15:08:03.651+09:00  INFO 18092 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2024-07-14T15:08:03.709+09:00  INFO 18092 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-07-14T15:08:04.114+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-07-14T15:08:04.238+09:00  WARN 18092 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-07-14T15:08:05.611+09:00  INFO 18092 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-07-14T15:08:08.273+09:00  INFO 18092 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-07-14T15:08:08.779+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-07-14T15:08:10.256+09:00  INFO 18092 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
-2024-07-14T15:08:10.265+09:00  INFO 18092 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
-2024-07-14T15:08:13.573+09:00  WARN 18092 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-07-14T15:08:13.607+09:00  WARN 18092 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2024-07-17T17:19:03.869+09:00  INFO 24800 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 24800 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-17T17:19:03.876+09:00  INFO 24800 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-07-17T17:19:03.930+09:00  INFO 24800 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-17T17:19:03.930+09:00  INFO 24800 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-17T17:19:04.863+09:00  INFO 24800 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-17T17:19:05.112+09:00  INFO 24800 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 239 ms. Found 9 JPA repository interfaces.
+2024-07-17T17:19:05.861+09:00  INFO 24800 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-17T17:19:05.880+09:00  INFO 24800 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-17T17:19:05.881+09:00  INFO 24800 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-17T17:19:05.959+09:00  INFO 24800 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-17T17:19:05.959+09:00  INFO 24800 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2028 ms
+2024-07-17T17:19:06.004+09:00  INFO 24800 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-17T17:19:06.721+09:00  INFO 24800 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2a70c376
+2024-07-17T17:19:06.732+09:00  INFO 24800 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-17T17:19:06.750+09:00  INFO 24800 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-07-17T17:19:07.060+09:00  INFO 24800 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-17T17:19:07.211+09:00  INFO 24800 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-17T17:19:07.292+09:00  INFO 24800 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-17T17:19:07.738+09:00  INFO 24800 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-17T17:19:07.838+09:00  WARN 24800 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-17T17:19:09.266+09:00  INFO 24800 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-17T17:19:12.085+09:00  INFO 24800 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:19:12.576+09:00  INFO 24800 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-17T17:19:13.869+09:00  INFO 24800 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
+2024-07-17T17:19:13.875+09:00  INFO 24800 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
+2024-07-17T17:19:17.203+09:00  WARN 24800 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-17T17:19:17.232+09:00  WARN 24800 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 72523f20-4d42-47e0-a8d4-7bcd6aa13e57
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2024-07-14T15:08:13.875+09:00 DEBUG 18092 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 12 mappings in 'requestMappingHandlerMapping'
-2024-07-14T15:08:14.026+09:00 DEBUG 18092 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2024-07-14T15:08:14.078+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@448ddc4d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@61685bf, org.springframework.security.web.context.SecurityContextHolderFilter@2eafadcd, org.springframework.security.web.header.HeaderWriterFilter@37af5838, org.springframework.web.filter.CorsFilter@5965d21f, org.springframework.security.web.authentication.logout.LogoutFilter@356caf1c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@a07d3be, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2c0c7fb8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3fd03070, org.springframework.security.web.access.ExceptionTranslationFilter@353ab1fc, org.springframework.security.web.access.intercept.AuthorizationFilter@30de40fb]
-2024-07-14T15:08:14.181+09:00 DEBUG 18092 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2024-07-14T15:08:14.233+09:00 DEBUG 18092 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2024-07-14T15:08:14.503+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2024-07-14T15:08:14.556+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
-2024-07-14T15:08:14.570+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 14.885 seconds (process running for 16.083)
-2024-07-14T15:08:14.575+09:00  INFO 18092 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-07-14T15:59:48.541+09:00  INFO 18092 --- [chatbot] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 19 class path changes (0 additions, 18 deletions, 1 modification)
-2024-07-14T15:59:48.594+09:00  INFO 18092 --- [chatbot] [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-07-14T15:59:48.600+09:00  INFO 18092 --- [chatbot] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-07-14T15:59:48.606+09:00  INFO 18092 --- [chatbot] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-07-14T15:59:48.717+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 18092 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
-2024-07-14T15:59:48.718+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : The following 1 profile is active: "dev"
-2024-07-14T15:59:49.077+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-07-14T15:59:49.108+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 31 ms. Found 6 JPA repository interfaces.
-2024-07-14T15:59:49.257+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-07-14T15:59:49.259+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-07-14T15:59:49.259+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
-2024-07-14T15:59:49.299+09:00  INFO 18092 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-07-14T15:59:49.300+09:00  INFO 18092 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 578 ms
-2024-07-14T15:59:49.317+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2024-07-14T15:59:49.335+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@81f73c5
-2024-07-14T15:59:49.335+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2024-07-14T15:59:49.335+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
-2024-07-14T15:59:49.366+09:00  INFO 18092 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-07-14T15:59:49.372+09:00  INFO 18092 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-07-14T15:59:49.380+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-07-14T15:59:49.383+09:00  WARN 18092 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-07-14T15:59:49.407+09:00  WARN 18092 --- [chatbot] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Type com.bluecode.chatbot.domain.UserMissions not present
-2024-07-14T15:59:49.407+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
-2024-07-14T15:59:49.408+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
-2024-07-14T15:59:49.408+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2024-07-14T15:59:49.415+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-07-14T15:59:49.443+09:00 ERROR 18092 --- [chatbot] [restartedMain] o.s.boot.SpringApplication               : Application run failed
-
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Type com.bluecode.chatbot.domain.UserMissions not present
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1234) ~[spring-context-6.1.6.jar:6.1.6]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:952) ~[spring-context-6.1.6.jar:6.1.6]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.6.jar:6.1.6]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.5.jar:3.2.5]
-	at com.bluecode.chatbot.ChatbotApplication.main(ChatbotApplication.java:10) ~[classes/:na]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:578) ~[na:na]
-	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.5.jar:3.2.5]
-Caused by: java.lang.TypeNotPresentException: Type com.bluecode.chatbot.domain.UserMissions not present
-	at java.base/sun.reflect.generics.factory.CoreReflectionFactory.makeNamedType(CoreReflectionFactory.java:117) ~[na:na]
-	at java.base/sun.reflect.generics.visitor.Reifier.visitClassTypeSignature(Reifier.java:125) ~[na:na]
-	at java.base/sun.reflect.generics.tree.ClassTypeSignature.accept(ClassTypeSignature.java:49) ~[na:na]
-	at java.base/sun.reflect.generics.visitor.Reifier.reifyTypeArguments(Reifier.java:68) ~[na:na]
-	at java.base/sun.reflect.generics.visitor.Reifier.visitClassTypeSignature(Reifier.java:138) ~[na:na]
-	at java.base/sun.reflect.generics.tree.ClassTypeSignature.accept(ClassTypeSignature.java:49) ~[na:na]
-	at java.base/sun.reflect.generics.repository.MethodRepository.computeReturnType(MethodRepository.java:75) ~[na:na]
-	at java.base/sun.reflect.generics.repository.MethodRepository.getReturnType(MethodRepository.java:66) ~[na:na]
-	at java.base/java.lang.reflect.Method.getGenericReturnType(Method.java:297) ~[na:na]
-	at org.hibernate.annotations.common.reflection.java.JavaXClass.getDeclaredMethodProperties(JavaXClass.java:139) ~[hibernate-commons-annotations-6.0.6.Final.jar:6.0.6.Final]
-	at org.hibernate.annotations.common.reflection.java.JavaXClass.getDeclaredProperties(JavaXClass.java:175) ~[hibernate-commons-annotations-6.0.6.Final.jar:6.0.6.Final]
-	at org.hibernate.annotations.common.reflection.java.JavaXClass.getDeclaredProperties(JavaXClass.java:167) ~[hibernate-commons-annotations-6.0.6.Final.jar:6.0.6.Final]
-	at org.hibernate.boot.model.internal.InheritanceState.determineDefaultAccessType(InheritanceState.java:259) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.InheritanceState.getElementsToProcess(InheritanceState.java:215) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.InheritanceState.postProcess(InheritanceState.java:160) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.EntityBinder.handleIdentifier(EntityBinder.java:348) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.EntityBinder.bindEntityClass(EntityBinder.java:237) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.AnnotationBinder.bindClass(AnnotationBinder.java:423) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl.processEntityHierarchies(AnnotationMetadataSourceProcessorImpl.java:256) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess$1.processEntityHierarchies(MetadataBuildingProcess.java:279) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:322) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1432) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1503) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-6.1.6.jar:6.1.6]
-	... 19 common frames omitted
-Caused by: java.lang.ClassNotFoundException: com.bluecode.chatbot.domain.UserMissions
-	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
-	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
-	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:496) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:475) ~[na:na]
-	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.2.5.jar:3.2.5]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
-	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:496) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:475) ~[na:na]
-	at java.base/sun.reflect.generics.factory.CoreReflectionFactory.makeNamedType(CoreReflectionFactory.java:114) ~[na:na]
-	... 48 common frames omitted
-
-2024-07-14T15:59:51.977+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 18092 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
-2024-07-14T15:59:51.978+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : The following 1 profile is active: "dev"
-2024-07-14T15:59:52.323+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-07-14T15:59:52.363+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39 ms. Found 8 JPA repository interfaces.
-2024-07-14T15:59:52.527+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-07-14T15:59:52.530+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-07-14T15:59:52.530+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
-2024-07-14T15:59:52.584+09:00  INFO 18092 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2024-07-14T15:59:52.584+09:00  INFO 18092 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 602 ms
-2024-07-14T15:59:52.600+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
-2024-07-14T15:59:52.617+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5afe3309
-2024-07-14T15:59:52.618+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
-2024-07-14T15:59:52.618+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
-2024-07-14T15:59:52.653+09:00  INFO 18092 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-07-14T15:59:52.660+09:00  INFO 18092 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-07-14T15:59:52.670+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-07-14T15:59:52.674+09:00  WARN 18092 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-07-14T15:59:52.959+09:00  INFO 18092 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-07-14T15:59:55.446+09:00  INFO 18092 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-07-14T15:59:55.957+09:00  INFO 18092 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
-2024-07-14T15:59:55.962+09:00  INFO 18092 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
-2024-07-14T15:59:59.046+09:00  WARN 18092 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-07-14T15:59:59.054+09:00  WARN 18092 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
-
-Using generated security password: 6e01fe58-9a78-4135-ac98-492d6b27d551
+Using generated security password: 65d0deb5-ecf1-4f1b-981e-cf252fb5fa04
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-07-14T15:59:59.086+09:00 DEBUG 18092 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 8 mappings in 'requestMappingHandlerMapping'
-2024-07-14T15:59:59.134+09:00 DEBUG 18092 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2024-07-14T15:59:59.147+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1008a3e6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6d3fb237, org.springframework.security.web.context.SecurityContextHolderFilter@42c61007, org.springframework.security.web.header.HeaderWriterFilter@42362ea3, org.springframework.web.filter.CorsFilter@60cd1b45, org.springframework.security.web.authentication.logout.LogoutFilter@40cd8949, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7857f59d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6756afb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@43da8104, org.springframework.security.web.access.ExceptionTranslationFilter@14bd4c20, org.springframework.security.web.access.intercept.AuthorizationFilter@3c23e2ea]
-2024-07-14T15:59:59.176+09:00 DEBUG 18092 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2024-07-14T15:59:59.181+09:00 DEBUG 18092 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2024-07-14T15:59:59.274+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2024-07-14T15:59:59.300+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
-2024-07-14T15:59:59.305+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 7.365 seconds (process running for 3120.818)
-2024-07-14T15:59:59.306+09:00  INFO 18092 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-07-14T15:59:59.308+09:00  INFO 18092 --- [chatbot] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2024-07-14T16:05:38.590+09:00  INFO 18092 --- [chatbot] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 14 class path changes (0 additions, 13 deletions, 1 modification)
-2024-07-14T16:05:38.605+09:00  INFO 18092 --- [chatbot] [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-07-14T16:05:38.606+09:00  INFO 18092 --- [chatbot] [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
-2024-07-14T16:05:38.610+09:00  INFO 18092 --- [chatbot] [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
-2024-07-14T16:05:38.707+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 18092 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
-2024-07-14T16:05:38.708+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
-2024-07-14T16:05:38.963+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-07-14T16:05:38.994+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 30 ms. Found 6 JPA repository interfaces.
-2024-07-14T16:05:39.129+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-07-14T16:05:39.131+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-07-14T16:05:39.131+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
-2024-07-14T16:05:39.172+09:00  INFO 18092 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2024-07-14T16:05:39.172+09:00  INFO 18092 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 462 ms
-2024-07-14T16:05:39.186+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
-2024-07-14T16:05:39.201+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3187fcd5
-2024-07-14T16:05:39.202+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
-2024-07-14T16:05:39.202+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
-2024-07-14T16:05:39.230+09:00  INFO 18092 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-07-14T16:05:39.236+09:00  INFO 18092 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-07-14T16:05:39.243+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-07-14T16:05:39.246+09:00  WARN 18092 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-07-14T16:05:39.263+09:00  WARN 18092 --- [chatbot] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Type com.bluecode.chatbot.domain.UserMissions not present
-2024-07-14T16:05:39.263+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
-2024-07-14T16:05:39.264+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
-2024-07-14T16:05:39.265+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2024-07-14T16:05:39.271+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+2024-07-17T17:19:17.441+09:00 DEBUG 24800 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 19 mappings in 'requestMappingHandlerMapping'
+2024-07-17T17:19:17.594+09:00 DEBUG 24800 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-17T17:19:17.643+09:00  INFO 24800 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@24df0018, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3cd4279f, org.springframework.security.web.context.SecurityContextHolderFilter@26524216, org.springframework.security.web.header.HeaderWriterFilter@48d68bb4, org.springframework.web.filter.CorsFilter@673eb953, org.springframework.security.web.authentication.logout.LogoutFilter@100e93e7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3bfa2911, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@45228f47, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@735eac1d, org.springframework.security.web.access.ExceptionTranslationFilter@6b28ee59, org.springframework.security.web.access.intercept.AuthorizationFilter@2e16d0ac]
+2024-07-17T17:19:17.765+09:00 DEBUG 24800 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-17T17:19:17.820+09:00 DEBUG 24800 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-17T17:19:18.125+09:00  INFO 24800 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-17T17:19:18.183+09:00  INFO 24800 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-07-17T17:19:18.195+09:00  INFO 24800 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 14.843 seconds (process running for 15.802)
+2024-07-17T17:19:18.200+09:00  INFO 24800 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-17T17:19:23.249+09:00  INFO 24800 --- [chatbot] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-17T17:19:23.249+09:00  INFO 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-17T17:19:23.250+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-07-17T17:19:23.250+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-07-17T17:19:23.250+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-07-17T17:19:23.251+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7410f70c
+2024-07-17T17:19:23.251+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@2477d253
+2024-07-17T17:19:23.251+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-07-17T17:19:23.251+09:00  INFO 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-07-17T17:19:23.275+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:19:23.285+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:19:23.288+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:19:23.291+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:19:23.381+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@769e7ccf]
+2024-07-17T17:19:23.397+09:00  INFO 24800 --- [chatbot] [http-nio-8080-exec-2] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:19:23.456+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:19:23.457+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@a43db2d]
+2024-07-17T17:19:23.483+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:19:23.484+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:19:42.209+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:19:42.209+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:19:42.210+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:19:42.210+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:19:42.211+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@27db0ffb]
+2024-07-17T17:19:42.212+09:00  INFO 24800 --- [chatbot] [http-nio-8080-exec-3] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:19:42.238+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:19:42.239+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@3d3c73f3]
+2024-07-17T17:19:42.240+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:19:42.240+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:19:58.924+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/clear
+2024-07-17T17:19:58.925+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/clear
+2024-07-17T17:19:58.925+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/clear", parameters={}
+2024-07-17T17:19:58.926+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2024-07-17T17:19:58.929+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2024-07-17T17:19:58.932+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource admin/mission/clear.]
+2024-07-17T17:19:58.933+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2024-07-17T17:19:58.933+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:19:58.941+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2024-07-17T17:19:58.941+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2024-07-17T17:19:58.941+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2024-07-17T17:19:58.942+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2024-07-17T17:19:58.948+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:19:58.948+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Jul 17 17:19:58 KST 2024, status=404, error=Not Found, trace=org.springframework.web. (truncated)...]
+2024-07-17T17:19:58.959+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
+2024-07-17T17:19:58.959+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:20:10.158+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/daily
+2024-07-17T17:20:10.159+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/daily
+2024-07-17T17:20:10.159+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/daily", parameters={}
+2024-07-17T17:20:10.159+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetMission()
+2024-07-17T17:20:10.194+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:20:10.194+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:20:10.196+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:20:10.196+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:20:12.760+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:20:12.760+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:20:12.760+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:20:12.761+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:20:12.762+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@6ea81929]
+2024-07-17T17:20:12.763+09:00  INFO 24800 --- [chatbot] [http-nio-8080-exec-6] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:20:12.779+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:20:12.780+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@912cf41]
+2024-07-17T17:20:12.781+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:20:12.781+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:20:26.012+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/daily
+2024-07-17T17:20:26.012+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/daily
+2024-07-17T17:20:26.012+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/daily", parameters={}
+2024-07-17T17:20:26.012+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetMission()
+2024-07-17T17:20:26.055+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:20:26.056+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:20:26.057+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:20:26.057+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:20:27.943+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:20:27.943+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:20:27.943+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:20:27.944+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:20:27.944+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@4ab07bd]
+2024-07-17T17:20:27.945+09:00  INFO 24800 --- [chatbot] [http-nio-8080-exec-8] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:20:27.967+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:20:27.968+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@7db9b812]
+2024-07-17T17:20:27.969+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:20:27.969+09:00 DEBUG 24800 --- [chatbot] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:22:00.276+09:00  INFO 24800 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:22:00.286+09:00  INFO 24800 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-17T17:22:00.303+09:00  INFO 24800 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-17T17:22:05.221+09:00  INFO 30100 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 30100 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-17T17:22:05.224+09:00  INFO 30100 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-07-17T17:22:05.272+09:00  INFO 30100 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-17T17:22:05.272+09:00  INFO 30100 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-17T17:22:06.050+09:00  INFO 30100 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-17T17:22:06.242+09:00  INFO 30100 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 184 ms. Found 9 JPA repository interfaces.
+2024-07-17T17:22:06.876+09:00  INFO 30100 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-17T17:22:06.890+09:00  INFO 30100 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-17T17:22:06.890+09:00  INFO 30100 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-17T17:22:06.958+09:00  INFO 30100 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-17T17:22:06.959+09:00  INFO 30100 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1687 ms
+2024-07-17T17:22:06.991+09:00  INFO 30100 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-17T17:22:07.322+09:00  INFO 30100 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4d97f626
+2024-07-17T17:22:07.324+09:00  INFO 30100 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-17T17:22:07.333+09:00  INFO 30100 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-07-17T17:22:07.469+09:00  INFO 30100 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-17T17:22:07.544+09:00  INFO 30100 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-17T17:22:07.589+09:00  INFO 30100 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-17T17:22:07.859+09:00  INFO 30100 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-17T17:22:07.940+09:00  WARN 30100 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-17T17:22:09.070+09:00  INFO 30100 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-17T17:22:11.778+09:00  INFO 30100 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:22:12.109+09:00  INFO 30100 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-17T17:22:13.139+09:00  INFO 30100 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
+2024-07-17T17:22:13.146+09:00  INFO 30100 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
+2024-07-17T17:22:16.371+09:00  WARN 30100 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-17T17:22:16.387+09:00  WARN 30100 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-07-14T16:05:39.275+09:00 ERROR 18092 --- [chatbot] [restartedMain] o.s.boot.SpringApplication               : Application run failed
-
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Type com.bluecode.chatbot.domain.UserMissions not present
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1234) ~[spring-context-6.1.6.jar:6.1.6]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:952) ~[spring-context-6.1.6.jar:6.1.6]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.6.jar:6.1.6]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.5.jar:3.2.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.5.jar:3.2.5]
-	at com.bluecode.chatbot.ChatbotApplication.main(ChatbotApplication.java:10) ~[classes/:na]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:578) ~[na:na]
-	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.5.jar:3.2.5]
-Caused by: java.lang.TypeNotPresentException: Type com.bluecode.chatbot.domain.UserMissions not present
-	at java.base/sun.reflect.generics.factory.CoreReflectionFactory.makeNamedType(CoreReflectionFactory.java:117) ~[na:na]
-	at java.base/sun.reflect.generics.visitor.Reifier.visitClassTypeSignature(Reifier.java:125) ~[na:na]
-	at java.base/sun.reflect.generics.tree.ClassTypeSignature.accept(ClassTypeSignature.java:49) ~[na:na]
-	at java.base/sun.reflect.generics.visitor.Reifier.reifyTypeArguments(Reifier.java:68) ~[na:na]
-	at java.base/sun.reflect.generics.visitor.Reifier.visitClassTypeSignature(Reifier.java:138) ~[na:na]
-	at java.base/sun.reflect.generics.tree.ClassTypeSignature.accept(ClassTypeSignature.java:49) ~[na:na]
-	at java.base/sun.reflect.generics.repository.MethodRepository.computeReturnType(MethodRepository.java:75) ~[na:na]
-	at java.base/sun.reflect.generics.repository.MethodRepository.getReturnType(MethodRepository.java:66) ~[na:na]
-	at java.base/java.lang.reflect.Method.getGenericReturnType(Method.java:297) ~[na:na]
-	at org.hibernate.annotations.common.reflection.java.JavaXClass.getDeclaredMethodProperties(JavaXClass.java:139) ~[hibernate-commons-annotations-6.0.6.Final.jar:6.0.6.Final]
-	at org.hibernate.annotations.common.reflection.java.JavaXClass.getDeclaredProperties(JavaXClass.java:175) ~[hibernate-commons-annotations-6.0.6.Final.jar:6.0.6.Final]
-	at org.hibernate.annotations.common.reflection.java.JavaXClass.getDeclaredProperties(JavaXClass.java:167) ~[hibernate-commons-annotations-6.0.6.Final.jar:6.0.6.Final]
-	at org.hibernate.boot.model.internal.InheritanceState.determineDefaultAccessType(InheritanceState.java:259) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.InheritanceState.getElementsToProcess(InheritanceState.java:215) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.InheritanceState.postProcess(InheritanceState.java:160) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.EntityBinder.handleIdentifier(EntityBinder.java:348) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.EntityBinder.bindEntityClass(EntityBinder.java:237) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.internal.AnnotationBinder.bindClass(AnnotationBinder.java:423) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl.processEntityHierarchies(AnnotationMetadataSourceProcessorImpl.java:256) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess$1.processEntityHierarchies(MetadataBuildingProcess.java:279) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:322) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1432) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1503) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366) ~[spring-orm-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833) ~[spring-beans-6.1.6.jar:6.1.6]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-6.1.6.jar:6.1.6]
-	... 19 common frames omitted
-Caused by: java.lang.ClassNotFoundException: com.bluecode.chatbot.domain.UserMissions
-	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
-	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
-	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:496) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:475) ~[na:na]
-	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.2.5.jar:3.2.5]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
-	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:496) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:475) ~[na:na]
-	at java.base/sun.reflect.generics.factory.CoreReflectionFactory.makeNamedType(CoreReflectionFactory.java:114) ~[na:na]
-	... 48 common frames omitted
-
-2024-07-14T16:05:41.819+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 18092 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
-2024-07-14T16:05:41.819+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
-2024-07-14T16:05:42.189+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-07-14T16:05:42.235+09:00  INFO 18092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 8 JPA repository interfaces.
-2024-07-14T16:05:42.405+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-07-14T16:05:42.406+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-07-14T16:05:42.407+09:00  INFO 18092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
-2024-07-14T16:05:42.459+09:00  INFO 18092 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2024-07-14T16:05:42.459+09:00  INFO 18092 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 636 ms
-2024-07-14T16:05:42.485+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
-2024-07-14T16:05:42.501+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12494fc5
-2024-07-14T16:05:42.501+09:00  INFO 18092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
-2024-07-14T16:05:42.502+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
-2024-07-14T16:05:42.532+09:00  INFO 18092 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-07-14T16:05:42.538+09:00  INFO 18092 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-07-14T16:05:42.546+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-07-14T16:05:42.550+09:00  WARN 18092 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-07-14T16:05:42.736+09:00  INFO 18092 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-07-14T16:05:45.140+09:00  INFO 18092 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-07-14T16:05:45.588+09:00  INFO 18092 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
-2024-07-14T16:05:45.594+09:00  INFO 18092 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
-2024-07-14T16:05:48.760+09:00  WARN 18092 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-07-14T16:05:48.774+09:00  WARN 18092 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
-
-Using generated security password: 205c9109-65ce-4325-8317-4d657e5b5009
+Using generated security password: d01a4e1d-0f9d-477c-bbe8-6d8cb290e97d
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-07-14T16:05:48.802+09:00 DEBUG 18092 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 12 mappings in 'requestMappingHandlerMapping'
-2024-07-14T16:05:48.847+09:00 DEBUG 18092 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2024-07-14T16:05:48.859+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3ed65ffa, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4012144d, org.springframework.security.web.context.SecurityContextHolderFilter@55a16c8a, org.springframework.security.web.header.HeaderWriterFilter@ab1f65f, org.springframework.web.filter.CorsFilter@6ba5db76, org.springframework.security.web.authentication.logout.LogoutFilter@4e2080d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@518ed398, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@78cae9bb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@45ada019, org.springframework.security.web.access.ExceptionTranslationFilter@1047254f, org.springframework.security.web.access.intercept.AuthorizationFilter@2ae088cb]
-2024-07-14T16:05:48.885+09:00 DEBUG 18092 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2024-07-14T16:05:48.891+09:00 DEBUG 18092 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2024-07-14T16:05:48.940+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2024-07-14T16:05:48.956+09:00  INFO 18092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
-2024-07-14T16:05:48.960+09:00  INFO 18092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 7.175 seconds (process running for 3470.473)
-2024-07-14T16:05:48.961+09:00  INFO 18092 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-07-14T16:05:48.962+09:00  INFO 18092 --- [chatbot] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2024-07-14T16:06:15.589+09:00  INFO 18092 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-07-14T16:06:15.589+09:00  INFO 18092 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
-2024-07-14T16:06:15.592+09:00  INFO 18092 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2024-07-17T17:22:16.549+09:00 DEBUG 30100 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 19 mappings in 'requestMappingHandlerMapping'
+2024-07-17T17:22:16.653+09:00 DEBUG 30100 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-17T17:22:16.693+09:00  INFO 30100 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@32503ef8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1b5c4b89, org.springframework.security.web.context.SecurityContextHolderFilter@6e191c5, org.springframework.security.web.header.HeaderWriterFilter@2efcdc97, org.springframework.web.filter.CorsFilter@6bcb6138, org.springframework.security.web.authentication.logout.LogoutFilter@4b6c080, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@76d80ca5, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@25147caf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@42e33a6, org.springframework.security.web.access.ExceptionTranslationFilter@1ef0ece7, org.springframework.security.web.access.intercept.AuthorizationFilter@38d22efd]
+2024-07-17T17:22:16.773+09:00 DEBUG 30100 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-17T17:22:16.808+09:00 DEBUG 30100 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-17T17:22:17.002+09:00  INFO 30100 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-17T17:22:17.044+09:00  INFO 30100 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-07-17T17:22:17.052+09:00  INFO 30100 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 12.255 seconds (process running for 13.051)
+2024-07-17T17:22:17.055+09:00  INFO 30100 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-17T17:22:21.069+09:00  INFO 30100 --- [chatbot] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-17T17:22:21.069+09:00  INFO 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-17T17:22:21.069+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-07-17T17:22:21.069+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-07-17T17:22:21.069+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-07-17T17:22:21.070+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1893da7
+2024-07-17T17:22:21.070+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@111b7be7
+2024-07-17T17:22:21.071+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-07-17T17:22:21.071+09:00  INFO 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-07-17T17:22:21.091+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:22:21.100+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:22:21.102+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:22:21.104+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:22:21.187+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@3762a0e8]
+2024-07-17T17:22:21.202+09:00  INFO 30100 --- [chatbot] [http-nio-8080-exec-2] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:22:21.260+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:22:21.261+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@1cd6a436]
+2024-07-17T17:22:21.277+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:22:21.279+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:22:23.668+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/daily
+2024-07-17T17:22:23.668+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/daily
+2024-07-17T17:22:23.668+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/daily", parameters={}
+2024-07-17T17:22:23.669+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetMission()
+2024-07-17T17:22:23.713+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:22:23.713+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:22:23.715+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:22:23.715+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:22:25.686+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:22:25.687+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:22:25.687+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:22:25.687+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:22:25.688+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@14f20aa9]
+2024-07-17T17:22:25.689+09:00  INFO 30100 --- [chatbot] [http-nio-8080-exec-4] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:22:25.707+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:22:25.708+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@42fa6bc9]
+2024-07-17T17:22:25.714+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:22:25.715+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:22:30.584+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/daily
+2024-07-17T17:22:30.584+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/daily
+2024-07-17T17:22:30.584+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/daily", parameters={}
+2024-07-17T17:22:30.585+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetMission()
+2024-07-17T17:22:30.622+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:22:30.623+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:22:30.624+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:22:30.624+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:22:32.806+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:22:32.806+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:22:32.806+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:22:32.807+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:22:32.807+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@6fdf3a48]
+2024-07-17T17:22:32.808+09:00  INFO 30100 --- [chatbot] [http-nio-8080-exec-6] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:22:32.829+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:22:32.829+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@3ee29949]
+2024-07-17T17:22:32.830+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:22:32.830+09:00 DEBUG 30100 --- [chatbot] [http-nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:23:36.081+09:00  INFO 30100 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:23:36.103+09:00  INFO 30100 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-17T17:23:36.113+09:00  INFO 30100 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-17T17:23:40.572+09:00  INFO 23008 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 23008 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-17T17:23:40.574+09:00  INFO 23008 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-07-17T17:23:40.620+09:00  INFO 23008 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-17T17:23:40.620+09:00  INFO 23008 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-17T17:23:41.399+09:00  INFO 23008 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-17T17:23:41.590+09:00  INFO 23008 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 183 ms. Found 9 JPA repository interfaces.
+2024-07-17T17:23:42.221+09:00  INFO 23008 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-17T17:23:42.235+09:00  INFO 23008 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-17T17:23:42.236+09:00  INFO 23008 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-17T17:23:42.305+09:00  INFO 23008 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-17T17:23:42.305+09:00  INFO 23008 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1685 ms
+2024-07-17T17:23:42.338+09:00  INFO 23008 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-17T17:23:42.678+09:00  INFO 23008 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@df9a028
+2024-07-17T17:23:42.680+09:00  INFO 23008 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-17T17:23:42.688+09:00  INFO 23008 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-07-17T17:23:42.833+09:00  INFO 23008 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-17T17:23:42.909+09:00  INFO 23008 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-17T17:23:42.955+09:00  INFO 23008 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-17T17:23:43.228+09:00  INFO 23008 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-17T17:23:43.303+09:00  WARN 23008 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-17T17:23:44.453+09:00  INFO 23008 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-17T17:23:47.078+09:00  INFO 23008 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:23:47.427+09:00  INFO 23008 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-17T17:23:48.718+09:00  INFO 23008 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
+2024-07-17T17:23:48.723+09:00  INFO 23008 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
+2024-07-17T17:23:51.964+09:00  WARN 23008 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-17T17:23:51.986+09:00  WARN 23008 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 3cb43e21-55df-4576-b348-e34c64985322
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-07-17T17:23:52.140+09:00 DEBUG 23008 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 20 mappings in 'requestMappingHandlerMapping'
+2024-07-17T17:23:52.255+09:00 DEBUG 23008 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-17T17:23:52.297+09:00  INFO 23008 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7e311509, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@bf7aa6a, org.springframework.security.web.context.SecurityContextHolderFilter@58e5dc84, org.springframework.security.web.header.HeaderWriterFilter@25147caf, org.springframework.web.filter.CorsFilter@6ff80273, org.springframework.security.web.authentication.logout.LogoutFilter@43ddbb7e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c321db6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@600632f0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3a14897b, org.springframework.security.web.access.ExceptionTranslationFilter@4e31edea, org.springframework.security.web.access.intercept.AuthorizationFilter@42e33a6]
+2024-07-17T17:23:52.372+09:00 DEBUG 23008 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-17T17:23:52.405+09:00 DEBUG 23008 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-17T17:23:52.612+09:00  INFO 23008 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-17T17:23:52.657+09:00  INFO 23008 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-07-17T17:23:52.668+09:00  INFO 23008 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 12.52 seconds (process running for 13.306)
+2024-07-17T17:23:52.671+09:00  INFO 23008 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-17T17:24:06.599+09:00  INFO 23008 --- [chatbot] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-17T17:24:06.600+09:00  INFO 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-17T17:24:06.600+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-07-17T17:24:06.600+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-07-17T17:24:06.600+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-07-17T17:24:06.602+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@fc3fd58
+2024-07-17T17:24:06.603+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@633e61f0
+2024-07-17T17:24:06.603+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-07-17T17:24:06.603+09:00  INFO 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-07-17T17:24:06.627+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:24:06.636+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:24:06.638+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:24:06.640+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:24:06.717+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@725f516c]
+2024-07-17T17:24:06.729+09:00  INFO 23008 --- [chatbot] [http-nio-8080-exec-1] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:24:06.785+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:24:06.786+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@1f86d21a]
+2024-07-17T17:24:06.806+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:24:06.807+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:24:17.443+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/daily
+2024-07-17T17:24:17.443+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/daily
+2024-07-17T17:24:17.443+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/daily", parameters={}
+2024-07-17T17:24:17.444+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetMission()
+2024-07-17T17:24:17.478+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:24:17.478+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:24:17.480+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:24:17.480+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:24:27.424+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/weekly
+2024-07-17T17:24:27.424+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/weekly
+2024-07-17T17:24:27.424+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/weekly", parameters={}
+2024-07-17T17:24:27.425+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetWeeklyMission()
+2024-07-17T17:24:27.451+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:24:27.453+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:24:27.454+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:24:27.454+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:24:42.462+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:24:42.463+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:24:42.463+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:24:42.463+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:24:42.464+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@4a48b23f]
+2024-07-17T17:24:42.466+09:00  INFO 23008 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:24:42.493+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:24:42.493+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@11d9ab01]
+2024-07-17T17:24:42.494+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:24:42.494+09:00 DEBUG 23008 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:25:09.119+09:00  INFO 23008 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:25:09.128+09:00  INFO 23008 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-17T17:25:09.133+09:00  INFO 23008 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-17T17:25:13.945+09:00  INFO 10092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 10092 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-17T17:25:13.948+09:00  INFO 10092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-07-17T17:25:14.000+09:00  INFO 10092 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-17T17:25:14.000+09:00  INFO 10092 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-17T17:25:14.787+09:00  INFO 10092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-17T17:25:14.976+09:00  INFO 10092 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 181 ms. Found 9 JPA repository interfaces.
+2024-07-17T17:25:15.606+09:00  INFO 10092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-17T17:25:15.619+09:00  INFO 10092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-17T17:25:15.620+09:00  INFO 10092 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-17T17:25:15.688+09:00  INFO 10092 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-17T17:25:15.689+09:00  INFO 10092 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1687 ms
+2024-07-17T17:25:15.720+09:00  INFO 10092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-17T17:25:16.055+09:00  INFO 10092 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@113c1bc9
+2024-07-17T17:25:16.057+09:00  INFO 10092 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-17T17:25:16.067+09:00  INFO 10092 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-07-17T17:25:16.211+09:00  INFO 10092 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-17T17:25:16.290+09:00  INFO 10092 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-17T17:25:16.337+09:00  INFO 10092 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-17T17:25:16.606+09:00  INFO 10092 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-17T17:25:16.681+09:00  WARN 10092 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-17T17:25:17.824+09:00  INFO 10092 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-17T17:25:20.525+09:00  INFO 10092 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:25:20.802+09:00  INFO 10092 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-17T17:25:21.985+09:00  INFO 10092 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
+2024-07-17T17:25:21.993+09:00  INFO 10092 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
+2024-07-17T17:25:25.245+09:00  WARN 10092 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-17T17:25:25.271+09:00  WARN 10092 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: abfdeb4d-1eed-4628-af73-8a7743a74ecb
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-07-17T17:25:25.444+09:00 DEBUG 10092 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 20 mappings in 'requestMappingHandlerMapping'
+2024-07-17T17:25:25.570+09:00 DEBUG 10092 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-17T17:25:25.609+09:00  INFO 10092 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5aa5f643, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3bfa2911, org.springframework.security.web.context.SecurityContextHolderFilter@70af6fc6, org.springframework.security.web.header.HeaderWriterFilter@444f03ce, org.springframework.web.filter.CorsFilter@45228f47, org.springframework.security.web.authentication.logout.LogoutFilter@117d8443, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@40d26e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@eea0616, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@71542707, org.springframework.security.web.access.ExceptionTranslationFilter@13a6ebda, org.springframework.security.web.access.intercept.AuthorizationFilter@d6d9a7c]
+2024-07-17T17:25:25.692+09:00 DEBUG 10092 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-17T17:25:25.728+09:00 DEBUG 10092 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-17T17:25:25.918+09:00  INFO 10092 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-17T17:25:25.958+09:00  INFO 10092 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-07-17T17:25:25.968+09:00  INFO 10092 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 12.46 seconds (process running for 13.291)
+2024-07-17T17:25:25.970+09:00  INFO 10092 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-17T17:25:29.479+09:00  INFO 10092 --- [chatbot] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-17T17:25:29.479+09:00  INFO 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-17T17:25:29.479+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-07-17T17:25:29.480+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-07-17T17:25:29.480+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-07-17T17:25:29.482+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@6a320236
+2024-07-17T17:25:29.483+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@4488991f
+2024-07-17T17:25:29.483+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-07-17T17:25:29.483+09:00  INFO 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2024-07-17T17:25:29.511+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:25:29.522+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:25:29.525+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:25:29.527+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:25:29.622+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@477a7e8e]
+2024-07-17T17:25:29.635+09:00  INFO 10092 --- [chatbot] [http-nio-8080-exec-2] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:25:29.688+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:25:29.689+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@7e00e747]
+2024-07-17T17:25:29.715+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:25:29.717+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:25:35.922+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/daily
+2024-07-17T17:25:35.923+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/daily
+2024-07-17T17:25:35.923+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/daily", parameters={}
+2024-07-17T17:25:35.924+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetMission()
+2024-07-17T17:25:35.972+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:25:35.973+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:25:35.974+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:25:35.975+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:25:39.516+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/weekly
+2024-07-17T17:25:39.517+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/weekly
+2024-07-17T17:25:39.517+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/weekly", parameters={}
+2024-07-17T17:25:39.517+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetWeeklyMission()
+2024-07-17T17:25:39.546+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:25:39.546+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:25:39.547+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:25:39.547+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:25:41.230+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:25:41.231+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:25:41.231+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:25:41.231+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:25:41.232+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@39cbe27]
+2024-07-17T17:25:41.233+09:00  INFO 10092 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:25:41.258+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:25:41.258+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@77b411a0]
+2024-07-17T17:25:41.260+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:25:41.260+09:00 DEBUG 10092 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:26:23.462+09:00  INFO 10092 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:26:23.471+09:00  INFO 10092 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-17T17:26:23.479+09:00  INFO 10092 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-17T17:31:19.628+09:00  INFO 26164 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 26164 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-17T17:31:19.630+09:00  INFO 26164 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-07-17T17:31:19.677+09:00  INFO 26164 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-17T17:31:19.677+09:00  INFO 26164 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-17T17:31:20.576+09:00  INFO 26164 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-17T17:31:20.777+09:00  INFO 26164 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 191 ms. Found 9 JPA repository interfaces.
+2024-07-17T17:31:21.438+09:00  INFO 26164 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-17T17:31:21.455+09:00  INFO 26164 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-17T17:31:21.456+09:00  INFO 26164 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-17T17:31:21.534+09:00  INFO 26164 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-17T17:31:21.534+09:00  INFO 26164 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1856 ms
+2024-07-17T17:31:21.568+09:00  INFO 26164 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-17T17:31:21.917+09:00  INFO 26164 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12da57c9
+2024-07-17T17:31:21.920+09:00  INFO 26164 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-17T17:31:21.929+09:00  INFO 26164 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-07-17T17:31:22.086+09:00  INFO 26164 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-17T17:31:22.163+09:00  INFO 26164 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-17T17:31:22.208+09:00  INFO 26164 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-17T17:31:22.482+09:00  INFO 26164 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-17T17:31:22.573+09:00  WARN 26164 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-17T17:31:23.756+09:00  INFO 26164 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-17T17:31:26.463+09:00  INFO 26164 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:31:26.790+09:00  INFO 26164 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-17T17:31:27.839+09:00  INFO 26164 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
+2024-07-17T17:31:27.845+09:00  INFO 26164 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
+2024-07-17T17:31:31.111+09:00  WARN 26164 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-17T17:31:31.131+09:00  WARN 26164 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: ce0cf576-2e4a-41bc-821d-128ab7d1da09
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-07-17T17:31:31.287+09:00 DEBUG 26164 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 20 mappings in 'requestMappingHandlerMapping'
+2024-07-17T17:31:31.403+09:00 DEBUG 26164 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-17T17:31:31.441+09:00  INFO 26164 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2358990f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@38d22efd, org.springframework.security.web.context.SecurityContextHolderFilter@2588daa, org.springframework.security.web.header.HeaderWriterFilter@2181b13f, org.springframework.web.filter.CorsFilter@6f13ee94, org.springframework.security.web.authentication.logout.LogoutFilter@5aa5f643, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@599c29a0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@409271a0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@55a755a2, org.springframework.security.web.access.ExceptionTranslationFilter@75088449, org.springframework.security.web.access.intercept.AuthorizationFilter@1c40ea2b]
+2024-07-17T17:31:31.512+09:00 DEBUG 26164 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-17T17:31:31.544+09:00 DEBUG 26164 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-17T17:31:31.752+09:00  INFO 26164 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-17T17:31:31.793+09:00  INFO 26164 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-07-17T17:31:31.803+09:00  INFO 26164 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 12.657 seconds (process running for 13.488)
+2024-07-17T17:31:31.806+09:00  INFO 26164 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-17T17:32:01.489+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-17T17:32:01.489+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-17T17:32:01.489+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-07-17T17:32:01.490+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-07-17T17:32:01.490+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-07-17T17:32:01.491+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@372b2ea
+2024-07-17T17:32:01.491+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@747d92dd
+2024-07-17T17:32:01.491+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-07-17T17:32:01.492+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-07-17T17:32:01.512+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /test/create/normal
+2024-07-17T17:32:01.521+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /test/create/normal
+2024-07-17T17:32:01.523+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/test/create/normal", parameters={}
+2024-07-17T17:32:01.525+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createNormalTest(DataCallDto)
+2024-07-17T17:32:01.606+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=2, curriculumId=5)]
+2024-07-17T17:32:01.618+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] c.b.chatbot.controller.TestController    : call createNormalTest in TestController: DataCallDto(userId=2, curriculumId=5)
+2024-07-17T17:32:01.636+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 4. 표현식, level: HARD, count: 1
+2024-07-17T17:32:01.643+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 4. 표현식, level: NORMAL, count: 1
+2024-07-17T17:32:01.646+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 4. 표현식, level: EASY, count: 1
+2024-07-17T17:32:01.674+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : createNormalTest response: TestResponseDto(tests=[TestResponseElementDto(testId=13, quizId=16, text=테스트 문제-챕터 4: 입문자 1번째, level=EASY, quizType=NUM, q1=오답1, q2=오답2, q3=오답3, q4=정답4), TestResponseElementDto(testId=14, quizId=15, text=테스트 문제-챕터 4: 초급자 1번째, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4), TestResponseElementDto(testId=15, quizId=14, text=테스트 문제-챕터 4: 중급자 2번째, level=HARD, quizType=NUM, q1=오답1, q2=정답2, q3=오답3, q4=오답4)])
+2024-07-17T17:32:01.676+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-1] c.b.chatbot.controller.TestController    : createNormalTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=13, quizId=16, text=테스트 문제-챕터 4: 입문자 1번째, level=EASY, quizType=NUM, q1=오답1, q2=오답2, q3=오답3, q4=정답4), TestResponseElementDto(testId=14, quizId=15, text=테스트 문제-챕터 4: 초급자 1번째, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4), TestResponseElementDto(testId=15, quizId=14, text=테스트 문제-챕터 4: 중급자 2번째, level=HARD, quizType=NUM, q1=오답1, q2=정답2, q3=오답3, q4=오답4)])
+2024-07-17T17:32:01.696+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:32:01.698+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=13, quizId=16, text=테스트 문제-챕터 4: 입문자 1번째, level (truncated)...]
+2024-07-17T17:32:01.721+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:32:01.722+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:32:04.474+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /test/submit/num
+2024-07-17T17:32:04.475+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /test/submit/num
+2024-07-17T17:32:04.475+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/test/submit/num", parameters={}
+2024-07-17T17:32:04.475+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#submitAnswerNum(TestAnswerCallDto)
+2024-07-17T17:32:04.478+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [TestAnswerCallDto(testId=13, userId=2, quizId=16, answer=4)]
+2024-07-17T17:32:04.478+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.b.chatbot.controller.TestController    : call submitAnswerNum in TestController: TestAnswerCallDto(testId=13, userId=2, quizId=16, answer=4)
+2024-07-17T17:32:04.478+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.bluecode.chatbot.service.TestService   : submitAnswer with dto: TestAnswerCallDto(testId=13, userId=2, quizId=16, answer=4)
+2024-07-17T17:32:04.514+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.b.c.config.UserActionEventListener     : 미션 조회: userId: 2, userMissions.size(): 4
+2024-07-17T17:32:04.514+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 2, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, userMissionId: 3
+2024-07-17T17:32:04.526+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 2, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, userMissionId: 6
+2024-07-17T17:32:04.534+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 2, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, userMissionId: 9
+2024-07-17T17:32:04.543+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 2, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, userMissionId: 10
+2024-07-17T17:32:04.554+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.bluecode.chatbot.service.TestService   : submitAnswer response: TestAnswerResponseDto(passed=true)
+2024-07-17T17:32:04.554+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-3] c.b.chatbot.controller.TestController    : submitAnswerNum passed: TestAnswerResponseDto(passed=true)
+2024-07-17T17:32:04.555+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:32:04.557+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestAnswerResponseDto(passed=true)]
+2024-07-17T17:32:04.557+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:32:04.557+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:32:07.075+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:32:07.076+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:32:07.076+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:32:07.077+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:32:07.078+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@7b4219e]
+2024-07-17T17:32:07.080+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-4] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:32:07.116+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:32:07.116+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@7d64ae55]
+2024-07-17T17:32:07.119+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:32:07.119+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:33:45.769+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /admin/mission/reset/daily
+2024-07-17T17:33:45.769+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /admin/mission/reset/daily
+2024-07-17T17:33:45.770+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/admin/mission/reset/daily", parameters={}
+2024-07-17T17:33:45.770+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#resetMission()
+2024-07-17T17:33:45.805+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:33:45.805+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:33:45.806+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:33:45.806+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:33:47.947+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:33:47.948+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:33:47.948+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:33:47.948+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:33:47.949+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@554b2c49]
+2024-07-17T17:33:47.950+09:00  INFO 26164 --- [chatbot] [http-nio-8080-exec-8] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:33:47.980+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:33:47.980+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@4ebb060b]
+2024-07-17T17:33:47.981+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:33:47.982+09:00 DEBUG 26164 --- [chatbot] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:34:03.093+09:00  INFO 26164 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:34:03.099+09:00  INFO 26164 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-17T17:34:03.108+09:00  INFO 26164 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-17T17:51:55.420+09:00  INFO 31612 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 31612 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-17T17:51:55.423+09:00  INFO 31612 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-07-17T17:51:55.470+09:00  INFO 31612 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-17T17:51:55.470+09:00  INFO 31612 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-17T17:51:56.336+09:00  INFO 31612 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-17T17:51:56.531+09:00  INFO 31612 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 188 ms. Found 9 JPA repository interfaces.
+2024-07-17T17:51:57.188+09:00  INFO 31612 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-17T17:51:57.203+09:00  INFO 31612 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-17T17:51:57.204+09:00  INFO 31612 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-17T17:51:57.279+09:00  INFO 31612 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-17T17:51:57.279+09:00  INFO 31612 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1808 ms
+2024-07-17T17:51:57.312+09:00  INFO 31612 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-17T17:51:57.646+09:00  INFO 31612 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@d339c56
+2024-07-17T17:51:57.648+09:00  INFO 31612 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-17T17:51:57.657+09:00  INFO 31612 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-07-17T17:51:57.810+09:00  INFO 31612 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-17T17:51:57.887+09:00  INFO 31612 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-17T17:51:57.933+09:00  INFO 31612 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-17T17:51:58.232+09:00  INFO 31612 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-17T17:51:58.313+09:00  WARN 31612 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-17T17:51:59.512+09:00  INFO 31612 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-17T17:52:02.373+09:00  INFO 31612 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T17:52:02.766+09:00  INFO 31612 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-17T17:52:03.933+09:00  INFO 31612 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
+2024-07-17T17:52:03.940+09:00  INFO 31612 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
+2024-07-17T17:52:07.200+09:00  WARN 31612 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-17T17:52:07.227+09:00  WARN 31612 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: eea6e317-09ec-4dd4-b8e4-2a497b38306a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-07-17T17:52:07.398+09:00 DEBUG 31612 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 21 mappings in 'requestMappingHandlerMapping'
+2024-07-17T17:52:07.528+09:00 DEBUG 31612 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-17T17:52:07.565+09:00  INFO 31612 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@bf7aa6a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6ff80273, org.springframework.security.web.context.SecurityContextHolderFilter@5e922233, org.springframework.security.web.header.HeaderWriterFilter@2f71ae71, org.springframework.web.filter.CorsFilter@3a14897b, org.springframework.security.web.authentication.logout.LogoutFilter@7698eed7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@600632f0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1671c388, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4c7b4a6d, org.springframework.security.web.access.ExceptionTranslationFilter@76d80ca5, org.springframework.security.web.access.intercept.AuthorizationFilter@37ba6a25]
+2024-07-17T17:52:07.635+09:00 DEBUG 31612 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-17T17:52:07.674+09:00 DEBUG 31612 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-17T17:52:07.895+09:00  INFO 31612 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-17T17:52:07.942+09:00  INFO 31612 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-07-17T17:52:07.952+09:00  INFO 31612 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 13.022 seconds (process running for 13.967)
+2024-07-17T17:52:07.955+09:00  INFO 31612 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-17T17:52:12.761+09:00  INFO 31612 --- [chatbot] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-17T17:52:12.761+09:00  INFO 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-17T17:52:12.762+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-07-17T17:52:12.762+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-07-17T17:52:12.762+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-07-17T17:52:12.763+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@307067a2
+2024-07-17T17:52:12.763+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@7a112ba0
+2024-07-17T17:52:12.763+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-07-17T17:52:12.764+09:00  INFO 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-07-17T17:52:12.784+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /mission/init
+2024-07-17T17:52:12.794+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /mission/init
+2024-07-17T17:52:12.797+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/mission/init", parameters={}
+2024-07-17T17:52:12.799+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#initMissions(UserMissionDataCallDto)
+2024-07-17T17:52:12.874+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@4f0b0faf]
+2024-07-17T17:52:12.901+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:52:12.902+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["Unexpected user"]
+2024-07-17T17:52:12.909+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2024-07-17T17:52:12.910+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:52:26.507+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /mission/init
+2024-07-17T17:52:26.507+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /mission/init
+2024-07-17T17:52:26.507+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/mission/init", parameters={}
+2024-07-17T17:52:26.507+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#initMissions(UserMissionDataCallDto)
+2024-07-17T17:52:26.509+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@1ab1c2ab]
+2024-07-17T17:52:26.563+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T17:52:26.563+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T17:52:26.564+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:52:26.565+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T17:52:40.184+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T17:52:40.185+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T17:52:40.185+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T17:52:40.185+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T17:52:40.186+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@1df7eddf]
+2024-07-17T17:52:40.187+09:00  INFO 31612 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T17:52:40.238+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T17:52:40.238+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@2587532c]
+2024-07-17T17:52:40.256+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T17:52:40.256+09:00 DEBUG 31612 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T18:05:57.825+09:00  INFO 31612 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T18:05:57.830+09:00  INFO 31612 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-17T18:05:57.837+09:00  INFO 31612 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-17T18:06:02.946+09:00  INFO 29240 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 20 with PID 29240 (C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend\out\production\classes started by flinter in C:\Users\flinter\Desktop\gits\2024-1-CECD1-BlueCode-3\Backend)
+2024-07-17T18:06:02.949+09:00  INFO 29240 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-07-17T18:06:02.998+09:00  INFO 29240 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-07-17T18:06:02.998+09:00  INFO 29240 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-07-17T18:06:03.769+09:00  INFO 29240 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-17T18:06:03.958+09:00  INFO 29240 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 180 ms. Found 9 JPA repository interfaces.
+2024-07-17T18:06:04.575+09:00  INFO 29240 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-17T18:06:04.588+09:00  INFO 29240 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-17T18:06:04.589+09:00  INFO 29240 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-17T18:06:04.655+09:00  INFO 29240 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-17T18:06:04.655+09:00  INFO 29240 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1657 ms
+2024-07-17T18:06:04.685+09:00  INFO 29240 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-17T18:06:05.014+09:00  INFO 29240 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@56a50c82
+2024-07-17T18:06:05.017+09:00  INFO 29240 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-17T18:06:05.026+09:00  INFO 29240 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-07-17T18:06:05.168+09:00  INFO 29240 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-17T18:06:05.243+09:00  INFO 29240 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-07-17T18:06:05.286+09:00  INFO 29240 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-17T18:06:05.552+09:00  INFO 29240 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-17T18:06:05.631+09:00  WARN 29240 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-17T18:06:06.738+09:00  INFO 29240 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-17T18:06:09.380+09:00  INFO 29240 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-17T18:06:09.700+09:00  INFO 29240 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-17T18:06:10.690+09:00  INFO 29240 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 챕터 4: HARD학습자료: 4. 표현식 테스트 내용입니다. - 초기 시험 합격
+2024-07-17T18:06:10.696+09:00  INFO 29240 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : 7. 주석,파이썬에서 대괄호, 중괄호, 소괄호 간 차이
+2024-07-17T18:06:13.935+09:00  WARN 29240 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-17T18:06:13.955+09:00  WARN 29240 --- [chatbot] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: de912cb7-fe4e-44ad-a2e2-3883042551b6
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-07-17T18:06:14.104+09:00 DEBUG 29240 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 21 mappings in 'requestMappingHandlerMapping'
+2024-07-17T18:06:14.210+09:00 DEBUG 29240 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-07-17T18:06:14.244+09:00  INFO 29240 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4c92cf13, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6ac5ff76, org.springframework.security.web.context.SecurityContextHolderFilter@6f13ee94, org.springframework.security.web.header.HeaderWriterFilter@54cdd86c, org.springframework.web.filter.CorsFilter@17a08106, org.springframework.security.web.authentication.logout.LogoutFilter@735eac1d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@32503ef8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1b5c4b89, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@66ef9bf2, org.springframework.security.web.access.ExceptionTranslationFilter@1c40ea2b, org.springframework.security.web.access.intercept.AuthorizationFilter@2770303f]
+2024-07-17T18:06:14.315+09:00 DEBUG 29240 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-07-17T18:06:14.347+09:00 DEBUG 29240 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-07-17T18:06:14.525+09:00  INFO 29240 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-07-17T18:06:14.562+09:00  INFO 29240 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-07-17T18:06:14.571+09:00  INFO 29240 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 12.042 seconds (process running for 12.84)
+2024-07-17T18:06:14.574+09:00  INFO 29240 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-07-17T18:06:20.372+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-17T18:06:20.372+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-17T18:06:20.372+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-07-17T18:06:20.372+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-07-17T18:06:20.372+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-07-17T18:06:20.373+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7e4c71b4
+2024-07-17T18:06:20.373+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@539cf291
+2024-07-17T18:06:20.373+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-07-17T18:06:20.373+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-07-17T18:06:20.395+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T18:06:20.403+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T18:06:20.406+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T18:06:20.408+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T18:06:20.479+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@46773ae7]
+2024-07-17T18:06:20.490+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-1] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T18:06:20.532+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T18:06:20.534+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@93ab7e7]
+2024-07-17T18:06:20.546+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T18:06:20.548+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T18:06:24.132+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /mission/init
+2024-07-17T18:06:24.132+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /mission/init
+2024-07-17T18:06:24.133+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/mission/init", parameters={}
+2024-07-17T18:06:24.133+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#initMissions(UserMissionDataCallDto)
+2024-07-17T18:06:24.134+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@7c533abc]
+2024-07-17T18:06:24.195+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2024-07-17T18:06:24.196+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["ok"]
+2024-07-17T18:06:24.197+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T18:06:24.198+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T18:06:26.293+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /mission/find
+2024-07-17T18:06:26.293+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /mission/find
+2024-07-17T18:06:26.293+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/mission/find", parameters={}
+2024-07-17T18:06:26.294+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.UserMissionController#findMissions(UserMissionDataCallDto)
+2024-07-17T18:06:26.294+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.bluecode.chatbot.dto.UserMissionDataCallDto@3a38e994]
+2024-07-17T18:06:26.296+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-4] c.b.chatbot.service.UserMissionService   : UserMissionController findMissions 시작
+2024-07-17T18:06:26.321+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T18:06:26.322+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.bluecode.chatbot.dto.UserMissionDataResponseDto@23ec4af9]
+2024-07-17T18:06:26.329+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T18:06:26.329+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T18:06:36.336+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /test/create/normal
+2024-07-17T18:06:36.336+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /test/create/normal
+2024-07-17T18:06:36.336+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/test/create/normal", parameters={}
+2024-07-17T18:06:36.337+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createNormalTest(DataCallDto)
+2024-07-17T18:06:36.339+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=5)]
+2024-07-17T18:06:36.340+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.controller.TestController    : call createNormalTest in TestController: DataCallDto(userId=1, curriculumId=5)
+2024-07-17T18:06:36.357+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 4. 표현식, level: HARD, count: 1
+2024-07-17T18:06:36.363+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 4. 표현식, level: NORMAL, count: 1
+2024-07-17T18:06:36.365+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 4. 표현식, level: EASY, count: 1
+2024-07-17T18:06:36.395+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : createNormalTest response: TestResponseDto(tests=[TestResponseElementDto(testId=13, quizId=16, text=테스트 문제-챕터 4: 입문자 1번째, level=EASY, quizType=NUM, q1=오답1, q2=오답2, q3=오답3, q4=정답4), TestResponseElementDto(testId=14, quizId=15, text=테스트 문제-챕터 4: 초급자 1번째, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4), TestResponseElementDto(testId=15, quizId=14, text=테스트 문제-챕터 4: 중급자 2번째, level=HARD, quizType=NUM, q1=오답1, q2=정답2, q3=오답3, q4=오답4)])
+2024-07-17T18:06:36.396+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.controller.TestController    : createNormalTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=13, quizId=16, text=테스트 문제-챕터 4: 입문자 1번째, level=EASY, quizType=NUM, q1=오답1, q2=오답2, q3=오답3, q4=정답4), TestResponseElementDto(testId=14, quizId=15, text=테스트 문제-챕터 4: 초급자 1번째, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4), TestResponseElementDto(testId=15, quizId=14, text=테스트 문제-챕터 4: 중급자 2번째, level=HARD, quizType=NUM, q1=오답1, q2=정답2, q3=오답3, q4=오답4)])
+2024-07-17T18:06:36.400+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T18:06:36.400+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=13, quizId=16, text=테스트 문제-챕터 4: 입문자 1번째, level (truncated)...]
+2024-07-17T18:06:36.403+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T18:06:36.403+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T18:06:41.240+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /test/submit/num
+2024-07-17T18:06:41.241+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /test/submit/num
+2024-07-17T18:06:41.241+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/test/submit/num", parameters={}
+2024-07-17T18:06:41.241+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#submitAnswerNum(TestAnswerCallDto)
+2024-07-17T18:06:41.245+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=4)]
+2024-07-17T18:06:41.245+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.chatbot.controller.TestController    : call submitAnswerNum in TestController: TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=4)
+2024-07-17T18:06:41.245+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.TestService   : submitAnswer with dto: TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=4)
+2024-07-17T18:06:41.263+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.c.config.UserActionEventListener     : 미션 조회: userId: 1, userMissions.size(): 2
+2024-07-17T18:06:41.264+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_PASS, userMissionId: 13
+2024-07-17T18:06:41.284+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_PASS, userMissionId: 23
+2024-07-17T18:06:41.298+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.c.config.UserActionEventListener     : 미션 조회: userId: 1, userMissions.size(): 3
+2024-07-17T18:06:41.298+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_SUBMIT, userMissionId: 15
+2024-07-17T18:06:41.306+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_SUBMIT, userMissionId: 21
+2024-07-17T18:06:41.316+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_SUBMIT, userMissionId: 22
+2024-07-17T18:06:41.329+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.TestService   : submitAnswer response: TestAnswerResponseDto(passed=true)
+2024-07-17T18:06:41.329+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-6] c.b.chatbot.controller.TestController    : submitAnswerNum passed: TestAnswerResponseDto(passed=true)
+2024-07-17T18:06:41.332+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T18:06:41.332+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestAnswerResponseDto(passed=true)]
+2024-07-17T18:06:41.333+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T18:06:41.334+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T18:06:53.637+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /test/submit/num
+2024-07-17T18:06:53.638+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /test/submit/num
+2024-07-17T18:06:53.638+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/test/submit/num", parameters={}
+2024-07-17T18:06:53.638+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#submitAnswerNum(TestAnswerCallDto)
+2024-07-17T18:06:53.639+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=4)]
+2024-07-17T18:06:53.639+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.b.chatbot.controller.TestController    : call submitAnswerNum in TestController: TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=4)
+2024-07-17T18:06:53.640+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.bluecode.chatbot.service.TestService   : submitAnswer with dto: TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=4)
+2024-07-17T18:06:53.650+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.b.c.config.UserActionEventListener     : 미션 조회: userId: 1, userMissions.size(): 2
+2024-07-17T18:06:53.652+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_PASS, userMissionId: 13
+2024-07-17T18:06:53.662+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_PASS, userMissionId: 23
+2024-07-17T18:06:53.676+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.b.c.config.UserActionEventListener     : 미션 조회: userId: 1, userMissions.size(): 2
+2024-07-17T18:06:53.676+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_SUBMIT, userMissionId: 15
+2024-07-17T18:06:53.685+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_SUBMIT, userMissionId: 21
+2024-07-17T18:06:53.694+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.bluecode.chatbot.service.TestService   : submitAnswer response: TestAnswerResponseDto(passed=true)
+2024-07-17T18:06:53.695+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-9] c.b.chatbot.controller.TestController    : submitAnswerNum passed: TestAnswerResponseDto(passed=true)
+2024-07-17T18:06:53.695+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T18:06:53.695+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestAnswerResponseDto(passed=true)]
+2024-07-17T18:06:53.696+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T18:06:53.696+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-17T18:07:05.248+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /test/submit/num
+2024-07-17T18:07:05.249+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /test/submit/num
+2024-07-17T18:07:05.249+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/test/submit/num", parameters={}
+2024-07-17T18:07:05.249+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#submitAnswerNum(TestAnswerCallDto)
+2024-07-17T18:07:05.250+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=3)]
+2024-07-17T18:07:05.250+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.b.chatbot.controller.TestController    : call submitAnswerNum in TestController: TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=3)
+2024-07-17T18:07:05.250+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.bluecode.chatbot.service.TestService   : submitAnswer with dto: TestAnswerCallDto(testId=13, userId=1, quizId=16, answer=3)
+2024-07-17T18:07:05.263+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.b.c.config.UserActionEventListener     : 미션 조회: userId: 1, userMissions.size(): 2
+2024-07-17T18:07:05.264+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_FAIL, userMissionId: 17
+2024-07-17T18:07:05.278+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_FAIL, userMissionId: 24
+2024-07-17T18:07:05.293+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.b.c.config.UserActionEventListener     : 미션 조회: userId: 1, userMissions.size(): 2
+2024-07-17T18:07:05.293+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_SUBMIT, userMissionId: 15
+2024-07-17T18:07:05.303+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.b.c.config.UserActionEventListener     : 미션 수행 여부 체크: userId: 1, Mission 내 ServiceType: TEST, event 내 ServiceType: TEST, ActionType: TEST_SUBMIT, userMissionId: 21
+2024-07-17T18:07:05.313+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.bluecode.chatbot.service.TestService   : submitAnswer response: TestAnswerResponseDto(passed=false)
+2024-07-17T18:07:05.313+09:00  INFO 29240 --- [chatbot] [http-nio-8080-exec-10] c.b.chatbot.controller.TestController    : submitAnswerNum passed: TestAnswerResponseDto(passed=false)
+2024-07-17T18:07:05.314+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-07-17T18:07:05.314+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestAnswerResponseDto(passed=false)]
+2024-07-17T18:07:05.315+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-07-17T18:07:05.315+09:00 DEBUG 29240 --- [chatbot] [http-nio-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
