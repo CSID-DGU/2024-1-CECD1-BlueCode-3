@@ -75,6 +75,26 @@ public class TestController {
         }
     }
 
+    // 단답형 문제 채점
+    @PostMapping("/test/submit/word")
+    public ResponseEntity submitAnswerWord(@RequestBody TestAnswerCallDto dto) {
+
+        log.info("call submitAnswerWord in TestController: {}", dto);
+
+        try {
+            TestAnswerResponseDto answer = testService.submitAnswerWord(dto);
+            log.info("submitAnswerNum passed: {}", answer);
+            return ResponseEntity.ok().body(answer);
+        } catch (IllegalArgumentException e) {
+            // 유효하지 않은 dto 값일 경우, 400 error 발생 및 에러 메시지 String return
+            log.error("submitAnswerNum error: " + e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            // 그 외의 Exception의 경우, back 내부 에러로 간주
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
     // user 테이블에 초기 테스트 완료 처리
     @GetMapping("/test/complete/init/{userId}")
     public ResponseEntity completeInitTest(@PathVariable Long userId) {
