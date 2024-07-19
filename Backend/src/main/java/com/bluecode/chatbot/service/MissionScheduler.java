@@ -16,19 +16,19 @@ public class MissionScheduler {
     private final UserMissionService userMissionService;
 
     // 주기적으로 생성될 일일 미션 개수
-    private final int dailyMissionCount = 3;
+    private static final int DAILY_MISSION_COUNT = 3;
 
     // 주기적으로 생성될 주간 미션 개수
-    private final int weeklyMissionCount = 3;
+    private static final int WEEKLY_MISSION_COUNT = 3;
 
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void resetDailyMissions() {
-        userMissionService.resetMissions(MissionType.DAILY, dailyMissionCount);
+        userMissionService.resetMissions(MissionType.DAILY, DAILY_MISSION_COUNT);
     }
 
-    @Scheduled(cron = "0 0 0  * MON")
+    @Scheduled(cron = "0 0 0 ? * MON")
     public void resetWeeklyMissions() {
-        userMissionService.resetMissions(MissionType.WEEKLY, weeklyMissionCount);
+        userMissionService.resetMissions(MissionType.WEEKLY, WEEKLY_MISSION_COUNT);
     }
 }
