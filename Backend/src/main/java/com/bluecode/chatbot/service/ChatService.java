@@ -48,7 +48,7 @@ public class ChatService {
         this.curriculumRepository = curriculumRepository;
     }
 
-    // 사용자의 질문을 받아 gpt API의 응답을 반환하는 메서드
+    // 사용자의 질문을 받아 gpt API의 응답을 반환
     public QuestionResponseDto getResponse(QuestionCallDto questionCallDto) {
         String userMessage = questionCallDto.getText();
         QuestionType questionType = questionCallDto.getType();
@@ -78,7 +78,7 @@ public class ChatService {
         return questionResponseDto;
     }
 
-    // 단계적 답변에서 다음 단계의 응답을 가져오는 메서드
+    // 단계적 답변에서 다음 단계의 응답을 로드
     public QuestionResponseDto getNextStep(NextLevelChatCallDto nextLevelChatCallDto) {
         Long chatId = nextLevelChatCallDto.getChatId();
         Chats chat = chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Chat not found with ID: " + chatId));
@@ -93,7 +93,7 @@ public class ChatService {
         return questionResponseDto;
     }
 
-    // 단계적 답변 및 대화 규칙에 따라서 gpt API의 응답 템플릿을 정의하는 메서드
+    // 단계적 답변 및 대화 규칙에 따라서 gpt API의 응답 템플릿을 정의
     private String continueConversation(QuestionType questionType, List<String> conversationHistory) {
         String rules = loadRules(); // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
@@ -122,7 +122,7 @@ public class ChatService {
         return sendPostRequest(body);
     }
 
-    // gpt API에 응답을 요청하는 메서드
+    // gpt API에 응답을 요청
     public String sendPostRequest(Map<String, Object> body) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
@@ -141,7 +141,7 @@ public class ChatService {
         }
     }
 
-    // json에서 content만 추출하여 텍스트로 저장하는 메서드
+    // json에서 content만 추출하여 텍스트로 저장
     private String extractContentFromResponse(String response) {
         try {
             JsonNode root = objectMapper.readTree(response);
@@ -152,7 +152,7 @@ public class ChatService {
         }
     }
 
-    // 백엔드 서버에 로그로 표시하는 메서드
+    // 백엔드 서버에 로그로 표시
     private void logContent(String response) {
         try {
             JsonNode root = objectMapper.readTree(response);
@@ -163,7 +163,7 @@ public class ChatService {
         }
     }
     
-    // 응답 규칙을 불러오는 메서드
+    // rules.txt 파일에서 응답 규칙을 로드
     private String loadRules() {
         try {
             ClassPathResource resource = new ClassPathResource("rules.txt"); // Resource 디렉토리에 저장된 응답 규칙
@@ -173,7 +173,7 @@ public class ChatService {
         }
     }
 
-    // 채팅을 데이터베이스에 저장하는 메서드
+    // 채팅을 데이터베이스에 저장
     private Chats saveChat(Long userId, Long curriculumId, String question, String answer, QuestionType questionType, int level) {
         Users user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
         Curriculums curriculum = curriculumRepository.findById(curriculumId).orElseThrow(() -> new IllegalArgumentException("Invalid curriculum ID: " + curriculumId));
@@ -189,12 +189,12 @@ public class ChatService {
         return chatRepository.save(chat);
     }
 
-    // 단계적 답변을 위해 응답을 분할하는 메서드
+    // 단계적 답변을 위해 응답을 분할
     private List<String> splitResponse(String response) {
         return List.of(response.split("\\n\\n"));
     }
 
-    // 채팅 기록을 불러오는 메서드
+    // 전체 채팅 기록을 로드
     public List<Chats> getChatHistory(Long userId, Long curriculumId) {
         return chatRepository.findAllByUserIdAndChapterIdOrderByChatDate(userId, curriculumId);
     }
