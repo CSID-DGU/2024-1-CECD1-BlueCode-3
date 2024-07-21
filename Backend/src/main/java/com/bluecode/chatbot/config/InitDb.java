@@ -263,10 +263,10 @@ public class InitDb {
             chat = createChat(user, chapters.get(5), "챕터 6에서의 질문1: 개념질문", "챕터 6에서의 답변1: 단일 답변", QuestionType.DEF, 1);
             chatRepository.save(chat);
             Thread.sleep(1000);
-            chat = createChat(user, chapters.get(5), "챕터 6에서의 질문2: 코드질문(1단계 부터 시작)", "단계적 답변 진행도 1단계, 단계적 답변 진행도 2단계, 단계적 답변 진행도 3단계, 단계적 답변 진행도 4단계", QuestionType.CODE, 1);
+            chat = createChat(user, chapters.get(5), "챕터 6에서의 질문2: 코드질문(1단계 부터 시작)", "1단계: 코드 단계적 답변\n\n2단계: 코드 단계적 답변 진행\n\n3단계: 코드 단계적 답변 진행\n\n4단계: 코드 단계적 답변 진행", QuestionType.CODE, 1);
             chatRepository.save(chat);
             Thread.sleep(1000);
-            chat = createChat(user, chapters.get(5), "챕터 6에서의 질문3: 에러질문(3단계 까지 진행)", "에러 단계적 답변 진행도 1단계, 에러 단계적 답변 진행도 2단계, 에러 단계적 답변 진행도 3단계, 에러 단계적 답변 진행도 4단계", QuestionType.ERRORS, 3);
+            chat = createChat(user, chapters.get(5), "챕터 6에서의 질문3: 에러질문(3단계 까지 진행)", "1단계: 에러 단계적 답변\n\n2단계: 에러 단계적 답변 진행\n\n3단계: 단계적 답변 진행\n\n4단계: 에러 단계적 답변 진행", QuestionType.ERRORS, 3);
             chatRepository.save(chat);
         }
 
