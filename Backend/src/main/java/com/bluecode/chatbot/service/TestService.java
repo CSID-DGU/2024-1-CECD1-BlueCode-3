@@ -166,6 +166,7 @@ public class TestService {
             element.setQ2(testQuizzes.get(i).getQ2());
             element.setQ3(testQuizzes.get(i).getQ3());
             element.setQ4(testQuizzes.get(i).getQ4());
+            element.setWordCount(testQuizzes.get(i).getWordCount());
             testElements.add(element);
         }
 
