@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_b.png'
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 
 function Mainpage() {
