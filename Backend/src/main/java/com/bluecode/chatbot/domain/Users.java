@@ -37,6 +37,7 @@ public class Users implements UserDetails {
 
     // 최근 접속일
     @UpdateTimestamp
+    @Column(insertable = false)
     private LocalDateTime recentAccess;
 
     // 연속 접속일수
@@ -93,21 +94,21 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

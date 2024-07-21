@@ -5,12 +5,15 @@ import com.bluecode.chatbot.dto.UserAddCallDto;
 import com.bluecode.chatbot.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     // 유저 테이블 id 기반 user 검색
@@ -52,5 +55,10 @@ public class UserService {
     }
     public boolean checkIdDuplicate(String id){
         return userRepository.existsById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        return userRepository.findByLoginId(id).orElseThrow(()-> new UsernameNotFoundException("cannot find id --> "+ id));
     }
 }

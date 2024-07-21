@@ -19,7 +19,7 @@ public class Quiz {
     @JoinColumn(name = "curriculum_id")
     private Curriculums curriculum;
 
-    // 문제 타입(객관식, 코드작성식)
+    // 문제 타입(객관식, 코드작성식, 단답식)
     @Enumerated(EnumType.STRING)
     private QuizType quizType;
 
@@ -46,4 +46,7 @@ public class Quiz {
     private String inputs;
 
     private String outputs;
+
+    // 단답식 전용(단어 글자 수 표시 용)
+    private int wordCount;
 }

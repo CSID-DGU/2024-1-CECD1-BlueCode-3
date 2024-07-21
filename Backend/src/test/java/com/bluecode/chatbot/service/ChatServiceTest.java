@@ -1,106 +1,90 @@
 package com.bluecode.chatbot.service;
 
-import com.bluecode.chatbot.domain.Chats;
-import com.bluecode.chatbot.domain.Curriculums;
-import com.bluecode.chatbot.domain.QuestionType;
-import com.bluecode.chatbot.domain.Users;
-import com.bluecode.chatbot.repository.ChatRepository;
-import com.bluecode.chatbot.repository.CurriculumRepository;
-import com.bluecode.chatbot.repository.UserRepository;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.ResponseEntity;
+import com.bluecode.chatbot.domain.*;
+import com.bluecode.chatbot.dto.*;
+import com.bluecode.chatbot.repository.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
-@SpringBootTest
 public class ChatServiceTest {
 
-    @MockBean
+    @Mock
+    private RestTemplate restTemplate;
+
+    @Mock
     private ChatRepository chatRepository;
 
-    @MockBean
+    @Mock
     private UserRepository userRepository;
 
-    @MockBean
+    @Mock
     private CurriculumRepository curriculumRepository;
 
     @InjectMocks
     private ChatService chatService;
 
-    @Value("${api.key}")
-    private String apiKey;
-
-    private Users user;
-    private Curriculums curriculum;
-
     @BeforeEach
     void setUp() {
-        user = new Users();
-        user.setUserId(2L);
-        user.setUsername("testUser");
-
-        curriculum = new Curriculums();
-        curriculum.setCurriculumId(1L);
-        curriculum.setCurriculumName("testCurriculum");
-
-        when(userRepository.findById(2L)).thenReturn(Optional.of(user));
-        when(curriculumRepository.findById(1L)).thenReturn(Optional.of(curriculum));
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void testGetResponse() {
-        String userMessage = "테스트 메세지입니다.";
+        QuestionCallDto questionCallDto = new QuestionCallDto();
+        questionCallDto.setUserId(1L);
+        questionCallDto.setCurriculumId(1L);
+        questionCallDto.setText("print(Hello World) 코드에서 에러가 나는 이유가 뭘까?"); // 사용자 모의 질문
+        questionCallDto.setType(QuestionType.ERRORS);
 
-        // 실제 API 호출
-        String response = chatService.getResponse(2L, 1L, userMessage, 1);
+        // Mock 데이터 설정(모의 답변)
+        String jsonMockResponse = "{\"choices\": [{\"message\": {\"content\": \"1단계: print 함수에서 괄호는 사용되어야 합니다." +
+                "\\n\\n2단계: Hello World는 문자열이므로 따옴표 안에 있어야 합니다." +
+                "\\n\\n3단계: Python에서는 문자열을 인쇄할 때 따옴표를 사용하여 정의해야 합니다.\"}}]}";
+        when(restTemplate.postForEntity(anyString(), any(), eq(String.class)))
+                .thenReturn(ResponseEntity.ok(jsonMockResponse));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(new Users()));
+        when(curriculumRepository.findById(anyLong())).thenReturn(Optional.of(new Curriculums()));
 
-        // 응답 확인
-        assertThat(response).isNotNull();
-        System.out.println("API Response: " + response);
+        // 메서드 호출
+        QuestionResponseDto result = chatService.getResponse(questionCallDto);
 
-        // Chats 엔티티 저장 확인
-        ArgumentCaptor<Chats> chatCaptor = ArgumentCaptor.forClass(Chats.class);
-        verify(chatRepository).save(chatCaptor.capture());
-        Chats savedChat = chatCaptor.getValue();
+        // 결과 검증
+        assertNotNull(result);
+        assertEquals(3, result.getAnswerList().size());
+        assertEquals("1단계: print 함수에서 괄호는 사용되어야 합니다.", result.getAnswerList().get(0));
 
-        assertThat(savedChat.getUser().getUserId()).isEqualTo(2L);
-        assertThat(savedChat.getCurriculum().getCurriculumId()).isEqualTo(1L);
-        assertThat(savedChat.getQuestion()).isEqualTo(userMessage);
-        assertThat(savedChat.getAnswer()).isNotNull();
+        // Mock 객체의 사용 확인
+        verify(chatRepository, times(1)).save(any(Chats.class));
     }
 
     @Test
-    public void testSetQuestionType() {
-        String question = "print(hello)에서 왜 오류가 나는거야?";
+    public void testGetNextStep() {
+        NextLevelChatCallDto nextLevelChatCallDto = new NextLevelChatCallDto();
+        nextLevelChatCallDto.setChatId(1L);
 
-        // 실제 API 호출
-        QuestionType questionType = chatService.setQuestionType(question);
+        // Chat 히스토리 설정
+        Chats chat = new Chats();
+        chat.setAnswer("1단계: print 함수에서 괄호는 사용되어야 합니다." +
+                "\n\n2단계: Hello World는 문자열이므로 따옴표 안에 있어야 합니다." +
+                "\n\n3단계: Python에서는 문자열을 인쇄할 때 따옴표를 사용하여 정의해야 합니다.");
+        when(chatRepository.findById(anyLong())).thenReturn(Optional.of(chat));
 
-        // 응답 확인
-        assertThat(questionType).isEqualTo(QuestionType.ERRORS);
-        System.out.println("질문 유형: " + questionType);
-    }
+        // 메서드 호출
+        QuestionResponseDto result = chatService.getNextStep(nextLevelChatCallDto);
 
-    @Test
-    public void testGetStepByStepResponse() {
-        String gptResponse = "1단계\n\n2단계\n\n3단계";
-        String step1Response = chatService.getStepByStepResponse(gptResponse, 1);
-        String step2Response = chatService.getStepByStepResponse(gptResponse, 2);
-        String step3Response = chatService.getStepByStepResponse(gptResponse, 3);
-        String step4Response = chatService.getStepByStepResponse(gptResponse, 4);
-
-        assertThat(step1Response).isEqualTo("1단계");
-        assertThat(step2Response).isEqualTo("2단계");
-        assertThat(step3Response).isEqualTo("3단계");
-        assertThat(step4Response).isEqualTo("No More Step!");
+        // 결과 검증
+        assertEquals("2단계: Hello World는 문자열이므로 따옴표 안에 있어야 합니다.", result.getAnswer());
     }
 }

@@ -1,16 +1,13 @@
 package com.bluecode.chatbot.service;
 
-import com.bluecode.chatbot.domain.Chats;
-import com.bluecode.chatbot.domain.Curriculums;
-import com.bluecode.chatbot.domain.QuestionType;
-import com.bluecode.chatbot.domain.Users;
-import com.bluecode.chatbot.repository.ChatRepository;
-import com.bluecode.chatbot.repository.CurriculumRepository;
-import com.bluecode.chatbot.repository.UserRepository;
+import com.bluecode.chatbot.domain.*;
+import com.bluecode.chatbot.dto.*;
+import com.bluecode.chatbot.repository.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
@@ -35,9 +32,9 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
     private final CurriculumRepository curriculumRepository;
-    private List<Map<String, String>> conversationHistory = new ArrayList<>();
     private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
 
+    @Autowired
     public ChatService(
             RestTemplate restTemplate,
             @Value("${api.key}") String apiKey,
@@ -51,43 +48,68 @@ public class ChatService {
         this.curriculumRepository = curriculumRepository;
     }
 
-    // 사용자의 메시지에 대한 GPT의 응답을 가져오고 이를 단계별로 처리하는 메서드
-    public String getResponse(Long userId, Long curriculumId, String userMessage, int questionLevel) {
-        conversationHistory.add(Map.of("role", "user", "content", userMessage)); // 사용자의 메시지를 기록
+    // 사용자의 질문을 받아 gpt API의 응답을 반환하는 메서드
+    public QuestionResponseDto getResponse(QuestionCallDto questionCallDto) {
+        String userMessage = questionCallDto.getText();
+        QuestionType questionType = questionCallDto.getType();
 
-        // 질문 유형을 GPT로 판단
-        QuestionType questionType = setQuestionType(userMessage);
+        List<String> conversationHistory = new ArrayList<>();
+        conversationHistory.add(userMessage);
+        
+        String response = continueConversation(questionType, conversationHistory);
+        String content = extractContentFromResponse(response); // json 형식의 응답에서 content만 텍스트로 추출
 
-        // GPT 대화 생성
-        String response = continueConversation(questionType, userMessage);
-        conversationHistory.add(Map.of("role", "assistant", "content", response)); // 챗봇의 응답을 기록
-
-        // Chats 엔티티에 저장
-        saveChat(userId, curriculumId, userMessage, response, questionType, questionLevel);
-
-        // 단계별 답변 리턴
+        // 질문 유형이 코드와 에러이면 단계적 답변으로 분할
+        List<String> responseParts;
         if (questionType == QuestionType.CODE || questionType == QuestionType.ERRORS) {
-            return getStepByStepResponse(response, questionLevel);
+            responseParts = splitResponse(content);
         } else {
-            return response;
+            responseParts = List.of(content);
         }
+
+        // 채팅을 데이터베이스에 저장
+        Chats chat = saveChat(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), userMessage, content, questionType, 1);
+
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto();
+        questionResponseDto.setQuestionType(questionType);
+        questionResponseDto.setAnswer(responseParts.get(0));
+        questionResponseDto.setChatId(chat.getChatId());
+        questionResponseDto.setAnswerList(responseParts);
+        return questionResponseDto;
     }
 
-    // 대화를 리스트에 저장하는 메서드
-    private String continueConversation(QuestionType questionType, String userMessage) {
+    // 단계적 답변에서 다음 단계의 응답을 가져오는 메서드
+    public QuestionResponseDto getNextStep(NextLevelChatCallDto nextLevelChatCallDto) {
+        Long chatId = nextLevelChatCallDto.getChatId();
+        Chats chat = chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Chat not found with ID: " + chatId));
+        List<String> responseParts = splitResponse(chat.getAnswer());
+
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto();
+        questionResponseDto.setAnswerList(responseParts);
+        questionResponseDto.setChatId(chatId);
+        questionResponseDto.setQuestionType(chat.getQuestionType());
+        questionResponseDto.setAnswer(responseParts.size() > 1 ? responseParts.get(1) : "No more step.");
+
+        return questionResponseDto;
+    }
+
+    // 단계적 답변 및 대화 규칙에 따라서 gpt API의 응답 템플릿을 정의하는 메서드
+    private String continueConversation(QuestionType questionType, List<String> conversationHistory) {
         String rules = loadRules(); // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
 
         messages.add(Map.of("role", "system", "content", rules));
 
-        for (Map<String, String> pastMessage : conversationHistory) {
-            messages.add(Map.of("role", pastMessage.get("role"), "content", pastMessage.get("content")));
+        for (String pastMessage : conversationHistory) {
+            messages.add(Map.of("role", "user", "content", pastMessage));
         }
 
-        messages.add(Map.of("role", "user", "content", userMessage));
-
         if (questionType == QuestionType.CODE || questionType == QuestionType.ERRORS) {
-            messages.add(Map.of("role", "system", "content", "답변은 다음 단계로 제공할 것:\n1단계: 코드 라인별 기능 또는 발생 에러 개념 정의\n2단계: 코드로 구현할 내용 또는 에러 발생 지점\n3단계: 완전한 해설 또는 에러 해결 방안 제시\n추가 단계: 비슷한 예제 코드 또는 에러 코드 제시"));
+            messages.add(Map.of("role", "system", "content", "답변은 다음과 같은 형태로만 제공할 것(단, 괄호 안은 참고사항):" +
+                    "\n\n1단계: (코드 라인별 기능 또는 발생 에러 개념 정의)" +
+                    "\n\n2단계: (코드로 구현할 내용 또는 에러 발생 지점)" +
+                    "\n\n3단계: (완전한 해설 또는 에러 해결 방안 제시)" +
+                    "\n\n추가 단계: (비슷한 예제 코드 또는 에러 코드 제시)"));
         }
 
         Map<String, Object> body = Map.of(
@@ -99,7 +121,7 @@ public class ChatService {
         return sendPostRequest(body);
     }
 
-    // GPT API에 응답을 요청하는 메서드
+    // gpt API에 응답을 요청하는 메서드
     public String sendPostRequest(Map<String, Object> body) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
@@ -118,7 +140,7 @@ public class ChatService {
         }
     }
 
-    // GPT API의 json 형식 응답에서 답변 본문만 추출하는 메서드
+    // json에서 content만 추출하여 텍스트로 저장하는 메서드
     private String extractContentFromResponse(String response) {
         try {
             JsonNode root = objectMapper.readTree(response);
@@ -129,7 +151,7 @@ public class ChatService {
         }
     }
 
-    // 백엔드 서버 로그에 GPT API 응답을 출력하는 메서드
+    // 백엔드 서버에 로그로 표시하는 메서드
     private void logContent(String response) {
         try {
             JsonNode root = objectMapper.readTree(response);
@@ -139,19 +161,19 @@ public class ChatService {
             logger.error("응답 JSON 파싱 에러", e);
         }
     }
-
-    // rules.txt에 있는 답변규칙을 로드하여 GPT API에 각인시키는 메서드
+    
+    // 응답 규칙을 불러오는 메서드
     private String loadRules() {
         try {
-            ClassPathResource resource = new ClassPathResource("rules.txt");
+            ClassPathResource resource = new ClassPathResource("rules.txt"); // Resource 디렉토리에 저장된 응답 규칙
             return new String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load rules", e);
         }
     }
 
-    // 채팅을 Chat DB에 저장하는 메서드
-    private void saveChat(Long userId, Long curriculumId, String question, String answer, QuestionType questionType, int level) {
+    // 채팅을 데이터베이스에 저장하는 메서드
+    private Chats saveChat(Long userId, Long curriculumId, String question, String answer, QuestionType questionType, int level) {
         Users user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
         Curriculums curriculum = curriculumRepository.findById(curriculumId).orElseThrow(() -> new IllegalArgumentException("Invalid curriculum ID: " + curriculumId));
 
@@ -163,44 +185,16 @@ public class ChatService {
         chat.setQuestionType(questionType);
         chat.setLevel(level);
 
-        chatRepository.save(chat);
+        return chatRepository.save(chat);
     }
 
-    // GPT API를 사용하여 질문의 유형을 판단하는 메서드
-    public QuestionType setQuestionType(String question) {
-        String rules = "질문을 보고 다음 유형 중 하나로 판단해줘 : (코드) (오류) (개념)";
-
-        List<Map<String, String>> messages = new ArrayList<>();
-        messages.add(Map.of("role", "system", "content", rules));
-        messages.add(Map.of("role", "user", "content", question));
-
-        Map<String, Object> body = Map.of(
-                "model", "gpt-4o",
-                "messages", messages
-        );
-
-        String response = sendPostRequest(body);
-        return parseQuestionType(response);
+    // 단계적 답변을 위해 응답을 분할하는 메서드
+    private List<String> splitResponse(String response) {
+        return List.of(response.split("\\n\\n"));
     }
 
-    // GPT 응답에서 질문 유형을 분류하는 메서드
-    private QuestionType parseQuestionType(String response) {
-        if (response.contains("코드")) {
-            return QuestionType.CODE;
-        } else if (response.contains("오류")) {
-            return QuestionType.ERRORS;
-        } else {
-            return QuestionType.DEF;
-        }
-    }
-
-    // GPT 응답을 단계별로 슬라이싱하는 메서드
-    public String getStepByStepResponse(String response, int step) {
-        String[] responseParts = response.split("\\n\\n");
-        if (step - 1 < responseParts.length) {
-            return responseParts[step - 1];
-        } else {
-            return "No More Step!";
-        }
+    // 채팅 기록을 불러오는 메서드
+    public List<Chats> getChatHistory(Long userId, Long curriculumId) {
+        return chatRepository.findAllByUserIdAndChapterIdOrderByChatDate(userId, curriculumId);
     }
 }

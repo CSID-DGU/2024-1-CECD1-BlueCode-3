@@ -14,11 +14,12 @@ public class UserActionEvent extends ApplicationEvent {
 
     private Users user;
     private ServiceType serviceType;
+    private String actionType;
 
-
-    public UserActionEvent(Object source, Users user, ServiceType serviceType) {
+    public UserActionEvent(Object source, Users user, ServiceType serviceType, String actionType) {
         super(source);
         this.user = user;
         this.serviceType = serviceType;
+        this.actionType = actionType;
     }
 }

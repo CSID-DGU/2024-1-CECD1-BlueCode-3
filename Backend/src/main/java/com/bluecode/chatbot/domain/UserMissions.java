@@ -31,6 +31,7 @@ public class UserMissions {
 
     // 클리어한 날짜
     @UpdateTimestamp
+    @Column(insertable = false)
     private LocalDateTime clearDateTime;
 
     // 할당된 미션

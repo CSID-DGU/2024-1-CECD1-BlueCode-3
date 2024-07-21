@@ -33,7 +33,7 @@ class QuizRepositoryTest {
         List<Quiz> result = quizRepository.findAllByCurriculumId(chaps.get(chapNum - 1).getCurriculumId());
 
         //then
-        Assertions.assertThat(result.size()).isEqualTo(4); // 챕터 2인 문제는 총 4문제 존재
+        Assertions.assertThat(result.size()).isEqualTo(12); // 챕터 2인 문제는 총 12문제 존재
 
     }
 
@@ -51,7 +51,7 @@ class QuizRepositoryTest {
         List<Quiz> result = quizRepository.findByCurriculumIdAndLevel(chaps.get(chapNum - 1).getCurriculumId(), quizLevel);
 
         //then
-        Assertions.assertThat(result.size()).isEqualTo(2); // 챕터 2인 HARD 문제는 총 2문제 존재
+        Assertions.assertThat(result.size()).isEqualTo(6); // 챕터 2인 HARD 문제는 총 6문제 존재
     }
 
     @Test
@@ -60,7 +60,6 @@ class QuizRepositoryTest {
         //given
         List<Curriculums> roots = curriculumRepository.findAllRootCurriculumList();
         int chapNum = 2;
-        QuizType quizType = QuizType.NUM;
 
         List<Curriculums> chaps = curriculumRepository.findAllByParentOrderByChapterNum(roots.get(0));
 
@@ -70,7 +69,7 @@ class QuizRepositoryTest {
 
         //then
         Assertions.assertThat(result.size()).isEqualTo(4); // 챕터 2인 객관식 문제는 총 4문제 존재
-        Assertions.assertThat(result2.size()).isEqualTo(0); // 챕터 2인 코드작성식 문제는 총 0문제 존재
+        Assertions.assertThat(result2.size()).isEqualTo(4); // 챕터 2인 코드작성식 문제는 총 4문제 존재
 
     }
 
@@ -89,9 +88,10 @@ class QuizRepositoryTest {
         List<Quiz> result3 = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(chaps.get(chapNum - 1).getCurriculumId(), QuizType.CODE, QuizLevel.HARD);
 
         //then
+
         Assertions.assertThat(result.size()).isEqualTo(2); // 챕터 2인 객관식 Hard 문제는 총 2문제 존재
         Assertions.assertThat(result2.size()).isEqualTo(1); // 챕터 2인 객관식 Normal 문제는 총 1문제 존재
-        Assertions.assertThat(result3.size()).isEqualTo(0); // 챕터 2인 코드작성식 Normal 문제는 총 0문제 존재
+        Assertions.assertThat(result3.size()).isEqualTo(2); // 챕터 2인 코드작성식 Normal 문제는 총 2문제 존재
 
     }
 }
