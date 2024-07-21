@@ -128,11 +128,38 @@ public class InitDb {
             Curriculums root = curriculumRepository.findById(1L).get();
             List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
 
+            // 객관식
             for (int i = 0; i < lists.size(); i++) {
-                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째", i + 1), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "");
-                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 2번째", i + 1), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "");
-                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째", i + 1), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "");
-                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째", i + 1), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "");
+                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 객관식", i + 1), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "", 0);
+                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 객관식", i + 1), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "", 0);
+                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 객관식", i + 1), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "", 0);
+                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 객관식", i + 1), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "", 0);
+
+                em.persist(quizHard1);
+                em.persist(quizHard2);
+                em.persist(quizNormal1);
+                em.persist(quizEasy1);
+            }
+
+            // 단답형
+            for (int i = 0; i < lists.size(); i++) {
+                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 단답형", i + 1), "정답", QuizLevel.HARD, "", "", "", "","","",2);
+                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 단답형", i + 1), "정답", QuizLevel.HARD, "", "", "", "","","",2);
+                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 단답형", i + 1), "정답", QuizLevel.NORMAL, "", "", "", "","","",2);
+                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 단답형", i + 1), "정답", QuizLevel.EASY, "", "", "", "","","",2);
+
+                em.persist(quizHard1);
+                em.persist(quizHard2);
+                em.persist(quizNormal1);
+                em.persist(quizEasy1);
+            }
+
+            // 코드 작성형
+            for (int i = 0; i < lists.size(); i++) {
+                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 코드작성형", i + 1), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0);
+                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 코드작성형", i + 1), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0);
+                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 코드작성형", i + 1), "", QuizLevel.NORMAL, "", "", "", "","1\n2","3",0);
+                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 코드작성형", i + 1), "", QuizLevel.EASY, "", "", "", "","1\n2","3",0);
 
                 em.persist(quizHard1);
                 em.persist(quizHard2);
@@ -232,35 +259,47 @@ public class InitDb {
 
             List<Missions> missions = new ArrayList<>();
 
-            Missions dailyMission1 = createMission(10, MissionType.DAILY, ServiceType.CHAT, "chat 일일 미션: 1회 달성 목표", 1);
-            Missions dailyMission2 = createMission(11, MissionType.DAILY, ServiceType.STUDY, "study 일일 미션: 2회 달성 목표", 2);
-            Missions dailyMission3 = createMission(12, MissionType.DAILY, ServiceType.TEST, "test 일일 미션: 3회 달성 목표", 3);
-            Missions dailyMission4 = createMission(13, MissionType.DAILY, ServiceType.TEST, "test 일일 미션: 1회 달성 목표", 1);
+            Missions dailyMission1 = createMission(10, MissionType.DAILY, ServiceType.CHAT, "CHAT_SUBMIT", "chat 일일 미션: 1회 달성 목표", 1);
+            Missions dailyMission2 = createMission(11, MissionType.DAILY, ServiceType.STUDY, "STUDY_COMPLETE", "study 일일 미션: 2회 달성 목표", 2);
+            Missions dailyMission3 = createMission(12, MissionType.DAILY, ServiceType.TEST, "TEST_SUBMIT", "test 일일 미션: 3회 제출 목표", 3);
+            Missions dailyMission4 = createMission(13, MissionType.DAILY, ServiceType.TEST, "TEST_SUBMIT", "test 일일 미션: 1회 제출 목표", 1);
+            Missions dailyMission5 = createMission(14, MissionType.DAILY, ServiceType.TEST, "TEST_PASS", "test 일일 미션: 2회 정답 제출 목표", 2);
+            Missions dailyMission6 = createMission(15, MissionType.DAILY, ServiceType.TEST, "TEST_FAIL", "test 일일 미션: 1회 오답 제출 목표", 1);
 
             missions.add(dailyMission1);
             missions.add(dailyMission2);
             missions.add(dailyMission3);
             missions.add(dailyMission4);
+            missions.add(dailyMission5);
+            missions.add(dailyMission6);
 
-            Missions weeklyMission1 = createMission(20, MissionType.WEEKLY, ServiceType.CHAT, "chat 주간 미션: 1회 달성 목표", 1);
-            Missions weeklyMission2 = createMission(21, MissionType.WEEKLY, ServiceType.STUDY, "study 주간 미션: 2회 달성 목표", 2);
-            Missions weeklyMission3 = createMission(22, MissionType.WEEKLY, ServiceType.TEST, "test 주간 미션: 3회 달성 목표", 3);
-            Missions weeklyMission4 = createMission(23, MissionType.WEEKLY, ServiceType.TEST, "test 주간 미션: 1회 달성 목표", 1);
+            Missions weeklyMission1 = createMission(20, MissionType.WEEKLY, ServiceType.CHAT, "CHAT_SUBMIT", "chat 주간 미션: 1회 달성 목표", 1);
+            Missions weeklyMission2 = createMission(21, MissionType.WEEKLY, ServiceType.STUDY, "STUDY_COMPLETE", "study 주간 미션: 2회 달성 목표", 2);
+            Missions weeklyMission3 = createMission(22, MissionType.WEEKLY, ServiceType.TEST, "TEST_SUBMIT", "test 주간 미션: 3회 제출 목표", 3);
+            Missions weeklyMission4 = createMission(23, MissionType.WEEKLY, ServiceType.TEST, "TEST_SUBMIT", "test 주간 미션: 1회 제출 목표", 1);
+            Missions weeklyMission5 = createMission(24, MissionType.WEEKLY, ServiceType.TEST, "TEST_PASS", "test 주간 미션: 2회 정답 제출 목표", 2);
+            Missions weeklyMission6 = createMission(25, MissionType.WEEKLY, ServiceType.TEST, "TEST_FAIL", "test 주간 미션: 1회 오답 제출 목표", 1);
 
             missions.add(weeklyMission1);
             missions.add(weeklyMission2);
             missions.add(weeklyMission3);
             missions.add(weeklyMission4);
+            missions.add(weeklyMission5);
+            missions.add(weeklyMission6);
 
-            Missions challengeMission1 = createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, "chat 도전 과제 미션: 1회 달성 목표", 1);
-            Missions challengeMission2 = createMission(21, MissionType.CHALLENGE, ServiceType.STUDY, "study 도전 과제 미션: 2회 달성 목표", 2);
-            Missions challengeMission3 = createMission(22, MissionType.CHALLENGE, ServiceType.TEST, "test 도전 과제 미션: 3회 달성 목표", 3);
-            Missions challengeMission4 = createMission(23, MissionType.CHALLENGE, ServiceType.TEST, "test 도전 과제 미션: 1회 달성 목표", 1);
+            Missions challengeMission1 = createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, "CHAT_SUBMIT", "chat 도전 과제 미션: 1회 달성 목표", 1);
+            Missions challengeMission2 = createMission(21, MissionType.CHALLENGE, ServiceType.STUDY, "STUDY_COMPLETE", "study 도전 과제 미션: 2회 달성 목표", 2);
+            Missions challengeMission3 = createMission(22, MissionType.CHALLENGE, ServiceType.TEST, "TEST_SUBMIT", "test 도전 과제 미션: 3회 제출 목표", 3);
+            Missions challengeMission4 = createMission(23, MissionType.CHALLENGE, ServiceType.TEST, "TEST_SUBMIT", "test 도전 과제 미션: 1회 제출 목표", 1);
+            Missions challengeMission5 = createMission(24, MissionType.CHALLENGE, ServiceType.TEST, "TEST_PASS", "test 도전 과제 미션: 2회 정답 제출 목표", 2);
+            Missions challengeMission6 = createMission(25, MissionType.CHALLENGE, ServiceType.TEST, "TEST_FAIL", "test 도전 과제 미션: 1회 오답 제출 목표", 1);
 
             missions.add(challengeMission1);
             missions.add(challengeMission2);
             missions.add(challengeMission3);
             missions.add(challengeMission4);
+            missions.add(challengeMission5);
+            missions.add(challengeMission6);
 
             missionRepository.saveAll(missions);
         }
@@ -311,6 +350,7 @@ public class InitDb {
                 int exp,
                 MissionType missionType,
                 ServiceType serviceType,
+                String actionType,
                 String text,
                 int missionCount
         ) {
@@ -318,6 +358,7 @@ public class InitDb {
             mission.setExp(exp);
             mission.setMissionType(missionType);
             mission.setServiceType(serviceType);
+            mission.setActionType(actionType);
             mission.setText(text);
             mission.setMissionCount(missionCount);
 
@@ -394,7 +435,8 @@ public class InitDb {
                 String q3,
                 String q4,
                 String inputs,
-                String outputs
+                String outputs,
+                int wordCount
         ) {
             Quiz quiz = new Quiz();
             quiz.setCurriculum(curriculum);
@@ -408,6 +450,7 @@ public class InitDb {
             quiz.setQ4(q4);
             quiz.setInputs(inputs);
             quiz.setOutputs(outputs);
+            quiz.setWordCount(wordCount);
 
             return quiz;
         }
