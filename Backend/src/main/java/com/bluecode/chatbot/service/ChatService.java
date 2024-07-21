@@ -105,11 +105,11 @@ public class ChatService {
         }
 
         if (questionType == QuestionType.CODE || questionType == QuestionType.ERRORS) {
-            messages.add(Map.of("role", "system", "content", "답변은 다음과 같은 형태로만 제공할 것:" +
-                    "\n\n1단계: 코드 라인별 기능 또는 발생 에러 개념 정의" +
-                    "\n\n2단계: 코드로 구현할 내용 또는 에러 발생 지점" +
-                    "\n\n3단계: 완전한 해설 또는 에러 해결 방안 제시" +
-                    "\n\n추가 단계: 비슷한 예제 코드 또는 에러 코드 제시"));
+            messages.add(Map.of("role", "system", "content", "답변은 다음과 같은 형태로만 제공할 것(단, 괄호 안은 참고사항):" +
+                    "\n\n1단계: (코드 라인별 기능 또는 발생 에러 개념 정의)" +
+                    "\n\n2단계: (코드로 구현할 내용 또는 에러 발생 지점)" +
+                    "\n\n3단계: (완전한 해설 또는 에러 해결 방안 제시)" +
+                    "\n\n추가 단계: (비슷한 예제 코드 또는 에러 코드 제시)"));
         }
 
         Map<String, Object> body = Map.of(
