@@ -16,6 +16,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.NoSuchElementException;
 
 /**
  * 테스트용 데이터를 DB에 저장하는 class 입니다.
@@ -60,11 +61,12 @@ public class InitDb {
             Users user2 = createUser("testName2", "testEmail2", "testId2", "1111", "22223344", true); // 초기 테스트 진행 유저 (3챕터에서 시작)
             em.persist(user1);
             em.persist(user2);
+            em.flush();
+            log.info("Users have been initialized");
         }
 
         public void test() {
-
-            Users user = userRepository.findByUserId(2L).get();
+            Users user = userRepository.findByUserId(2L).orElseThrow(() -> new NoSuchElementException("User not found with id 2"));
             Curriculums root = curriculumRepository.findById(1L).get();
             List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
 
@@ -76,8 +78,6 @@ public class InitDb {
 
             Optional<Curriculums> res = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), 7);
             log.info(res.get().getCurriculumName());
-
-
         }
 
         public void curriculumInit() {
@@ -125,8 +125,16 @@ public class InitDb {
 
         public void quizInit() {
 
-            Curriculums root = curriculumRepository.findById(1L).get();
+            Users user = userRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("User not found with id 2"));
+            List<Curriculums> rootCurriculums = curriculumRepository.findAllRootCurriculumList();
+            if (rootCurriculums.isEmpty()) {
+                throw new NoSuchElementException("No root curriculum found");
+            }
+            Curriculums root = rootCurriculums.get(0);
             List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
+            if (lists.size() < 6) {
+                throw new NoSuchElementException("Not enough chapters found");
+            }
 
             // 객관식
             for (int i = 0; i < lists.size(); i++) {
@@ -233,11 +241,18 @@ public class InitDb {
         }
 
         public void chatInit() throws InterruptedException {
+            Users user = userRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("User not found with id 2"));
 
-            Users user = userRepository.findById(2L).get();
+            List<Curriculums> rootCurriculums = curriculumRepository.findAllRootCurriculumList();
+            if (rootCurriculums.isEmpty()) {
+                throw new NoSuchElementException("No root curriculum found");
+            }
+            Curriculums root = rootCurriculums.get(0);
 
-            Curriculums root = curriculumRepository.findAllRootCurriculumList().get(0);
             List<Curriculums> chapters = curriculumRepository.findAllByParentOrderByChapterNum(root);
+            if (chapters.size() < 6) {
+                throw new NoSuchElementException("Not enough chapters found");
+            }
 
             // 챕터 4에서 질문 1개
             Chats chat = createChat(user, chapters.get(3), "챕터 4에서의 질문1: 개념질문", "챕터 4에서의 답변1: 단일 답변", QuestionType.DEF, 1);
@@ -412,7 +427,6 @@ public class InitDb {
                 String password,
                 String birth,
                 boolean initTest) {
-
             Users user = new Users();
             user.setUsername(username);
             user.setId(id);
@@ -420,7 +434,6 @@ public class InitDb {
             user.setPassword(password);
             user.setBirth(birth);
             user.setInitTest(initTest);
-
             return user;
         }
 
