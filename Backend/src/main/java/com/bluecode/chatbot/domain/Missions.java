@@ -25,6 +25,9 @@ public class Missions {
     @Enumerated(EnumType.STRING)
     private ServiceType serviceType;
 
+    // 대상 Action 타입
+    private String actionType;
+
     // 미션 내용
     private String text;
 
