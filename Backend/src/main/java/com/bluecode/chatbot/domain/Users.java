@@ -37,6 +37,7 @@ public class Users implements UserDetails {
 
     // 최근 접속일
     @UpdateTimestamp
+    @Column(insertable = false)
     private LocalDateTime recentAccess;
 
     // 연속 접속일수

@@ -1,6 +1,9 @@
 package com.bluecode.chatbot.service;
 
 import com.bluecode.chatbot.domain.*;
+import com.bluecode.chatbot.dto.UserMissionDataCallDto;
+import com.bluecode.chatbot.dto.UserMissionDataElementDto;
+import com.bluecode.chatbot.dto.UserMissionDataResponseDto;
 import com.bluecode.chatbot.repository.MissionRepository;
 import com.bluecode.chatbot.repository.UserMissionRepository;
 import com.bluecode.chatbot.repository.UserRepository;
@@ -8,10 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +31,87 @@ public class UserMissionService {
     private final MissionRepository missionRepository;
     private final UserMissionRepository userMissionRepository;
 
+    // 미션 현황 조회 method
+    public UserMissionDataResponseDto findMissions(@RequestBody UserMissionDataCallDto dto) {
+
+        log.info("UserMissionController findMissions 시작");
+        Optional<Users> user = userRepository.findByUserId(dto.getUserId());
+
+        if (user.isEmpty()) {
+            log.error("유효하지 않은 유저 id: {}", dto.getUserId());
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        // 조회 결과를 담을 리스트
+        List<UserMissions> daily = new ArrayList<>();
+        List<UserMissions> weekly = new ArrayList<>();
+        List<UserMissions> challenge = new ArrayList<>();
+
+        // 주기 내 진행중인 일일 미션
+        daily.addAll(userMissionRepository.findAllProgressMissionByUserAndMissionType(user.get(), MissionType.DAILY));
+        // 주기 내 완료 일일 미션
+        daily.addAll(userMissionRepository.findAllCompleteMissionByUserAndStartDateAndMissionType(user.get(), LocalDate.now(), MissionType.DAILY));
+
+        // 주기 내 진행중인 주간 미션
+        weekly.addAll(userMissionRepository.findAllProgressMissionByUserAndMissionType(user.get(), MissionType.WEEKLY));
+        // 주기 내 완료 주간 미션
+        weekly.addAll(userMissionRepository.findAllCompleteMissionByUserAndStartDateAndMissionType(user.get(), LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)), MissionType.WEEKLY));
+
+        // 진행중인 도전 과제
+        challenge.addAll(userMissionRepository.findAllByUserAndMissionStatusAndType(user.get(), MissionStatus.PROGRESS, MissionType.CHALLENGE));
+        // 완료한 도전 과제
+        challenge.addAll(userMissionRepository.findAllByUserAndMissionStatusAndType(user.get(), MissionStatus.COMPLETED, MissionType.CHALLENGE));
+
+        List<UserMissionDataElementDto> dailyDto = new ArrayList<>();
+        List<UserMissionDataElementDto> weeklyDto = new ArrayList<>();
+        List<UserMissionDataElementDto> challengeDto = new ArrayList<>();
+
+        // return 리스트
+        UserMissionDataResponseDto result = new UserMissionDataResponseDto();
+
+        // dto mapping
+        for (UserMissions um : daily) {
+            UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setText(um.getMission().getText());
+            element.setMissionCount(um.getMission().getMissionCount());
+            element.setCurrentCount(um.getCurrentCount());
+            element.setMissionStatus(um.getMissionStatus());
+
+            dailyDto.add(element);
+        }
+
+        // dto mapping
+        for (UserMissions um : weekly) {
+            UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setText(um.getMission().getText());
+            element.setMissionCount(um.getMission().getMissionCount());
+            element.setCurrentCount(um.getCurrentCount());
+            element.setMissionStatus(um.getMissionStatus());
+
+            weeklyDto.add(element);
+        }
+
+        // dto mapping
+        for (UserMissions um : challenge) {
+            UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setText(um.getMission().getText());
+            element.setMissionCount(um.getMission().getMissionCount());
+            element.setCurrentCount(um.getCurrentCount());
+            element.setMissionStatus(um.getMissionStatus());
+
+            challengeDto.add(element);
+        }
+
+        result.setListDaily(dailyDto);
+        result.setListWeekly(weeklyDto);
+        result.setListChallenge(challengeDto);
+
+        return result;
+    }
+
+
     // 미션 진행 현황 체크 및 보상 제공 method
-    public void checkAndCompleteMission(Users user, ServiceType serviceType, Long userMissionId) throws Exception {
+    public void checkAndCompleteMission(Users user, String actionType, Long userMissionId) throws Exception {
 
         Optional<UserMissions> userMission = userMissionRepository.findById(userMissionId);
 
@@ -36,14 +120,13 @@ public class UserMissionService {
             throw new IllegalArgumentException("userMission이 존재하지 않습니다.");
         }
 
-        if (!userMission.get().getMission().getServiceType().equals(serviceType)) {
-            log.error("mission 내의 serviceType과 제공된 serviceType이 일치하지 않습니다. userMission 내 ServiceType: {}, 주어진 ServiceType: {}", userMission.get().getMission().getServiceType(), serviceType);
-            throw new IllegalArgumentException("mission 내의 serviceType과 제공된 serviceType이 일치하지 않습니다.");
+        if (!userMission.get().getMission().getActionType().equals(actionType)) {
+            log.error("mission 내의 actionType과 제공된 actionType이 일치하지 않습니다. userMission 내 actionType: {}, 주어진 actionType: {}", userMission.get().getMission().getActionType(), actionType);
+            throw new IllegalArgumentException("mission 내의 actionType과 제공된 actionType이 일치하지 않습니다.");
         }
 
         if (userMission.get().incrementProgress()) {
             user.setExp(user.getExp() + userMission.get().getMission().getExp());
-
         }
 
         userMissionRepository.save(userMission.get());
@@ -68,7 +151,12 @@ public class UserMissionService {
             userMission.setUser(user);
             userMission.setMission(mission);
             userMission.setCurrentCount(0);
-            userMission.setStartDate(LocalDate.now());
+            if (missionType == MissionType.DAILY || missionType == MissionType.CHALLENGE) {
+                userMission.setStartDate(LocalDate.now());
+            } else if (missionType == MissionType.WEEKLY) {
+                userMission.setStartDate(LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)));
+            }
+
             userMission.setEndDate(calculateEndTime(missionType));
             userMission.setMissionStatus(MissionStatus.PROGRESS);
             userMissionRepository.save(userMission);
