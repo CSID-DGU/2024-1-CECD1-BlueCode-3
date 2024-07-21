@@ -105,7 +105,8 @@ public class ChatService {
         }
 
         if (questionType == QuestionType.CODE || questionType == QuestionType.ERRORS) {
-            messages.add(Map.of("role", "system", "content", "답변은 다음과 같은 형태로만 제공할 것(단, 괄호 안은 참고사항):" +
+            messages.add(Map.of("role", "system", "content", "답변은 다음과 같은 형태로만 제공할 것" +
+                    "(괄호 안 내용은 참고하여 해당 위치에 적절한 응답 생성):" +
                     "\n\n1단계: (코드 라인별 기능 또는 발생 에러 개념 정의)" +
                     "\n\n2단계: (코드로 구현할 내용 또는 에러 발생 지점)" +
                     "\n\n3단계: (완전한 해설 또는 에러 해결 방안 제시)" +
