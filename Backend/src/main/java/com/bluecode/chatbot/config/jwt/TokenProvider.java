@@ -1,10 +1,7 @@
 package com.bluecode.chatbot.config.jwt;
 
 import com.bluecode.chatbot.domain.Users;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -52,6 +49,28 @@ public class TokenProvider {
             return false;  //복호화 에러시 false
         }
     }
+
+    public TokenValidationResult validateToken(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(jwtProperties.getSecretKey())
+                    .parseClaimsJws(token);
+            return TokenValidationResult.VALID;
+        } catch (ExpiredJwtException e) {
+            return TokenValidationResult.EXPIRED;
+        } catch (UnsupportedJwtException e) {
+            return TokenValidationResult.UNSUPPORTED;
+        } catch (MalformedJwtException e) {
+            return TokenValidationResult.MALFORMED;
+        } catch (SignatureException e) {
+            return TokenValidationResult.INVALID_SIGNATURE;
+        } catch (IllegalArgumentException e) {
+            return TokenValidationResult.EMPTY_OR_NULL;
+        } catch (Exception e) {
+            return TokenValidationResult.INVALID;
+        }
+    }
+
 
     // jwt 토큰으로 인증 정보 가져옴
     public Authentication getAuthentication(String token){

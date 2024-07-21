@@ -14,7 +14,7 @@ public class TokenService {
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
 
-    // access token 생성 서비스 코드
+    // refresh token 체크 후 access token 재발급 서비스 코드
     public String createNewAccessToken(String refreshToken){
         if(!tokenProvider.validToken(refreshToken)){
             throw new IllegalArgumentException("Unexpected refresh token(not valid)");
