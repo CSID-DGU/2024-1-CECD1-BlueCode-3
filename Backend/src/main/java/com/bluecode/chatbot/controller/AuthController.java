@@ -9,6 +9,7 @@ import com.bluecode.chatbot.dto.LoginResponseDto;
 import com.bluecode.chatbot.repository.RefreshTokenRepository;
 import com.bluecode.chatbot.repository.UserRepository;
 import com.bluecode.chatbot.service.RefreshTokenService;
+import com.bluecode.chatbot.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final UserRepository userRepository;
     private final RefreshTokenService refreshTokenService;
-
+    private final UserService userService;
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofHours(2);
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(7);
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
@@ -46,6 +47,9 @@ public class AuthController {
 
         // user 정보 찾아서 액세스 발행 , 리프레시 토큰 기존있으면 불러오고 없으면 새로 발행
         Users user=userRepository.findByLoginId(loginCallDto.getId()).orElseThrow(()->new RuntimeException("user not found user id :" + loginCallDto.getId()));
+
+        //연속 로그인 업데이트
+        userService.updateLoginStreak(user);
 
         String accessToken=tokenProvider.generateToken(user,ACCESS_TOKEN_DURATION);
         Optional<RefreshToken> refreshToken=refreshTokenService.createOrGetRefreshToken(user);
