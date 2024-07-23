@@ -70,6 +70,7 @@ public class ChatService {
         List<String> responseParts;
         if (questionType == QuestionType.CODE || questionType == QuestionType.ERRORS) {
             responseParts = splitResponse(content);
+            responseParts = cleanResponseParts(responseParts);
         } else {
             responseParts = List.of(content);
         }
@@ -80,6 +81,7 @@ public class ChatService {
         return createResponseDtoFromChat(chat);
     }
 
+    // api의 답변을 dto 형태로 데이터베이스에 저장
     private QuestionResponseDto createResponseDtoFromChat(Chats chat) {
         List<String> responseParts = splitResponse(chat.getAnswer());
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
@@ -88,6 +90,16 @@ public class ChatService {
         questionResponseDto.setChatId(chat.getChatId());
         questionResponseDto.setAnswerList(responseParts);
         return questionResponseDto;
+    }
+
+    // 단계적 답변 리스트 앞뒤에 불필요한 공백이 있을 경우 삭제
+    private List<String> cleanResponseParts(List<String> responseParts) {
+        List<String> cleanedParts = new ArrayList<>();
+        for (String part : responseParts) {
+            String cleaned = part.replaceAll("(?m)^\\s*|\\s*$", "");
+            cleanedParts.add(cleaned);
+        }
+        return cleanedParts;
     }
 
     // 단계적 답변에서 다음 단계의 응답을 로드
@@ -168,7 +180,9 @@ public class ChatService {
     private String extractContentFromResponse(String response) {
         try {
             JsonNode root = objectMapper.readTree(response);
-            return root.path("choices").path(0).path("message").path("content").asText();
+            JsonNode choice = root.path("choices").path(0);
+            return choice.path("message").path("content").asText()
+                    .replaceAll("(?m)^\\s*=>\\s*", ""); // 단계적 답변 첫번째 응답 앞에 '=>' 제거
         } catch (IOException e) {
             logger.error("Error parsing response JSON", e);
             return "";
