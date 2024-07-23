@@ -35,6 +35,7 @@ public class Chats {
     private String question;
 
     // 답변
+    @Column(name = "answer", columnDefinition = "MEDIUMTEXT")
     private String answer;
 
     // 질문 유형
