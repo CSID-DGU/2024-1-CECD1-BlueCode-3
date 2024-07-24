@@ -9,14 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * 테스트용 데이터를 DB에 저장하는 class 입니다.
@@ -274,47 +271,177 @@ public class InitDb {
 
             List<Missions> missions = new ArrayList<>();
 
-            Missions dailyMission1 = createMission(10, MissionType.DAILY, ServiceType.CHAT, "CHAT_SUBMIT", "chat 일일 미션: 1회 달성 목표", 1);
-            Missions dailyMission2 = createMission(11, MissionType.DAILY, ServiceType.STUDY, "STUDY_COMPLETE", "study 일일 미션: 2회 달성 목표", 2);
-            Missions dailyMission3 = createMission(12, MissionType.DAILY, ServiceType.TEST, "TEST_SUBMIT", "test 일일 미션: 3회 제출 목표", 3);
-            Missions dailyMission4 = createMission(13, MissionType.DAILY, ServiceType.TEST, "TEST_SUBMIT", "test 일일 미션: 1회 제출 목표", 1);
-            Missions dailyMission5 = createMission(14, MissionType.DAILY, ServiceType.TEST, "TEST_PASS", "test 일일 미션: 2회 정답 제출 목표", 2);
-            Missions dailyMission6 = createMission(15, MissionType.DAILY, ServiceType.TEST, "TEST_FAIL", "test 일일 미션: 1회 오답 제출 목표", 1);
+            // test 일일 미션
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 1회 제출하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 2회 제출하기", 2));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 3회 제출하기", 3));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 1회 맞추기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 2회 맞추기", 2));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 3회 맞추기", 3));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 1회 맞추기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 1회 맞추기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 1회 맞추기", 1));
 
-            missions.add(dailyMission1);
-            missions.add(dailyMission2);
-            missions.add(dailyMission3);
-            missions.add(dailyMission4);
-            missions.add(dailyMission5);
-            missions.add(dailyMission6);
+            // test 주간 미션
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 5회 제출하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 6회 제출하기", 6));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 7회 제출하기", 7));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 8회 제출하기", 8));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 9회 제출하기", 9));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 10회 제출하기", 10));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 5회 맞추기", 5));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 6회 맞추기", 6));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 7회 맞추기", 7));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 8회 맞추기", 8));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 9회 맞추기", 9));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 10회 맞추기", 10));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 5회 맞추기", 5));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 5회 맞추기", 5));
+            missions.add(createMission(10, MissionType.WEEKLY, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 5회 맞추기", 5));
 
-            Missions weeklyMission1 = createMission(20, MissionType.WEEKLY, ServiceType.CHAT, "CHAT_SUBMIT", "chat 주간 미션: 1회 달성 목표", 1);
-            Missions weeklyMission2 = createMission(21, MissionType.WEEKLY, ServiceType.STUDY, "STUDY_COMPLETE", "study 주간 미션: 2회 달성 목표", 2);
-            Missions weeklyMission3 = createMission(22, MissionType.WEEKLY, ServiceType.TEST, "TEST_SUBMIT", "test 주간 미션: 3회 제출 목표", 3);
-            Missions weeklyMission4 = createMission(23, MissionType.WEEKLY, ServiceType.TEST, "TEST_SUBMIT", "test 주간 미션: 1회 제출 목표", 1);
-            Missions weeklyMission5 = createMission(24, MissionType.WEEKLY, ServiceType.TEST, "TEST_PASS", "test 주간 미션: 2회 정답 제출 목표", 2);
-            Missions weeklyMission6 = createMission(25, MissionType.WEEKLY, ServiceType.TEST, "TEST_FAIL", "test 주간 미션: 1회 오답 제출 목표", 1);
+            // test 도전과제 미션
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 1회 제출하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 2회 제출하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 4회 제출하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 8회 제출하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 16회 제출하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 32회 제출하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 64회 제출하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 128회 제출하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 256회 제출하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_SUBMIT, "아무 난이도 문제 답안 512회 제출하기", 512));
 
-            missions.add(weeklyMission1);
-            missions.add(weeklyMission2);
-            missions.add(weeklyMission3);
-            missions.add(weeklyMission4);
-            missions.add(weeklyMission5);
-            missions.add(weeklyMission6);
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 1회 제출하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 2회 제출하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 4회 제출하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 8회 제출하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 16회 제출하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 32회 제출하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 64회 제출하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 128회 제출하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 256회 제출하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT, "입문자 난이도 문제 답안 512회 제출하기", 512));
 
-            Missions challengeMission1 = createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, "CHAT_SUBMIT", "chat 도전 과제 미션: 1회 달성 목표", 1);
-            Missions challengeMission2 = createMission(21, MissionType.CHALLENGE, ServiceType.STUDY, "STUDY_COMPLETE", "study 도전 과제 미션: 2회 달성 목표", 2);
-            Missions challengeMission3 = createMission(22, MissionType.CHALLENGE, ServiceType.TEST, "TEST_SUBMIT", "test 도전 과제 미션: 3회 제출 목표", 3);
-            Missions challengeMission4 = createMission(23, MissionType.CHALLENGE, ServiceType.TEST, "TEST_SUBMIT", "test 도전 과제 미션: 1회 제출 목표", 1);
-            Missions challengeMission5 = createMission(24, MissionType.CHALLENGE, ServiceType.TEST, "TEST_PASS", "test 도전 과제 미션: 2회 정답 제출 목표", 2);
-            Missions challengeMission6 = createMission(25, MissionType.CHALLENGE, ServiceType.TEST, "TEST_FAIL", "test 도전 과제 미션: 1회 오답 제출 목표", 1);
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 1회 제출하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 2회 제출하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 4회 제출하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 8회 제출하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 16회 제출하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 32회 제출하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 64회 제출하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 128회 제출하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 256회 제출하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT, "초급자 난이도 문제 답안 512회 제출하기", 512));
 
-            missions.add(challengeMission1);
-            missions.add(challengeMission2);
-            missions.add(challengeMission3);
-            missions.add(challengeMission4);
-            missions.add(challengeMission5);
-            missions.add(challengeMission6);
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 1회 제출하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 2회 제출하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 4회 제출하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 8회 제출하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 16회 제출하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 32회 제출하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 64회 제출하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 128회 제출하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 256회 제출하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT, "중급자 난이도 문제 답안 512회 제출하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 1회 맞추기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 2회 맞추기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 4회 맞추기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 8회 맞추기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 16회 맞추기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 32회 맞추기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 64회 맞추기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 128회 맞추기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 256회 맞추기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_PASS, "아무 난이도 문제 답안 512회 맞추기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 1회 맞추기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 2회 맞추기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 4회 맞추기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 8회 맞추기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 16회 맞추기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 32회 맞추기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 64회 맞추기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 128회 맞추기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 256회 맞추기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_EASY_PASS, "입문자 난이도 문제 답안 512회 맞추기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 1회 맞추기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 2회 맞추기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 4회 맞추기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 8회 맞추기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 16회 맞추기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 32회 맞추기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 64회 맞추기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 128회 맞추기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 256회 맞추기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS, "초급자 난이도 문제 답안 512회 맞추기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 1회 맞추기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 2회 맞추기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 4회 맞추기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 8회 맞추기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 16회 맞추기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 32회 맞추기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 64회 맞추기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 128회 맞추기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 256회 맞추기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 512회 맞추기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 1회 맞추기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 2회 맞추기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 4회 맞추기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 8회 맞추기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 16회 맞추기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 32회 맞추기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 64회 맞추기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 128회 맞추기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 256회 맞추기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 512회 맞추기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_INIT_COMPLETE, "초기 테스트 1회 수행 완료하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_INIT_COMPLETE, "초기 테스트 2회 수행 완료하기", 2));
+            missions.add(createMission(30, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_INIT_COMPLETE, "초기 테스트 3회 수행 완료하기", 3));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_INIT_COMPLETE, "초기 테스트 4회 수행 완료하기", 4));
+            missions.add(createMission(50, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_INIT_COMPLETE, "초기 테스트 5회 수행 완료하기", 5));
+
+            // study 일일 미션
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 1회 학습 완료하기", 1));
+
+            // study 주간 미션
+            missions.add(createMission(50, MissionType.WEEKLY, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 5회 학습 완료하기", 5));
+
+            // study 도전과제 미션
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 1회 학습 완료하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 2회 학습 완료하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 4회 학습 완료하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 8회 학습 완료하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 16회 학습 완료하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 32회 학습 완료하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 64회 학습 완료하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 128회 학습 완료하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 256회 학습 완료하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.STUDY_COMPLETE, "커리큘럼 챕터 512회 학습 완료하기", 512));
+
+            // User 일일 미션
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.USER, MissionConst.USER_LOGIN, "1일 로그인하기", 1));
+
+            // User 주간 미션
+            missions.add(createMission(50, MissionType.WEEKLY, ServiceType.USER, MissionConst.USER_LOGIN, "7일 로그인하기", 7));
+
+            // User 도전과제 미션
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "1일 연속 로그인하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "2일 연속 로그인하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "4일 연속 로그인하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "8일 연속 로그인하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "16일 연속 로그인하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "32일 연속 로그인하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "64일 연속 로그인하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "128일 연속 로그인하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "256일 연속 로그인하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "512일 연속 로그인하기", 512));
+
+
 
             missionRepository.saveAll(missions);
         }
@@ -326,6 +453,9 @@ public class InitDb {
             List<Missions> dailyMission = missionRepository.findAllByMissionType(MissionType.DAILY);
             List<Missions> weeklyMission = missionRepository.findAllByMissionType(MissionType.WEEKLY);
             List<Missions> challengeMission = missionRepository.findAllByMissionType(MissionType.CHALLENGE);
+
+            Collections.shuffle(dailyMission, new SecureRandom());
+            Collections.shuffle(weeklyMission, new SecureRandom());
 
             for (int i = 0; i < 3; i++) {
                 UserMissions userMission = createUserMission(
