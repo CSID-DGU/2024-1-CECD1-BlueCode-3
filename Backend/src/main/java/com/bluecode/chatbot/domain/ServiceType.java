@@ -6,5 +6,5 @@ package com.bluecode.chatbot.domain;
  */
 
 public enum ServiceType {
-    STUDY, CHAT, TEST
+    STUDY, CHAT, TEST, USER
 }
