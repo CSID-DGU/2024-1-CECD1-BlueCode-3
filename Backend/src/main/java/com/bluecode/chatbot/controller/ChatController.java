@@ -1,6 +1,7 @@
 package com.bluecode.chatbot.controller;
 
 import com.bluecode.chatbot.domain.Chats;
+import com.bluecode.chatbot.domain.QuestionType;
 import com.bluecode.chatbot.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,15 +46,57 @@ public class ChatController {
                 : ResponseEntity.notFound().build();
     }
 
-    // 지난 채팅 기록을 로드
-    @GetMapping("/history")
-    public ResponseEntity<List<QuestionListResponseElementDto>> getHistory(@RequestParam Long userId, @RequestParam Long parentId) {
+    // 루트 커리큘럼에 대한 채팅 기록을 로드
+    @GetMapping("/historyByParent")
+    public ResponseEntity<List<QuestionListResponseElementDto>> getChatsByParent(@RequestParam Long userId, @RequestParam Long parentId) {
         List<Chats> chats = chatService.getChatHistory(userId, parentId);
         if (chats.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        List<QuestionListResponseElementDto> formattedChats = chats.stream().map(chat -> {
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        return ResponseEntity.ok(formattedChats); // json 형태로 변환
+    }
+
+    // 특정 커리큘럼에 대한 채팅 기록 조회
+    @GetMapping("/historyByCurriculum")
+    public ResponseEntity<List<QuestionListResponseElementDto>> getChatsByCurriculum(@RequestParam Long userId, @RequestParam Long curriculumId) {
+        List<Chats> chats = chatService.getChatsByCurriculum(userId, curriculumId);
+        if (chats.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        return ResponseEntity.ok(formattedChats); // json 형태로 변환
+    }
+
+    // 특정 질문 유형에 대한 채팅 기록 조회
+    @GetMapping("/historyByQuestionType")
+    public ResponseEntity<List<QuestionListResponseElementDto>> getChatsByQuestionType(@RequestParam Long userId, @RequestParam QuestionType questionType) {
+        List<Chats> chats = chatService.getChatsByQuestionType(userId, questionType);
+        if (chats.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        return ResponseEntity.ok(formattedChats); // json 형태로 변환
+    }
+
+    // 특정 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    @GetMapping("/historyByCurriculumAndQuestionType")
+    public ResponseEntity<List<QuestionListResponseElementDto>> getChatsByCurriculumAndQuestionType(@RequestParam Long userId, @RequestParam Long curriculumId, @RequestParam QuestionType questionType) {
+        List<Chats> chats = chatService.getChatsByCurriculumAndQuestionType(userId, curriculumId, questionType);
+        if (chats.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        return ResponseEntity.ok(formattedChats); // json 형태로 변환
+    }
+
+    // 채팅 기록을 DTO 형태로 변환
+    private List<QuestionListResponseElementDto> formatChats(List<Chats> chats) {
+        return chats.stream().map(chat -> {
             QuestionListResponseElementDto dto = new QuestionListResponseElementDto();
             dto.setCurriculumText(chat.getCurriculum().getCurriculumName());
             dto.setQuestion(chat.getQuestion());
@@ -62,7 +105,5 @@ public class ChatController {
             dto.setChatDate(chat.getChatDate());
             return dto;
         }).collect(Collectors.toList());
-
-        return ResponseEntity.ok(formattedChats); // json 형태로 반환
     }
 }

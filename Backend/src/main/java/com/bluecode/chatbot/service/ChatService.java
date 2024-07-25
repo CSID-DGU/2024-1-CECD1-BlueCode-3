@@ -66,40 +66,23 @@ public class ChatService {
             content = response;
         }
 
-        // 질문 유형이 코드와 에러이면 단계적 답변으로 분할
-        List<String> responseParts;
-        if (questionType == QuestionType.CODE || questionType == QuestionType.ERRORS) {
-            responseParts = splitResponse(content);
-            responseParts = cleanResponseParts(responseParts);
-        } else {
-            responseParts = List.of(content);
-        }
-
         // 채팅을 데이터베이스에 저장
+        List<String> responseParts = splitResponse(content);
         Chats chat = saveChat(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), userMessage, content, questionType, 1);
 
-        return createResponseDtoFromChat(chat);
+        return createResponseDtoFromChat(chat, responseParts);
     }
 
     // api의 답변을 dto 형태로 데이터베이스에 저장
-    private QuestionResponseDto createResponseDtoFromChat(Chats chat) {
-        List<String> responseParts = splitResponse(chat.getAnswer());
+    private QuestionResponseDto createResponseDtoFromChat(Chats chat, List<String> responseParts) {
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
         questionResponseDto.setQuestionType(chat.getQuestionType());
-        questionResponseDto.setAnswer(responseParts.get(0));
         questionResponseDto.setChatId(chat.getChatId());
-        questionResponseDto.setAnswerList(responseParts);
-        return questionResponseDto;
-    }
-
-    // 단계적 답변 리스트 앞뒤에 불필요한 공백이 있을 경우 삭제
-    private List<String> cleanResponseParts(List<String> responseParts) {
-        List<String> cleanedParts = new ArrayList<>();
-        for (String part : responseParts) {
-            String cleaned = part.replaceAll("(?m)^\\s*|\\s*$", "");
-            cleanedParts.add(cleaned);
+        questionResponseDto.setAnswerList(responseParts);  // 단계적 답변들을 모두 저장
+        if (!responseParts.isEmpty()) {
+            questionResponseDto.setAnswer(responseParts.get(0));  // 첫 번째 답변을 기본 응답으로 설정
         }
-        return cleanedParts;
+        return questionResponseDto;
     }
 
     // 단계적 답변에서 다음 단계의 응답을 로드
@@ -234,5 +217,20 @@ public class ChatService {
     // 전체 채팅 기록을 로드
     public List<Chats> getChatHistory(Long userId, Long parentId) {
         return chatRepository.findAllByUserIdAndParentIdOrderByChapterNumAndChatDate(userId, parentId);
+    }
+
+    // 특정 커리큘럼에 대한 채팅 기록 조회
+    public List<Chats> getChatsByCurriculum(Long userId, Long curriculumId) {
+        return chatRepository.findAllByUserIdAndChapterIdOrderByChatDate(userId, curriculumId);
+    }
+
+    // 특정 질문 유형에 대한 채팅 기록 조회
+    public List<Chats> getChatsByQuestionType(Long userId, QuestionType questionType) {
+        return chatRepository.findAllByUserIdAndQuestionTypeOrderByChatDate(userId, questionType);
+    }
+
+    // 특정 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    public List<Chats> getChatsByCurriculumAndQuestionType(Long userId, Long curriculumId, QuestionType questionType) {
+        return chatRepository.findAllByUserIdAndChapterIdAAndQuestionTypeOrderByChatDate(userId, curriculumId, questionType);
     }
 }
