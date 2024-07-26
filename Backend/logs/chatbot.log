@@ -664,3 +664,6 @@ gen_expr = (x * x for x in range(10))
 2024-07-27T01:19:16.886+09:00 DEBUG 35220 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [QuestionResponseDto(questionType=ERRORS, answer=비슷한 에러가 발생할 만한 다른 예제 코드<EOL>다음과 같은 코드에서도 동일한 오류가 발생할 수 있 (truncated)...]
 2024-07-27T01:19:16.886+09:00 DEBUG 35220 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2024-07-27T01:19:16.886+09:00 DEBUG 35220 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-27T01:20:14.297+09:00  INFO 35220 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-27T01:20:14.300+09:00  INFO 35220 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-27T01:20:14.303+09:00  INFO 35220 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
