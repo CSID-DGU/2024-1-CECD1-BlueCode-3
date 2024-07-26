@@ -23,6 +23,6 @@ public interface StudyRepository extends JpaRepository<Studies, Long>, StudyRepo
             " and s.level = :levelType")
     Optional<Studies> findByUserIdAndCurriculumIdAndLevel(@Param("userId") Long userId, @Param("curriculumId") Long curriculumId, @Param("levelType") LevelType levelType);
 
-    // 유저, 커리큘럼, level 기반 Studies 단일 검색
-    Optional<Studies> findByCurriculumAndUserAndAndLevel(Curriculums curriculums, Users user, LevelType levelType);
+    // 유저, 커리큘럼(챕터), level 기반 Studies 단일 검색
+    Optional<Studies> findByCurriculumAndUserAndLevel(Curriculums chapter, Users user, LevelType levelType);
 }
