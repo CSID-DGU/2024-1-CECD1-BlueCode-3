@@ -34,7 +34,9 @@ public class ApiService {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     // gpt API에 응답을 요청
-    public String sendPostRequest(List<Map<String, String>> messages) {
+    public String sendPostRequest(List<Map<String, String>> messages, Long curriculumId) {
+        String rules = loadRules(curriculumId); // 규칙 로드
+        messages.add(Map.of("role", "system", "content", rules));
         Map<String, Object> body = Map.of(
                 "model", "gpt-4o",
                 "messages", messages,

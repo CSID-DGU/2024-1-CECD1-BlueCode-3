@@ -112,12 +112,10 @@ public class StudyService {
 
     // GPT API를 호출하여 학습 내용 생성
     private String requestGptText(String keyword, Long curriculumId) {
-        String rules = apiService.loadRules(curriculumId); // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
 
-        messages.add(Map.of("role", "system", "content", rules));
         messages.add(Map.of("role", "user", "content", "다음 키워드에 대해 자세한 학습 내용을 생성해줘. (키워드: " + keyword + ")"));
 
-        return apiService.sendPostRequest(messages);
+        return apiService.sendPostRequest(messages, curriculumId);
     }
 }

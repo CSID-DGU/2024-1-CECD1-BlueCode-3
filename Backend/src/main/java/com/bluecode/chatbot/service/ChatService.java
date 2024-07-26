@@ -95,17 +95,23 @@ public class ChatService {
         Chats chat = chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Not found with chatId: " + chatId));
         List<String> responseParts = splitResponse(chat.getAnswer());
 
+        // 각 단계적 답변 앞에 빈 칸이 존재하면 삭제
+        List<String> trimmedResponseParts = new ArrayList<>();
+        for (String part : responseParts) {
+            trimmedResponseParts.add(part.trim());
+        }
+
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
-        questionResponseDto.setAnswerList(responseParts);
+        questionResponseDto.setAnswerList(trimmedResponseParts);
         questionResponseDto.setChatId(chatId);
         questionResponseDto.setQuestionType(chat.getQuestionType());
 
         // 다음 단계로 넘어갈 수 있는지 확인
         int currentLevel = chat.getLevel();
-        if (currentLevel < responseParts.size()) {
+        if (currentLevel < trimmedResponseParts.size()) {
             chat.setLevel(currentLevel + 1);  // 다음 단계로 업데이트
             chatRepository.save(chat);  // 변경사항 저장
-            questionResponseDto.setAnswer(responseParts.get(currentLevel));  // 현재 단계의 답변 반환
+            questionResponseDto.setAnswer(trimmedResponseParts.get(currentLevel));  // 현재 단계의 답변 반환
         } else {
             questionResponseDto.setAnswer("더 이상 답변이 존재하지 않습니다.");
         }
@@ -115,10 +121,7 @@ public class ChatService {
 
     // 단계적 답변 및 대화 규칙에 따라서 gpt API의 응답 템플릿을 정의
     private String continueConversation(QuestionType questionType, List<String> conversationHistory, Long curriculumId) {
-        String rules = apiService.loadRules(curriculumId); // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
-
-        messages.add(Map.of("role", "system", "content", rules));
 
         for (String pastMessage : conversationHistory) {
             messages.add(Map.of("role", "user", "content", pastMessage));
@@ -135,7 +138,7 @@ public class ChatService {
                     "추가 단계: (CODE인 경우: 같은 목적 및 작동 방식의 다른 예제 코드 안내, ERRORS인 경우: 비슷한 에러가 발생할만한 다른 예제 코드 안내)"));
         }
 
-        return apiService.sendPostRequest(messages);
+        return apiService.sendPostRequest(messages, curriculumId);
     }
 
     // 채팅을 데이터베이스에 저장
