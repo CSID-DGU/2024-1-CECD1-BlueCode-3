@@ -52,11 +52,12 @@ public class ChatService {
     public QuestionResponseDto getResponse(QuestionCallDto questionCallDto) {
         String userMessage = questionCallDto.getText();
         QuestionType questionType = questionCallDto.getType();
+        Long curriculumId = questionCallDto.getCurriculumId();
 
         List<String> conversationHistory = new ArrayList<>();
         conversationHistory.add(userMessage);
 
-        String response = continueConversation(questionType, conversationHistory);
+        String response = continueConversation(questionType, conversationHistory, curriculumId);
         String content;
         if (response.startsWith("{")) {
             // JSON인 경우 텍스트로 응답만 추출
@@ -88,7 +89,7 @@ public class ChatService {
     // 단계적 답변에서 다음 단계의 응답을 로드
     public QuestionResponseDto getNextStep(NextLevelChatCallDto nextLevelChatCallDto) {
         Long chatId = nextLevelChatCallDto.getChatId();
-        Chats chat = chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Chat not found with ID: " + chatId));
+        Chats chat = chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Not found with chatId: " + chatId));
         List<String> responseParts = splitResponse(chat.getAnswer());
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
@@ -103,15 +104,15 @@ public class ChatService {
             chatRepository.save(chat);  // 변경사항 저장
             questionResponseDto.setAnswer(responseParts.get(currentLevel));  // 현재 단계의 답변 반환
         } else {
-            questionResponseDto.setAnswer("No more step.");
+            questionResponseDto.setAnswer("더 이상 답변이 존재하지 않습니다.");
         }
 
         return questionResponseDto;
     }
 
     // 단계적 답변 및 대화 규칙에 따라서 gpt API의 응답 템플릿을 정의
-    private String continueConversation(QuestionType questionType, List<String> conversationHistory) {
-        String rules = loadRules(); // 규칙 로드
+    private String continueConversation(QuestionType questionType, List<String> conversationHistory, Long curriculumId) {
+        String rules = loadRules(curriculumId); // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
 
         messages.add(Map.of("role", "system", "content", rules));
@@ -182,12 +183,25 @@ public class ChatService {
             logger.error("응답 JSON 파싱 에러", e);
         }
     }
-    
+
+    // 루트 커리큘럼 출력
+    private String getRootCurriculumName(Long curriculumId) {
+        Curriculums curriculum = curriculumRepository.findById(curriculumId).orElse(null);
+        if (curriculum == null) return "Unknown"; // 현재 커리큘럼을 찾을 수 없는 경우
+
+        while (curriculum.getParent() != null) {
+            curriculum = curriculum.getParent();
+        }
+        return curriculum.getCurriculumName();
+    }
+
     // rules.txt 파일에서 응답 규칙을 로드
-    private String loadRules() {
+    private String loadRules(Long curriculumId) {
+        String rootCurriculumName = getRootCurriculumName(curriculumId);
         try {
-            ClassPathResource resource = new ClassPathResource("rules.txt"); // Resource 디렉토리에 저장된 응답 규칙
-            return new String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8);
+            ClassPathResource resource = new ClassPathResource("rules.txt");
+            String rules = new String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8);
+            return rules.replaceAll("Plang", rootCurriculumName);  // 동적으로 언어 이름 교체
         } catch (IOException e) {
             throw new RuntimeException("Failed to load rules", e);
         }
