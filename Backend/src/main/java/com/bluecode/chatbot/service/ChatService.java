@@ -3,22 +3,14 @@ package com.bluecode.chatbot.service;
 import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.repository.*;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +20,7 @@ public class ChatService {
 
     private final RestTemplate restTemplate;
     private final String apiKey;
+    private final ApiService apiService;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
@@ -35,14 +28,16 @@ public class ChatService {
     private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
 
     @Autowired
-    public ChatService(
+    private ChatService(
             RestTemplate restTemplate,
             @Value("${api.key}") String apiKey,
+            ApiService apiService,
             ChatRepository chatRepository,
             UserRepository userRepository,
             CurriculumRepository curriculumRepository) {
         this.restTemplate = restTemplate;
         this.apiKey = apiKey;
+        this.apiService = apiService;
         this.chatRepository = chatRepository;
         this.userRepository = userRepository;
         this.curriculumRepository = curriculumRepository;
@@ -61,7 +56,8 @@ public class ChatService {
         String content;
         if (response.startsWith("{")) {
             // JSON인 경우 텍스트로 응답만 추출
-            content = extractContentFromResponse(response);
+            content = apiService.extractContentFromResponse(response);
+            content = content.replaceAll("^=>", ""); // 답변 앞에 '=>'가 있으면 삭제
         } else {
             // 텍스트 그대로 사용
             content = response;
@@ -69,9 +65,16 @@ public class ChatService {
 
         // 채팅을 데이터베이스에 저장
         List<String> responseParts = splitResponse(content);
+
+        // 각 단계적 답변 앞에 빈 칸이 존재하면 삭제
+        List<String> trimmedResponseParts = new ArrayList<>();
+        for (String part : responseParts) {
+            trimmedResponseParts.add(part.trim());
+        }
+
         Chats chat = saveChat(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), userMessage, content, questionType, 1);
 
-        return createResponseDtoFromChat(chat, responseParts);
+        return createResponseDtoFromChat(chat, trimmedResponseParts);
     }
 
     // api의 답변을 dto 형태로 데이터베이스에 저장
@@ -112,7 +115,7 @@ public class ChatService {
 
     // 단계적 답변 및 대화 규칙에 따라서 gpt API의 응답 템플릿을 정의
     private String continueConversation(QuestionType questionType, List<String> conversationHistory, Long curriculumId) {
-        String rules = loadRules(curriculumId); // 규칙 로드
+        String rules = apiService.loadRules(curriculumId); // 규칙 로드
         List<Map<String, String>> messages = new ArrayList<>();
 
         messages.add(Map.of("role", "system", "content", rules));
@@ -132,79 +135,7 @@ public class ChatService {
                     "추가 단계: (CODE인 경우: 같은 목적 및 작동 방식의 다른 예제 코드 안내, ERRORS인 경우: 비슷한 에러가 발생할만한 다른 예제 코드 안내)"));
         }
 
-        Map<String, Object> body = Map.of(
-                "model", "gpt-4o",
-                "messages", messages,
-                "max_tokens", 1000 // 필요에 따라 토큰 수 조정
-        );
-
-        return sendPostRequest(body);
-    }
-
-    // gpt API에 응답을 요청
-    public String sendPostRequest(Map<String, Object> body) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + apiKey);
-        headers.set("Content-Type", "application/json");
-
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-
-        try {
-            ResponseEntity<String> responseEntity = restTemplate.postForEntity("https://api.openai.com/v1/chat/completions", entity, String.class);
-            String response = responseEntity.getBody();
-            logContent(response);
-            return extractContentFromResponse(response);
-        } catch (Exception e) {
-            logger.error("API call failed", e);
-            throw new RuntimeException("Error during API call", e);
-        }
-    }
-
-    // json에서 content만 추출하여 텍스트로 저장
-    private String extractContentFromResponse(String response) {
-        try {
-            JsonNode root = objectMapper.readTree(response);
-            JsonNode choice = root.path("choices").path(0);
-            return choice.path("message").path("content").asText()
-                    .replaceAll("(?m)^\\s*=>\\s*", ""); // 단계적 답변 첫번째 응답 앞에 '=>' 제거
-        } catch (IOException e) {
-            logger.error("Error parsing response JSON", e);
-            return "";
-        }
-    }
-
-    // 백엔드 서버에 로그로 표시
-    private void logContent(String response) {
-        try {
-            JsonNode root = objectMapper.readTree(response);
-            String content = root.path("choices").path(0).path("message").path("content").asText();
-            logger.info("Response from GPT: {}", content);
-        } catch (IOException e) {
-            logger.error("응답 JSON 파싱 에러", e);
-        }
-    }
-
-    // 루트 커리큘럼 출력
-    private String getRootCurriculumName(Long curriculumId) {
-        Curriculums curriculum = curriculumRepository.findById(curriculumId).orElse(null);
-        if (curriculum == null) return "Unknown"; // 현재 커리큘럼을 찾을 수 없는 경우
-
-        while (curriculum.getParent() != null) {
-            curriculum = curriculum.getParent();
-        }
-        return curriculum.getCurriculumName();
-    }
-
-    // rules.txt 파일에서 응답 규칙을 로드
-    private String loadRules(Long curriculumId) {
-        String rootCurriculumName = getRootCurriculumName(curriculumId);
-        try {
-            ClassPathResource resource = new ClassPathResource("rules.txt");
-            String rules = new String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8);
-            return rules.replaceAll("Plang", rootCurriculumName);  // 동적으로 언어 이름 교체
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load rules", e);
-        }
+        return apiService.sendPostRequest(messages);
     }
 
     // 채팅을 데이터베이스에 저장
