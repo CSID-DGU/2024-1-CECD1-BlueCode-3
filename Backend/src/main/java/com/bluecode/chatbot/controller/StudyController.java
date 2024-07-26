@@ -1,9 +1,6 @@
 package com.bluecode.chatbot.controller;
 
-import com.bluecode.chatbot.dto.CurriculumPassedDto;
-import com.bluecode.chatbot.dto.CurriculumTextCallDto;
-import com.bluecode.chatbot.dto.DataCallDto;
-import com.bluecode.chatbot.dto.StudyTextDto;
+import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.service.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +44,19 @@ public class StudyController {
         studyService.getCurriculumText(dataCallDto, curriculumTextCallDto.getLevelType());
 
         return ResponseEntity.ok().build();
+    }
+
+    // 커리큘럼 챕터 학습 통과 처리
+    @PostMapping("/curriculum/chapterpass")
+    public ResponseEntity<Object> chapterPassed(@RequestBody CurriculumPassCallDto dto) {
+
+        try {
+            studyService.curriculumPass(dto);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 }
