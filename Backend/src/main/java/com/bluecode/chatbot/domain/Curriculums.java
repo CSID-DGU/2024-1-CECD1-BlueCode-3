@@ -46,4 +46,7 @@ public class Curriculums {
 
     // 챕터 순서
     private int chapterNum;
+
+    // 루크 커리큘럼 내 챕터 총 개수(root 전용)
+    private int totalChapterCount;
 }
