@@ -391,16 +391,16 @@ public class InitDb {
             missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 256회 맞추기", 256));
             missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_HARD_PASS, "중급자 난이도 문제 답안 512회 맞추기", 512));
 
-            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 1회 맞추기", 1));
-            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 2회 맞추기", 2));
-            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 4회 맞추기", 4));
-            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 8회 맞추기", 8));
-            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 16회 맞추기", 16));
-            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 32회 맞추기", 32));
-            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 64회 맞추기", 64));
-            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 128회 맞추기", 128));
-            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 256회 맞추기", 256));
-            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 512회 맞추기", 512));
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 1회 틀리기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 2회 틀리기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 4회 틀리기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 8회 틀리기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 16회 틀리기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 32회 틀리기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 64회 틀리기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 128회 틀리기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 256회 틀리기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_FAIL, "아무 난이도 문제 답안 512회 틀리기", 512));
 
             missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_INIT_COMPLETE, "초기 테스트 1회 수행 완료하기", 1));
             missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.TEST, MissionConst.TEST_INIT_COMPLETE, "초기 테스트 2회 수행 완료하기", 2));

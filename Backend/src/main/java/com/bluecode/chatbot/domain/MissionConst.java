@@ -28,8 +28,6 @@ public class MissionConst {
 
     public static final String STUDY_COMPLETE = "STUDY_COMPLETE";
 
-    public static final String STUDY_CHAPTER_COMPLETE = "STUDY_CHAPTER_COMPLETE";
-
     public static final String USER_LOGIN = "USER_LOGIN";
 
     public static final String USER_STREAK = "USER_STREAK";

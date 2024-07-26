@@ -123,7 +123,7 @@ public class StudyService {
         }
 
         // 아무 챕터 학습 미션 처리
-        eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.STUDY_CHAPTER_COMPLETE));
+        eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.STUDY_COMPLETE));
 
         // 특정 커리큘럼 내 챕터 학습 완료 처리
         eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootAndChapterName(chapter.getParent(), chapter)));
