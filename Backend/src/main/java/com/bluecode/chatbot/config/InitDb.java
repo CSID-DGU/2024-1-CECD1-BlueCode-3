@@ -195,7 +195,7 @@ public class InitDb {
                         List<Quiz> quizListEasy = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.EASY);
 
                         Tests testHard1 = createTest(user2, quizListHard.get(0), 0, true, TestType.INIT);
-                        Tests testHard2 = createTest(user2, quizListHard.get(1), 0, true, TestType.INIT);
+                        Tests testHard2 = createTest(user2, quizListHard.get(1), 0, false, TestType.INIT);
                         Tests testNormal1 = createTest(user2, quizListNormal.get(0), 0, true, TestType.INIT);
                         Tests testEasy1 = createTest(user2, quizListEasy.get(0), 0, true, TestType.INIT);
 
@@ -204,8 +204,13 @@ public class InitDb {
                         testRepository.save(testNormal1);
                         testRepository.save(testEasy1);
 
-                        Studies studies = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", i + 1), true, LevelType.HARD);
-                        studyRepository.save(studies);
+                        Studies studiesEasy = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", i + 1), true, LevelType.EASY);
+                        Studies studiesNormal = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.NORMAL + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", i + 1), true, LevelType.NORMAL);
+                        Studies studiesHard = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", i + 1), true, LevelType.HARD);
+
+                        studyRepository.save(studiesEasy);
+                        studyRepository.save(studiesNormal);
+                        studyRepository.save(studiesHard);
                     } else {
                         Studies studies = createStudy(user2, curriculum, 60L + i + 1, String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", i + 1), true, LevelType.HARD);
                         studyRepository.save(studies);
@@ -236,8 +241,8 @@ public class InitDb {
                 }
             }
             // 커리큘럼 생성 테스트용 데이터
-            Studies studies = createStudy(user2, chapters.get(16), 60L, null, false, LevelType.HARD);
-            studyRepository.save(studies);
+//            Studies studies = createStudy(user2, chapters.get(16), 60L, null, false, LevelType.HARD);
+//            studyRepository.save(studies);
         }
 
         public void chatInit() throws InterruptedException {
@@ -482,6 +487,168 @@ public class InitDb {
             missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.MISSION, MissionConst.MISSION_WEEKLY_COMPLETE, "주간 미션 전체 256회 완료하기", 256));
             missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.MISSION, MissionConst.MISSION_WEEKLY_COMPLETE, "주간 미션 전체 512회 완료하기", 512));
 
+            // chat 일일 미션
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 1회 수행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 2회 수행하기", 2));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 3회 수행하기", 3));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 1회 수행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 2회 수행하기", 2));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 3회 수행하기", 3));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 1회 수행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 2회 수행하기", 2));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 3회 수행하기", 3));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 1회 수행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 2회 수행하기", 2));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 3회 수행하기", 3));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 1회 진행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 1회 진행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 1회 진행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "오류 태그 질문 2단계까지 1회 진행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "오류 태그 질문 3단계까지 1회 진행하기", 1));
+            missions.add(createMission(10, MissionType.DAILY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "오류 태그 질문 4단계까지 1회 진행하기", 1));
+
+
+            // chat 주간 미션
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 1회 수행하기", 1));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 2회 수행하기", 2));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 3회 수행하기", 3));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 4회 수행하기", 4));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 5회 수행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 5회 수행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 6회 수행하기", 6));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 7회 수행하기", 7));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 8회 수행하기", 8));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 9회 수행하기", 9));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 10회 수행하기", 10));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 5회 수행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 6회 수행하기", 6));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 7회 수행하기", 7));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 8회 수행하기", 8));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 9회 수행하기", 9));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 10회 수행하기", 10));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 5회 수행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 6회 수행하기", 6));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 7회 수행하기", 7));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 8회 수행하기", 8));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 9회 수행하기", 9));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 10회 수행하기", 10));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 5회 진행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 5회 진행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 5회 진행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "오류 태그 질문 2단계까지 5회 진행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "오류 태그 질문 3단계까지 5회 진행하기", 5));
+            missions.add(createMission(100, MissionType.WEEKLY, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "오류 태그 질문 4단계까지 5회 진행하기", 5));
+
+            // chat 도전과제
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 1회 수행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 2회 수행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 4회 수행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 8회 수행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 16회 수행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 32회 수행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 64회 수행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 128회 수행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 256회 수행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_QUESTION, "질문 512회 수행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 1회 수행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 2회 수행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 4회 수행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 8회 수행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 16회 수행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 32회 수행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 64회 수행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 128회 수행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 256회 수행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION, "개념 태그 질문 512회 수행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 1회 수행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 2회 수행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 4회 수행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 8회 수행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 16회 수행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 32회 수행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 64회 수행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 128회 수행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 256회 수행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION, "코드 태그 질문 512회 수행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 1회 수행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 2회 수행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 4회 수행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 8회 수행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 16회 수행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 32회 수행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 64회 수행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 128회 수행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 256회 수행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION, "오류 태그 질문 512회 수행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 1회 진행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 5회 진행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 5회 진행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 8회 진행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 16회 진행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 32회 진행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 64회 진행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 128회 진행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 256회 진행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 2), "코드 태그 질문 2단계까지 512회 진행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 1회 진행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 5회 진행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 5회 진행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 8회 진행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 16회 진행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 32회 진행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 64회 진행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 128회 진행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 256회 진행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 3), "코드 태그 질문 3단계까지 512회 진행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 1회 진행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 5회 진행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 5회 진행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 8회 진행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 16회 진행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 32회 진행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 64회 진행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 128회 진행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 256회 진행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.CODE, 4), "코드 태그 질문 4단계까지 512회 진행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 1회 진행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 5회 진행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 5회 진행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 8회 진행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 16회 진행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 32회 진행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 64회 진행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 128회 진행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 256회 진행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 2), "에러 태그 질문 2단계까지 512회 진행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 1회 진행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 5회 진행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 5회 진행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 8회 진행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 16회 진행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 32회 진행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 64회 진행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 128회 진행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 256회 진행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 3), "에러 태그 질문 3단계까지 512회 진행하기", 512));
+
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 1회 진행하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 5회 진행하기", 2));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 5회 진행하기", 4));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 8회 진행하기", 8));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 16회 진행하기", 16));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 32회 진행하기", 32));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 64회 진행하기", 64));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 128회 진행하기", 128));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 256회 진행하기", 256));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(QuestionType.ERRORS, 4), "에러 태그 질문 4단계까지 512회 진행하기", 512));
 
             missionRepository.saveAll(missions);
         }
