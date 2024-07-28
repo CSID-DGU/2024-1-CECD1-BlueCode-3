@@ -223,3 +223,6 @@
 2024-07-28T15:08:22.183+09:00 DEBUG 37312 --- [chatbot] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [QuestionListResponseDto(list=[QuestionListResponseElementDto(curriculumText=4. 표현식, question=챕터 4에서의 (truncated)...]
 2024-07-28T15:08:22.184+09:00 DEBUG 37312 --- [chatbot] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2024-07-28T15:08:22.184+09:00 DEBUG 37312 --- [chatbot] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-07-28T15:09:21.321+09:00  INFO 37312 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-28T15:09:21.322+09:00  INFO 37312 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-07-28T15:09:21.326+09:00  INFO 37312 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.

@@ -1,12 +1,10 @@
 package com.bluecode.chatbot.controller;
 
 import com.bluecode.chatbot.domain.Chats;
-import com.bluecode.chatbot.domain.QuestionType;
 import com.bluecode.chatbot.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.bluecode.chatbot.dto.DataCallDto;
 import com.bluecode.chatbot.dto.QuestionCallDto;
 import com.bluecode.chatbot.dto.QuestionResponseDto;
 import com.bluecode.chatbot.dto.NextLevelChatCallDto;
