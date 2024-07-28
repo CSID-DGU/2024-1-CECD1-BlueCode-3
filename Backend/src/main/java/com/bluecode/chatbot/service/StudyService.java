@@ -7,48 +7,56 @@ import com.bluecode.chatbot.domain.Users;
 import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.repository.CurriculumRepository;
 import com.bluecode.chatbot.repository.StudyRepository;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class StudyService {
 
-    private final StudyRepository studyRepository;
-    private final CurriculumRepository curriculumRepository;
-    private final CurriculumService curriculumService;
     private final RestTemplate restTemplate;
+    private final String apiKey;
+    private final ApiService apiService;
+    private final StudyRepository studyRepository;
+    private final CurriculumService curriculumService;
+    private final CurriculumRepository curriculumRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final Logger logger = LoggerFactory.getLogger(StudyService.class);
 
-    @Value("${api.key}")
-    private String apiKey;
+    @Autowired
+    public StudyService(
+            RestTemplate restTemplate,
+            @Value("${api.key}") String apiKey,
+            ApiService apiService,
+            StudyRepository studyRepository,
+            CurriculumService curriculumService,
+            CurriculumRepository curriculumRepository) {
+        this.restTemplate = restTemplate;
+        this.apiKey = apiKey;
+        this.apiService = apiService;
+        this.studyRepository = studyRepository;
+        this.curriculumService = curriculumService;
+        this.curriculumRepository = curriculumRepository;
+    }
 
     // 유저의 커리큘럼 진행 현황 로드
     public CurriculumPassedDto getCurriculumProgress(DataCallDto dto) {
         logger.info("getCurriculumProgress called with dto: {}", dto);
 
-
         //List<Studies> studies = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
 
-        List<Studies> studies=studyRepository.findAllByUserId(dto.getUserId());
+        List<Studies> studies = studyRepository.findAllByUserId(dto.getUserId());
 
         List<CurriculumPassedElementDto> progressList = studies.stream().map(study -> {
             CurriculumPassedElementDto elementDto = new CurriculumPassedElementDto();
@@ -77,10 +85,10 @@ public class StudyService {
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         if (study == null || study.getText() == null) {
             Curriculums curriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
-            Curriculums rootNode = curriculum.getParent();
-            String keyword = curriculumService.getKeywordForLevel(curriculum, levelType); // CurriculumService의 메서드 사용
+            String keyword = curriculumService.getKeywordForLevel(curriculum, levelType);
             String fullKeyword = curriculum.getCurriculumName() + ": " + keyword;
-            String generatedText = requestGptText(fullKeyword, rootNode.getCurriculumName());
+            String generatedResponse = requestGptText(fullKeyword, dto.getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+            String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
 
             if (study == null) {
                 study = new Studies();
@@ -103,48 +111,11 @@ public class StudyService {
     }
 
     // GPT API를 호출하여 학습 내용 생성
-    private String requestGptText(String keyword, String pLang) {
-        Map<String, Object> body = Map.of(
-                "model", "gpt-4o",
-                "messages", List.of(
-                        Map.of("role", "system", "content", "너는 " + pLang + "의 전문 튜터야."),
-                        Map.of("role", "user", "content", "다음 키워드에 대해 자세한 학습 내용을 생성해줘. (키워드: " + keyword + ")")
-                ),
-                "max_tokens", 1000
-        );
+    private String requestGptText(String keyword, Long curriculumId) {
+        List<Map<String, String>> messages = new ArrayList<>();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + apiKey);
-        headers.set("Content-Type", "application/json");
+        messages.add(Map.of("role", "user", "content", "다음 키워드에 대해 자세한 학습 내용을 생성해줘. (키워드: " + keyword + ")"));
 
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-
-        try {
-            ResponseEntity<String> responseEntity = restTemplate.postForEntity("https://api.openai.com/v1/chat/completions", entity, String.class);
-            if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                String response = responseEntity.getBody();
-                logger.info("requestGptText response: {}", response);
-                String content = extractContentFromResponse(response);
-                logger.info("Extracted content from GPT response: {}", content);
-                return content;
-            } else {
-                logger.error("API call failed with status: {}", responseEntity.getStatusCode());
-                throw new RuntimeException("Error during API call");
-            }
-        } catch (Exception e) {
-            logger.error("API call failed", e);
-            throw new RuntimeException("Error during API call", e);
-        }
-    }
-
-    // GPT API 응답 JSON에서 학습 내용만 추출
-    private String extractContentFromResponse(String response) {
-        try {
-            JsonNode root = objectMapper.readTree(response);
-            return root.path("choices").path(0).path("message").path("content").asText();
-        } catch (IOException e) {
-            logger.error("Error parsing response JSON", e);
-            return "";
-        }
+        return apiService.sendPostRequest(messages, curriculumId);
     }
 }
