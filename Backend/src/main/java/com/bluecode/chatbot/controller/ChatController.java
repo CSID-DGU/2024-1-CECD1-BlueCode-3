@@ -6,9 +6,11 @@ import com.bluecode.chatbot.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.bluecode.chatbot.dto.DataCallDto;
 import com.bluecode.chatbot.dto.QuestionCallDto;
 import com.bluecode.chatbot.dto.QuestionResponseDto;
 import com.bluecode.chatbot.dto.NextLevelChatCallDto;
+import com.bluecode.chatbot.dto.QuestionListResponseDto;
 import com.bluecode.chatbot.dto.QuestionListResponseElementDto;
 
 import java.util.stream.Collectors;
@@ -35,11 +37,8 @@ public class ChatController {
     }
 
     // 호출 시마다 다음 단계의 답변을 요청
-    @GetMapping("/next")
-    public ResponseEntity<QuestionResponseDto> getNextStep(@RequestParam Long chatId) {
-        NextLevelChatCallDto nextLevelChatCallDto = new NextLevelChatCallDto();
-        nextLevelChatCallDto.setChatId(chatId);
-
+    @PostMapping("/next")
+    public ResponseEntity<QuestionResponseDto> getNextStep(@RequestBody NextLevelChatCallDto nextLevelChatCallDto) {
         QuestionResponseDto response = chatService.getNextStep(nextLevelChatCallDto);
         return response != null && !response.getAnswerList().isEmpty()
                 ? ResponseEntity.ok(response)
@@ -47,51 +46,59 @@ public class ChatController {
     }
 
     // 루트 커리큘럼에 대한 채팅 기록을 로드
-    @GetMapping("/historyByParent")
-    public ResponseEntity<List<QuestionListResponseElementDto>> getChatsByParent(@RequestParam Long userId, @RequestParam Long parentId) {
-        List<Chats> chats = chatService.getChatHistory(userId, parentId);
+    @PostMapping("/historyByParent")
+    public ResponseEntity<QuestionListResponseDto> getChatsByParent(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatHistory(questionCallDto.getUserId(), questionCallDto.getCurriculumId());
         if (chats.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
-        return ResponseEntity.ok(formattedChats); // json 형태로 변환
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
     }
 
     // 특정 커리큘럼에 대한 채팅 기록 조회
-    @GetMapping("/historyByCurriculum")
-    public ResponseEntity<List<QuestionListResponseElementDto>> getChatsByCurriculum(@RequestParam Long userId, @RequestParam Long curriculumId) {
-        List<Chats> chats = chatService.getChatsByCurriculum(userId, curriculumId);
+    @PostMapping("/historyByCurriculum")
+    public ResponseEntity<QuestionListResponseDto> getChatsByCurriculum(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsByCurriculum(questionCallDto.getUserId(), questionCallDto.getCurriculumId());
         if (chats.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
-        return ResponseEntity.ok(formattedChats); // json 형태로 변환
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
     }
 
     // 특정 질문 유형에 대한 채팅 기록 조회
-    @GetMapping("/historyByQuestionType")
-    public ResponseEntity<List<QuestionListResponseElementDto>> getChatsByQuestionType(@RequestParam Long userId, @RequestParam QuestionType questionType) {
-        List<Chats> chats = chatService.getChatsByQuestionType(userId, questionType);
+    @PostMapping("/historyByQuestionType")
+    public ResponseEntity<QuestionListResponseDto> getChatsByQuestionType(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsByQuestionType(questionCallDto.getUserId(), questionCallDto.getType());
         if (chats.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
-        return ResponseEntity.ok(formattedChats); // json 형태로 변환
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
     }
 
     // 특정 커리큘럼과 질문 유형에 대한 채팅 기록 조회
-    @GetMapping("/historyByCurriculumAndQuestionType")
-    public ResponseEntity<List<QuestionListResponseElementDto>> getChatsByCurriculumAndQuestionType(@RequestParam Long userId, @RequestParam Long curriculumId, @RequestParam QuestionType questionType) {
-        List<Chats> chats = chatService.getChatsByCurriculumAndQuestionType(userId, curriculumId, questionType);
+    @PostMapping("/historyByCurriculumAndQuestionType")
+    public ResponseEntity<QuestionListResponseDto> getChatsByCurriculumAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsByCurriculumAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
         if (chats.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
-        return ResponseEntity.ok(formattedChats); // json 형태로 변환
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
     }
 
     // 채팅 기록을 DTO 형태로 변환
