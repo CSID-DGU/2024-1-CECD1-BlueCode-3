@@ -9,6 +9,7 @@ import com.bluecode.chatbot.repository.UserMissionRepository;
 import com.bluecode.chatbot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,9 @@ public class UserMissionService {
     private final MissionRepository missionRepository;
     private final UserMissionRepository userMissionRepository;
 
+    // 미션 처리를 위한 클래스
+    private final ApplicationEventPublisher eventPublisher;
+
     // 미션 현황 조회 method
     public UserMissionDataResponseDto findMissions(@RequestBody UserMissionDataCallDto dto) {
 
@@ -50,17 +54,28 @@ public class UserMissionService {
         // 주기 내 진행중인 일일 미션
         daily.addAll(userMissionRepository.findAllProgressMissionByUserAndMissionType(user.get(), MissionType.DAILY));
         // 주기 내 완료 일일 미션
-        daily.addAll(userMissionRepository.findAllCompleteMissionByUserAndStartDateAndMissionType(user.get(), LocalDate.now(), MissionType.DAILY));
+        List<UserMissions> dailyComplete = userMissionRepository.findAllCompleteMissionByUserAndStartDateAndMissionType(user.get(), LocalDate.now(), MissionType.DAILY);
+        daily.addAll(dailyComplete);
 
         // 주기 내 진행중인 주간 미션
         weekly.addAll(userMissionRepository.findAllProgressMissionByUserAndMissionType(user.get(), MissionType.WEEKLY));
+
+        List<UserMissions> weeklyComplete = userMissionRepository.findAllCompleteMissionByUserAndStartDateAndMissionType(user.get(), LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)), MissionType.WEEKLY);
         // 주기 내 완료 주간 미션
-        weekly.addAll(userMissionRepository.findAllCompleteMissionByUserAndStartDateAndMissionType(user.get(), LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)), MissionType.WEEKLY));
+        weekly.addAll(weeklyComplete);
 
         // 진행중인 도전 과제
         challenge.addAll(userMissionRepository.findAllByUserAndMissionStatusAndType(user.get(), MissionStatus.PROGRESS, MissionType.CHALLENGE));
         // 완료한 도전 과제
         challenge.addAll(userMissionRepository.findAllByUserAndMissionStatusAndType(user.get(), MissionStatus.COMPLETED, MissionType.CHALLENGE));
+
+        if (dailyComplete.size() == 3) {
+            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.MISSION, MissionConst.MISSION_DAILY_COMPLETE));
+        }
+
+        if (weeklyComplete.size() == 3) {
+            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.MISSION, MissionConst.MISSION_WEEKLY_COMPLETE));
+        }
 
         List<UserMissionDataElementDto> dailyDto = new ArrayList<>();
         List<UserMissionDataElementDto> weeklyDto = new ArrayList<>();
@@ -108,7 +123,6 @@ public class UserMissionService {
 
         return result;
     }
-
 
     // 미션 진행 현황 체크 및 보상 제공 method
     public void checkAndCompleteMission(Users user, String actionType, Long userMissionId) throws Exception {
