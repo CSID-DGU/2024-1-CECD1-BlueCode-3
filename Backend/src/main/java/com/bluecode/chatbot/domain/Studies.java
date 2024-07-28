@@ -47,4 +47,21 @@ public class Studies {
     // 난이도
     @Enumerated(EnumType.STRING)
     private LevelType level;
+
+    public static Studies createStudy(
+            Users user,
+            Curriculums curriculum,
+            boolean passed,
+            String text,
+            LevelType level
+    ) {
+        Studies studies = new Studies();
+        studies.setUser(user);
+        studies.setCurriculum(curriculum);
+        studies.setPassed(passed);
+        studies.setText(text);
+        studies.setLevel(level);
+
+        return studies;
+    }
 }
