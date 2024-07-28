@@ -19,6 +19,11 @@ public interface UserRepository extends JpaRepository<Users, Long> {
             "where u.id = :loginId")
     Optional<Users> findByLoginId(@Param("loginId") String loginId);
 
+    @Query("select u from Users u " +
+            "where u.username = :username "+
+            "and u.email = :email")
+    Optional<Users> findByUserNameAndEmail(@Param("username") String username,@Param("email") String email);
+
     // 유저명, 유저 이메일, 유저 ID 중복 체킹 메소드
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);

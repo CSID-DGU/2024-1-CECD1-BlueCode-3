@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class UserControllerTest {
     @Autowired
     protected MockMvc mockMvc;
@@ -89,6 +91,56 @@ public class UserControllerTest {
 
         resultActions.andExpect(status().isOk()).andDo(print());
 
+    }
+
+    @DisplayName("find user api 테스트")
+    @Test
+    public void findUser() throws Exception{
+        final String url="/user/findId";
+
+        final String username="testName2";
+        final String email="testEmail2";
+        final String id="";
+        final String password="";
+        final String birth="";
+        final UserAddCallDto userAddCallDto= new UserAddCallDto();
+        userAddCallDto.setId(id);
+        userAddCallDto.setPassword(password);
+        userAddCallDto.setBirth(birth);
+        userAddCallDto.setUsername(username);
+        userAddCallDto.setEmail(email);
+        final String requestBody= objectMapper.writeValueAsString(userAddCallDto);
+
+        ResultActions resultActions=mockMvc.perform(get(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestBody));
+
+        resultActions.andExpect(status().isOk()).andDo(print());
+    }
+
+    @DisplayName("update user pw api 테스트")
+    @Test
+    public void updatePassword() throws Exception{
+        final String url="/user/updatePassword";
+
+        final String username="";
+        final String email="";
+        final String id="testId2";
+        final String password="newpw525";
+        final String birth="";
+        final UserAddCallDto userAddCallDto= new UserAddCallDto();
+        userAddCallDto.setId(id);
+        userAddCallDto.setPassword(password);
+        userAddCallDto.setBirth(birth);
+        userAddCallDto.setUsername(username);
+        userAddCallDto.setEmail(email);
+        final String requestBody= objectMapper.writeValueAsString(userAddCallDto);
+
+        ResultActions resultActions=mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestBody));
+
+        resultActions.andExpect(status().isOk()).andDo(print());
     }
 
 }
