@@ -3,45 +3,27 @@ package com.bluecode.chatbot.service;
 import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.repository.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class ChatService {
 
-    private final RestTemplate restTemplate;
-    private final String apiKey;
     private final ApiService apiService;
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
     private final CurriculumRepository curriculumRepository;
-    private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
 
-    @Autowired
-    private ChatService(
-            RestTemplate restTemplate,
-            @Value("${api.key}") String apiKey,
-            ApiService apiService,
-            ChatRepository chatRepository,
-            UserRepository userRepository,
-            CurriculumRepository curriculumRepository) {
-        this.restTemplate = restTemplate;
-        this.apiKey = apiKey;
-        this.apiService = apiService;
-        this.chatRepository = chatRepository;
-        this.userRepository = userRepository;
-        this.curriculumRepository = curriculumRepository;
-    }
+    // 미션 처리를 위한 클래스
+    private final ApplicationEventPublisher eventPublisher;
 
     // 사용자의 질문을 받아 gpt API의 응답을 반환
     public QuestionResponseDto getResponse(QuestionCallDto questionCallDto) {
@@ -112,6 +94,11 @@ public class ChatService {
             chat.setLevel(currentLevel + 1);  // 다음 단계로 업데이트
             chatRepository.save(chat);  // 변경사항 저장
             questionResponseDto.setAnswer(trimmedResponseParts.get(currentLevel));  // 현재 단계의 답변 반환
+
+            // 미션 처리 로직
+            eventPublisher.publishEvent(new UserActionEvent(this, chat.getUser(), ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(chat.getQuestionType(), chat.getLevel())));
+
+
         } else {
             questionResponseDto.setAnswer("더 이상 답변이 존재하지 않습니다.");
         }
@@ -153,6 +140,16 @@ public class ChatService {
         chat.setAnswer(answer);
         chat.setQuestionType(questionType);
         chat.setLevel(level);
+
+        // 미션 처리 로직
+        if (questionType == QuestionType.DEF) {
+            eventPublisher.publishEvent(new UserActionEvent(this,  user, ServiceType.CHAT, MissionConst.CHAT_DEF_QUESTION));
+        } else if (questionType == QuestionType.CODE) {
+            eventPublisher.publishEvent(new UserActionEvent(this,  user, ServiceType.CHAT, MissionConst.CHAT_CODE_QUESTION));
+        } else if (questionType == QuestionType.ERRORS) {
+            eventPublisher.publishEvent(new UserActionEvent(this,  user, ServiceType.CHAT, MissionConst.CHAT_ERRORS_QUESTION));
+        }
+        eventPublisher.publishEvent(new UserActionEvent(this,  user, ServiceType.CHAT, MissionConst.CHAT_QUESTION));
 
         return chatRepository.save(chat);
     }
