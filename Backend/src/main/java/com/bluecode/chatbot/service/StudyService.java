@@ -20,6 +20,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class StudyService {
 
     private final ApiService apiService;
@@ -32,6 +33,7 @@ public class StudyService {
     private final ApplicationEventPublisher eventPublisher;
 
     // 유저의 커리큘럼 학습 시작하기 위한 챕터 학습 데이터 생성
+    @Transactional
     public CurriculumChapResponseDto createCurriculumStudyData(DataCallDto dto) {
 
         Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
@@ -47,6 +49,10 @@ public class StudyService {
 
         Users user = userOptional.get();
         Curriculums root = rootOptional.get();
+
+        if (root.getParent() != null) {
+            throw new IllegalArgumentException("루트 커리큘럼 id가 아닙니다.");
+        }
 
         List<Studies> validation = studyRepository.findAllByUserAndRoot(user, root);
 
@@ -98,6 +104,10 @@ public class StudyService {
         Users user = userOptional.get();
         Curriculums root = rootOptional.get();
 
+        if (root.getParent() != null) {
+            throw new IllegalArgumentException("루트 커리큘럼 id가 아닙니다.");
+        }
+
         List<Studies> studies = studyRepository.findAllEasyStudiesByUserAndRoot(user, root);
 
         List<CurriculumPassedElementDto> progressList = studies.stream().map(study -> {
@@ -137,7 +147,8 @@ public class StudyService {
             List<Studies> chapters = studyRepository.findAllByUserAndCurriculum(user, chapter);
 
             if (chapters.isEmpty() || chapters.size() < 3) {
-                throw new IllegalArgumentException(String.format("학습중인 챕터가 아닙니다. size: %d", chapters.size()));
+                log.error("학습중인 챕터가 아닙니다. size: {}", chapters.size());
+                throw new IllegalArgumentException("학습중인 챕터가 아닙니다.");
             }
 
             Studies studyEasy = chapters.stream().filter(s -> s.getLevel().equals(LevelType.EASY)).findFirst().get();
@@ -150,7 +161,8 @@ public class StudyService {
                     studyHard.setPassed(true);
                     studyRepository.save(studyHard);
                 } else {
-                    throw new IllegalArgumentException(String.format("유효하지 않은 currentLevel 과 NextLevel 입니다. currentLevel: %s, nextLevel: %s", dto.getCurrentLevel(), dto.getNextLevel()));
+                    log.error("유효하지 않은 currentLevel 과 NextLevel 입니다. currentLevel: {}, nextLevel: {}", dto.getCurrentLevel(), dto.getNextLevel());
+                    throw new IllegalArgumentException("유효하지 않은 currentLevel 과 NextLevel 입니다.");
                 }
 
             } else if (dto.getCurrentLevel() == LevelType.NORMAL) {
@@ -163,7 +175,8 @@ public class StudyService {
                     studyNormal.setPassed(true);
                     studyRepository.save(studyNormal);
                 } else {
-                    throw new IllegalArgumentException(String.format("유효하지 않은 currentLevel 과 NextLevel 입니다. currentLevel: %s, nextLevel: %s", dto.getCurrentLevel(), dto.getNextLevel()));
+                    log.error("유효하지 않은 currentLevel 과 NextLevel 입니다. currentLevel: {}, nextLevel: {}", dto.getCurrentLevel(), dto.getNextLevel());
+                    throw new IllegalArgumentException("유효하지 않은 currentLevel 과 NextLevel 입니다.");
                 }
             } else if (dto.getCurrentLevel() == LevelType.EASY) {
                 if (dto.getNextLevel() == LevelType.HARD) {
@@ -188,7 +201,8 @@ public class StudyService {
             List<Studies> studyValid = studyRepository.findAllByUserAndCurriculum(user, chapter);
 
             if (studyValid.isEmpty()) {
-                throw new IllegalArgumentException(String.format("학습중인 챕터가 아닙니다. size: %d", studyValid.size()));
+                log.error("학습중인 챕터가 아닙니다.");
+                throw new IllegalArgumentException("학습중인 챕터가 아닙니다.");
             }
 
             // 통과 처리
