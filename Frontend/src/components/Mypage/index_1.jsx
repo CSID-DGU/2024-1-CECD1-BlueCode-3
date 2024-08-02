@@ -38,7 +38,8 @@ function Study_theory() {
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
@@ -50,7 +51,6 @@ function Study_theory() {
             <NavLink style={{ textDecoration : "none" }} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
             </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
@@ -210,7 +210,7 @@ const ProgressName = styled.p`
 
 const CurrentProgress = styled.div`
   display : flex;
-  margin : 1rem auto 1rem;
+  margin : 1rem auto 0rem;
 `
 
 const ProgressImg = styled.div`

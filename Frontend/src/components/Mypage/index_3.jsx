@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
-import Left from '../../left.png';
-import Right from '../../right.png';
-import Input from '../../input.png';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -40,7 +37,8 @@ function Study_theory() {
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
@@ -52,10 +50,22 @@ function Study_theory() {
             <NavLink style={{ textDecoration : "none" }} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/mypage/question"><Nav style={color}> ㅇ 내 질문 정보 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
           </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
+          <Order>
+            <OrderType> ㅇ 날짜별 </OrderType>
+            <OrderType> ㅇ 과정별 </OrderType>
+            <OrderType> ㅇ 태그별 </OrderType>
+          </Order>
+          <QuestionRecord>
+            <QuestionTitle>
+
+            </QuestionTitle>
+            <QuestionContent>
+
+            </QuestionContent>
+          </QuestionRecord>
         </ContentSection>
       </Content>
     </TestSection>
@@ -89,8 +99,8 @@ const Content = styled.div`
 `
 
 const NavSection = styled.div`
-  width : 15rem;
   display : flex;
+  min-width : 15rem;
   flex-direction : column;
   border-right : 0.125rem solid rgba(0, 0, 0, 0.125);
   height : ${(props) => `${(props.height - 68) / 16}rem`};
@@ -145,7 +155,7 @@ const Nav = styled.div`
 const Dynamic = styled.div`
   overflow : scroll;
   padding : 0.625rem;
-  
+
   &::-webkit-scrollbar {
     display : none;
   }
@@ -153,7 +163,35 @@ const Dynamic = styled.div`
 
 const ContentSection = styled.div`
   margin : 2rem;
+  padding : 2rem;
   border-radius : 1rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 304) / 16}rem`};
+  width : ${(props) => `${(props.width - 370) / 16}rem`};
+`
+
+const Order = styled.div`
+  display : flex;
+`
+
+const OrderType = styled.div`
+  margin : 0;
+  font-weight : bold;
+  font-size : 1.05rem;
+  margin-right : 2.5rem;
+  color : rgba(0, 0, 0, 0.5);
+`
+
+const QuestionRecord = styled.div`
+  display : flex;
+`
+
+const QuestionTitle = styled.div`
+  width : 42.5rem;
+  height : 32.875rem;
+`
+
+const QuestionContent = styled.div`
+  width : 42.5rem;
+  border-radius : 1rem;
+  border : 0.05rem solid rgba(0, 0, 0, 0.5);
 `
