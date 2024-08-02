@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_b.png'
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { SHA256 } from 'crypto-js';
 
 
 function Mainpage() {
   const [id, setId] = useState('');
   const [passwd, setPasswd] = useState('');
+  const [newPasswd, setNewPasswd] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [birthday, setBirthday] = useState('');
-  const [phonenum, setPhonenum] = useState('');
   const [pin, setPin] = useState('');
 
   const [SignInValue, setSignInValue] = useState(true);
@@ -22,6 +23,56 @@ function Mainpage() {
   const [SignUpValue, setSignUpValue] = useState(false);
   const [CheckSignUpValue, setCheckSignUpValue] = useState(false);
   const [RequestPinValue, setRequestPinValue] = useState(false);
+
+  const idRegex = /^[a-z0-9]{5,16}$/;
+  const passwdRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^~*])[A-Za-z\d!@#$%^~*]{9,16}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const birthdayRegex = /^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/;
+
+  const [idValid, setIdValid] = useState(true);
+  const [passwdValid, setPasswdValid] = useState(true);
+  const [passwdEqual, setPasswdEqual] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  const [birthdayValid, setBirthdayValid] = useState(true);
+
+  const idBlur = () => {
+    if (idRegex.test(id)) {
+      setIdValid(true);
+    } else {
+      setIdValid(false);
+    }
+  };
+
+  const passwdBlur = () => {
+    if (passwdRegex.test(passwd)) {
+      setPasswdValid(true);
+    } else {
+      setPasswdValid(false);
+    }
+  };
+
+  const emailBlur = () => {
+    if (emailRegex.test(email)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
+    }
+  };
+
+  const birthdayBlur = () => {
+    if (birthdayRegex.test(birthday)) {
+      setBirthdayValid(true);
+    } else {
+      setBirthdayValid(false);
+    }
+  };
+
+  const passwdEqualBlur = () => {
+    if (passwd === newPasswd)
+      setPasswdEqual(true);
+    else
+      setPasswdEqual(false);
+  }
 
   const ChangeToSignIn = () => {
     document.getElementById("SectionName").innerText = "아이디찾기";
@@ -64,36 +115,73 @@ function Mainpage() {
   }
 
   const ChangeToVerify = () => {
-    if (ResetPasswdValue === false && RequestPinValue === false)
+    if (((name && email && emailValid && FindIdValue) || (id && email && idValid && emailValid && FindPasswdValue)
+        || (id && passwd && email && name && birthday && idValid && passwdValid && emailValid && birthdayValid && SignUpValue))
+        && !pin)
     {
       document.getElementById("RequestName").innerText = "인 증 하 기";
       setRequestPinValue(true);
     }
-    else if (ResetPasswdValue && RequestPinValue === false)
+    else if (ResetPasswdValue && passwd && passwdEqual)
     {
+      setPasswd('');
       setResetPasswdValue(false);
       setCheckPasswdValue(true);
     }
     else
     {
-      if (FindIdValue)
+      if (FindIdValue && pin)
       {
+        setName('');
+        setEmail('');
+        setPin('');
+
         setFindIdValue(false);
         setCheckIdValue(true);
+        
+        document.getElementById("RequestName").innerText = "인 증 요 청";
+        setRequestPinValue(false);
       }
-      else if(FindPasswdValue)
+      else if(FindPasswdValue && pin)
       {
+        setId('');
+        setEmail('');
+        setPin('');
+
         setFindPasswdValue(false);
         setResetPasswdValue(true);
+
+        document.getElementById("RequestName").innerText = "인 증 요 청";
+        setRequestPinValue(false);
       }
-      else
+      else if(SignUpValue && pin)
       {
+        setId('');
+        setPasswd('');
+        setEmail('');
+        setName('');
+        setBirthday('');
+        setPin('');
+
         setSignUpValue(false);
         setCheckSignUpValue(true);
-      }
 
-      document.getElementById("RequestName").innerText = "인 증 요 청";
-      setRequestPinValue(false);
+        document.getElementById("RequestName").innerText = "인 증 요 청";
+        setRequestPinValue(false);
+      }
+    }
+  }
+
+  const navigate = useNavigate();
+  const SignIn = () => {
+    if(id === "sudden11y" && passwd === "sudden11y!") {
+      const hash = SHA256(passwd).toString();
+      navigate('/mypage/todo');
+      // alert(hash);
+    }
+    else {
+      navigate('/');
+      alert("입력하신 정보가 일치하지 않습니다.");
     }
   }
 
@@ -108,7 +196,7 @@ function Mainpage() {
         {SignInValue && (<ChangingSection>
           <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)}></InputArea>
           <InputArea type="password" placeholder="비밀번호" value={passwd} onChange={(e)=>setPasswd(e.target.value)}></InputArea>
-          <Button> 로 그 인 </Button>
+          <Button onClick={SignIn}> 로 그 인 </Button>
           <Others>
             <p onClick={ChangeToFindId}> 아이디 찾기 </p>
             <p onClick={ChangeToFindPasswd}> 비밀번호 찾기 </p>
@@ -117,8 +205,9 @@ function Mainpage() {
         </ChangingSection>)}
 
         {FindIdValue && (<ChangingSection>
-          <InputArea type="text"  placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)}></InputArea>
-          <InputArea type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} ></InputArea>
+          <InputArea type="text"  placeholder="이름" value={name} onChange={(e)=>setName(e.target.value)}></InputArea>
+          <InputArea type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} onBlur={emailBlur}></InputArea>
+          {!emailValid && (<RegexCheck> 옳지 않은 이메일입니다. </RegexCheck>)}
           {RequestPinValue && (<InputArea type="text" placeholder="인증번호" value={pin} onChange={(e)=>setPin(e.target.value)}></InputArea>)}
           <Button id="RequestName" onClick={ChangeToVerify}> 인 증 요 청 </Button>
         </ChangingSection>)}
@@ -134,14 +223,18 @@ function Mainpage() {
         
         {FindPasswdValue && (<ChangingSection>
           <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)}></InputArea>
-          <InputArea type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)}></InputArea>
+          <InputArea type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} onBlur={emailBlur}></InputArea>
+          {!emailValid && (<RegexCheck> 옳지 않은 이메일입니다. </RegexCheck>)}
           {RequestPinValue && (<InputArea type="text" placeholder="인증번호" value={pin} onChange={(e)=>setPin(e.target.value)}></InputArea>)}
           <Button id="RequestName" onClick={ChangeToVerify}> 인 증 요 청 </Button>
         </ChangingSection>)}
 
         {ResetPasswdValue && (<ChangingSection>
-          <InputArea type="passwd" placeholder="새 비밀번호" value={id} onChange={(e)=>setId(e.target.value)}></InputArea>
-          <InputArea type="passwd" placeholder="새 비밀번호 확인" value={email} onChange={(e)=>setEmail(e.target.value)}></InputArea>
+          <InputArea type="password" placeholder="새 비밀번호" value={passwd} onChange={(e)=>setPasswd(e.target.value)} onBlur={passwdBlur}></InputArea>
+          <RegexCheck> 비밀번호: 9~16자의 영문, 숫자, 특수문자(!@#$%^~*) 조합 </RegexCheck>
+          {!passwdValid && (<RegexCheck> 옳지 않은 비밀번호입니다. </RegexCheck>)}
+          <InputArea type="password" placeholder="새 비밀번호 확인" value={newPasswd} onChange={(e)=>setNewPasswd(e.target.value)} onBlur={passwdEqualBlur}></InputArea>
+          {!passwdEqual && (<RegexCheck> 비밀번호가 일치하지 않습니다. </RegexCheck>)}
           <Button id="RequestName" onClick={ChangeToVerify}> 확 인 </Button>
         </ChangingSection>)}
 
@@ -151,12 +244,17 @@ function Mainpage() {
         </ChangingSection>)}
 
         {SignUpValue && (<ChangingSection>
-          <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)}></InputArea>
-          <InputArea type="passwd" placeholder="비밀번호" value={passwd} onChange={(e)=>setPasswd(e.target.value)}></InputArea>
-          <InputArea type="text" placeholder="이메일" value={passwd} onChange={(e)=>setEmail(e.target.value)}></InputArea>
+          <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)} onBlur={idBlur}></InputArea>
+          <RegexCheck> 아이디: 5~16자의 영문, 숫자 조합 </RegexCheck>
+          {!idValid && (<RegexCheck> 옳지 않은 아이디입니다. </RegexCheck>)}
+          <InputArea type="password" placeholder="비밀번호" value={passwd} onChange={(e)=>setPasswd(e.target.value)} onBlur={passwdBlur}></InputArea>
+          <RegexCheck> 비밀번호: 9~16자의 영문, 숫자, 특수문자(!@#$%^~*) 조합 </RegexCheck>
+          {!passwdValid && (<RegexCheck> 옳지 않은 비밀번호입니다. </RegexCheck>)}
+          <InputArea type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} onBlur={emailBlur}></InputArea>
+          {!emailValid && (<RegexCheck> 옳지 않은 이메일입니다. </RegexCheck>)}
           <InputArea type="text" placeholder="이름" value={name} onChange={(e)=>setName(e.target.value)}></InputArea>
-          <InputArea type="text" placeholder="생년월일 8자리" value={birthday} onChange={(e)=>setBirthday(e.target.value)}></InputArea>
-          <InputArea type="text" placeholder="전화번호" value={phonenum} onChange={(e)=>setPhonenum(e.target.value)}></InputArea>
+          <InputArea type="text" placeholder="생년월일 8자리" value={birthday} onChange={(e)=>setBirthday(e.target.value)} onBlur={birthdayBlur}></InputArea>
+          {!birthdayValid && (<RegexCheck> 옳지 않은 생년월일입니다. </RegexCheck>)}
           {RequestPinValue && (<InputArea type="text" placeholder="인증번호" value={pin} onChange={(e)=>setPin(e.target.value)}></InputArea>)}
           <Button id="RequestName" onClick={ChangeToVerify}> 인 증 요 청 </Button>
         </ChangingSection>)}
@@ -174,6 +272,16 @@ function Mainpage() {
 export default Mainpage;
 
 
+
+const RegexCheck = styled.p`
+  display : flex;
+  width : 20rem;
+  margin : 0 auto ;
+  color : #008BFF;
+  font-weight : bold;
+  font-size : 0.75rem;
+  justify-content : left;
+`
 
 const MainpageSection = styled.div`
   height : 100vh;
@@ -219,7 +327,7 @@ const InputArea = styled.input`
   padding : 0.75rem;
   font-size : 1.25rem;
   border-radius : 0.5rem;
-  margin : 0.125rem auto 0.625rem auto;
+  margin : 0.25rem auto 0.25rem;
   border : 0.05rem ridge rgba(0, 0, 0, 0.5);
 `
 

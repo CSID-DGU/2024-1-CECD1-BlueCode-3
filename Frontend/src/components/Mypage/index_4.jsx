@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
-import Left from '../../left.png';
-import Right from '../../right.png';
-import Input from '../../input.png';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { SHA256 } from 'crypto-js';
 
 
 function Study_theory() {
@@ -30,18 +28,44 @@ function Study_theory() {
   const [process, setProcess] = useState(0);
   const color = {color : "#008BFF"};
   
-  const [email, setEmail] = useState('example@example.com');
-  const [newPasswd, setNewPasswd] = useState('');
-  const [passwdCheck, setPasswdCheck] = useState('');
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwdRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^~*])[A-Za-z\d!@#$%^~*]{9,16}$/;
 
-  const PasswdChecking = () => {
-    if(newPasswd === passwdCheck) {
-      alert("비밀번호가 일치합니다");
+  const [email, setEmail] = useState('example@example.com');
+  const [newEmail, setNewEmail] = useState('');
+  const [newPasswd, setNewPasswd] = useState('');
+  const [newPasswdCheck, setNewPasswdCheck] = useState('');
+
+  const [passwdValid, setPasswdValid] = useState(true);
+  const [passwdEqual, setPasswdEqual] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  
+  const newEmailBlur = () => {
+    if (emailRegex.test(newEmail)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
     }
-    else {
-      alert("비밀번호가 불일치합니다");
+  };
+
+  const newPasswdBlur = () => {
+    if (passwdRegex.test(newPasswd)) {
+      setPasswdValid(true);
+    } else {
+      setPasswdValid(false);
     }
+  };
+
+  const passwdEqualBlur = () => {
+    if (newPasswd === newPasswdCheck)
+      setPasswdEqual(true);
+    else
+      setPasswdEqual(false);
   }
+
+  const hash = SHA256(newPasswd).toString();
+  // <p> - 3개 이상 동일한 문자 / 숫자 제외, 연속적인 숫자나 생일은 제외 </p>
+  // <p> - 아이디 및 이메일 제외 </p>
 
   return (
     <TestSection>
@@ -53,7 +77,8 @@ function Study_theory() {
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
+            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
@@ -65,7 +90,6 @@ function Study_theory() {
             <NavLink style={{ textDecoration : "none" }} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/mypage/info"><Nav style={color}> ㅇ 내 정보 수정 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
           </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
@@ -92,20 +116,21 @@ function Study_theory() {
           <ChangingInfo>
             <Email> ㅇ 이메일 </Email>
             <ChangingSection>
-              <InputArea  type="text" placeholder={email} value={email} onChange={(e)=>setEmail(e.target.value)}></InputArea>
+              <InputArea  type="text" placeholder={email} value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} onBlur={newEmailBlur}></InputArea>
               <Button> 이메일 변경 </Button>
-              <p> - 인증번호 발급을 위한 이메일 작성 </p>
+              <p id="info"> - 인증번호 발급을 위한 이메일 작성 </p>
+              {!emailValid && (<p style={{color : "#008BFF", fontWeight : "bold"}}> 옳지 않은 이메일입니다. </p>)}
             </ChangingSection>
           </ChangingInfo>
           <ChangingInfo>
             <Passwd> ㅇ 비밀번호 </Passwd>
             <ChangingSection>
-              <InputArea type="password" placeholder="새 비밀번호" value={newPasswd} onChange={(e)=>setNewPasswd(e.target.value)}></InputArea>
-              <InputArea type="password" placeholder="새 비밀번호 확인" value={passwdCheck} onChange={(e)=>setPasswdCheck(e.target.value)}></InputArea>
-              <Button onClick={PasswdChecking}> 비밀번호 변경 </Button>
-              <p> - 9~16자의 영문, 숫자, 특수문자(!@#$%^~*) 조합 </p>
-              <p> - 3개 이상 동일한 문자 / 숫자 제외, 연속적인 숫자나 생일은 제외 </p>
-              <p> - 아이디 및 이메일 제외 </p>
+              <InputArea type="password" placeholder="새 비밀번호" value={newPasswd} onChange={(e)=>setNewPasswd(e.target.value)} onBlur={newPasswdBlur}></InputArea>
+              <InputArea type="password" placeholder="새 비밀번호 확인" value={newPasswdCheck} onChange={(e)=>setNewPasswdCheck(e.target.value)} onBlur={passwdEqualBlur}></InputArea>
+              <Button> 비밀번호 변경 </Button>
+              <p id="info"> - 9~16자의 영문, 숫자, 특수문자(!@#$%^~*) 조합 </p>
+              {!passwdValid && (<p style={{color : "#008BFF", fontWeight : "bold"}}> 옳지 않은 비밀번호입니다. </p>)}
+              {!passwdEqual && (<p style={{color : "#008BFF", fontWeight : "bold"}}> 비밀번호가 일치하지 않습니다. </p>)}
             </ChangingSection>
           </ChangingInfo>
         </ContentSection>
@@ -117,6 +142,16 @@ function Study_theory() {
 export default Study_theory;
 
 
+
+const RegexCheck = styled.p`
+  display : flex;
+  width : 20rem;
+  margin : 0 auto ;
+  color : #008BFF;
+  font-weight : bold;
+  font-size : 0.75rem;
+  justify-content : left;
+`
 
 const TestSection = styled.div`
   height : 100vh;
