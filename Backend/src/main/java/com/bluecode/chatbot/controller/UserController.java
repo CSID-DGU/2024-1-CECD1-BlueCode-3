@@ -33,4 +33,27 @@ public class UserController {
         userService.addUser(userAddCallDto);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/user/findId")
+    public ResponseEntity<String> findId(@RequestBody UserAddCallDto userAddCallDto){
+        try {
+            return ResponseEntity.ok(userService.findLoginId(userAddCallDto));
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/user/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestBody UserAddCallDto userAddCallDto){
+        try {
+            userService.updatePassword(userAddCallDto);
+            return ResponseEntity.ok("수정되었습니다");
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 }

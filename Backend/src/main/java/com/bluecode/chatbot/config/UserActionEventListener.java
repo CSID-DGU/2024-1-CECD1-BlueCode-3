@@ -24,14 +24,14 @@ public class UserActionEventListener {
     @EventListener
     public void handleUserActionEvent(UserActionEvent event) throws Exception {
 
-        List<UserMissions> userMissions = userMissionRepository.findAllByUserAndServiceTypeAndMissionStatus(event.getUser(), event.getServiceType(), MissionStatus.PROGRESS);
+        List<UserMissions> userMissions = userMissionRepository.findAllByUserAndActionTypeAndMissionStatus(event.getUser(), event.getActionType(), MissionStatus.PROGRESS);
         log.info("미션 조회: userId: {}, userMissions.size(): {}", event.getUser().getUserId(), userMissions.size());
 
         for (UserMissions userMission : userMissions) {
             if (userMission.getMission().getServiceType().equals(event.getServiceType())) {
                 try {
-                    log.info("미션 수행 여부 체크: userId: {}, Mission 내 ServiceType: {}, event 내 ServiceType: {}, userMissionId: {}", event.getUser().getUserId(), userMission.getMission().getServiceType(), event.getServiceType(), userMission.getUserMissionId());
-                    userMissionService.checkAndCompleteMission(event.getUser(), userMission.getMission().getServiceType(), userMission.getUserMissionId());
+                    log.info("미션 수행 여부 체크: userId: {}, Mission 내 ServiceType: {}, event 내 ServiceType: {}, ActionType: {}, userMissionId: {}", event.getUser().getUserId(), userMission.getMission().getServiceType(), event.getServiceType(), event.getActionType(), userMission.getUserMissionId());
+                    userMissionService.checkAndCompleteMission(event.getUser(), userMission.getMission().getActionType(), userMission.getUserMissionId());
                 } catch (Exception e) {
                     log.error("handleUserActionEvent 에러 발생: " + e.getMessage());
                 }

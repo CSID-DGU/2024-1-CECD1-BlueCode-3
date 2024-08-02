@@ -41,9 +41,9 @@ public class StudyServiceTest {
         logger.info("testGetCurriculumText 테스트 시작");
 
         DataCallDto dto = new DataCallDto();
-        dto.setUserId(1L);
-        dto.setCurriculumId(2L);
-        LevelType levelType = LevelType.EASY;
+        dto.setUserId(2L);
+        dto.setCurriculumId(8L);
+        LevelType levelType = LevelType.HARD;
 
         Curriculums curriculum = curriculumRepository.findById(2L).orElse(null);
         assertNotNull(curriculum);

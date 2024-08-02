@@ -20,4 +20,5 @@ public class TestResponseElementDto {
     private String q2;
     private String q3;
     private String q4;
+    private int wordCount;
 }

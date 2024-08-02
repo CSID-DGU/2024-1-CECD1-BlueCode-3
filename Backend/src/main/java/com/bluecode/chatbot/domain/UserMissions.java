@@ -3,7 +3,6 @@ package com.bluecode.chatbot.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,7 +29,6 @@ public class UserMissions {
     private LocalDate endDate;
 
     // 클리어한 날짜
-    @UpdateTimestamp
     private LocalDateTime clearDateTime;
 
     // 할당된 미션
@@ -57,6 +55,7 @@ public class UserMissions {
 
         if (currentCount >= mission.getMissionCount()) {
             missionStatus = MissionStatus.COMPLETED;
+            clearDateTime = LocalDateTime.now();
             return true;
         }
         return false;

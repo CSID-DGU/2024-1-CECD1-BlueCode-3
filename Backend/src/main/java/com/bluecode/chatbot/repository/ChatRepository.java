@@ -23,6 +23,16 @@ public interface ChatRepository extends JpaRepository<Chats, Long> {
     List<Chats> findAllByUserIdAndChapterIdOrderByChatDate(@Param("userId") Long userId,
                                                            @Param("chapterId") Long curriculumId);
 
+    // 특정 유저가 특정 질문 유형인 Chat 리스트 Chat 생성 시간 정렬 검색
+    @Query("select c from Chats c " +
+            "join fetch c.curriculum " +
+            "join fetch c.user " +
+            "where c.user.userId = :userId " +
+            "and c.questionType = :questionType " +
+            "order by c.chatDate")
+    List<Chats> findAllByUserIdAndQuestionTypeOrderByChatDate(@Param("userId") Long userId,
+                                                              @Param("questionType") QuestionType questionType);
+
     // 특정 유저가 커리큘럼(챕터)에서 특정 질문 유형인 Chat 리스트 Chat 생성 시간 정렬 검색
     @Query("select c from Chats c " +
             "join fetch c.curriculum " +
