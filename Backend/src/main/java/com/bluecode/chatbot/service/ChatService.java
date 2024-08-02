@@ -174,8 +174,13 @@ public class ChatService {
         return chatRepository.findAllByUserIdAndQuestionTypeOrderByChatDate(userId, questionType);
     }
 
-    // 특정 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    // 특정 챕터 커리큘럼과 질문 유형에 대한 채팅 기록 조회
     public List<Chats> getChatsByCurriculumAndQuestionType(Long userId, Long curriculumId, QuestionType questionType) {
         return chatRepository.findAllByUserIdAndChapterIdAAndQuestionTypeOrderByChatDate(userId, curriculumId, questionType);
+    }
+
+    // 특정 루트 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    public List<Chats> getChatsByRootAndQuestionType(Long userId, Long rootId, QuestionType questionType) {
+        return chatRepository.findAllByUserIdAndRootIdAAndQuestionTypeOrderByChatDate(userId, rootId, questionType);
     }
 }
