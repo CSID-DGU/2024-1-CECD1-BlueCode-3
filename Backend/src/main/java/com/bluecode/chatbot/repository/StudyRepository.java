@@ -46,4 +46,7 @@ public interface StudyRepository extends JpaRepository<Studies, Long>, StudyRepo
 
     // 유저, 챕터 기반 Studies 리스트 검색
     List<Studies> findAllByUserAndCurriculum(Users user, Curriculums chapter);
+
+    // 유저 기반 Studies 리스트 검색
+    List<Studies> findAllByUser(Users user);
 }

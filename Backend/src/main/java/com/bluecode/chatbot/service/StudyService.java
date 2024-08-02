@@ -11,11 +11,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -31,6 +28,57 @@ public class StudyService {
 
     // 미션 처리를 위한 클래스
     private final ApplicationEventPublisher eventPublisher;
+
+    // 루트 커리큘럼 리스트 반환
+    public CurriculumRootResponseDto searchRootData(Long userId) {
+
+        Optional<Users> userOptional = userRepository.findByUserId(userId);
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+
+        List<Studies> allByUser = studyRepository.findAllByUser(user);
+        List<Curriculums> roots = curriculumRepository.findAllRootCurriculumList();
+
+        if (roots.isEmpty()) {
+            throw new IllegalArgumentException("루트 커리큘럼이 존재하지 않습니다.");
+        }
+
+        CurriculumRootResponseDto dto = new CurriculumRootResponseDto();
+        List<CurriculumRootElementDto> list = new ArrayList<>();
+
+        for (Curriculums root : roots) {
+
+            CurriculumRootElementDto elementDto = new CurriculumRootElementDto();
+            elementDto.setRootId(root.getCurriculumId());
+            elementDto.setTitle(root.getCurriculumName());
+
+            // 학습 중인지 확인하는 로직
+            List<Studies> rootStudy = allByUser.stream().filter(i -> Objects.equals(i.getCurriculum().getParent().getCurriculumId(), root.getCurriculumId())).toList();
+
+            // 마지막 챕터 대상 난이도가 easy 인 Study 데이터 내에서 passed 가 false 인 행이 존재할 경우 -> 커리큘럼 학습 미완료
+            boolean isNotCompleted = allByUser.stream().filter(i -> i.getCurriculum().getChapterNum() == root.getTotalChapterCount()
+                    && i.getLevel().equals(LevelType.EASY)
+                    && !i.isPassed()).count() == 0;
+
+            if (rootStudy.isEmpty()) {
+                // root 대상 study 데이터가 존재하지 않는다면
+                elementDto.setStatus(StudyStatus.INIT);
+            } else if (isNotCompleted) {
+                // 마지막 챕터 대상 EASY 난이도 Study 내 pass == false 일 경우 학습중이라 판단
+                elementDto.setStatus(StudyStatus.STUDYING);
+            } else {
+                elementDto.setStatus(StudyStatus.COMPLETE);
+            }
+            list.add(elementDto);
+        }
+
+        dto.setList(list);
+        return dto;
+    }
 
     // 유저의 커리큘럼 학습 시작하기 위한 챕터 학습 데이터 생성
     @Transactional
@@ -116,7 +164,7 @@ public class StudyService {
             elementDto.setCurriculumName(study.getCurriculum().getCurriculumName());
             elementDto.setPassed(study.isPassed());
             return elementDto;
-        }).collect(Collectors.toList());
+        }).toList();
 
         CurriculumPassedDto responseDto = new CurriculumPassedDto();
         responseDto.setList(progressList);
