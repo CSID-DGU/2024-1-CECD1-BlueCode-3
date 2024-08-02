@@ -104,6 +104,7 @@ function Study_theory() {
       <Content>
         <NavSection height={height}>
           <Static>
+            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav> ㅇ 마이페이지 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
@@ -143,10 +144,9 @@ function Study_theory() {
           {div.map(div => div)}
         </Chat>
         <ChatType>
-          <Type style={typeValue1 ? type_style : styled} onClick={selectType}> #이론 </Type>
-          <Type style={typeValue2 ? type_style : styled} onClick={selectType}> #문법 </Type>
-          <Type style={typeValue3 ? type_style : styled} onClick={selectType}> #코드 </Type>
-          <Type style={typeValue4 ? type_style : styled} onClick={selectType}> #오류 </Type>
+          <Type style={typeValue1 ? type_style : styled} onClick={selectType}> #개념 </Type>
+          <Type style={typeValue2 ? type_style : styled} onClick={selectType}> #코드 </Type>
+          <Type style={typeValue3 ? type_style : styled} onClick={selectType}> #오류 </Type>
         </ChatType>
           <ChatInput>
             <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
