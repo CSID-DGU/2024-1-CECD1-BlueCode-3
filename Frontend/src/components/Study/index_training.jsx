@@ -177,6 +177,7 @@ print_collected()
       <Content>
         <NavSection height={height}>
           <Static>
+            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav> ㅇ 마이페이지 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
@@ -230,8 +231,7 @@ print_collected()
           {div.map(div => div)}
           </Chat>
           <ChatType>
-            <Type> #이론 </Type>
-            <Type> #문법 </Type>
+            <Type> #개념 </Type>
             <Type> #코드 </Type>
             <Type> #오류 </Type>
           </ChatType>
