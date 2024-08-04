@@ -143,4 +143,37 @@ public class UserControllerTest {
         resultActions.andExpect(status().isOk()).andDo(print());
     }
 
+    @DisplayName("update user email api 테스트")
+    @Test
+    public void updateEmail() throws Exception{
+        final String url="/user/updateEmail";
+
+        final String username="";
+        final String email="updateEmail2";
+        final String id="testId2";
+        final String password="";
+        final String birth="";
+        final UserAddCallDto userAddCallDto= new UserAddCallDto();
+        userAddCallDto.setId(id);
+        userAddCallDto.setPassword(password);
+        userAddCallDto.setBirth(birth);
+        userAddCallDto.setUsername(username);
+        userAddCallDto.setEmail(email);
+        final String requestBody= objectMapper.writeValueAsString(userAddCallDto);
+
+        ResultActions resultActions=mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestBody));
+
+        resultActions.andExpect(status().isOk()).andDo(print());
+    }
+
+    @DisplayName("get userinfo api 테스트")
+    @Test
+    public void getUserInfo() throws Exception{
+        final String url="/user/getUserInfo/testId2";
+        final ResultActions resultActions=mockMvc.perform(get(url,"testId2"));
+        resultActions.andExpect(status().isOk()).andDo(print());
+    }
+
 }
