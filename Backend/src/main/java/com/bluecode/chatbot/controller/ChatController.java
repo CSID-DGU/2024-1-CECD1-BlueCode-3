@@ -85,10 +85,24 @@ public class ChatController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // 특정 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    // 특정 챕터 커리큘럼과 질문 유형에 대한 채팅 기록 조회
     @PostMapping("/historyByCurriculumAndQuestionType")
     public ResponseEntity<QuestionListResponseDto> getChatsByCurriculumAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
         List<Chats> chats = chatService.getChatsByCurriculumAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
+        if (chats.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 특정 루트 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    @PostMapping("/historyByRootAndQuestionType")
+    public ResponseEntity<QuestionListResponseDto> getChatsByRootAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsByRootAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
         if (chats.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -109,6 +123,6 @@ public class ChatController {
             dto.setQuestionType(chat.getQuestionType());
             dto.setChatDate(chat.getChatDate());
             return dto;
-        }).collect(Collectors.toList());
+        }).toList();
     }
 }
