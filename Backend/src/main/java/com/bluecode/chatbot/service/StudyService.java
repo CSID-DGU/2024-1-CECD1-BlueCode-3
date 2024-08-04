@@ -177,7 +177,7 @@ public class StudyService {
     }
 
     // 유저의 커리큘럼 학습 완료 처리
-    public String chapterPass(CurriculumPassCallDto dto) throws Exception {
+    public String chapterPass(CurriculumPassCallDto dto) {
 
         Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
         Optional<Curriculums> chapterOptional = curriculumRepository.findById(dto.getCurriculumId());
@@ -260,8 +260,6 @@ public class StudyService {
             study.setPassed(true);
 
             studyRepository.save(study);
-        } else {
-            throw new Exception("유효하지 않은 chapter.testable");
         }
 
         // 특정 챕터 완료 미션 처리
