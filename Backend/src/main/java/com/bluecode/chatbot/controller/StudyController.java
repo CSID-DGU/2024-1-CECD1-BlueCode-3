@@ -23,7 +23,7 @@ public class StudyController {
 
     // 유저의 root 내 챕터들의 커리큘럼 학습 Study 데이터 생성 요청
     @PostMapping("/create")
-    public ResponseEntity<Object> createChapterStudyData(@RequestBody DataCallDto dto) {
+    public ResponseEntity<CurriculumChapResponseDto> createChapterStudyData(@RequestBody DataCallDto dto) {
 
         CurriculumChapResponseDto result = studyService.createCurriculumStudyData(dto);
         return ResponseEntity.ok().body(result);
@@ -31,7 +31,7 @@ public class StudyController {
 
     // 유저의 커리큘럼 진행 현황 요청
     @PostMapping("/chapters")
-    public ResponseEntity<Object> findCurriculumProgress(@RequestBody DataCallDto dataCallDto){
+    public ResponseEntity<CurriculumPassedDto> findCurriculumProgress(@RequestBody DataCallDto dataCallDto){
 
         CurriculumPassedDto curriculumPassedDto = studyService.getCurriculumProgress(dataCallDto);
         return ResponseEntity.ok().body(curriculumPassedDto);
@@ -39,7 +39,7 @@ public class StudyController {
 
     // 유저가 요청한 커리큘럼 챕터의 학습 내용 텍스트 요청
     @PostMapping("/text")
-    public ResponseEntity<Object> findCurriculumText(@RequestBody CurriculumTextCallDto curriculumTextCallDto) {
+    public ResponseEntity<StudyTextDto> findCurriculumText(@RequestBody CurriculumTextCallDto curriculumTextCallDto) {
 
         StudyTextDto studyTextDto = studyService.getCurriculumText(curriculumTextCallDto);
         return ResponseEntity.ok().body(studyTextDto);
@@ -47,7 +47,7 @@ public class StudyController {
 
     // 학습중인 커리큘럼 챕터 통과 처리
     @PostMapping("/pass")
-    public ResponseEntity<Object> chapterPass(@RequestBody CurriculumPassCallDto dto) {
+    public ResponseEntity<String> chapterPass(@RequestBody CurriculumPassCallDto dto) {
 
         String result = studyService.chapterPass(dto);
         return ResponseEntity.ok(result);

@@ -30,7 +30,7 @@ public class TestService {
     private final ApplicationEventPublisher eventPublisher;
 
     // 초기 테스트 구성
-    public TestResponseDto createInitTest(DataCallDto dto) throws Exception {
+    public TestResponseDto createInitTest(DataCallDto dto) {
         log.info("createInitTest with userId: {}, curriculumId: {}", dto.getUserId(), dto.getCurriculumId());
 
         Optional<Users> user = userRepository.findByUserId(dto.getUserId());
@@ -104,7 +104,7 @@ public class TestService {
     }
 
     // 이해도 테스트 구성
-    public TestResponseDto createNormalTest(DataCallDto dto) throws Exception {
+    public TestResponseDto createNormalTest(DataCallDto dto) {
 
         Optional<Users> user = userRepository.findByUserId(dto.getUserId());
         Optional<Curriculums> chapter = curriculumRepository.findById(dto.getCurriculumId());

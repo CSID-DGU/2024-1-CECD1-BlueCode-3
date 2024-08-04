@@ -19,7 +19,7 @@ public class TestController {
 
     // 초기 테스트 생성(1개 챕터)
     @PostMapping("/test/create/init")
-    public ResponseEntity createInitTest(@RequestBody DataCallDto dto) {
+    public ResponseEntity<TestResponseDto> createInitTest(@RequestBody DataCallDto dto) {
         log.info("call createInitTest in TestController: {}", dto);
         TestResponseDto initTest = testService.createInitTest(dto);
         log.info("createInitTest passed: {}", initTest);
@@ -28,7 +28,7 @@ public class TestController {
 
     // 이해도 테스트 생성
     @PostMapping("/test/create/normal")
-    public ResponseEntity createNormalTest(@RequestBody DataCallDto dto) {
+    public ResponseEntity<TestResponseDto> createNormalTest(@RequestBody DataCallDto dto) {
 
         log.info("call createNormalTest in TestController: {}", dto);
         TestResponseDto normalTest = testService.createNormalTest(dto);
@@ -39,7 +39,7 @@ public class TestController {
 
     // 객관식 문제 채점
     @PostMapping("/test/submit/num")
-    public ResponseEntity submitAnswerNum(@RequestBody TestAnswerCallDto dto) {
+    public ResponseEntity<TestAnswerResponseDto> submitAnswerNum(@RequestBody TestAnswerCallDto dto) {
 
         log.info("call submitAnswerNum in TestController: {}", dto);
         TestAnswerResponseDto answer = testService.submitAnswerNum(dto);
@@ -49,7 +49,7 @@ public class TestController {
 
     // 단답형 문제 채점
     @PostMapping("/test/submit/word")
-    public ResponseEntity submitAnswerWord(@RequestBody TestAnswerCallDto dto) {
+    public ResponseEntity<TestAnswerResponseDto> submitAnswerWord(@RequestBody TestAnswerCallDto dto) {
 
         log.info("call submitAnswerWord in TestController: {}", dto);
 
@@ -61,7 +61,7 @@ public class TestController {
 
     // user 테이블에 초기 테스트 완료 처리
     @GetMapping("/test/complete/init/{userId}")
-    public ResponseEntity completeInitTest(@PathVariable Long userId) {
+    public ResponseEntity<String> completeInitTest(@PathVariable Long userId) {
 
         String result = testService.completeInitTest(userId);
         return ResponseEntity.ok().body(result);
