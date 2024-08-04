@@ -35,7 +35,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/user/findId")
+    @PostMapping("/user/findId")
     public ResponseEntity<String> findId(@RequestBody UserAddCallDto userAddCallDto){
         try {
             return ResponseEntity.ok(userService.findLoginId(userAddCallDto));
