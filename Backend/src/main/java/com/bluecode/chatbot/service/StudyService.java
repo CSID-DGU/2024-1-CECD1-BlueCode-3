@@ -1,112 +1,315 @@
 package com.bluecode.chatbot.service;
 
-import com.bluecode.chatbot.domain.Curriculums;
-import com.bluecode.chatbot.domain.LevelType;
-import com.bluecode.chatbot.domain.Studies;
-import com.bluecode.chatbot.domain.Users;
+import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.repository.CurriculumRepository;
 import com.bluecode.chatbot.repository.StudyRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.bluecode.chatbot.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Map;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class StudyService {
 
-    private final RestTemplate restTemplate;
-    private final String apiKey;
     private final ApiService apiService;
     private final StudyRepository studyRepository;
     private final CurriculumService curriculumService;
     private final CurriculumRepository curriculumRepository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final UserRepository userRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(StudyService.class);
+    // 미션 처리를 위한 클래스
+    private final ApplicationEventPublisher eventPublisher;
 
-    @Autowired
-    public StudyService(
-            RestTemplate restTemplate,
-            @Value("${api.key}") String apiKey,
-            ApiService apiService,
-            StudyRepository studyRepository,
-            CurriculumService curriculumService,
-            CurriculumRepository curriculumRepository) {
-        this.restTemplate = restTemplate;
-        this.apiKey = apiKey;
-        this.apiService = apiService;
-        this.studyRepository = studyRepository;
-        this.curriculumService = curriculumService;
-        this.curriculumRepository = curriculumRepository;
+    // 루트 커리큘럼 리스트 반환
+    public CurriculumRootResponseDto searchRootData(Long userId) {
+
+        Optional<Users> userOptional = userRepository.findByUserId(userId);
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+
+        List<Studies> allByUser = studyRepository.findAllByUser(user);
+        List<Curriculums> roots = curriculumRepository.findAllRootCurriculumList();
+
+        if (roots.isEmpty()) {
+            throw new IllegalArgumentException("루트 커리큘럼이 존재하지 않습니다.");
+        }
+
+        CurriculumRootResponseDto dto = new CurriculumRootResponseDto();
+        List<CurriculumRootElementDto> list = new ArrayList<>();
+
+        for (Curriculums root : roots) {
+
+            CurriculumRootElementDto elementDto = new CurriculumRootElementDto();
+            elementDto.setRootId(root.getCurriculumId());
+            elementDto.setTitle(root.getCurriculumName());
+
+            // 학습 중인지 확인하는 로직
+            List<Studies> rootStudy = allByUser.stream().filter(i -> Objects.equals(i.getCurriculum().getParent().getCurriculumId(), root.getCurriculumId())).toList();
+
+            // 마지막 챕터 대상 난이도가 easy 인 Study 데이터 내에서 passed 가 false 인 행이 존재할 경우 -> 커리큘럼 학습 미완료
+            boolean isNotCompleted = allByUser.stream().filter(i -> i.getCurriculum().getChapterNum() == root.getTotalChapterCount()
+                    && i.getLevel().equals(LevelType.EASY)
+                    && !i.isPassed()).count() == 0;
+
+            if (rootStudy.isEmpty()) {
+                // root 대상 study 데이터가 존재하지 않는다면
+                elementDto.setStatus(StudyStatus.INIT);
+            } else if (isNotCompleted) {
+                // 마지막 챕터 대상 EASY 난이도 Study 내 pass == false 일 경우 학습중이라 판단
+                elementDto.setStatus(StudyStatus.STUDYING);
+            } else {
+                elementDto.setStatus(StudyStatus.COMPLETE);
+            }
+            list.add(elementDto);
+        }
+
+        dto.setList(list);
+        return dto;
+    }
+
+    // 유저의 커리큘럼 학습 시작하기 위한 챕터 학습 데이터 생성
+    @Transactional
+    public CurriculumChapResponseDto createCurriculumStudyData(DataCallDto dto) {
+
+        Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
+        Optional<Curriculums> rootOptional = curriculumRepository.findById(dto.getCurriculumId());
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (rootOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 루트 커리큘럼 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+        Curriculums root = rootOptional.get();
+
+        if (root.getParent() != null) {
+            throw new IllegalArgumentException("루트 커리큘럼 id가 아닙니다.");
+        }
+
+        List<Studies> validation = studyRepository.findAllByUserAndRoot(user, root);
+
+        // 데이터 생성 여부 확인
+        if (!validation.isEmpty()) {
+            throw new IllegalArgumentException("이미 해당 유저의 학습 대상 커리큘럼 데이터가 생성되어있습니다.");
+        }
+
+        // 루트 커리큘럼 내 챕터 정보 검색
+        List<Curriculums> chapters = curriculumRepository.findAllByParentOrderByChapterNum(root);
+        List<Studies> studies = new ArrayList<>();
+
+        // testable 조건에 따른 study 데이터 생성
+        for (Curriculums chapter : chapters) {
+            if (chapter.isTestable()) {
+                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.EASY));
+                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
+                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
+            } else {
+                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.EASY));
+            }
+        }
+
+        // 생성된 study 데이터 저장
+        studyRepository.saveAll(studies);
+
+        // 대상 커리큘럼의 챕터 정보를 리턴 로직
+        CurriculumChapCallDto callDto = new CurriculumChapCallDto();
+        callDto.setCurriculumId(dto.getCurriculumId());
+
+        return curriculumService.getCurriculumChapters(callDto);
     }
 
     // 유저의 커리큘럼 진행 현황 로드
     public CurriculumPassedDto getCurriculumProgress(DataCallDto dto) {
-        logger.info("getCurriculumProgress called with dto: {}", dto);
+        log.info("getCurriculumProgress called with dto: {}", dto);
 
-        //List<Studies> studies = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
+        Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
+        Optional<Curriculums> rootOptional = curriculumRepository.findById(dto.getCurriculumId());
 
-        List<Studies> studies = studyRepository.findAllByUserId(dto.getUserId());
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (rootOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 루트 커리큘럼 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+        Curriculums root = rootOptional.get();
+
+        if (root.getParent() != null) {
+            throw new IllegalArgumentException("루트 커리큘럼 id가 아닙니다.");
+        }
+
+        List<Studies> studies = studyRepository.findAllEasyStudiesByUserAndRoot(user, root);
 
         List<CurriculumPassedElementDto> progressList = studies.stream().map(study -> {
             CurriculumPassedElementDto elementDto = new CurriculumPassedElementDto();
             elementDto.setCurriculumId(study.getCurriculum().getCurriculumId());
             elementDto.setCurriculumName(study.getCurriculum().getCurriculumName());
             elementDto.setPassed(study.isPassed());
-            elementDto.setLevelType(study.getLevel());
             return elementDto;
-        }).collect(Collectors.toList());
+        }).toList();
 
         CurriculumPassedDto responseDto = new CurriculumPassedDto();
         responseDto.setList(progressList);
 
-        logger.info("getCurriculumProgress returning: {}", responseDto);
+        log.info("getCurriculumProgress returning: {}", responseDto);
         return responseDto;
+    }
+
+    // 유저의 커리큘럼 학습 완료 처리
+    public String chapterPass(CurriculumPassCallDto dto) {
+
+        Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
+        Optional<Curriculums> chapterOptional = curriculumRepository.findById(dto.getCurriculumId());
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (chapterOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 루트 커리큘럼 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+        Curriculums chapter = chapterOptional.get();
+
+        if (chapter.isTestable()) {
+
+            List<Studies> chapters = studyRepository.findAllByUserAndCurriculum(user, chapter);
+
+            if (chapters.isEmpty() || chapters.size() < 3) {
+                log.error("학습중인 챕터가 아닙니다. size: {}", chapters.size());
+                throw new IllegalArgumentException("학습중인 챕터가 아닙니다.");
+            }
+
+            Studies studyEasy = chapters.stream().filter(s -> s.getLevel().equals(LevelType.EASY)).findFirst().get();
+            Studies studyNormal = chapters.stream().filter(s -> s.getLevel().equals(LevelType.NORMAL)).findFirst().get();
+            Studies studyHard = chapters.stream().filter(s -> s.getLevel().equals(LevelType.HARD)).findFirst().get();
+
+            if (dto.getCurrentLevel() == LevelType.HARD) {
+
+                if (dto.getNextLevel() == LevelType.HARD) {
+                    studyHard.setPassed(true);
+                    studyRepository.save(studyHard);
+                } else {
+                    log.error("유효하지 않은 currentLevel 과 NextLevel 입니다. currentLevel: {}, nextLevel: {}", dto.getCurrentLevel(), dto.getNextLevel());
+                    throw new IllegalArgumentException("유효하지 않은 currentLevel 과 NextLevel 입니다.");
+                }
+
+            } else if (dto.getCurrentLevel() == LevelType.NORMAL) {
+                if (dto.getNextLevel() == LevelType.HARD) {
+                    studyNormal.setPassed(true);
+                    studyHard.setPassed(true);
+                    studyRepository.save(studyNormal);
+                    studyRepository.save(studyHard);
+                } else if (dto.getNextLevel() == LevelType.NORMAL) {
+                    studyNormal.setPassed(true);
+                    studyRepository.save(studyNormal);
+                } else {
+                    log.error("유효하지 않은 currentLevel 과 NextLevel 입니다. currentLevel: {}, nextLevel: {}", dto.getCurrentLevel(), dto.getNextLevel());
+                    throw new IllegalArgumentException("유효하지 않은 currentLevel 과 NextLevel 입니다.");
+                }
+            } else if (dto.getCurrentLevel() == LevelType.EASY) {
+                if (dto.getNextLevel() == LevelType.HARD) {
+                    studyEasy.setPassed(true);
+                    studyNormal.setPassed(true);
+                    studyHard.setPassed(true);
+                    studyRepository.save(studyEasy);
+                    studyRepository.save(studyNormal);
+                    studyRepository.save(studyHard);
+                } else if (dto.getNextLevel() == LevelType.NORMAL) {
+                    studyEasy.setPassed(true);
+                    studyNormal.setPassed(true);
+                    studyRepository.save(studyEasy);
+                    studyRepository.save(studyNormal);
+                } else if (dto.getNextLevel() == LevelType.EASY) {
+                    // 테스트 불합격(최소 NORMAL 까지는 pass 해야함)
+                    return "챕터 학습 미완료";
+                }
+            }
+
+        } else {
+            List<Studies> studyValid = studyRepository.findAllByUserAndCurriculum(user, chapter);
+
+            if (studyValid.isEmpty()) {
+                log.error("학습중인 챕터가 아닙니다.");
+                throw new IllegalArgumentException("학습중인 챕터가 아닙니다.");
+            }
+
+            // 통과 처리
+            Studies study = studyValid.get(0);
+            study.setPassed(true);
+
+            studyRepository.save(study);
+        }
+
+        // 특정 챕터 완료 미션 처리
+        eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootAndChapterName(chapter.getParent(), chapter)));
+
+        // 커리큘럼 학습 완료 미션 처리
+        eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.STUDY_COMPLETE));
+
+        return "챕터 학습 완료";
     }
 
     // 유저의 커리큘럼 학습 내용 로드
     @Transactional
-    public StudyTextDto getCurriculumText(DataCallDto dto, LevelType levelType) {
-        logger.info("getCurriculumText called with dto: {}, levelType: {}", dto, levelType);
+    public StudyTextDto getCurriculumText(CurriculumTextCallDto dto) {
+        log.info("getCurriculumText called with dto: {}", dto);
 
-        List<Studies> studiesList = studyRepository.findAllByCurriculumIdAndUserId(dto.getCurriculumId(), dto.getUserId());
-        Studies study = studiesList.isEmpty() ? null : studiesList.get(0);
+        Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
+        Optional<Curriculums> chapterOptional = curriculumRepository.findById(dto.getCurriculumId());
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (chapterOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 루트 커리큘럼 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+        Curriculums chapter = chapterOptional.get();
+
+        Optional<Studies> studyOptional = studyRepository.findByCurriculumAndUserAndLevel(chapter, user, dto.getLevelType());
+
+        if (studyOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 study 입니다.");
+        }
+
+        Studies study = studyOptional.get();
 
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
-        if (study == null || study.getText() == null) {
-            Curriculums curriculum = curriculumRepository.findById(dto.getCurriculumId()).orElse(null);
-            String keyword = curriculumService.getKeywordForLevel(curriculum, levelType);
-            String fullKeyword = curriculum.getCurriculumName() + ": " + keyword;
+        if (study.getText() == null) {
+            String keyword = curriculumService.getKeywordForLevel(chapter, dto.getLevelType());
+            String fullKeyword = chapter.getCurriculumName() + ": " + keyword;
             String generatedResponse = requestGptText(fullKeyword, dto.getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
             String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
 
-            if (study == null) {
-                study = new Studies();
-                study.setUser(new Users());
-                study.getUser().setUserId(dto.getUserId());
-                study.setCurriculum(curriculum);
-                study.setLevel(levelType);
-                study.setText(generatedText);
-                studyRepository.save(study);
-            } else {
-                study.setText(generatedText);
-            }
+            study.setText(generatedText);
         }
 
         StudyTextDto responseDto = new StudyTextDto();
         responseDto.setText(study.getText());
 
-        logger.info("getCurriculumText returning: {}", responseDto);
+        log.info("getCurriculumText returning: {}", responseDto);
         return responseDto;
     }
 
