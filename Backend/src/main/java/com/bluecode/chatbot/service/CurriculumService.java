@@ -9,8 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -38,16 +37,43 @@ public class CurriculumService {
             throw new IllegalArgumentException("루트 커리큘럼이 아닙니다.");
         }
 
-        // 해당 루트 노드의 챕터들 찾기
-        List<Curriculums> chapters = curriculumRepository.findAllChildByParentOrderByChapterNumAndSubChapterNum(root);
+        // 해당 루트 노드의 자식들 찾기
+        List<Curriculums> child = curriculumRepository.findAllByRoot(root);
+
+        // 챕터 필터링
+        List<Curriculums> chapters = child.stream().filter(i -> !i.isRootNode() && !i.isLeafNode()).toList();
+        // 서브 챕터 필터링
+        List<Curriculums> subChapters = child.stream().filter(Curriculums::isLeafNode).toList();
+        Deque<Curriculums> deque = new ArrayDeque<>(subChapters);
+
+        log.info("deque={}", deque);
 
         // 챕터 리스트를 DTO로 변환
-        List<CurriculumChapElementDto> chapterList = chapters.stream().map(chapter -> {
-            CurriculumChapElementDto elementDto = new CurriculumChapElementDto();
-            elementDto.setCurriculumId(chapter.getCurriculumId());
-            elementDto.setText(chapter.getCurriculumName());
-            return elementDto;
-        }).toList();
+        List<CurriculumChapElementDto> chapterList = new ArrayList<>();
+
+        for (Curriculums chapter : chapters) {
+
+            List<CurriculumChapElementDto> subChapterList = new ArrayList<>();
+
+            while (!deque.isEmpty() && deque.getFirst().getParent() == chapter) {
+
+                Curriculums subChapter = deque.removeFirst();
+
+                CurriculumChapElementDto subChapterDto = new CurriculumChapElementDto();
+                subChapterDto.setCurriculumId(subChapter.getCurriculumId());
+                subChapterDto.setText(subChapter.getCurriculumName());
+                // 서브 챕터 추가
+                subChapterList.add(subChapterDto);
+            }
+
+            // 서브 챕터 list 챕터 dto에 추가
+            CurriculumChapElementDto chapterDto = new CurriculumChapElementDto();
+            chapterDto.setCurriculumId(chapter.getCurriculumId());
+            chapterDto.setText(chapter.getCurriculumName());
+            chapterDto.setSubChapters(subChapterList);
+
+            chapterList.add(chapterDto);
+        }
 
         // 결과를 담아 반환
         CurriculumChapResponseDto responseDto = new CurriculumChapResponseDto();

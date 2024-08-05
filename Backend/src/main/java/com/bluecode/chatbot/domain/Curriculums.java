@@ -1,14 +1,16 @@
 package com.bluecode.chatbot.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
 public class Curriculums {
 
     // table id
@@ -25,6 +27,11 @@ public class Curriculums {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "root_id")
     private Curriculums root;
+
+    // 자식 정의
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = CascadeType.ALL)
+    private List<Curriculums> children = new ArrayList<>();
 
     // 커리큘럼 이름
     private String curriculumName;
