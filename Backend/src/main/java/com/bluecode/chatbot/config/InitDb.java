@@ -141,10 +141,18 @@ public class InitDb {
             Users user2 = userRepository.findById(2L).get();
             Curriculums root = curriculumRepository.findAllRootCurriculumList().get(0);
 
+            List<Curriculums> chapters = curriculumRepository.findAllChildByParentOrderByChapterNumAndSubChapterNum(root);
             List<Curriculums> subChapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
             int testedSubChap = 4;
             int current = 0;
             Curriculums curriculum = subChapters.get(0);
+
+            for (int i = 0; i < 2; i++) {
+                Studies chapterStudy = Studies.createStudy(user2, chapters.get(i), true, null, null, null, LevelType.HARD);
+                studyRepository.save(chapterStudy);
+            }
+            Studies chapterStudy = Studies.createStudy(user2, chapters.get(chapters.size() - 1), false, null, null, null, LevelType.EASY);
+            studyRepository.save(chapterStudy);
 
             for (int i = 0; i < subChapters.size(); i++) {
 
@@ -167,27 +175,17 @@ public class InitDb {
                         testRepository.save(testNormal1);
                         testRepository.save(testEasy1);
 
-                        Studies studiesEasy = Studies.createStudy(user2, curriculum, true,
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", curriculum.getSubChapterNum()), LevelType.EASY);
-                        Studies studiesNormal = Studies.createStudy(user2, curriculum, true,
-                                null,
-                                String.format("챕터 %d: " + LevelType.NORMAL + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.NORMAL + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", curriculum.getSubChapterNum()), LevelType.NORMAL);
                         Studies studiesHard = Studies.createStudy(user2, curriculum, true,
                                 null,
                                 null,
                                 String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", curriculum.getSubChapterNum()), LevelType.HARD);
 
-                        studyRepository.save(studiesEasy);
-                        studyRepository.save(studiesNormal);
                         studyRepository.save(studiesHard);
                     } else {
                         Studies studies = Studies.createStudy(user2, curriculum, true,
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()), LevelType.EASY);
+                                String.format("챕터 %d: " + LevelType.COMMON + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()),
+                                String.format("챕터 %d: " + LevelType.COMMON + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()),
+                                String.format("챕터 %d: " + LevelType.COMMON + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()), LevelType.COMMON);
                         studyRepository.save(studies);
                     }
                 } else {
@@ -210,18 +208,8 @@ public class InitDb {
                                 String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()),
                                 String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()),
                                 String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()), LevelType.EASY);
-                        Studies studiesNormal = Studies.createStudy(user2, curriculum, false,
-                                null,
-                                String.format("챕터 %d: " + LevelType.NORMAL + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.NORMAL + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()), LevelType.NORMAL);
-                        Studies studiesHard = Studies.createStudy(user2, curriculum, false,
-                                null,
-                                null,
-                                String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()), LevelType.HARD);
 
                         studyRepository.save(studiesEasy);
-                        studyRepository.save(studiesNormal);
-                        studyRepository.save(studiesHard);
                         break;
                     } else {
                         Studies studiesEasy = Studies.createStudy(user2, curriculum, false,
