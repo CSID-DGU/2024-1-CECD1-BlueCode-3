@@ -16,6 +16,12 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
+import static com.bluecode.chatbot.domain.Missions.createMission;
+import static com.bluecode.chatbot.domain.Quiz.createQuiz;
+import static com.bluecode.chatbot.domain.Tests.createTest;
+import static com.bluecode.chatbot.domain.UserMissions.createUserMission;
+import static com.bluecode.chatbot.domain.Users.createUser;
+
 /**
  * 테스트용 데이터를 DB에 저장하는 class 입니다.
  */
@@ -27,7 +33,7 @@ public class InitDb {
     private final InitService initService;
 
     @PostConstruct
-    public void init() throws InterruptedException {
+    public void init() {
         initService.userInit();
         initService.curriculumInit();
         initService.quizInit();
@@ -54,28 +60,11 @@ public class InitDb {
         private final UserMissionRepository userMissionRepository;
 
         public void userInit() {
-            Users user1 = createUser("testName", "testEmail", "testId", "1111", "11110033", false); // 초기 테스트 미진행 유저
-            Users user2 = createUser("testName2", "testEmail2", "testId2", "1111", "22223344", true); // 초기 테스트 진행 유저 (3챕터에서 시작)
-            em.persist(user1);
-            em.persist(user2);
-            em.flush();
-            log.info("Users have been initialized");
+            List<Users> users = new ArrayList<>();
+            users.add(createUser("testName", "testEmail", "testId", "1111", "11110033", false)); // 초기 테스트 미진행 유저
+            users.add(createUser("testName2", "testEmail2", "testId2", "1111", "22223344", true)); // 초기 테스트 진행 유저 (3챕터에서 시작)
+            userRepository.saveAll(users);
         }
-
-//        public void test() {
-//            Users user = userRepository.findByUserId(2L).orElseThrow(() -> new NoSuchElementException("User not found with id 2"));
-//            Curriculums root = curriculumRepository.findById(1L).get();
-//            List<Curriculums> lists = curriculumRepository.findAllByParentOrderByChapterNum(root);
-//
-//            List<Studies> result = studyRepository.findAllByCurriculumIdAndUserId(lists.get(3).getCurriculumId(), user.getUserId());
-//
-//            for (Studies study : result) {
-//                log.info(study.getText());
-//            }
-//
-//            Optional<Curriculums> res = curriculumRepository.findByRootIdAndChapterNum(root.getCurriculumId(), 7);
-//            log.info(res.get().getCurriculumName());
-//        }
 
         public void curriculumInit() {
 
@@ -114,48 +103,37 @@ public class InitDb {
             }
             Curriculums root = rootCurriculums.get(0);
             List<Curriculums> lists = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
-            if (lists.size() < 3) {
+            if (lists.size() < 6) {
                 throw new NoSuchElementException("Not enough chapters found");
             }
 
+            List<Quiz> quizList = new ArrayList<>();
+
             // 객관식
             for (int i = 0; i < lists.size(); i++) {
-                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "", 0);
-                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "", 0);
-                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "", 0);
-                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "", 0);
-
-                em.persist(quizHard1);
-                em.persist(quizHard2);
-                em.persist(quizNormal1);
-                em.persist(quizEasy1);
+                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "", 0));
+                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "", 0));
+                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "", 0));
+                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "", 0));
             }
 
             // 단답형
             for (int i = 0; i < lists.size(); i++) {
-                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2);
-                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2);
-                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.NORMAL, "", "", "", "","","",2);
-                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.EASY, "", "", "", "","","",2);
-
-                em.persist(quizHard1);
-                em.persist(quizHard2);
-                em.persist(quizNormal1);
-                em.persist(quizEasy1);
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.NORMAL, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.EASY, "", "", "", "","","",2));
             }
 
             // 코드 작성형
             for (int i = 0; i < lists.size(); i++) {
-                Quiz quizHard1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0);
-                Quiz quizHard2 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0);
-                Quiz quizNormal1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.NORMAL, "", "", "", "","1\n2","3",0);
-                Quiz quizEasy1 = createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.EASY, "", "", "", "","1\n2","3",0);
-
-                em.persist(quizHard1);
-                em.persist(quizHard2);
-                em.persist(quizNormal1);
-                em.persist(quizEasy1);
+                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
+                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
+                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.NORMAL, "", "", "", "","1\n2","3",0));
+                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.EASY, "", "", "", "","1\n2","3",0));
             }
+
+            quizRepository.saveAll(quizList);
         }
 
         public void testInit() {
@@ -163,16 +141,16 @@ public class InitDb {
             Users user2 = userRepository.findById(2L).get();
             Curriculums root = curriculumRepository.findAllRootCurriculumList().get(0);
 
-            List<Curriculums> chapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
-            int testedChap = 2;
+            List<Curriculums> subChapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
+            int testedSubChap = 4;
             int current = 0;
-            Curriculums curriculum = chapters.get(0);
+            Curriculums curriculum = subChapters.get(0);
 
-            for (int i = 0; i < chapters.size(); i++) {
+            for (int i = 0; i < subChapters.size(); i++) {
 
-                curriculum = chapters.get(i);
+                curriculum = subChapters.get(i);
 
-                if (current < testedChap) {
+                if (current < testedSubChap) {
                     if (curriculum.isTestable()) {
                         current++;
                         List<Quiz> quizListHard = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.HARD);
@@ -255,11 +233,11 @@ public class InitDb {
                 }
             }
             // 커리큘럼 생성 테스트용 데이터
-//            Studies studies = createStudy(user2, chapters.get(16), 60L, null, false, LevelType.HARD);
+//            Studies studies = createStudy(user2, subChapters.get(16), 60L, null, false, LevelType.HARD);
 //            studyRepository.save(studies);
         }
 
-        public void chatInit() throws InterruptedException {
+        public void chatInit() {
             Users user = userRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("User not found with id 2"));
 
             List<Curriculums> rootCurriculums = curriculumRepository.findAllRootCurriculumList();
@@ -274,15 +252,15 @@ public class InitDb {
             }
 
             // 챕터 1 - 서브 챕터 1에서 질문 1개
-            Chats chat = createChatWithTime(user, chapters.get(0), "챕터 4에서의 질문1: 개념질문", "챕터 4에서의 답변1: 단일 답변", QuestionType.DEF, LocalDateTime.now(), 1);
+            Chats chat = createChatWithTime(user, chapters.get(0), "챕터 1 - 서브챕터 1에서의 질문1: 개념질문", "챕터 4에서의 답변1: 단일 답변", QuestionType.DEF, LocalDateTime.now(), 1);
             chatRepository.save(chat);
 
             // 챕터 2 - 서브 챕터 1에서 질문 3개
-            chat = createChatWithTime(user, chapters.get(2), "챕터 6에서의 질문1: 개념질문", "챕터 6에서의 답변1: 단일 답변", QuestionType.DEF, LocalDateTime.now().plusMinutes(1), 1);
+            chat = createChatWithTime(user, chapters.get(2), "챕터 2 - 서브챕터 1에서의 질문1: 개념질문", "챕터 6에서의 답변1: 단일 답변", QuestionType.DEF, LocalDateTime.now().plusMinutes(1), 1);
             chatRepository.save(chat);
-            chat = createChatWithTime(user, chapters.get(2), "챕터 6에서의 질문2: 코드질문(1단계 부터 시작)", "1단계: 코드 단계적 답변\n\n2단계: 코드 단계적 답변 진행\n\n3단계: 코드 단계적 답변 진행\n\n4단계: 코드 단계적 답변 진행", QuestionType.CODE, LocalDateTime.now().plusMinutes(2), 1);
+            chat = createChatWithTime(user, chapters.get(2), "챕터 2 - 서브챕터 1에서의 질문2: 코드질문(1단계 부터 시작)", "1단계: 코드 단계적 답변\n\n2단계: 코드 단계적 답변 진행\n\n3단계: 코드 단계적 답변 진행\n\n4단계: 코드 단계적 답변 진행", QuestionType.CODE, LocalDateTime.now().plusMinutes(2), 1);
             chatRepository.save(chat);
-            chat = createChatWithTime(user, chapters.get(2), "챕터 6에서의 질문3: 에러질문(3단계 까지 진행)", "1단계: 에러 단계적 답변\n\n2단계: 에러 단계적 답변 진행\n\n3단계: 단계적 답변 진행\n\n4단계: 에러 단계적 답변 진행", QuestionType.ERRORS, LocalDateTime.now().plusMinutes(3), 3);
+            chat = createChatWithTime(user, chapters.get(2), "챕터 2 - 서브챕터 1에서의 질문3: 에러질문(3단계 까지 진행)", "1단계: 에러 단계적 답변\n\n2단계: 에러 단계적 답변 진행\n\n3단계: 단계적 답변 진행\n\n4단계: 에러 단계적 답변 진행", QuestionType.ERRORS, LocalDateTime.now().plusMinutes(3), 3);
             chatRepository.save(chat);
         }
 
@@ -705,125 +683,6 @@ public class InitDb {
                         MissionStatus.PROGRESS);
                 userMissionRepository.save(userMission);
             }
-        }
-
-        private Missions createMission(
-                int exp,
-                MissionType missionType,
-                ServiceType serviceType,
-                String actionType,
-                String text,
-                int missionCount
-        ) {
-            Missions mission = new Missions();
-            mission.setExp(exp);
-            mission.setMissionType(missionType);
-            mission.setServiceType(serviceType);
-            mission.setActionType(actionType);
-            mission.setText(text);
-            mission.setMissionCount(missionCount);
-
-            return mission;
-        }
-
-        private UserMissions createUserMission(
-                Users user,
-                LocalDate startDate,
-                LocalDate endDate,
-                Missions mission,
-                int currentCount,
-                MissionStatus missionStatus
-        ) {
-            UserMissions userMission = new UserMissions();
-            userMission.setUser(user);
-            userMission.setStartDate(startDate);
-            userMission.setEndDate(endDate);
-            userMission.setMission(mission);
-            userMission.setCurrentCount(currentCount);
-            userMission.setMissionStatus(missionStatus);
-
-            return userMission;
-        }
-
-        private Users createUser(
-                String username,
-                String email,
-                String id,
-                String password,
-                String birth,
-                boolean initTest) {
-            Users user = new Users();
-            user.setUsername(username);
-            user.setId(id);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setBirth(birth);
-            user.setInitTest(initTest);
-            return user;
-        }
-
-        private Quiz createQuiz(
-                Curriculums curriculum,
-                QuizType quizType,
-                String text,
-                String answer,
-                QuizLevel level,
-                String q1,
-                String q2,
-                String q3,
-                String q4,
-                String inputs,
-                String outputs,
-                int wordCount
-        ) {
-            Quiz quiz = new Quiz();
-            quiz.setCurriculum(curriculum);
-            quiz.setQuizType(quizType);
-            quiz.setText(text);
-            quiz.setAnswer(answer);
-            quiz.setLevel(level);
-            quiz.setQ1(q1);
-            quiz.setQ2(q2);
-            quiz.setQ3(q3);
-            quiz.setQ4(q4);
-            quiz.setInputs(inputs);
-            quiz.setOutputs(outputs);
-            quiz.setWordCount(wordCount);
-
-            return quiz;
-        }
-
-        private Tests createTest(
-                Users user,
-                Quiz quiz,
-                int wrongCount,
-                boolean passed,
-                TestType testType
-        ) {
-            Tests test = new Tests();
-            test.setUser(user);
-            test.setQuiz(quiz);
-            test.setWrongCount(wrongCount);
-            test.setPassed(passed);
-            test.setTestType(testType);
-
-            return test;
-        }
-        private Chats createChat(Users user,
-                                 Curriculums curriculum,
-                                 String question,
-                                 String answer,
-                                 QuestionType questionType,
-                                 int level) {
-            Chats chat = new Chats();
-            chat.setUser(user);
-            chat.setCurriculum(curriculum);
-            chat.setQuestion(question);
-            chat.setAnswer(answer);
-            chat.setQuestionType(questionType);
-            chat.setLevel(level);
-
-            return chat;
         }
 
         private Chats createChatWithTime(Users user,

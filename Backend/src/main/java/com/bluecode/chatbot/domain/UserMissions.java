@@ -60,4 +60,23 @@ public class UserMissions {
         }
         return false;
     }
+
+    public static UserMissions createUserMission(
+            Users user,
+            LocalDate startDate,
+            LocalDate endDate,
+            Missions mission,
+            int currentCount,
+            MissionStatus missionStatus
+    ) {
+        UserMissions userMission = new UserMissions();
+        userMission.setUser(user);
+        userMission.setStartDate(startDate);
+        userMission.setEndDate(endDate);
+        userMission.setMission(mission);
+        userMission.setCurrentCount(currentCount);
+        userMission.setMissionStatus(missionStatus);
+
+        return userMission;
+    }
 }
