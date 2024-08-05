@@ -45,11 +45,11 @@ public class StudyController {
         return ResponseEntity.ok().body(studyTextDto);
     }
 
-    // 학습중인 커리큘럼 챕터 통과 처리
+    // 학습중인 커리큘럼 서브 챕터 통과 처리
     @PostMapping("/pass")
-    public ResponseEntity<String> chapterPass(@RequestBody CurriculumPassCallDto dto) {
+    public ResponseEntity<Boolean> subChapterPass(@RequestBody CurriculumPassCallDto dto) {
 
-        String result = studyService.chapterPass(dto);
+        boolean result = studyService.subChapterPass(dto);
         return ResponseEntity.ok(result);
     }
 

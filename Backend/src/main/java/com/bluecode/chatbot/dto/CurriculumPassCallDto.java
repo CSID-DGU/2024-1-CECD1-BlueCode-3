@@ -12,6 +12,6 @@ public class CurriculumPassCallDto {
 
     private Long userId;
     private Long curriculumId;
-    private LevelType currentLevel;
-    private LevelType nextLevel;
+    private LevelType level;
+
 }
