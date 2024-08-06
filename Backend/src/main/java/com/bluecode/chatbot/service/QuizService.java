@@ -22,7 +22,7 @@ public class QuizService {
     private final QuizRepository quizRepository;
 
     // 특정 커리큘럼, 특정 퀴즈 레벨, 특정 유형의 n개의 문제를 뽑는 메서드
-    public List<Quiz> getRandomQuizzesByTypeAndLevel(Curriculums curriculums, QuizType type, QuizLevel level, int count) throws Exception {
+    public List<Quiz> getRandomQuizzesByTypeAndLevel(Curriculums curriculums, QuizType type, QuizLevel level, int count) {
         log.info("getRandomQuizzesByType curriculum: {}, type: {}, level: {}, count: {}", curriculums.getCurriculumName(), type, level, count);
 
         // 루트 커리큘럼을 대상으로 호출 시 Exception 발생
@@ -52,7 +52,7 @@ public class QuizService {
     }
 
     // 특정 커리큘럼, 특정 퀴즈 레벨의 n개의 문제를 뽑는 메서드
-    public List<Quiz> getRandomQuizzesByLevel(Curriculums curriculums, QuizLevel quizLevel, int count) throws Exception {
+    public List<Quiz> getRandomQuizzesByLevel(Curriculums curriculums, QuizLevel quizLevel, int count) {
 
         // 루트 커리큘럼을 대상으로 호출 시 Exception 발생
         if (curriculums.getChapterNum() == 0) {

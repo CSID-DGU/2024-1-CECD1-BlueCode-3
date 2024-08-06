@@ -33,4 +33,23 @@ public class Missions {
 
     // 미션 달성 목표 횟수
     private int missionCount;
+
+    public static Missions createMission(
+            int exp,
+            MissionType missionType,
+            ServiceType serviceType,
+            String actionType,
+            String text,
+            int missionCount
+    ) {
+        Missions mission = new Missions();
+        mission.setExp(exp);
+        mission.setMissionType(missionType);
+        mission.setServiceType(serviceType);
+        mission.setActionType(actionType);
+        mission.setText(text);
+        mission.setMissionCount(missionCount);
+
+        return mission;
+    }
 }
