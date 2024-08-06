@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,7 +15,8 @@ public class QuestionListResponseElementDto {
 
     private String curriculumText;
     private String question;
-    private String answer;
+    private List<String> answer;
+    private int level;
     private QuestionType questionType;
     private LocalDateTime chatDate;
 }
