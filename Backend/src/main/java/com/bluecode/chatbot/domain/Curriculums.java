@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Curriculums {
+public class Curriculums implements Comparable<Curriculums> {
 
     // table id
     @Id @GeneratedValue
@@ -77,5 +77,17 @@ public class Curriculums {
         curriculums.setLeafNode(isLeaf);
 
         return curriculums;
+    }
+
+    @Override
+    public int compareTo(Curriculums o) {
+
+        if (this.chapterNum > o.chapterNum) {
+            return 1;
+        } else if (this.chapterNum < o.chapterNum) {
+            return -1;
+        } else {
+            return Integer.compare(this.subChapterNum, o.subChapterNum);
+        }
     }
 }

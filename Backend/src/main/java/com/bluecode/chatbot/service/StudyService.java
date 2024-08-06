@@ -113,6 +113,7 @@ public class StudyService {
 
         List<Curriculums> chapters = child.stream().filter(i -> !i.isRootNode() && !i.isLeafNode()).toList();
         List<Curriculums> subChapters = child.stream().filter(i -> i.isLeafNode()).toList();
+        subChapters.sort(Comparator.naturalOrder());
         Deque<Curriculums> deque = new ArrayDeque<>(subChapters);
 
         List<Studies> studies = new ArrayList<>();
