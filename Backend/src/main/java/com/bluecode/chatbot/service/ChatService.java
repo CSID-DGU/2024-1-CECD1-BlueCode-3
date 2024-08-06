@@ -155,8 +155,9 @@ public class ChatService {
     }
 
     // 단계적 답변을 위해 응답을 분할
-    private List<String> splitResponse(String response) {
-        return List.of(response.split("(?m)^\\$")); // '$' 기호로 시작하는 행을 기준으로 분할
+    public List<String> splitResponse(String response) {
+//        return List.of(response.split("(?m)^\\$"));
+        return List.of(response.split("\\$")); // '$' 기호로 시작하는 행을 기준으로 분할
     }
 
     // 전체 채팅 기록을 로드
