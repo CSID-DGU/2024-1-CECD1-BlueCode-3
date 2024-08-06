@@ -11,7 +11,6 @@ import com.bluecode.chatbot.dto.NextLevelChatCallDto;
 import com.bluecode.chatbot.dto.QuestionListResponseDto;
 import com.bluecode.chatbot.dto.QuestionListResponseElementDto;
 
-import java.util.stream.Collectors;
 import java.util.List;
 
 @RestController
@@ -119,7 +118,9 @@ public class ChatController {
             QuestionListResponseElementDto dto = new QuestionListResponseElementDto();
             dto.setCurriculumText(chat.getCurriculum().getCurriculumName());
             dto.setQuestion(chat.getQuestion());
-            dto.setAnswer(chat.getAnswer());
+            // 진행한 레벨까지만 단계적 답변 챗 필터링(단일 답변은 1개 요소인 리스트로 반영)
+            dto.setAnswer(chatService.splitResponse(chat.getAnswer()).stream().limit(chat.getLevel()).toList());
+            dto.setLevel(chat.getLevel());
             dto.setQuestionType(chat.getQuestionType());
             dto.setChatDate(chat.getChatDate());
             return dto;
