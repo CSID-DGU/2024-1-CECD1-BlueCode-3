@@ -13,14 +13,15 @@ public class GlobalControllerAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ErrorResultDto illegalArgumentException(IllegalArgumentException e) {
-        return new ErrorResultDto(HttpStatus.BAD_REQUEST, e.getMessage());
+    public ErrorResultDto handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("IllegalArgumentException: {}", e.getMessage(), e);
+        return new ErrorResultDto(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ErrorResultDto exception(Exception e) {
-        return new ErrorResultDto(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    public ErrorResultDto handleException(Exception e) {
+        log.error("Exception: {}", e.getMessage(), e);
+        return new ErrorResultDto(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
     }
-
 }
