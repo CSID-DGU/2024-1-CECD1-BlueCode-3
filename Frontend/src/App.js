@@ -10,6 +10,8 @@ import Study_theory from './components/Study/index_theory.jsx'
 import Study_training from './components/Study/index_training.jsx'
 import Test from './components/Test/index.jsx';
 import Test_ex from './components/Test/index_ex.jsx';
+import Tmp from './components/Test/tmp.jsx';
+
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
       <Route path="/" element={<Mainpage />}></Route>
       <Route path="/test" element={<Test />}></Route>      
       <Route path="/test_ex" element={<Test_ex />}></Route>
+      <Route path="/tmp" element={<Tmp />}></Route>
       <Route path="/study_theory" element={<Study_theory />}></Route>
       <Route path="/study_training" element={<Study_training />}></Route>
       <Route path="/mypage/todo" element={<Mypage_todo />}></Route>

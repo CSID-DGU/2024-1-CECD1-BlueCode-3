@@ -1,6 +1,7 @@
 package com.bluecode.chatbot.controller;
 
 import com.bluecode.chatbot.dto.UserAddCallDto;
+import com.bluecode.chatbot.dto.UserInfoResponseDto;
 import com.bluecode.chatbot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +35,22 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/user/findId")
+    @PostMapping("/user/findId")
     public ResponseEntity<String> findId(@RequestBody UserAddCallDto userAddCallDto){
         try {
             return ResponseEntity.ok(userService.findLoginId(userAddCallDto));
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/user/getUserInfo/{loginId}")
+    public ResponseEntity getUserInfo(@PathVariable String loginId){
+        try {
+            UserInfoResponseDto responseDto=userService.getUserInfo(loginId);
+            return ResponseEntity.ok(responseDto);
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e) {
@@ -49,10 +62,22 @@ public class UserController {
     public ResponseEntity<String> updatePassword(@RequestBody UserAddCallDto userAddCallDto){
         try {
             userService.updatePassword(userAddCallDto);
-            return ResponseEntity.ok("수정되었습니다");
+            return ResponseEntity.ok("비밀번호 수정되었습니다");
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/user/updateEmail")
+    public ResponseEntity<String> updateEmail(@RequestBody UserAddCallDto userAddCallDto){
+        try {
+            userService.updateEmail(userAddCallDto);
+            return ResponseEntity.ok("이메일 수정되었습니다");
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

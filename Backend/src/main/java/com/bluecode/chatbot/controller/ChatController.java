@@ -11,7 +11,6 @@ import com.bluecode.chatbot.dto.NextLevelChatCallDto;
 import com.bluecode.chatbot.dto.QuestionListResponseDto;
 import com.bluecode.chatbot.dto.QuestionListResponseElementDto;
 
-import java.util.stream.Collectors;
 import java.util.List;
 
 @RestController
@@ -85,10 +84,24 @@ public class ChatController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // 특정 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    // 특정 챕터 커리큘럼과 질문 유형에 대한 채팅 기록 조회
     @PostMapping("/historyByCurriculumAndQuestionType")
     public ResponseEntity<QuestionListResponseDto> getChatsByCurriculumAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
         List<Chats> chats = chatService.getChatsByCurriculumAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
+        if (chats.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 특정 루트 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    @PostMapping("/historyByRootAndQuestionType")
+    public ResponseEntity<QuestionListResponseDto> getChatsByRootAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsByRootAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
         if (chats.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -105,10 +118,12 @@ public class ChatController {
             QuestionListResponseElementDto dto = new QuestionListResponseElementDto();
             dto.setCurriculumText(chat.getCurriculum().getCurriculumName());
             dto.setQuestion(chat.getQuestion());
-            dto.setAnswer(chat.getAnswer());
+            // 진행한 레벨까지만 단계적 답변 챗 필터링(단일 답변은 1개 요소인 리스트로 반영)
+            dto.setAnswer(chatService.splitResponse(chat.getAnswer()).stream().limit(chat.getLevel()).toList());
+            dto.setLevel(chat.getLevel());
             dto.setQuestionType(chat.getQuestionType());
             dto.setChatDate(chat.getChatDate());
             return dto;
-        }).collect(Collectors.toList());
+        }).toList();
     }
 }

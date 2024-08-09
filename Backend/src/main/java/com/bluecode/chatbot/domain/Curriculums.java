@@ -49,4 +49,27 @@ public class Curriculums {
 
     // 루크 커리큘럼 내 챕터 총 개수(root 전용)
     private int totalChapterCount;
+
+    public static Curriculums createCurriculum(
+            Curriculums parent,
+            String curriculumName,
+            String keywordEasy,
+            String keywordNormal,
+            String keywordHard,
+            boolean testable,
+            int chapterNum,
+            int totalChapterCount
+    ) {
+        Curriculums curriculums = new Curriculums();
+        curriculums.setCurriculumName(curriculumName);
+        curriculums.setParent(parent);
+        curriculums.setKeywordEasy(keywordEasy);
+        curriculums.setKeywordNormal(keywordNormal);
+        curriculums.setKeywordHard(keywordHard);
+        curriculums.setTestable(testable);
+        curriculums.setChapterNum(chapterNum);
+        curriculums.setTotalChapterCount(totalChapterCount);
+
+        return curriculums;
+    }
 }

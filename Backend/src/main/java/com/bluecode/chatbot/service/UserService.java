@@ -2,6 +2,7 @@ package com.bluecode.chatbot.service;
 
 import com.bluecode.chatbot.domain.Users;
 import com.bluecode.chatbot.dto.UserAddCallDto;
+import com.bluecode.chatbot.dto.UserInfoResponseDto;
 import com.bluecode.chatbot.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,26 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUserId(userId)
                 .orElseThrow(()->new IllegalArgumentException("Unexpected user"));
     }
+
+    // 유저 정보 반환
+    public UserInfoResponseDto getUserInfo(String userLoginId){
+        Optional<Users> user=userRepository.findByLoginId(userLoginId);
+        if(user.isEmpty()){
+            throw new IllegalArgumentException("유저 ID 존재하지 않음");
+        }
+
+        UserInfoResponseDto responseDto=new UserInfoResponseDto();
+
+        responseDto.setUserId(user.get().getUserId());
+        responseDto.setEmail(user.get().getEmail());
+        responseDto.setTier(user.get().getTier());
+        responseDto.setExp(user.get().getExp());
+        responseDto.setBirth(user.get().getBirth());
+        responseDto.setUsername(user.get().getUsername());
+        responseDto.setInitTest(user.get().isInitTest());
+        return responseDto;
+    }
+
 
     // 유저 추가 (회원 가입)
     @Transactional
@@ -72,6 +93,17 @@ public class UserService implements UserDetailsService {
         log.info("해당되는 로그인 id " + user.get().getId());
         String encodedPassword=bCryptPasswordEncoder.encode(userAddCallDto.getPassword());
         user.get().setPassword(encodedPassword);
+    }
+
+    // 이메일 수정
+    @Transactional
+    public void updateEmail(UserAddCallDto userAddCallDto) throws Exception{
+        Optional<Users> user=userRepository.findByLoginId(userAddCallDto.getId());
+        if(user.isEmpty()){
+            throw new IllegalArgumentException("유저 ID 존재하지 않음");
+        }
+        log.info("해당되는 로그인 id " + user.get().getId());
+        user.get().setEmail(userAddCallDto.getEmail());
     }
 
     @Transactional

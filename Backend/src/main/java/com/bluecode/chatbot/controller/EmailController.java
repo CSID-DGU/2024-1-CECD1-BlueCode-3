@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class EmailController {
         return ResponseEntity.ok().body("이메일에 코드 전송 완료");
     }
 
-    @GetMapping("/user/email/verify")
+    @PostMapping("/user/email/verify")
     public ResponseEntity verifyCode(@RequestBody EmailVerifyDto emailVerifyDto){
         try {
             Boolean verify_result=emailService.verifyCode(emailVerifyDto);

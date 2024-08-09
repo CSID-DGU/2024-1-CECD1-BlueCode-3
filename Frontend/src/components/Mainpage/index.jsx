@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_b.png'
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { SHA256 } from 'crypto-js';
 
@@ -34,12 +35,30 @@ function Mainpage() {
   const [passwdEqual, setPasswdEqual] = useState(true);
   const [emailValid, setEmailValid] = useState(true);
   const [birthdayValid, setBirthdayValid] = useState(true);
+  
+  const [authValid, setAuthValid] = useState(false);
+  
+  const [idDup, setIdDup] = useState(false);
+  const [emailDup, setEmailDup] = useState(false);
 
-  const idBlur = () => {
+  const idBlur = async () => {
     if (idRegex.test(id)) {
-      setIdValid(true);
+      try{
+        setIdValid(true);
+        const res = await axios.get(`/user/user/exists/id/${id}`);
+        if(res.data){
+          setIdDup(true);
+        }
+        else{
+          setIdDup(false);
+        }
+      }
+      catch(err) {
+        console.log(err);
+      }
     } else {
       setIdValid(false);
+      setIdDup(false);
     }
   };
 
@@ -51,11 +70,24 @@ function Mainpage() {
     }
   };
 
-  const emailBlur = () => {
+  const emailBlur = async () => {
     if (emailRegex.test(email)) {
-      setEmailValid(true);
+      try {
+        setEmailValid(true);
+        const res = await axios.get(`/user/user/exists/email/${email}`);
+        if(res.data) {
+          setEmailDup(true);
+        }
+        else {
+          setEmailDup(false);
+        }
+      }
+      catch (err) {
+        console.log(err);
+      }
     } else {
       setEmailValid(false);
+      setEmailDup(false);
     }
   };
 
@@ -75,7 +107,9 @@ function Mainpage() {
   }
 
   const ChangeToSignIn = () => {
-    document.getElementById("SectionName").innerText = "아이디찾기";
+    document.getElementById("SectionName").innerText = "로그인";
+    
+    setId('');
 
     setSignInValue(true);
     setFindIdValue(false);
@@ -93,20 +127,29 @@ function Mainpage() {
     setFindIdValue(true);
     setFindPasswdValue(false);
     setSignUpValue(false);
+
+    setEmailDup(true);
   }
 
   const ChangeToFindPasswd = () => {
     document.getElementById("SectionName").innerText = "비밀번호찾기";
+
+    setId('');
 
     setCheckIdValue(false);
     setSignInValue(false);
     setFindIdValue(false);
     setFindPasswdValue(true);
     setSignUpValue(false);
+
+    setIdDup(true);
+    setEmailDup(true);
   }
 
   const ChangeToSignUp = () => {
     document.getElementById("SectionName").innerText = "회원가입";
+
+    setId('');
 
     setSignInValue(false);
     setFindIdValue(false);
@@ -114,16 +157,40 @@ function Mainpage() {
     setSignUpValue(true);
   }
 
-  const ChangeToVerify = () => {
+  const ChangeToVerify = async () => {
     if (((name && email && emailValid && FindIdValue) || (id && email && idValid && emailValid && FindPasswdValue)
         || (id && passwd && email && name && birthday && idValid && passwdValid && emailValid && birthdayValid && SignUpValue))
         && !pin)
     {
-      document.getElementById("RequestName").innerText = "인 증 하 기";
-      setRequestPinValue(true);
+      try {
+
+        //url path 수정 필요
+        axios.get(`/user/user/email/send/${email}`);
+
+        document.getElementById("RequestName").innerText = "인 증 하 기";
+        setRequestPinValue(true);
+      }
+      catch (err) {
+        console.log(err);
+      }
     }
     else if (ResetPasswdValue && passwd && passwdEqual)
     {
+      try{
+        const UserAddCallDto = {
+          'username' : '',
+          'email' : '',
+          'id' : id,
+          'password' : passwd,
+          'birth' : ''
+        };
+        
+        await axios.post("/user/user/updatePassword", UserAddCallDto);
+      }
+      catch (err) {
+        console.log(err);
+      }
+
       setPasswd('');
       setResetPasswdValue(false);
       setCheckPasswdValue(true);
@@ -132,56 +199,157 @@ function Mainpage() {
     {
       if (FindIdValue && pin)
       {
-        setName('');
-        setEmail('');
-        setPin('');
+        try {
+          const EmailVerifyDto = {
+            'email' : email,
+            'code' : pin
+          };
+          const res = await axios.post("/user/user/email/verify", EmailVerifyDto);
+          
+          if(res.data) {
+            try {
+              const UserAddCallDto = {
+                'username' : name,
+                'email' : email,
+                'id' : '',
+                'password' : '',
+                'birth' : ''
+              };
+              
+              const res = await axios.post("/user/user/findId", UserAddCallDto);
 
-        setFindIdValue(false);
-        setCheckIdValue(true);
-        
-        document.getElementById("RequestName").innerText = "인 증 요 청";
-        setRequestPinValue(false);
+              setId(res.data);
+
+              setName('');
+              setEmail('');
+              setPin('');
+      
+              setFindIdValue(false);
+              setCheckIdValue(true);
+              
+              document.getElementById("RequestName").innerText = "인 증 요 청";
+              setRequestPinValue(false);
+            }
+            catch (err) {
+              console.log(err);
+            }
+          } 
+          else {
+            alert("인증번호가 일치하지 않습니다.");
+          }      
+        }
+        catch (err) {
+          console.log(err);
+        }
       }
       else if(FindPasswdValue && pin)
       {
-        setId('');
-        setEmail('');
-        setPin('');
+        try {
+          const EmailVerifyDto = {
+            'email' : email,
+            'code' : pin
+          };
+          const res = await axios.post("/user/user/email/verify", EmailVerifyDto);
+          
+          if(res.data) {
+            try {
+              setEmail('');
+              setPin('');
 
-        setFindPasswdValue(false);
-        setResetPasswdValue(true);
+              setFindPasswdValue(false);
+              setResetPasswdValue(true);
 
-        document.getElementById("RequestName").innerText = "인 증 요 청";
-        setRequestPinValue(false);
+              document.getElementById("RequestName").innerText = "인 증 요 청";
+              setRequestPinValue(false);
+            }
+            catch (err) {
+              console.log(err);
+            }
+          } 
+          else {
+            alert("인증번호가 일치하지 않습니다.");
+          }      
+        }
+        catch (err) {
+          console.log(err);
+        }
       }
       else if(SignUpValue && pin)
       {
-        setId('');
-        setPasswd('');
-        setEmail('');
-        setName('');
-        setBirthday('');
-        setPin('');
+        try {
+          const EmailVerifyDto = {
+            'email' : email,
+            'code' : pin
+          };
+          const res = await axios.post("/user/user/email/verify", EmailVerifyDto);
+          
+          if(res.data) {
+            try {
+              const UserAddCallDto = {
+                'username' : name,
+                'email' : email,
+                'id' : id,
+                'password' : passwd,
+                'birth' : birthday
+              };
+              
+              await axios.post("/user/user/create", UserAddCallDto);
 
-        setSignUpValue(false);
-        setCheckSignUpValue(true);
-
-        document.getElementById("RequestName").innerText = "인 증 요 청";
-        setRequestPinValue(false);
+              setId('');
+              setPasswd('');
+              setEmail('');
+              setName('');
+              setBirthday('');
+              setPin('');
+  
+              setSignUpValue(false);
+              setCheckSignUpValue(true);
+  
+              document.getElementById("RequestName").innerText = "인 증 요 청";
+              setRequestPinValue(false);
+            }
+            catch (err) {
+              console.log(err);
+            }
+          } 
+          else {
+            alert("인증번호가 일치하지 않습니다.");
+          }      
+        }
+        catch (err) {
+          console.log(err);
+        }        
       }
     }
   }
 
   const navigate = useNavigate();
-  const SignIn = () => {
-    if(id === "sudden11y" && passwd === "sudden11y!") {
-      const hash = SHA256(passwd).toString();
-      navigate('/mypage/todo');
-      // alert(hash);
+  const SignIn = async () => {
+    if(!id){
+      alert("아이디를 입력해주세요");
     }
-    else {
-      navigate('/');
-      alert("입력하신 정보가 일치하지 않습니다.");
+    else if(!passwd){
+      alert("비밀번호를 입력해주세요");
+    }
+    else{
+      try {
+      const hash_passwd = SHA256(passwd).toString();
+      const LoginCallDto = {
+          'id' : id,
+          'password' : passwd
+      };
+
+      //url path 수정 필요
+      const res = await axios.post("/api/api/auth/login", LoginCallDto);
+      const accessToken = res.data.accessToken;
+          
+      localStorage.setItem("accessToken", accessToken);
+      navigate('/mypage/todo');
+      }
+      catch (err) {
+        navigate('/');
+        alert("입력하신 정보가 일치하지 않습니다.");
+      }
     }
   }
 
@@ -208,13 +376,14 @@ function Mainpage() {
           <InputArea type="text"  placeholder="이름" value={name} onChange={(e)=>setName(e.target.value)}></InputArea>
           <InputArea type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} onBlur={emailBlur}></InputArea>
           {!emailValid && (<RegexCheck> 옳지 않은 이메일입니다. </RegexCheck>)}
+          {!emailDup && (<RegexCheck> 서비스에 등록되지 않은 이메일입니다. </RegexCheck>)}
           {RequestPinValue && (<InputArea type="text" placeholder="인증번호" value={pin} onChange={(e)=>setPin(e.target.value)}></InputArea>)}
           <Button id="RequestName" onClick={ChangeToVerify}> 인 증 요 청 </Button>
         </ChangingSection>)}
 
         {CheckIdValue && (<ChangingSection>
           <Explaination> 아이디는 다음과 같습니다. </Explaination>
-          <Id>  </Id>
+          <Id> {id} </Id>
           <ButtonArea>
             <Btn onClick={ChangeToSignIn}> 로그인하기 </Btn>
             <Btn onClick={ChangeToFindPasswd}> 비밀번호찾기 </Btn>
@@ -222,9 +391,11 @@ function Mainpage() {
         </ChangingSection>)}
         
         {FindPasswdValue && (<ChangingSection>
-          <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)}></InputArea>
+          <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)} onBlur={idBlur}></InputArea>
+          {!idDup && (<RegexCheck> 서비스에 등록되지 않은 아이디입니다. </RegexCheck>)}
           <InputArea type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} onBlur={emailBlur}></InputArea>
           {!emailValid && (<RegexCheck> 옳지 않은 이메일입니다. </RegexCheck>)}
+          {!emailDup && (<RegexCheck> 서비스에 등록되지 않은 이메일입니다. </RegexCheck>)}
           {RequestPinValue && (<InputArea type="text" placeholder="인증번호" value={pin} onChange={(e)=>setPin(e.target.value)}></InputArea>)}
           <Button id="RequestName" onClick={ChangeToVerify}> 인 증 요 청 </Button>
         </ChangingSection>)}
@@ -247,11 +418,13 @@ function Mainpage() {
           <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)} onBlur={idBlur}></InputArea>
           <RegexCheck> 아이디: 5~16자의 영문, 숫자 조합 </RegexCheck>
           {!idValid && (<RegexCheck> 옳지 않은 아이디입니다. </RegexCheck>)}
+          {idDup && (<RegexCheck> 사용불가한 아이디입니다. </RegexCheck>)}
           <InputArea type="password" placeholder="비밀번호" value={passwd} onChange={(e)=>setPasswd(e.target.value)} onBlur={passwdBlur}></InputArea>
           <RegexCheck> 비밀번호: 9~16자의 영문, 숫자, 특수문자(!@#$%^~*) 조합 </RegexCheck>
           {!passwdValid && (<RegexCheck> 옳지 않은 비밀번호입니다. </RegexCheck>)}
           <InputArea type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} onBlur={emailBlur}></InputArea>
           {!emailValid && (<RegexCheck> 옳지 않은 이메일입니다. </RegexCheck>)}
+          {emailDup && (<RegexCheck> 사용불가한 이메일입니다. </RegexCheck>)}
           <InputArea type="text" placeholder="이름" value={name} onChange={(e)=>setName(e.target.value)}></InputArea>
           <InputArea type="text" placeholder="생년월일 8자리" value={birthday} onChange={(e)=>setBirthday(e.target.value)} onBlur={birthdayBlur}></InputArea>
           {!birthdayValid && (<RegexCheck> 옳지 않은 생년월일입니다. </RegexCheck>)}
