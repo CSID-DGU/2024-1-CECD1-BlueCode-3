@@ -29,8 +29,8 @@ public class UserService implements UserDetailsService {
     }
 
     // 유저 정보 반환
-    public UserInfoResponseDto getUserInfo(String userLoginId){
-        Optional<Users> user=userRepository.findByLoginId(userLoginId);
+    public UserInfoResponseDto getUserInfo(Long userId){
+        Optional<Users> user=userRepository.findByUserId(userId);
         if(user.isEmpty()){
             throw new IllegalArgumentException("유저 ID 존재하지 않음");
         }
@@ -52,9 +52,9 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void addUser(UserAddCallDto userAddCallDto){
         // 가입 DTO 넘어올때 중복 체크
-        if(userRepository.existsByUsername(userAddCallDto.getUsername())){
-            throw new IllegalArgumentException("Username already exists");
-        }
+        //if(userRepository.existsByUsername(userAddCallDto.getUsername())){
+        //    throw new IllegalArgumentException("Username already exists");
+        //}
         if (userRepository.existsByEmail(userAddCallDto.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }

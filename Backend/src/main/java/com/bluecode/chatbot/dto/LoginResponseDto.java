@@ -7,5 +7,4 @@ import lombok.Setter;
 @Setter
 public class LoginResponseDto {
     String accessToken;
-    String refreshToken;
 }
