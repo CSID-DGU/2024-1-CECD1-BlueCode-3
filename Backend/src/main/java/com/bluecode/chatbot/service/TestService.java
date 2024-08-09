@@ -48,6 +48,10 @@ public class TestService {
             throw new IllegalArgumentException("유효하지 않은 커리큘럼 id 입니다.");
         }
 
+        if (chapter.get().isLeafNode() || chapter.get().isRootNode()) {
+            throw new IllegalArgumentException("챕터가 아닙니다.");
+        }
+
         if (!chapter.get().isTestable()) {
             throw new IllegalArgumentException("테스트를 진행하지 않는 챕터입니다.");
         }
