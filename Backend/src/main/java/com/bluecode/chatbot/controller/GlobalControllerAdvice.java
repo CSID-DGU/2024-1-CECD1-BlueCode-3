@@ -18,6 +18,13 @@ public class GlobalControllerAdvice {
         return new ErrorResultDto(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(IllegalStateException.class)
+    public ErrorResultDto handleIllegalStateException(IllegalStateException e) {
+        log.error("IllegalStateException: {}", e.getMessage(), e);
+        return new ErrorResultDto(HttpStatus.NOT_FOUND.value(), e.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ErrorResultDto handleException(Exception e) {
