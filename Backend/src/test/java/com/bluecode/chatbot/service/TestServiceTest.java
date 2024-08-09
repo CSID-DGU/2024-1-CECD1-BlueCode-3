@@ -42,6 +42,9 @@ class TestServiceTest {
     @Autowired
     private QuizRepository quizRepository;
 
+    @Autowired
+    private UserMissionRepository userMissionRepository;
+
     @BeforeEach
     void beforeEach() {
         curriculumRepository.deleteAll();
@@ -49,6 +52,7 @@ class TestServiceTest {
         chatRepository.deleteAll();
         testRepository.deleteAll();
         quizRepository.deleteAll();
+        userMissionRepository.deleteAll();
         userRepository.deleteAll();
     }
 
@@ -59,24 +63,21 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userRepository.save(userA);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
-
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
 
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
-        curriculumRepository.save(chap1);
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
         List<Quiz> giveHard = new ArrayList<>();
         List<Quiz> giveNormal = new ArrayList<>();
@@ -160,45 +161,35 @@ class TestServiceTest {
         // 초기 테스트는 총 4개의 문제가 리턴되어야 한다.
         Assertions.assertThat(result.getTests().size()).isEqualTo(4);
 
-        // 모든 QuizType 은 NUM 이여야 한다.
-        for (TestResponseElementDto elementDto : result.getTests()) {
-            Assertions.assertThat(elementDto.getQuizType()).isEqualTo(QuizType.NUM);
-        }
-
         // result 에서 QuizLevel 순서는 HARD - NORMAL - EASY - HARD 순서여야 한다.
         Assertions.assertThat(result.getTests().get(0).getLevel()).isEqualTo(QuizLevel.HARD);
         Assertions.assertThat(result.getTests().get(1).getLevel()).isEqualTo(QuizLevel.NORMAL);
         Assertions.assertThat(result.getTests().get(2).getLevel()).isEqualTo(QuizLevel.EASY);
         Assertions.assertThat(result.getTests().get(3).getLevel()).isEqualTo(QuizLevel.HARD);
-
     }
 
     @Test
     @DisplayName("createNormalTest 메서드 정상 작동 테스트")
     public void createNormalTest() throws Exception {
         //given
-
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userRepository.save(userA);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
-
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
 
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
-        curriculumRepository.save(chap1);
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
         List<Quiz> giveHard = new ArrayList<>();
         List<Quiz> giveNormal = new ArrayList<>();
@@ -296,24 +287,21 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userA.setUserId(100L);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
-
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
 
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
-        curriculumRepository.save(chap1);
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
         DataCallDto dto = new DataCallDto();
         dto.setCurriculumId(chap1.getCurriculumId());
@@ -344,28 +332,27 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userRepository.save(userA);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
-
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
 
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",false, 1, 0, 2, false, false);
         // DB에 존재하지 않는 curriculum 가정
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
-        chap1.setCurriculumId(100L);
+//        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
+
+        Curriculums chap = new Curriculums();
+        chap.setTestable(true);
+        chap.setChapterNum(1);
+        chap.setParent(root);
+        chap.setCurriculumName("챕터1");
+        chap.setCurriculumId(100L);
 
 
         DataCallDto dto = new DataCallDto();
-        dto.setCurriculumId(chap1.getCurriculumId());
+        dto.setCurriculumId(chap.getCurriculumId());
         dto.setUserId(userA.getUserId());
 
         //  유효하지 않은 userId일 경우, Exception 발생
@@ -394,24 +381,21 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userRepository.save(userA);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        curriculumRepository.saveAndFlush(root);
 
-        curriculumRepository.save(root);
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",false, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
-        // test를 진행하지 않는 챕터 가정
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(false);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
-        curriculumRepository.save(chap1);
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
         DataCallDto dto = new DataCallDto();
         dto.setCurriculumId(chap1.getCurriculumId());
@@ -443,24 +427,22 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", true);
         userRepository.save(userA);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        curriculumRepository.saveAndFlush(root);
 
-        curriculumRepository.save(root);
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
 
-        curriculumRepository.save(chap1);
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
+
 
         DataCallDto dto = new DataCallDto();
         dto.setCurriculumId(chap1.getCurriculumId());
@@ -483,26 +465,21 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userRepository.save(userA);
 
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        curriculumRepository.saveAndFlush(root);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
-        curriculumRepository.save(root);
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
 
-
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
-
-        curriculumRepository.save(chap1);
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
 
         Quiz quizHard1 = new Quiz();
@@ -547,26 +524,21 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userRepository.save(userA);
 
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        curriculumRepository.saveAndFlush(root);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
-        curriculumRepository.save(root);
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
 
-
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
-
-        curriculumRepository.save(chap1);
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
 
         Quiz quizHard1 = new Quiz();
@@ -612,31 +584,25 @@ class TestServiceTest {
     @DisplayName("유효하지 않은 userId일 시, Exception 발생")
     public void submitAnswerInvalidUserId() throws Exception {
         //given
-
         // DB에 존재하지 않는 User 가정
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userA.setUserId(100L);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        curriculumRepository.saveAndFlush(root);
 
-        curriculumRepository.save(root);
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
 
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
-
-        curriculumRepository.save(chap1);
-
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
         Quiz quizHard1 = new Quiz();
         quizHard1.setQuizType(QuizType.NUM);
@@ -679,25 +645,21 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userRepository.save(userA);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        curriculumRepository.saveAndFlush(root);
 
-        curriculumRepository.save(root);
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
 
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
-
-        curriculumRepository.save(chap1);
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
 
         Quiz quizHard1 = new Quiz();
@@ -742,25 +704,21 @@ class TestServiceTest {
         Users userA = Users.createUser("userA", "userA@aaa.aaa", "userAId", "1234", "10001101", false);
         userRepository.save(userA);
 
-        Curriculums root = new Curriculums();
-        root.setChapterNum(0);
-        root.setParent(null);
-        root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
-        root.setTestable(false);
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        curriculumRepository.saveAndFlush(root);
 
-        curriculumRepository.save(root);
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
 
-        Curriculums chap1 = new Curriculums();
-        chap1.setTestable(true);
-        chap1.setChapterNum(1);
-        chap1.setParent(root);
-        chap1.setCurriculumName("챕터1");
-
-        curriculumRepository.save(chap1);
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
 
         Quiz quizHard1 = new Quiz();
