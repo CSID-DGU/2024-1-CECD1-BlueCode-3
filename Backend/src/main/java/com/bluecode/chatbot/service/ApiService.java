@@ -69,10 +69,7 @@ public class ApiService {
 
     // 루트 커리큘럼 출력
     private String getRootCurriculumName(Curriculums curriculum) {
-        while (curriculum.getParent() != null) {
-            curriculum = curriculum.getParent();
-        }
-        return curriculum.getCurriculumName();
+        return curriculum.getRoot().getCurriculumName();
     }
 
     // rules.txt 파일에서 응답 규칙을 로드
