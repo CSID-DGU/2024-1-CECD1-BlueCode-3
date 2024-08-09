@@ -16,7 +16,7 @@ import java.util.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class StudyService {
 
     private final ApiService apiService;
@@ -59,8 +59,7 @@ public class StudyService {
             List<Studies> rootStudy = allByUser.stream().filter(i -> Objects.equals(i.getCurriculum().getParent().getCurriculumId(), root.getCurriculumId())).toList();
 
             // 마지막 챕터 대상 Study 데이터 내에서 passed 가 false 인 행이 존재할 경우 -> 커리큘럼 학습 미완료
-            boolean isNotCompleted = allByUser.stream().filter(i -> i.getCurriculum().getChapterNum() == root.getTotalChapterCount()
-                    && !i.isPassed()).count() == 0;
+            boolean isNotCompleted = allByUser.stream().noneMatch(i -> i.getCurriculum().getChapterNum() == root.getTotalChapterCount() && !i.isPassed());
 
             if (rootStudy.isEmpty()) {
                 // root 대상 study 데이터가 존재하지 않는다면
@@ -79,7 +78,6 @@ public class StudyService {
     }
 
     // 유저의 커리큘럼 학습 시작하기 위한 챕터 학습 데이터 생성
-    @Transactional
     public CurriculumChapResponseDto createCurriculumStudyData(DataCallDto dto) {
 
         Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
@@ -112,11 +110,14 @@ public class StudyService {
         List<Curriculums> child = curriculumRepository.findAllByRoot(root);
 
         List<Curriculums> chapters = child.stream().filter(i -> !i.isRootNode() && !i.isLeafNode()).toList();
-        List<Curriculums> subChapters = child.stream().filter(i -> i.isLeafNode()).toList();
-        subChapters.sort(Comparator.naturalOrder());
+        List<Curriculums> subChapters = new ArrayList<>(child.stream().filter(i -> i.isLeafNode()).toList());
+        subChapters.sort(null);
         Deque<Curriculums> deque = new ArrayDeque<>(subChapters);
 
         List<Studies> studies = new ArrayList<>();
+
+        // 루트 학습 현황
+        studies.add(Studies.createStudy(user, root, false, null, null, null, null));
 
         for (Curriculums chapter : chapters) {
             // 챕터 학습 현황
@@ -213,33 +214,38 @@ public class StudyService {
     }
 
     // 부모 커리큘럼의 pass 처리 판정 로직(서브 챕터 -> 챕터)
-    private boolean chapterPass(Users user, Curriculums parent) {
+    public boolean parentPass(Users user, Curriculums parent) {
 
-        Optional<Studies> chapterStudyOptional = studyRepository.findByUserAndCurriculum(user, parent);
+        Optional<Studies> parentStudyOptional = studyRepository.findByUserAndCurriculum(user, parent);
 
-        if (chapterStudyOptional.isEmpty()) {
+        if (parentStudyOptional.isEmpty()) {
             log.error("study가 존재하지 않습니다. user={}, parent={}", user, parent);
             throw new IllegalArgumentException("study가 존재하지 않습니다.");
         }
 
-        Studies chapterStudy = chapterStudyOptional.get();
-        List<Studies> subChapterStudies = studyRepository.findAllByUserAndParent(user, parent);
+        Studies parentStudy = parentStudyOptional.get();
+        List<Studies> childStudyList = studyRepository.findAllByUserAndParent(user, parent);
 
-        if (subChapterStudies.isEmpty()) {
-            log.error("서브 챕터가 존재하지 않습니다. user={}, parent={}", user, parent);
-            throw new IllegalArgumentException("서브 챕터가 존재하지 않습니다.");
+        if (childStudyList.isEmpty()) {
+            log.error("자식 study가 존재하지 않습니다. user={}, parent={}", user, parent);
+            throw new IllegalArgumentException("자식 study가 존재하지 않습니다.");
         }
 
         // 통과 여부 확인
         boolean flag = true;
 
-        for (Studies subChapterStudy : subChapterStudies) {
-            if (!subChapterStudy.isPassed()) flag = false;
+        for (Studies childStudy : childStudyList) {
+            log.info("child 확인: {} flag: {}", childStudy.getCurriculum().getCurriculumName(), childStudy.isPassed());
+            if (!childStudy.isPassed()) {
+                flag = false;
+                break;
+            }
         }
 
-        // 모든 서브 챕터가 통과일 시 부모 챕터도 통과 처리
+        // 모든 자식 챕터가 통과일 시 부모 챕터도 통과 처리
         if (flag) {
-            chapterStudy.setPassed(true);
+            parentStudy.setPassed(true);
+            studyRepository.saveAndFlush(parentStudy);
         }
 
         return flag;
@@ -262,26 +268,56 @@ public class StudyService {
         Users user = userOptional.get();
         Curriculums subChapter = subChapterOptional.get();
 
+        Optional<Studies> studyOptional = studyRepository.findByUserAndCurriculum(user, subChapter);
+
+        // study 데이터가 존재하지 않거나 level == null(../curriculums/text 를 선행하지 않은 경우)
+        if (studyOptional.isEmpty() || studyOptional.get().getLevel() == null) {
+            log.error("학습중이 아닌 서브 챕터입니다. user= {}, subChapter= {}", user.getUserId(), subChapter.getCurriculumId());
+            throw new IllegalArgumentException("학습중이 아닌 서브 챕터입니다.");
+        }
+
+        Studies study = studyOptional.get();
+
+        if (study.isPassed()) {
+            log.error("이미 통과한 서브챕터 입니다. dto: {}", dto);
+            throw new IllegalArgumentException("이미 통과한 서브챕터 입니다.");
+        }
+
+        // 해당 서브챕터 pass 처리
+        study.setPassed(true);
+        studyRepository.saveAndFlush(study);
+        log.info("subChapter pass 처리 완료: {}, {}", study.getCurriculum().getCurriculumName(), study.isPassed());
+
         // 특정 서브 챕터 완료 미션 처리
+        log.info("MissionConst: {}", MissionConst.createConstByRootAndSubChapterName(subChapter.getParent(), subChapter));
         eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootAndSubChapterName(subChapter.getParent(), subChapter)));
 
         // 커리큘럼 학습 완료 공통 미션 처리
         eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.STUDY_COMPLETE));
 
         // 부모인 챕터 Study 통과 처리 업데이트
-        boolean flag = chapterPass(user, subChapter.getParent());
+        boolean flag = parentPass(user, subChapter.getParent());
 
         // 챕터가 pass 처리 되었을 경우,
         if (flag)  {
-            // 대상 챕터 미션 완료 처리
-            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootName(subChapter)));
+            // 대상 챕터 학습 미션 완료 처리
+            log.info("MissionConst: {}", MissionConst.createConstByRootName(subChapter.getParent()));
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootName(subChapter.getParent())));
+
+            // 루트 Study 통과 처리 업데이트
+            boolean flagRoot = parentPass(user, subChapter.getRoot());
+
+            // 루트가 pass 처리 되었을 경우,
+            if (flagRoot) {
+                // 대상 루트 학습 미션 완료 처리
+                eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootName(subChapter.getRoot())));
+            }
         }
 
         return true;
     }
 
     // 유저의 커리큘럼 학습 내용 로드
-    @Transactional
     public StudyTextDto getCurriculumText(CurriculumTextCallDto dto) {
         log.info("getCurriculumText called with dto: {}", dto);
 
@@ -322,6 +358,7 @@ public class StudyService {
 
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         String text = createTextByTextType(study, dto.getTextType());
+        studyRepository.save(study);
 
         StudyTextDto responseDto = new StudyTextDto();
         responseDto.setText(text);
@@ -333,31 +370,33 @@ public class StudyService {
     // textType에 따른 text 열 지정 및 생성
     private String createTextByTextType(Studies study, TextType textType) {
 
-        if (textType == TextType.DEFS) {
+        if (textType == TextType.DEF) {
 
             if (study.getTextDef() == null) {
-                // TODO GPT API 로직 재구성 필요
-//                String fullKeyword = chapter.getCurriculumName() + ": " + keyword;
-//                String generatedResponse = requestGptText(fullKeyword, dto.getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
-//                String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
-//                study.setText(generatedText);
-                study.setTextDef("GPT 생성 text: 이론");
+                String subChapterKeyword = study.getCurriculum().getCurriculumName();
+                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
+                study.setTextDef(generatedText);
             }
             return study.getTextDef();
 
         } else if (textType == TextType.CODE) {
 
             if (study.getTextCode() == null) {
-                // TODO GPT API 로직 재구성 필요
-                study.setTextCode("GPT 생성 text: 실습");
+                String subChapterKeyword = study.getCurriculum().getCurriculumName();
+                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
+                study.setTextCode(generatedText);
             }
-            return study.getTextDef();
+            return study.getTextCode();
 
         } else if (textType == TextType.QUIZ) {
 
             if (study.getTextQuiz() == null) {
-                // TODO GPT API 로직 재구성 필요
-                study.setTextQuiz("GPT 생성 text: 연습문제");
+                String subChapterKeyword = study.getCurriculum().getCurriculumName();
+                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
+                study.setTextQuiz(generatedText);
             }
             return study.getTextQuiz();
 
@@ -370,6 +409,8 @@ public class StudyService {
     // GPT API를 호출하여 학습 내용 생성
     private String requestGptText(String keyword, Long curriculumId) {
         List<Map<String, String>> messages = new ArrayList<>();
+
+        // TODO: 프롬프트 튜닝 진행 필요(학습 자료의 구조 등등)
         messages.add(Map.of("role", "user", "content", "다음 키워드에 대해 자세한 학습 내용을 생성해줘. (키워드: " + keyword + ")"));
         return apiService.sendPostRequest(messages, curriculumId);
     }

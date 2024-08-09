@@ -48,9 +48,7 @@ public class StudyController {
     // 학습중인 커리큘럼 서브 챕터 통과 처리
     @PostMapping("/pass")
     public ResponseEntity<Boolean> subChapterPass(@RequestBody CurriculumPassCallDto dto) {
-
         boolean result = studyService.subChapterPass(dto);
         return ResponseEntity.ok(result);
     }
-
 }

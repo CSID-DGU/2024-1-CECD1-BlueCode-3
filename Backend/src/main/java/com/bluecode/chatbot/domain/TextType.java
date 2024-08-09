@@ -8,5 +8,5 @@ package com.bluecode.chatbot.domain;
  */
 
 public enum TextType {
-    DEFS, CODE, QUIZ
+    DEF, CODE, QUIZ
 }
