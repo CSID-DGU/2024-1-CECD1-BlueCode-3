@@ -45,7 +45,7 @@ public class QuizService {
         // count로 정한 수만큼 문제를 선택하여 담은 리스트
         List<Quiz> selectedQuizzes = quizzes.stream()
                 .limit(count)
-                .collect(Collectors.toList());
+                .toList();
 
         log.info("Selected quizzes: {}", selectedQuizzes);
         return selectedQuizzes;
@@ -59,7 +59,7 @@ public class QuizService {
             throw new IllegalArgumentException("루트 커리큘럼은 유효하지 않습니다.");
         }
 
-        List<Quiz> quizzes = quizRepository.findByCurriculumIdAndLevel(curriculums.getCurriculumId(), quizLevel);
+        List<Quiz> quizzes = quizRepository.findAllByCurriculumIdAndLevel(curriculums.getCurriculumId(), quizLevel);
         log.info("getRandomQuizzesByType curriculum: {}, level: {}, count: {}", curriculums.getCurriculumName(), quizLevel, count);
 
         // 퀴즈가 존재하지 않을 경우 Exception 발생
@@ -71,10 +71,9 @@ public class QuizService {
         Collections.shuffle(quizzes, new Random());
 
         // count로 정한 수만큼 문제를 선택하여 담은 리스트
-        List<Quiz> selectedQuizzes = quizzes.stream()
-                .limit(count)
-                .collect(Collectors.toList());
 
-        return selectedQuizzes;
+        return quizzes.stream()
+                .limit(count)
+                .toList();
     }
 }
