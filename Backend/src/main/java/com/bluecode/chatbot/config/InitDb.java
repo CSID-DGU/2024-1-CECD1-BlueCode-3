@@ -37,6 +37,7 @@ public class InitDb {
         initService.userInit();
         initService.curriculumInit();
         initService.quizInit();
+        initService.studyInit();
         initService.testInit();
         initService.chatInit();
         initService.missionInit();
@@ -74,24 +75,27 @@ public class InitDb {
 
             // 챕터
             List<Curriculums> chapters = new ArrayList<>();
-            Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",false, 1, 0, 2, false, false);
-            Curriculums chap2 = Curriculums.createCurriculum(root, root, "챕터2",false, 2, 0,2, false, false);
-            Curriculums chap3 = Curriculums.createCurriculum(root, root, "챕터3",false, 3, 0,2, false, false);
+            Curriculums chap1 = Curriculums.createCurriculum(root, root, "파이썬 환경",false, 1, 0, 2, false, false);
+            Curriculums chap2 = Curriculums.createCurriculum(root, root, "변수와 자료형",true, 2, 0,2, false, false);
+            Curriculums chap3 = Curriculums.createCurriculum(root, root, "문자열 처리",true, 3, 0,2, false, false);
+            Curriculums chap4 = Curriculums.createCurriculum(root, root, "조건문",true, 4, 0,2, false, false);
             chapters.add(chap1);
             chapters.add(chap2);
             chapters.add(chap3);
+            chapters.add(chap4);
             curriculumRepository.saveAll(chapters);
 
             // 서브 챕터
             List<Curriculums> sub = new ArrayList<>();
 
-            sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap2, root, "챕터2: 서브 챕터1", false, 2, 1, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap2, root, "챕터2: 서브 챕터2", false, 2, 2, 1, true, false));
             sub.add(Curriculums.createCurriculum(chap3, root, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false));
-
+            sub.add(Curriculums.createCurriculum(chap3, root, "챕터3: 서브 챕터2", false, 3, 2, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap4, root, "챕터4: 서브 챕터1", false, 4, 1, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap4, root, "챕터4: 서브 챕터2", false, 4, 2, 1, true, false));
             curriculumRepository.saveAll(sub);
         }
 
@@ -102,8 +106,8 @@ public class InitDb {
                 throw new NoSuchElementException("No root curriculum found");
             }
             Curriculums root = rootCurriculums.get(0);
-            List<Curriculums> lists = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
-            if (lists.size() < 6) {
+            List<Curriculums> lists = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, false);
+            if (lists.size() < 3) {
                 throw new NoSuchElementException("Not enough chapters found");
             }
 
@@ -111,118 +115,130 @@ public class InitDb {
 
             // 객관식
             for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 객관식", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "", 0));
+                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 객관식", lists.get(i).getChapterNum()), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "", 0));
+                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 객관식", lists.get(i).getChapterNum()), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "", 0));
+                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 객관식", lists.get(i).getChapterNum()), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "", 0));
+                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 객관식", lists.get(i).getChapterNum()), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "", 0));
             }
 
             // 단답형
             for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.NORMAL, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 단답형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "정답", QuizLevel.EASY, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d", lists.get(i).getChapterNum()), "정답", QuizLevel.NORMAL, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d", lists.get(i).getChapterNum()), "정답", QuizLevel.EASY, "", "", "", "","","",2));
             }
 
             // 코드 작성형
             for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 중급자 2번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 초급자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.NORMAL, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d-서브챕터%d: 입문자 1번째 - 코드작성형", lists.get(i).getChapterNum(), lists.get(i).getSubChapterNum()), "", QuizLevel.EASY, "", "", "", "","1\n2","3",0));
+                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
+                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
+                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.NORMAL, "", "", "", "","1\n2","3",0));
+                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.EASY, "", "", "", "","1\n2","3",0));
             }
 
             quizRepository.saveAll(quizList);
+        }
+
+        public void studyInit() {
+
+            Users user2 = userRepository.findById(2L).get();
+            Curriculums root = curriculumRepository.findAllRootCurriculumList().get(0);
+            List<Curriculums> child = curriculumRepository.findAllByRoot(root);
+
+            List<Curriculums> chapter = child.stream().filter(i -> !i.isLeafNode()).toList();
+            List<Curriculums> subChapter = child.stream().filter(Curriculums::isLeafNode).toList();
+
+            List<Studies> studies = new ArrayList<>();
+
+            studies.add(Studies.createStudy(user2, root, false, null, null, null, null));
+
+            for (Curriculums curriculums : chapter) {
+                studies.add(Studies.createStudy(user2, curriculums, false, null, null, null, null));
+            }
+
+            for (Curriculums curriculums : subChapter) {
+//                studies.add(Studies.createStudy(user2, curriculums, false,
+//                        String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+//                        String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+//                        String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null));
+
+                studies.add(Studies.createStudy(user2, curriculums, false,
+                        null,
+                        String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                        String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null));
+            }
+
+            studyRepository.saveAll(studies);
         }
 
         public void testInit() {
 
             Users user2 = userRepository.findById(2L).get();
             Curriculums root = curriculumRepository.findAllRootCurriculumList().get(0);
+            List<Curriculums> child = curriculumRepository.findAllByRoot(root);
 
-            List<Curriculums> chapters = curriculumRepository.findAllChildByParentOrderByChapterNumAndSubChapterNum(root);
-            List<Curriculums> subChapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
-            int testedSubChap = 4;
-            int current = 0;
-            Curriculums curriculum = subChapters.get(0);
+            List<Curriculums> chapter = child.stream().filter(i -> !i.isLeafNode()).toList();
+            List<Curriculums> subChapter = child.stream().filter(Curriculums::isLeafNode).toList();
+            Deque<Curriculums> deque = new ArrayDeque<>(subChapter);
 
-            for (int i = 0; i < 2; i++) {
-                Studies chapterStudy = Studies.createStudy(user2, chapters.get(i), true, null, null, null, LevelType.HARD);
-                studyRepository.save(chapterStudy);
+            List<Tests> tests = new ArrayList<>();
+
+            // 챕터 1
+            Curriculums chap1 = chapter.get(0);
+
+            Optional<Studies> studyChap1 = studyRepository.findByUserAndCurriculum(user2, chap1);
+            studyChap1.get().setPassed(true);
+            studyChap1.get().setLevel(LevelType.EASY);
+            studyRepository.save(studyChap1.get());
+
+            List<Studies> subChaps1 = studyRepository.findAllByUserAndParent(user2, chap1);
+
+            for (Studies studies : subChaps1) {
+                studies.setPassed(true);
+                studies.setLevel(LevelType.EASY);
             }
-            Studies chapterStudy = Studies.createStudy(user2, chapters.get(chapters.size() - 1), false, null, null, null, LevelType.EASY);
-            studyRepository.save(chapterStudy);
 
-            for (int i = 0; i < subChapters.size(); i++) {
+            studyRepository.saveAll(subChaps1);
 
-                curriculum = subChapters.get(i);
+            // 챕터 2
+            Curriculums chap2 = chapter.get(1);
+            List<Quiz> quizListHard = quizRepository.findAllByCurriculumIdAndLevel(chap2.getCurriculumId(), QuizLevel.HARD);
+            List<Quiz> quizListNormal = quizRepository.findAllByCurriculumIdAndLevel(chap2.getCurriculumId(), QuizLevel.NORMAL);
+            List<Quiz> quizListEasy = quizRepository.findAllByCurriculumIdAndLevel(chap2.getCurriculumId(), QuizLevel.EASY);
 
-                if (current < testedSubChap) {
-                    if (curriculum.isTestable()) {
-                        current++;
-                        List<Quiz> quizListHard = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.HARD);
-                        List<Quiz> quizListNormal = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.NORMAL);
-                        List<Quiz> quizListEasy = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.EASY);
+            tests.add(createTest(user2, quizListHard.get(0), 0, true, TestType.INIT));
+            tests.add(createTest(user2, quizListHard.get(1), 0, false, TestType.INIT));
+            tests.add(createTest(user2, quizListNormal.get(0), 0, true, TestType.INIT));
+            tests.add(createTest(user2, quizListEasy.get(0), 0, true, TestType.INIT));
 
-                        Tests testHard1 = createTest(user2, quizListHard.get(0), 0, true, TestType.INIT);
-                        Tests testHard2 = createTest(user2, quizListHard.get(1), 0, false, TestType.INIT);
-                        Tests testNormal1 = createTest(user2, quizListNormal.get(0), 0, true, TestType.INIT);
-                        Tests testEasy1 = createTest(user2, quizListEasy.get(0), 0, true, TestType.INIT);
+            Optional<Studies> studyChap2 = studyRepository.findByUserAndCurriculum(user2, chap2);
+            studyChap2.get().setPassed(true);
+            studyChap2.get().setLevel(LevelType.HARD);
+            studyRepository.save(studyChap2.get());
 
-                        testRepository.save(testHard1);
-                        testRepository.save(testHard2);
-                        testRepository.save(testNormal1);
-                        testRepository.save(testEasy1);
+            List<Studies> subChaps2 = studyRepository.findAllByUserAndParent(user2, chap2);
 
-                        Studies studiesHard = Studies.createStudy(user2, curriculum, true,
-                                null,
-                                null,
-                                String.format("챕터 %d: " + LevelType.HARD + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 합격", curriculum.getSubChapterNum()), LevelType.HARD);
-
-                        studyRepository.save(studiesHard);
-                    } else {
-                        Studies studies = Studies.createStudy(user2, curriculum, true,
-                                String.format("챕터 %d: " + LevelType.COMMON + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.COMMON + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.COMMON + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()), LevelType.COMMON);
-                        studyRepository.save(studies);
-                    }
-                } else {
-                    if (curriculum.isTestable()) {
-                        List<Quiz> quizListHard = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.HARD);
-                        List<Quiz> quizListNormal = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.NORMAL);
-                        List<Quiz> quizListEasy = quizRepository.findAllByCurriculumIdAndQuizTypeAndLevel(curriculum.getCurriculumId(), QuizType.NUM, QuizLevel.EASY);
-
-                        Tests testHard1 = createTest(user2, quizListHard.get(0), 2, false, TestType.INIT);
-                        Tests testHard2 = createTest(user2, quizListHard.get(1), 0, false, TestType.INIT);
-                        Tests testNormal1 = createTest(user2, quizListNormal.get(0), 2, false, TestType.INIT);
-                        Tests testEasy1 = createTest(user2, quizListEasy.get(0), 0, true, TestType.INIT);
-
-                        testRepository.save(testHard1);
-                        testRepository.save(testHard2);
-                        testRepository.save(testNormal1);
-                        testRepository.save(testEasy1);
-
-                        Studies studiesEasy = Studies.createStudy(user2, curriculum, false,
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 불합격", curriculum.getSubChapterNum()), LevelType.EASY);
-
-                        studyRepository.save(studiesEasy);
-                        break;
-                    } else {
-                        Studies studiesEasy = Studies.createStudy(user2, curriculum, false,
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()),
-                                String.format("챕터 %d: " + LevelType.EASY + "학습자료: " + curriculum.getCurriculumName() + " 테스트 내용입니다. - 초기 시험 미대상", curriculum.getSubChapterNum()), LevelType.EASY);
-                        studyRepository.save(studiesEasy);
-                    }
-                }
+            for (Studies studies : subChaps2) {
+                studies.setPassed(true);
+                studies.setLevel(LevelType.HARD);
             }
-            // 커리큘럼 생성 테스트용 데이터
-//            Studies studies = createStudy(user2, subChapters.get(16), 60L, null, false, LevelType.HARD);
-//            studyRepository.save(studies);
+            studyRepository.saveAll(subChaps2);
+
+            // 챕터 3(테스트 불합격)
+            Curriculums chap3 = chapter.get(2);
+            quizListHard = quizRepository.findAllByCurriculumIdAndLevel(chap3.getCurriculumId(), QuizLevel.HARD);
+            quizListNormal = quizRepository.findAllByCurriculumIdAndLevel(chap3.getCurriculumId(), QuizLevel.NORMAL);
+            quizListEasy = quizRepository.findAllByCurriculumIdAndLevel(chap3.getCurriculumId(), QuizLevel.EASY);
+
+            tests.add(createTest(user2, quizListHard.get(0), 1, false, TestType.INIT));
+            tests.add(createTest(user2, quizListHard.get(1), 0, false, TestType.INIT));
+            tests.add(createTest(user2, quizListNormal.get(0), 1, false, TestType.INIT));
+            tests.add(createTest(user2, quizListEasy.get(0), 0, true, TestType.INIT));
+
+            Optional<Studies> studyChap3 = studyRepository.findByUserAndCurriculum(user2, chap3);
+            studyChap3.get().setLevel(LevelType.EASY);
+            studyRepository.save(studyChap3.get());
         }
 
         public void chatInit() {
@@ -233,23 +249,31 @@ public class InitDb {
                 throw new NoSuchElementException("No root curriculum found");
             }
             Curriculums root = rootCurriculums.get(0);
+            List<Curriculums> subChapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
+            List<Chats> chats = new ArrayList<>();
+            int min = 0;
 
-            List<Curriculums> chapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
-            if (chapters.size() < 6) {
-                throw new NoSuchElementException("Not enough chapters found");
+            for (Curriculums subChapter : subChapters) {
+                // 각 서브 챕터마다 유형별 질문을 2개씩 생성
+                for (int i = 0; i < 2; i++) {
+                    chats.add(createChatWithTime(user, subChapter,
+                            String.format("챕터 %d - 서브챕터 %d 에서의 질문 %d: DEF", subChapter.getChapterNum(), subChapter.getSubChapterNum(), i + 1),
+                            String.format("챕터 %d - 서브챕터 %d 에서의 단일 답변", subChapter.getChapterNum(), subChapter.getSubChapterNum()),
+                            QuestionType.DEF, LocalDateTime.now().plusMinutes(min++), 1));
+
+                    chats.add(createChatWithTime(user, subChapter,
+                            String.format("챕터 %d - 서브챕터 %d 에서의 질문 %d: CODE", subChapter.getChapterNum(), subChapter.getSubChapterNum(), i + 1),
+                            "1단계: 코드 단계적 답변$2단계: 코드 단계적 답변$3단계: 코드 단계적 답변$4단계: 코드 단계적 답변",
+                            QuestionType.CODE, LocalDateTime.now().plusMinutes(min++),3));
+
+                    chats.add(createChatWithTime(user, subChapter,
+                            String.format("챕터 %d - 서브챕터 %d 에서의 질문 %d: ERRORS", subChapter.getChapterNum(), subChapter.getSubChapterNum(), i + 1),
+                            "1단계: 에러 단계적 답변$2단계: 에러 단계적 답변$3단계: 에러 단계적 답변$4단계: 에러 단계적 답변",
+                            QuestionType.ERRORS, LocalDateTime.now().plusMinutes(min++), 3));
+                }
             }
 
-            // 챕터 1 - 서브 챕터 1에서 질문 1개
-            Chats chat = createChatWithTime(user, chapters.get(0), "챕터 1 - 서브챕터 1에서의 질문1: 개념질문", "챕터 4에서의 답변1: 단일 답변", QuestionType.DEF, LocalDateTime.now(), 1);
-            chatRepository.save(chat);
-
-            // 챕터 2 - 서브 챕터 1에서 질문 3개
-            chat = createChatWithTime(user, chapters.get(2), "챕터 2 - 서브챕터 1에서의 질문1: 개념질문", "챕터 6에서의 답변1: 단일 답변", QuestionType.DEF, LocalDateTime.now().plusMinutes(1), 1);
-            chatRepository.save(chat);
-            chat = createChatWithTime(user, chapters.get(5), "챕터 6에서의 질문2: 코드질문(1단계 부터 시작)", "1단계: 코드 단계적 답변$2단계: 코드 단계적 답변 진행$3단계: 코드 단계적 답변 진행$4단계: 코드 단계적 답변 진행", QuestionType.CODE, LocalDateTime.now().plusMinutes(2), 1);
-            chatRepository.save(chat);
-            chat = createChatWithTime(user, chapters.get(5), "챕터 6에서의 질문3: 에러질문(3단계 까지 진행)", "1단계: 에러 단계적 답변$2단계: 에러 단계적 답변 진행$3단계: 단계적 답변 진행$4단계: 에러 단계적 답변 진행", QuestionType.ERRORS, LocalDateTime.now().plusMinutes(3), 3);
-            chatRepository.save(chat);
+            chatRepository.saveAll(chats);
         }
 
         public void missionInit() {
@@ -412,12 +436,18 @@ public class InitDb {
 
             for (Curriculums root : roots) {
 
-                missions.add(createMission(1000, MissionType.CHALLENGE, ServiceType.STUDY, "STUDY_" + root.getCurriculumName().toUpperCase() +"_COMPLETE", "\"" + root.getCurriculumName() + "\" 내 모든 챕터 학습 완료하기", 1));
+                missions.add(createMission(1000, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.createConstByRootName(root), "\"" + root.getCurriculumName() + "\" 내 모든 챕터 학습 완료하기", 1));
 
-                List<Curriculums> chapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
+                List<Curriculums> chapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, false);
 
                 for (Curriculums chapter : chapters) {
-                    missions.add(createMission(100, MissionType.CHALLENGE, ServiceType.STUDY, "STUDY_" + root.getCurriculumName().toUpperCase() + "_CHAP_" + chapter.getChapterNum() + "_SUB_" + chapter.getSubChapterNum() + "_COMPLETE", "\"" + root.getCurriculumName() + ": " + chapter.getCurriculumName() + "\" 학습 통과하기", 1));
+                    missions.add(createMission(1000, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.createConstByRootName(chapter), "\"" + chapter.getCurriculumName() + "\" 내 모든 서브 챕터 학습 완료하기", 1));
+                }
+
+                List<Curriculums> subChapters = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, true);
+
+                for (Curriculums subChapter : subChapters) {
+                    missions.add(createMission(100, MissionType.CHALLENGE, ServiceType.STUDY, MissionConst.createConstByRootAndSubChapterName(subChapter.getParent(), subChapter), "\"" + root.getCurriculumName() + ": " + subChapter.getCurriculumName() + "\" 학습 통과하기", 1));
                 }
             }
 
