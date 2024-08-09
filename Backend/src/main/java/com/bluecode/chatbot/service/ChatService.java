@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -31,7 +32,34 @@ public class ChatService {
         QuestionType questionType = questionCallDto.getType();
         Long curriculumId = questionCallDto.getCurriculumId();
 
+        Optional<Users> userOptional = userRepository.findByUserId(questionCallDto.getUserId());
+        Optional<Curriculums> subChapterOptional = curriculumRepository.findById(questionCallDto.getCurriculumId());
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id입니다.");
+        }
+
+        if (subChapterOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 서브 챕터 커리큘럼 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+        Curriculums subChapter = subChapterOptional.get();
+
+        if (!subChapter.isLeafNode()) {
+            log.error("서브챕터 커리큘럼이 아닙니다. subChapter={}", subChapter);
+            throw new IllegalArgumentException("서브챕터 커리큘럼이 아닙니다.");
+        }
+
         List<String> conversationHistory = new ArrayList<>();
+        List<Chats> history = chatRepository.findAllByUserIdAndSubChapterIdOrderByChatDate(user.getUserId(), subChapter.getCurriculumId());
+
+        if (!history.isEmpty()) {
+            for (Chats chats : history) {
+                conversationHistory.add(chats.getQuestion());
+            }
+        }
+
         conversationHistory.add(userMessage);
 
         String response = continueConversation(questionType, conversationHistory, curriculumId);
@@ -67,6 +95,8 @@ public class ChatService {
         questionResponseDto.setAnswerList(responseParts);  // 단계적 답변들을 모두 저장
         if (!responseParts.isEmpty()) {
             questionResponseDto.setAnswer(responseParts.get(0));  // 첫 번째 답변을 기본 응답으로 설정
+        } else {
+            throw new IllegalStateException("답변 생성 실패");
         }
         return questionResponseDto;
     }
@@ -74,7 +104,15 @@ public class ChatService {
     // 단계적 답변에서 다음 단계의 응답을 로드
     public QuestionResponseDto getNextStep(NextLevelChatCallDto nextLevelChatCallDto) {
         Long chatId = nextLevelChatCallDto.getChatId();
-        Chats chat = chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Not found with chatId: " + chatId));
+        Optional<Chats> chatsOptional = chatRepository.findById(chatId);
+
+        if (chatsOptional.isEmpty()) {
+            log.error("유효하지 않은 chatId 입니다. chatId: {}", chatId);
+            throw new IllegalArgumentException("유효하지 않은 chatId 입니다.");
+        }
+
+        Chats chat = chatsOptional.get();
+
         List<String> responseParts = splitResponse(chat.getAnswer());
 
         // 각 단계적 답변 앞에 빈 칸이 존재하면 삭제
@@ -97,7 +135,6 @@ public class ChatService {
 
             // 미션 처리 로직
             eventPublisher.publishEvent(new UserActionEvent(this, chat.getUser(), ServiceType.CHAT, MissionConst.createConstByQuestionTypeAndLevel(chat.getQuestionType(), chat.getLevel())));
-
 
         } else {
             questionResponseDto.setAnswer("더 이상 답변이 존재하지 않습니다.");
@@ -160,28 +197,83 @@ public class ChatService {
         return List.of(response.split("\\$")); // '$' 기호로 시작하는 행을 기준으로 분할
     }
 
-    // 전체 채팅 기록을 로드
-    public List<Chats> getChatHistory(Long userId, Long parentId) {
-        return chatRepository.findAllByUserIdAndParentIdOrderByChapterNumAndChatDate(userId, parentId);
-    }
-
-    // 특정 커리큘럼에 대한 채팅 기록 조회
-    public List<Chats> getChatsByCurriculum(Long userId, Long curriculumId) {
-        return chatRepository.findAllByUserIdAndChapterIdOrderByChatDate(userId, curriculumId);
-    }
-
     // 특정 질문 유형에 대한 채팅 기록 조회
     public List<Chats> getChatsByQuestionType(Long userId, QuestionType questionType) {
-        return chatRepository.findAllByUserIdAndQuestionTypeOrderByChatDate(userId, questionType);
+        List<Chats> result = chatRepository.findAllByUserIdAndQuestionTypeOrderByChatDate(userId, questionType);
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("getChatsBySubChapter 결과 없음");
+        }
+
+        return result;
     }
 
-    // 특정 챕터 커리큘럼과 질문 유형에 대한 채팅 기록 조회
-    public List<Chats> getChatsByCurriculumAndQuestionType(Long userId, Long curriculumId, QuestionType questionType) {
-        return chatRepository.findAllByUserIdAndChapterIdAAndQuestionTypeOrderByChatDate(userId, curriculumId, questionType);
+
+    // 특정 서브챕터에 대한 채팅 기록 조회
+    public List<Chats> getChatsBySubChapter(Long userId, Long subChapterId) {
+        List<Chats> result = chatRepository.findAllByUserIdAndSubChapterIdOrderByChatDate(userId, subChapterId);
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("getChatsBySubChapter 결과 없음");
+        }
+
+        return result;
     }
 
-    // 특정 루트 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    // 특정 챕터에 대한 채팅 기록 조회
+    public List<Chats> getChatsByChapter(Long userId, Long chapterId) {
+        List<Chats> result = chatRepository.findAllByUserIdAndParentIdOrderBySubChapterNumAndChatDate(userId, chapterId);
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("getChatsByChapter 결과 없음");
+        }
+
+        return result;
+    }
+
+    // 특정 루트에 대한 채팅 기록 조회
+    public List<Chats> getChatsByRoot(Long userId, Long rootId) {
+        List<Chats> result = chatRepository.findAllByUserIdAndRootIdOrderByChapterNumAndSubChapterNumAndChatDate(userId, rootId);
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("getChatsByRoot 결과 없음");
+        }
+
+        return result;
+    }
+
+
+    // 특정 서브 챕터와 질문 유형에 대한 채팅 기록 조회
+    public List<Chats> getChatsBySubChapterAndQuestionType(Long userId, Long subChapterId, QuestionType questionType) {
+
+        List<Chats> result = chatRepository.findAllByUserIdAndSubChapterIdAndQuestionTypeOrderByChatDate(userId, subChapterId, questionType);
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("getChatsBySubChapterAndQuestionType 결과 없음");
+        }
+
+        return result;
+    }
+
+    // 특정 챕터와 질문 유형에 대한 채팅 기록 조회
+    public List<Chats> getChatsByChapterAndQuestionType(Long userId, Long curriculumId, QuestionType questionType) {
+        List<Chats> result = chatRepository.findAllByUserIdAndParentIdAAndQuestionTypeOrderBySubChapterNumAndChatDate(userId, curriculumId, questionType);
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("getChatsByChapterAndQuestionType 결과 없음");
+        }
+
+        return result;
+    }
+
+    // 특정 루트와 질문 유형에 대한 채팅 기록 조회
     public List<Chats> getChatsByRootAndQuestionType(Long userId, Long rootId, QuestionType questionType) {
-        return chatRepository.findAllByUserIdAndRootIdAAndQuestionTypeOrderByChatDate(userId, rootId, questionType);
+        List<Chats> result = chatRepository.findAllByUserIdAndRootIdAAndQuestionTypeOrderByChapterNumAndSubChapterNumAndChatDate(userId, rootId, questionType);
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("getChatsByRootAndQuestionType 결과 없음");
+        }
+
+        return result;
     }
 }

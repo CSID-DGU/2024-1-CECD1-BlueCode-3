@@ -28,27 +28,60 @@ public class ChatController {
     @PostMapping("/response")
     public ResponseEntity<QuestionResponseDto> getChatResponse(@RequestBody QuestionCallDto questionCallDto) {
         QuestionResponseDto response = chatService.getResponse(questionCallDto);
-        return response != null && !response.getAnswerList().isEmpty()
-                ? ResponseEntity.ok(response)
-                : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(response);
     }
 
     // 호출 시마다 다음 단계의 답변을 요청
     @PostMapping("/next")
     public ResponseEntity<QuestionResponseDto> getNextStep(@RequestBody NextLevelChatCallDto nextLevelChatCallDto) {
         QuestionResponseDto response = chatService.getNextStep(nextLevelChatCallDto);
-        return response != null && !response.getAnswerList().isEmpty()
-                ? ResponseEntity.ok(response)
-                : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(response);
     }
 
     // 루트 커리큘럼에 대한 채팅 기록을 로드
-    @PostMapping("/historyByParent")
+    @PostMapping("/historyByRoot")
     public ResponseEntity<QuestionListResponseDto> getChatsByParent(@RequestBody QuestionCallDto questionCallDto) {
-        List<Chats> chats = chatService.getChatHistory(questionCallDto.getUserId(), questionCallDto.getCurriculumId());
-        if (chats.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        List<Chats> chats = chatService.getChatsByRoot(questionCallDto.getUserId(), questionCallDto.getCurriculumId());
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 특정 챕터에 대한 채팅 기록 조회
+    @PostMapping("/historyByChapter")
+    public ResponseEntity<QuestionListResponseDto> getChatsByChapter(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsByChapter(questionCallDto.getUserId(), questionCallDto.getCurriculumId());
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 특정 서브 챕터에 대한 채팅 기록 조회
+    @PostMapping("/historyBySubChapter")
+    public ResponseEntity<QuestionListResponseDto> getChatsBySubChapter(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsBySubChapter(questionCallDto.getUserId(), questionCallDto.getCurriculumId());
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 특정 루트 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    @PostMapping("/historyByRootAndQuestionType")
+    public ResponseEntity<QuestionListResponseDto> getChatsByRootAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsByRootAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
+        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
+        QuestionListResponseDto responseDto = new QuestionListResponseDto();
+        responseDto.setList(formattedChats);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 특정 챕터 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    @PostMapping("/historyByChapterAndQuestionType")
+    public ResponseEntity<QuestionListResponseDto> getChatsByChapterAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsByChapterAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
 
         List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
         QuestionListResponseDto responseDto = new QuestionListResponseDto();
@@ -56,13 +89,10 @@ public class ChatController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // 특정 커리큘럼에 대한 채팅 기록 조회
-    @PostMapping("/historyByCurriculum")
-    public ResponseEntity<QuestionListResponseDto> getChatsByCurriculum(@RequestBody QuestionCallDto questionCallDto) {
-        List<Chats> chats = chatService.getChatsByCurriculum(questionCallDto.getUserId(), questionCallDto.getCurriculumId());
-        if (chats.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+    // 특정 서브 챕터 커리큘럼과 질문 유형에 대한 채팅 기록 조회
+    @PostMapping("/historyBySubChapterAndQuestionType")
+    public ResponseEntity<QuestionListResponseDto> getChatsBySubChapterAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
+        List<Chats> chats = chatService.getChatsBySubChapterAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
 
         List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
         QuestionListResponseDto responseDto = new QuestionListResponseDto();
@@ -74,38 +104,6 @@ public class ChatController {
     @PostMapping("/historyByQuestionType")
     public ResponseEntity<QuestionListResponseDto> getChatsByQuestionType(@RequestBody QuestionCallDto questionCallDto) {
         List<Chats> chats = chatService.getChatsByQuestionType(questionCallDto.getUserId(), questionCallDto.getType());
-        if (chats.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
-        QuestionListResponseDto responseDto = new QuestionListResponseDto();
-        responseDto.setList(formattedChats);
-        return ResponseEntity.ok(responseDto);
-    }
-
-    // 특정 챕터 커리큘럼과 질문 유형에 대한 채팅 기록 조회
-    @PostMapping("/historyByCurriculumAndQuestionType")
-    public ResponseEntity<QuestionListResponseDto> getChatsByCurriculumAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
-        List<Chats> chats = chatService.getChatsByCurriculumAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
-        if (chats.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
-        QuestionListResponseDto responseDto = new QuestionListResponseDto();
-        responseDto.setList(formattedChats);
-        return ResponseEntity.ok(responseDto);
-    }
-
-    // 특정 루트 커리큘럼과 질문 유형에 대한 채팅 기록 조회
-    @PostMapping("/historyByRootAndQuestionType")
-    public ResponseEntity<QuestionListResponseDto> getChatsByRootAndQuestionType(@RequestBody QuestionCallDto questionCallDto) {
-        List<Chats> chats = chatService.getChatsByRootAndQuestionType(questionCallDto.getUserId(), questionCallDto.getCurriculumId(), questionCallDto.getType());
-        if (chats.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
         List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
         QuestionListResponseDto responseDto = new QuestionListResponseDto();
         responseDto.setList(formattedChats);
