@@ -29,7 +29,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
 
         // 특정 경로에 대해서는 필터를 적용하지 않음
-        if (requestURI.startsWith("/api/") || requestURI.startsWith("/user/")) {
+        if (requestURI.startsWith("/api/") || requestURI.startsWith("/user/") || requestURI.startsWith("/mission/init" )) {
             filterChain.doFilter(request, response);
             return;
         }
