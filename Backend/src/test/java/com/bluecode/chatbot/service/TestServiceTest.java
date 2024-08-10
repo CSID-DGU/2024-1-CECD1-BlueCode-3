@@ -502,7 +502,6 @@ class TestServiceTest {
         TestAnswerCallDto dto = new TestAnswerCallDto();
         dto.setTestId(test.getTestId());
         dto.setUserId(userA.getUserId());
-        dto.setQuizId(quizHard1.getQuizId());
         dto.setAnswer("정답");
 
         //when
@@ -562,7 +561,6 @@ class TestServiceTest {
         TestAnswerCallDto dto = new TestAnswerCallDto();
         dto.setTestId(test.getTestId());
         dto.setUserId(userA.getUserId());
-        dto.setQuizId(quizHard1.getQuizId());
         dto.setAnswer("오답");
 
         //when
@@ -625,7 +623,6 @@ class TestServiceTest {
         TestAnswerCallDto dto = new TestAnswerCallDto();
         dto.setTestId(test.getTestId());
         dto.setUserId(userA.getUserId());
-        dto.setQuizId(quizHard1.getQuizId());
         dto.setAnswer("오답");
 
         try {
@@ -685,7 +682,6 @@ class TestServiceTest {
         TestAnswerCallDto dto = new TestAnswerCallDto();
         dto.setTestId(test.getTestId());
         dto.setUserId(userA.getUserId());
-        dto.setQuizId(quizHard1.getQuizId());
         dto.setAnswer("오답");
 
         try {
@@ -744,7 +740,6 @@ class TestServiceTest {
         TestAnswerCallDto dto = new TestAnswerCallDto();
         dto.setTestId(test.getTestId());
         dto.setUserId(userA.getUserId());
-        dto.setQuizId(quizHard1.getQuizId());
         dto.setAnswer("오답");
 
         try {
