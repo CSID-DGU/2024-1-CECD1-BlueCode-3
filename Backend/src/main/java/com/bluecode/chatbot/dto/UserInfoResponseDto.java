@@ -13,4 +13,5 @@ public class UserInfoResponseDto {
     String birth;
     String email;
     Long userId;
+    String id;
 }

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginResponseDto {
-    String accessToken;
-    Long userid;
+public class UpdatePasswordCallDto {
+    private Long userId;
+    private String password;
 }
