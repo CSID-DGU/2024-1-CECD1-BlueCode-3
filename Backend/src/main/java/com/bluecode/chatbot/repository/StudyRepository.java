@@ -33,6 +33,15 @@ public interface StudyRepository extends JpaRepository<Studies, Long> {
     // 유저 기반 Studies 리스트 검색
     List<Studies> findAllByUser(Users user);
 
+    // 유저의 루트 커리큘럼 대상 Study 리스트 검색
+    @Query("select s from Studies s " +
+            "join fetch s.user " +
+            "join fetch s.curriculum " +
+            "where s.user = :user " +
+            "and s.curriculum.rootNode = true")
+    List<Studies> findAllRootByUser(@Param("user") Users user);
+
+
     // 유저, 커리큘럼 기반 단일 검색
     Optional<Studies> findByUserAndCurriculum(Users user, Curriculums curriculums);
 

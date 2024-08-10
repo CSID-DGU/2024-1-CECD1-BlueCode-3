@@ -39,7 +39,7 @@ public class StudyService {
 
         Users user = userOptional.get();
 
-        List<Studies> allByUser = studyRepository.findAllByUser(user);
+        List<Studies> userRootStudy = studyRepository.findAllRootByUser(user);
         List<Curriculums> roots = curriculumRepository.findAllRootCurriculumList();
 
         if (roots.isEmpty()) {
@@ -56,19 +56,24 @@ public class StudyService {
             elementDto.setTitle(root.getCurriculumName());
 
             // 학습 중인지 확인하는 로직
-            List<Studies> rootStudy = allByUser.stream().filter(i -> Objects.equals(i.getCurriculum().getParent().getCurriculumId(), root.getCurriculumId())).toList();
+            Optional<Studies> rootStudy = userRootStudy.stream().filter(i -> Objects.equals(i.getCurriculum().getCurriculumId(), root.getCurriculumId())).findFirst();
 
-            // 마지막 챕터 대상 Study 데이터 내에서 passed 가 false 인 행이 존재할 경우 -> 커리큘럼 학습 미완료
-            boolean isNotCompleted = allByUser.stream().noneMatch(i -> i.getCurriculum().getChapterNum() == root.getTotalChapterCount() && !i.isPassed());
-
+            // root 대상 study 데이터가 존재하지 않는다면
             if (rootStudy.isEmpty()) {
-                // root 대상 study 데이터가 존재하지 않는다면
                 elementDto.setStatus(StudyStatus.INIT);
-            } else if (isNotCompleted) {
-                // 마지막 챕터 대상 EASY 난이도 Study 내 pass == false 일 경우 학습중이라 판단
-                elementDto.setStatus(StudyStatus.STUDYING);
-            } else {
+                list.add(elementDto);
+                continue;
+            }
+
+            // root의 학습 pass 여부 확인
+            boolean passed = rootStudy.get().isPassed();
+
+            if (passed) {
+                // 대상 root의 pass == true 일 경우 학습 완료라 판단
                 elementDto.setStatus(StudyStatus.COMPLETE);
+            } else {
+                // 대상 root의 pass == false 일 경우 학습중이라 판단
+                elementDto.setStatus(StudyStatus.STUDYING);
             }
             list.add(elementDto);
         }
@@ -351,10 +356,8 @@ public class StudyService {
 
         Studies study = studyOptional.get();
 
-        // study 데이터에 완전 최초 점근할 경우 null로 설정 되어있음 --> level 설정 로직
-        if (study.getLevel() == null) {
-            study.setLevel(dto.getLevelType());
-        }
+        // study 데이터에 완전 최초 접근의 경우,level = null 로 설정 되어있음 --> level 설정 로직
+        setStudyLevel(study, dto.getTextType());
 
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         String text = createTextByTextType(study, dto.getTextType());
@@ -366,6 +369,23 @@ public class StudyService {
         log.info("getCurriculumText returning: {}", responseDto);
         return responseDto;
     }
+
+    // 최초 접근에 대한 level 설정 로직
+    private void setStudyLevel(Studies study, TextType type) {
+        if (study.getLevel() == null) {
+            if (type == TextType.DEF) {
+                study.setLevel(LevelType.EASY);
+            } else if (type == TextType.CODE) {
+                study.setLevel(LevelType.NORMAL);
+            } else if (type == TextType.QUIZ) {
+                study.setLevel(LevelType.HARD);
+            } else {
+                log.error("유효하지 않은 TextType 입니다. type: {}", type);
+                throw new IllegalArgumentException("유효하지 않은 TextType 입니다. " + type);
+            }
+        }
+    }
+
 
     // textType에 따른 text 열 지정 및 생성
     private String createTextByTextType(Studies study, TextType textType) {
