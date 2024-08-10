@@ -62,6 +62,8 @@ public class ChatService {
 
         conversationHistory.add(userMessage);
 
+        log.info("convHist: {}", conversationHistory);
+
         String response = continueConversation(questionType, conversationHistory, curriculumId);
         String content;
         if (response.startsWith("{")) {
@@ -87,7 +89,7 @@ public class ChatService {
         return createResponseDtoFromChat(chat, trimmedResponseParts);
     }
 
-    // api의 답변을 dto 형태로 데이터베이스에 저장
+    // api의 답변을 dto 형태로 재구성
     private QuestionResponseDto createResponseDtoFromChat(Chats chat, List<String> responseParts) {
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
         questionResponseDto.setQuestionType(chat.getQuestionType());
@@ -194,20 +196,8 @@ public class ChatService {
     // 단계적 답변을 위해 응답을 분할
     public List<String> splitResponse(String response) {
 //        return List.of(response.split("(?m)^\\$"));
-        return List.of(response.split("\\$")); // '$' 기호로 시작하는 행을 기준으로 분할
+        return List.of(response.split("\\$")); // '$' 기호를 기준으로 분할
     }
-
-    // 특정 질문 유형에 대한 채팅 기록 조회
-    public List<Chats> getChatsByQuestionType(Long userId, QuestionType questionType) {
-        List<Chats> result = chatRepository.findAllByUserIdAndQuestionTypeOrderByChatDate(userId, questionType);
-
-        if (result.isEmpty()) {
-            throw new IllegalStateException("getChatsBySubChapter 결과 없음");
-        }
-
-        return result;
-    }
-
 
     // 특정 서브챕터에 대한 채팅 기록 조회
     public List<Chats> getChatsBySubChapter(Long userId, Long subChapterId) {

@@ -100,16 +100,6 @@ public class ChatController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // 특정 질문 유형에 대한 채팅 기록 조회
-    @PostMapping("/historyByQuestionType")
-    public ResponseEntity<QuestionListResponseDto> getChatsByQuestionType(@RequestBody QuestionCallDto questionCallDto) {
-        List<Chats> chats = chatService.getChatsByQuestionType(questionCallDto.getUserId(), questionCallDto.getType());
-        List<QuestionListResponseElementDto> formattedChats = formatChats(chats);
-        QuestionListResponseDto responseDto = new QuestionListResponseDto();
-        responseDto.setList(formattedChats);
-        return ResponseEntity.ok(responseDto);
-    }
-
     // 채팅 기록을 DTO 형태로 변환
     private List<QuestionListResponseElementDto> formatChats(List<Chats> chats) {
         return chats.stream().map(chat -> {
