@@ -50,7 +50,6 @@ public class InitDb {
     @Slf4j
     static class InitService {
 
-        private final EntityManager em;
         private final UserRepository userRepository;
         private final CurriculumRepository curriculumRepository;
         private final QuizRepository quizRepository;
@@ -123,10 +122,10 @@ public class InitDb {
 
             // 단답형
             for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d", lists.get(i).getChapterNum()), "정답", QuizLevel.NORMAL, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d", lists.get(i).getChapterNum()), "정답", QuizLevel.EASY, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.NORMAL, "", "", "", "","","",2));
+                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.EASY, "", "", "", "","","",2));
             }
 
             // 코드 작성형
@@ -239,6 +238,8 @@ public class InitDb {
             Optional<Studies> studyChap3 = studyRepository.findByUserAndCurriculum(user2, chap3);
             studyChap3.get().setLevel(LevelType.EASY);
             studyRepository.save(studyChap3.get());
+
+            testRepository.saveAll(tests);
         }
 
         public void chatInit() {
