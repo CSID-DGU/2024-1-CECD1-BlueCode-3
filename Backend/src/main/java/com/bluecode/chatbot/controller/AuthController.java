@@ -61,7 +61,7 @@ public class AuthController {
 
             LoginResponseDto loginResponseDto = new LoginResponseDto();
             loginResponseDto.setAccessToken(accessToken);
-
+            loginResponseDto.setUserid(user.getUserId());
             // 두 토큰을 dto로도 반환하고, 리프레시토큰을 쿠키로도 반환
             CookieUtil.addCookie(response, REFRESH_TOKEN_COOKIE_NAME, refreshTokenString, (int) REFRESH_TOKEN_DURATION.toSeconds());
             return ResponseEntity.ok().body(loginResponseDto);
