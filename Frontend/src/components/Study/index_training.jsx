@@ -3,7 +3,7 @@ import BCODE from '../../logo_w.png'
 import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 
@@ -136,7 +136,6 @@ print_collected()
   const [gptValue, setGptValue] = useState(false);
   const [contentWidth, setContentWidth] = useState(width);
   const [navValue, setNavValue] = useState(false);
-  const [dialog, setDialog] = useState("");
 
   const ShowGpt = () => {
     if (gptValue) {
@@ -160,11 +159,30 @@ print_collected()
       setNavValue(true);
   }
 
-  const [div, setDiv] = useState([]);
+  const [dialog, setDialog] = useState("");
+  const [dialogs, setDiv] = useState([]);
   const AddDialog = () => {
-    setDiv([...div, <Dialog> {dialog} </Dialog>]);
-    setDialog("");
+    if(dialog) {
+      setDiv([...dialogs, <Dialog> {dialog} </Dialog>]);
+      setDialog("");
+    }
   }
+  
+  const chat = useRef();
+  const scrollToBottom = () => {
+    chat.current?.scrollIntoView();
+  };
+
+  useEffect(()=>{
+    scrollToBottom();
+  }, [dialogs]);
+
+  const [divValue, setDivValue] = useState('');
+  const borderStyle = { borderRadius : "0.5rem", borderBottom : "0.25rem solid #008BFF" };
+  const getDivValue = (divVal) => {
+    setDivValue(divVal);
+  }
+
 
 
   return (
@@ -228,12 +246,13 @@ print_collected()
       </ContentSection>
       {gptValue && (<ChatbotSection>
           <Chat height={height}>
-          {div.map(div => div)}
+            {dialogs.map(div => div)}
+            <div ref={chat}></div>
           </Chat>
           <ChatType>
-            <Type> #개념 </Type>
-            <Type> #코드 </Type>
-            <Type> #오류 </Type>
+            <Type style={divValue === "개념"?borderStyle:{}} onClick={()=>getDivValue("개념")}> #개념 </Type>
+            <Type style={divValue === "코드"?borderStyle:{}} onClick={()=>getDivValue("코드")}> #코드 </Type>
+            <Type style={divValue === "오류"?borderStyle:{}} onClick={()=>getDivValue("오류")}> #오류 </Type>
           </ChatType>
           <ChatInput>
             <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
@@ -501,6 +520,8 @@ const Dialog = styled.p`
   width : fit-content;
   background : #FFFFFF;
   padding : 0.75rem 1rem;
+  word-break : break-word;
+  overflow-wrap : break-word;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
   border-radius : 1.5rem 1.5rem 0rem 1.5rem;
 `
@@ -521,7 +542,8 @@ const Type = styled.div`
   padding : 0.25rem 0.5rem;
 
   &:hover {
-    background : rgba(0, 139, 255, 0.25);
+    border-radius : 0.5rem;
+    border-bottom : 0.25rem solid rgba(0, 139, 255, 0.375);
   }
 `
 

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { SHA256 } from 'crypto-js';
+import axios from 'axios';
+import axiosInstance from '../../axiosInstance'
 
 
 function Study_theory() {
@@ -31,39 +33,133 @@ function Study_theory() {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwdRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^~*])[A-Za-z\d!@#$%^~*]{9,16}$/;
 
-  const [email, setEmail] = useState('example@example.com');
+  const [id, setId] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [newEmail, setNewEmail] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [signInDate, setSignInDate] = useState('');
   const [newPasswd, setNewPasswd] = useState('');
   const [newPasswdCheck, setNewPasswdCheck] = useState('');
 
-  const [passwdValid, setPasswdValid] = useState(true);
-  const [passwdEqual, setPasswdEqual] = useState(true);
-  const [emailValid, setEmailValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwdValid, setPasswdValid] = useState(false);
   
-  const newEmailBlur = () => {
-    if (emailRegex.test(newEmail)) {
-      setEmailValid(true);
-    } else {
+  const newEmailBlur = async () => {
+    if (!newEmail) {
       setEmailValid(false);
+      document.getElementById("emailInfo").innerText = "";
+    }
+    else if (emailRegex.test(newEmail)) {
+      try{
+        const res = await axios.get(`/user/user/exists/email/${newEmail}`);
+
+        if (res.data) {  
+          setEmailValid(false);
+          document.getElementById("emailInfo").innerText = "이미 서비스에 등록된 이메일입니다.";
+        }
+        else {
+          setEmailValid(true);
+          document.getElementById("emailInfo").innerText = "";
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    else {
+      setEmailValid(false);
+      document.getElementById("emailInfo").innerText = "옳지 않은 이메일입니다.";
     }
   };
 
+  const changeEmail = async () => {
+    if (emailValid) {
+      try {
+        const userid = localStorage.getItem('userid');
+        const email_data = {
+          'userId' : userid,
+          'email': newEmail
+        };
+        const res = await axiosInstance.post('/checkAuth/checkAuth/updateEmail', email_data);
+        alert(res.data);
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
   const newPasswdBlur = () => {
-    if (passwdRegex.test(newPasswd)) {
-      setPasswdValid(true);
-    } else {
-      setPasswdValid(false);
+    if (passwdRegex.test(newPasswd) || !newPasswd) {
+      document.getElementById("passwdInfo").innerText = "";
+    } 
+    else {
+      document.getElementById("passwdInfo").innerText = "옳지 않은 비밀번호입니다.";
     }
   };
 
   const passwdEqualBlur = () => {
-    if (newPasswd === newPasswdCheck)
-      setPasswdEqual(true);
-    else
-      setPasswdEqual(false);
+    if (!newPasswdCheck) {
+      setPasswdValid(false);
+      document.getElementById("passwdInfo").innerText = "";
+    }
+    else if (newPasswd === newPasswdCheck) {
+      setPasswdValid(true);
+      document.getElementById("passwdInfo").innerText = "";
+    }
+    else {
+      setPasswdValid(false);
+      document.getElementById("passwdInfo").innerText = "비밀번호가 일치하지 않습니다.";
+    }
   }
 
-  const hash = SHA256(newPasswd).toString();
+  const changePasswd = async () => {
+    if (passwdValid) {
+      try {
+        const hash_passwd = SHA256(newPasswd).toString();
+        const userid = localStorage.getItem('userid');
+        const password_data = {
+          'userId' : userid,
+          'password': hash_passwd
+        };
+        const res = await axiosInstance.post('/checkAuth/checkAuth/updatePassword', password_data);
+        alert(res.data);
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
+  useEffect(() => {
+    // 서버에서 사용자 정보를 가져오는 함수
+    const getUserInfo = async () => {
+     try {
+      const userid = localStorage.getItem('userid');
+      const res = await axiosInstance.get(`/checkAuth/checkAuth/getUserInfo/${userid}`);
+      
+      setId(res.data.id);
+      setEmail(res.data.email);
+      setBirthday(setFormat(res.data.birth));
+      setName(res.data.username);
+      setSignInDate("11111111");
+     }
+     catch (err){
+      console.error(err); 
+     }
+    };
+    
+    getUserInfo(); // 데이터를 불러오는 함수 호출
+  }, []);
+    
+  const setFormat = (text) => {
+    const year = text.substr(0, 4);
+    const month = text.substr(4, 2);
+    const day = text.substr(6, 2);
+
+    return year + "년 " + month + "월 " + day + "일";
+  }
+  
   // <p> - 3개 이상 동일한 문자 / 숫자 제외, 연속적인 숫자나 생일은 제외 </p>
   // <p> - 아이디 및 이메일 제외 </p>
 
@@ -96,17 +192,17 @@ function Study_theory() {
           <PrivateInfo>
             <SubInfo>
               <Element> ㅇ 아이디 </Element>
-              <SubElement> 구체적인 아이디 </SubElement>
+              <SubElement> {id} </SubElement>
             </SubInfo>
             <SubInfo>
               <Element> ㅇ 이름 </Element>
-              <SubElement> 구체적인 이름 </SubElement>
+              <SubElement> {name} </SubElement>
             </SubInfo>
           </PrivateInfo>
           <PrivateInfo>
             <SubInfo>
               <Element> ㅇ 생년월일 </Element>
-              <SubElement> 구체적인 생년월일 </SubElement>
+              <SubElement> {birthday} </SubElement>
             </SubInfo>
             <SubInfo>
               <Element> ㅇ 회원가입 일자 </Element>
@@ -117,9 +213,9 @@ function Study_theory() {
             <Email> ㅇ 이메일 </Email>
             <ChangingSection>
               <InputArea  type="text" placeholder={email} value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} onBlur={newEmailBlur}></InputArea>
-              <Button> 이메일 변경 </Button>
+              <Button onClick={changeEmail}> 이메일 변경 </Button>
               <p id="info"> - 인증번호 발급을 위한 이메일 작성 </p>
-              {!emailValid && (<p style={{color : "#008BFF", fontWeight : "bold"}}> 옳지 않은 이메일입니다. </p>)}
+              <p id="emailInfo" style={{color : "#008BFF", fontWeight : "bold"}}></p>
             </ChangingSection>
           </ChangingInfo>
           <ChangingInfo>
@@ -127,10 +223,9 @@ function Study_theory() {
             <ChangingSection>
               <InputArea type="password" placeholder="새 비밀번호" value={newPasswd} onChange={(e)=>setNewPasswd(e.target.value)} onBlur={newPasswdBlur}></InputArea>
               <InputArea type="password" placeholder="새 비밀번호 확인" value={newPasswdCheck} onChange={(e)=>setNewPasswdCheck(e.target.value)} onBlur={passwdEqualBlur}></InputArea>
-              <Button> 비밀번호 변경 </Button>
-              <p id="info"> - 9~16자의 영문, 숫자, 특수문자(!@#$%^~*) 조합 </p>
-              {!passwdValid && (<p style={{color : "#008BFF", fontWeight : "bold"}}> 옳지 않은 비밀번호입니다. </p>)}
-              {!passwdEqual && (<p style={{color : "#008BFF", fontWeight : "bold"}}> 비밀번호가 일치하지 않습니다. </p>)}
+              <Button onClick={changePasswd}> 비밀번호 변경 </Button>
+              <p> - 9~16자의 영문, 숫자, 특수문자(!@#$%^~*) 조합 </p>
+              <p id="passwdInfo" style={{color : "#008BFF", fontWeight : "bold"}}></p>
             </ChangingSection>
           </ChangingInfo>
         </ContentSection>
@@ -300,6 +395,7 @@ const Passwd = styled.p`
 
 const ChangingSection = styled.div`
   p {
+    height : 1rem;
     font-size : 0.75rem;
     color : rgba(0, 0, 0, 0.375);
     margin : 0.25rem 1.375rem 0rem;
@@ -314,7 +410,7 @@ const InputArea = styled.input`
   font-weight : bold;
   border-radius : 0.5rem;
   margin : 0.25rem 0.5rem;
-  border : 0.05rem ridge rgba(0, 0, 0, 0.5);
+  border : 0.05rem solid rgba(0, 0, 0, 0.5);
 `
 
 const Button = styled.button`
