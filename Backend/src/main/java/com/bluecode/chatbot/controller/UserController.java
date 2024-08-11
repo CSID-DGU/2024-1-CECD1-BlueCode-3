@@ -1,10 +1,16 @@
 package com.bluecode.chatbot.controller;
 
+import com.bluecode.chatbot.dto.UpdateEmailCallDto;
+import com.bluecode.chatbot.dto.UpdatePasswordCallDto;
 import com.bluecode.chatbot.dto.UserAddCallDto;
 import com.bluecode.chatbot.dto.UserInfoResponseDto;
 import com.bluecode.chatbot.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @Controller
+@Slf4j
 public class UserController {
     private final UserService userService;
 
@@ -30,9 +37,9 @@ public class UserController {
     }
 
     @PostMapping("/user/create")
-    public ResponseEntity<Void> addUser(@RequestBody UserAddCallDto userAddCallDto){
-        userService.addUser(userAddCallDto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Long> addUser(@RequestBody UserAddCallDto userAddCallDto){
+        Long userid=userService.addUser(userAddCallDto);
+        return ResponseEntity.ok(userid);
     }
 
     @PostMapping("/user/findId")
@@ -46,9 +53,13 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/getUserInfo/{loginId}")
-    public ResponseEntity getUserInfo(@PathVariable String loginId){
+    @GetMapping("/checkAuth/getUserInfo/{loginId}")
+    public ResponseEntity getUserInfo(@PathVariable Long loginId, @AuthenticationPrincipal Long userId){
         try {
+            if (!userId.equals(loginId)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("토큰과 요청 파라미터가 일치하지않음");
+            }
+
             UserInfoResponseDto responseDto=userService.getUserInfo(loginId);
             return ResponseEntity.ok(responseDto);
         } catch (IllegalArgumentException e){
@@ -58,10 +69,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/updatePassword")
-    public ResponseEntity<String> updatePassword(@RequestBody UserAddCallDto userAddCallDto){
+    @PostMapping("/checkAuth/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordCallDto updatePasswordCallDto){
         try {
-            userService.updatePassword(userAddCallDto);
+            userService.updatePassword(updatePasswordCallDto);
             return ResponseEntity.ok("비밀번호 수정되었습니다");
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -70,10 +81,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/updateEmail")
-    public ResponseEntity<String> updateEmail(@RequestBody UserAddCallDto userAddCallDto){
+    @PostMapping("/checkAuth/updateEmail")
+    public ResponseEntity<String> updateEmail(@RequestBody UpdateEmailCallDto updateEmailCallDto){
         try {
-            userService.updateEmail(userAddCallDto);
+            userService.updateEmail(updateEmailCallDto);
             return ResponseEntity.ok("이메일 수정되었습니다");
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());

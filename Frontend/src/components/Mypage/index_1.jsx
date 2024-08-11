@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
 
 
 function Study_theory() {
@@ -27,6 +28,54 @@ function Study_theory() {
   const [process, setProcess] = useState(0);
   const [current, setCurrent] = useState(5);
   const color = {color : "#008BFF"};
+
+  const [testValid, setTestValid] = useState(false);
+
+  const [missionDaily, setMissionDaily] = useState([]);
+  const [missionWeekly, setMissionWeekly] = useState([]);
+  const [challenge, setChallenge] = useState([]);
+
+  useEffect(() => {
+    // 서버에서 사용자 정보를 가져오는 함수
+    const getUserInfo = async () => {
+     try {
+      const userid = localStorage.getItem('userid');
+      const res = await axiosInstance.get(`/checkAuth/checkAuth/getUserInfo/${userid}`);
+      setTestValid(res.data.initTest);
+      setPoint(res.data.exp + 50);
+     }
+     catch (err){
+      console.error(err); 
+     }
+    };
+
+    const getMissionInfo = async () => {
+      try {
+       const userid = localStorage.getItem('userid');
+    
+       const UserMissionDataCallDto = {
+        'userId' : userid
+        };
+
+        const res = await axiosInstance.post('/mission/mission/find', UserMissionDataCallDto);
+        
+        setMissionDaily(res.data.listDaily);
+        setMissionWeekly(res.data.listWeekly);
+        setChallenge(res.data.listChallenge);
+      }
+      catch (err) {
+        console.error(err); 
+      }
+    };
+    
+    getUserInfo(); // 데이터를 불러오는 함수 호출
+    getMissionInfo();
+  }, []);
+
+  const navigate = useNavigate();
+  const enterExam = () => {
+    navigate('/test');
+  }
 
   return (
     <TestSection>
@@ -65,35 +114,51 @@ function Study_theory() {
               </svg>
               <Percentage> {current / 10 * 100}% </Percentage>
             </ProgressImg>
-            <Progress>
+            {!testValid && <Progress>
+              <Lecture> - 초기 테스트 미응시 </Lecture>
+              <SubLecture onClick={enterExam}> 초기 테스트 바로가기 </SubLecture>
+            </Progress>}
+            {testValid && <Progress>
               <Lecture> - 이전 수강 강의 </Lecture>
               <SubLecture> 구체적인 이전 수강 강의 </SubLecture>
               <Lecture> - 현재 수강 강의 </Lecture>
               <SubLecture> 구체적인 현재 수강 강의 </SubLecture>
               <Lecture> - 다음 수강 강의 </Lecture>
               <SubLecture> 구체적인 다음 수강 강의 </SubLecture>
-            </Progress>
+            </Progress>}
           </CurrentProgress>
           <ProgressName> ㅇ 미션/업적 진행 상황 </ProgressName>
           <CurrentProgress>
             <Mission style={{backgroundColor : "#00E5BA"}}>
               <MissionContent>
                 <Term> 일간 </Term>
-                <SubMissionContent></SubMissionContent>
+                <SubMissionContent>
+                  {missionDaily.map(item => (
+                    <SubMission key={item.id}> {item.text} </SubMission>
+                  ))}
+                </SubMissionContent>
               </MissionContent>
               <PointBtn style={{backgroundColor : "#00E5BA"}}> 포인트 획득 </PointBtn>
             </Mission>
             <Mission style={{backgroundColor : "#00CFEE"}}>
               <MissionContent>
                 <Term> 주간 </Term>
-                <SubMissionContent></SubMissionContent>
+                <SubMissionContent>
+                  {missionWeekly.map(item => (
+                    <SubMission key={item.id}> {item.text} </SubMission>
+                  ))}
+                </SubMissionContent>
               </MissionContent>
               <PointBtn style={{backgroundColor : "#00CFEE"}}> 포인트 획득 </PointBtn>
             </Mission>
             <Mission style={{backgroundColor : "#00B2FF"}}>
               <MissionContent>
                 <Term> 업적 </Term>
-                <SubMissionContent></SubMissionContent>
+                <SubMissionContent>
+                  {challenge.map(item => (
+                    <SubMission key={item.id}> {item.text} </SubMission>
+                  ))}
+                </SubMissionContent>
               </MissionContent>
               <PointBtn style={{backgroundColor : "#00B2FF"}}> 업적 보기 </PointBtn>
             </Mission>
@@ -284,7 +349,11 @@ const Term = styled.p`
   font-size : 1.25rem;
 `
 
-const SubMissionContent = styled.p`
+const SubMissionContent = styled.div`
+
+`
+
+const SubMission = styled.div`
 
 `
 

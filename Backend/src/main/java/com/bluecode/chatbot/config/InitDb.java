@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,14 +59,18 @@ public class InitDb {
         private final ChatRepository chatRepository;
         private final MissionRepository missionRepository;
         private final UserMissionRepository userMissionRepository;
-
+        private final BCryptPasswordEncoder bCryptPasswordEncoder;
         public void userInit() {
-            List<Users> users = new ArrayList<>();
-            users.add(createUser("testName", "testEmail", "testId", "1111", "11110033", false)); // 초기 테스트 미진행 유저
-            users.add(createUser("testName2", "testEmail2", "testId2", "1111", "22223344", true)); // 초기 테스트 진행 유저 (3챕터에서 시작)
-            userRepository.saveAll(users);
-        }
 
+            String encodedPassword=bCryptPasswordEncoder.encode("1111");
+            Users user1 = createUser("testName", "testEmail", "testId", encodedPassword, "11110033", false); // 초기 테스트 미진행 유저
+            Users user2 = createUser("testName2", "testEmail2", "testId2", encodedPassword, "22223344", true); // 초기 테스트 진행 유저 (3챕터에서 시작)
+            em.persist(user1);
+            em.persist(user2);
+            em.flush();
+            log.info("Users have been initialized");
+        }
+      
         public void curriculumInit() {
 
             // 루트
