@@ -36,9 +36,17 @@ public class Studies {
     @CreationTimestamp
     private LocalDate startDay;
 
-    // 학습 내용 전문
-    @Column(name = "text", columnDefinition = "MEDIUMTEXT")
-    private String text;
+    // 학습 내용 전문 - 이론
+    @Column(name = "text_def", columnDefinition = "MEDIUMTEXT")
+    private String textDef;
+
+    // 학습 내용 전문 - 실습
+    @Column(name = "text_code", columnDefinition = "MEDIUMTEXT")
+    private String textCode;
+
+    // 학습 내용 전문 - 연습문제
+    @Column(name = "text_quiz", columnDefinition = "MEDIUMTEXT")
+    private String textQuiz;
 
     // 해당 학습 통과 여부
     @Column(name = "passed")
@@ -52,14 +60,18 @@ public class Studies {
             Users user,
             Curriculums curriculum,
             boolean passed,
-            String text,
+            String textDef,
+            String textCode,
+            String textQuiz,
             LevelType level
     ) {
         Studies studies = new Studies();
         studies.setUser(user);
         studies.setCurriculum(curriculum);
         studies.setPassed(passed);
-        studies.setText(text);
+        studies.setTextDef(textDef);
+        studies.setTextCode(textCode);
+        studies.setTextQuiz(textQuiz);
         studies.setLevel(level);
 
         return studies;

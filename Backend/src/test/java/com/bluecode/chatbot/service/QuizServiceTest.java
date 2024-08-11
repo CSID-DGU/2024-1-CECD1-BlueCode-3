@@ -52,16 +52,13 @@ class QuizServiceTest {
 
     @Test
     @DisplayName("getRandomQuizzesByTypeAndLevel 메서드 정상 작동 테스트")
-    public void getRandomQuizzesByTypeAndLevel() throws Exception {
+    void getRandomQuizzesByTypeAndLevel() {
 
         //give
         Curriculums root = new Curriculums();
         root.setChapterNum(0);
         root.setParent(null);
         root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
         root.setTestable(false);
 
         curriculumRepository.save(root);
@@ -119,15 +116,12 @@ class QuizServiceTest {
 
     @Test
     @DisplayName("getRandomQuizzesByLevel 메서드 정상 작동 테스트")
-    public void getRandomQuizzesByLevel() throws Exception {
+    void getRandomQuizzesByLevel() {
         //given
         Curriculums root = new Curriculums();
         root.setChapterNum(0);
         root.setParent(null);
         root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
         root.setTestable(false);
 
         curriculumRepository.save(root);
@@ -183,6 +177,7 @@ class QuizServiceTest {
 
         // 문제는 2개여야 한다.
         Assertions.assertThat(result.size()).isEqualTo(2);
+        
 
         // result 의 각 문제는 DB에 존재하는 문제여야 한다.
         for (Quiz quiz : result) {
@@ -196,15 +191,12 @@ class QuizServiceTest {
 
     @Test
     @DisplayName("root 커리큘럼을 대상으로 할 시, Exception 이 발생한다.")
-    public void rootCurriculumExceptionTest() throws Exception {
+    void rootCurriculumExceptionTest() {
         //given
         Curriculums root = new Curriculums();
         root.setChapterNum(0);
         root.setParent(null);
         root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
         root.setTestable(false);
 
         int count = 100;
@@ -224,16 +216,13 @@ class QuizServiceTest {
 
     @Test
     @DisplayName("전체 문제 수가 요청한 문제 수보다 적을 경우, 존재하는 문제 수 만큼만 제공한다.")
-    public void limitOfQuizCountTest() throws Exception {
+    void limitOfQuizCountTest() {
 
         //given
         Curriculums root = new Curriculums();
         root.setChapterNum(0);
         root.setParent(null);
         root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
         root.setTestable(false);
 
         curriculumRepository.save(root);
@@ -287,16 +276,13 @@ class QuizServiceTest {
 
     @Test
     @DisplayName("챕터 대상 문제가 존재하지 않을 경우, Exception 발생")
-    public void notExistQuizOfCurriculum() throws Exception {
+    void notExistQuizOfCurriculum() {
 
         //given
         Curriculums root = new Curriculums();
         root.setChapterNum(0);
         root.setParent(null);
         root.setCurriculumName("루트 커리큘럼");
-        root.setKeywordEasy("");
-        root.setKeywordNormal("");
-        root.setKeywordHard("");
         root.setTestable(false);
         curriculumRepository.save(root);
 
@@ -304,9 +290,6 @@ class QuizServiceTest {
         chap100.setCurriculumName("챕터 100");
         chap100.setTestable(true);
         chap100.setParent(root);
-        chap100.setKeywordEasy("");
-        chap100.setKeywordNormal("");
-        chap100.setKeywordHard("");
         chap100.setChapterNum(100);
         curriculumRepository.save(chap100);
 

@@ -1,9 +1,6 @@
 package com.bluecode.chatbot.service;
 
-import com.bluecode.chatbot.domain.LevelType;
-import com.bluecode.chatbot.domain.Curriculums;
-import com.bluecode.chatbot.domain.Studies;
-import com.bluecode.chatbot.domain.Users;
+import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.repository.*;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 @Slf4j
@@ -47,6 +46,9 @@ class StudyServiceTest {
     @Autowired
     private QuizRepository quizRepository;
 
+    @Autowired
+    private UserMissionRepository userMissionRepository;
+
     @BeforeEach
     void beforeEach() {
         curriculumRepository.deleteAll();
@@ -54,6 +56,7 @@ class StudyServiceTest {
         chatRepository.deleteAll();
         testRepository.deleteAll();
         quizRepository.deleteAll();
+        userMissionRepository.deleteAll();
         userRepository.deleteAll();
     }
 
@@ -61,43 +64,79 @@ class StudyServiceTest {
     @DisplayName("createCurriculumStudyData 메서드 정상 테스트")
     void createCurriculumStudyData() {
         //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        List<Curriculums> curriculums = new ArrayList<>();
+
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
+
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
+
+        curriculums.add(root);
+        curriculums.addAll(chapters);
+        curriculums.addAll(sub);
 
         //when
         DataCallDto dto = new DataCallDto();
         dto.setUserId(user.getUserId());
         dto.setCurriculumId(root.getCurriculumId());
 
-        CurriculumChapResponseDto result = studyService.createCurriculumStudyData(dto);
+        studyService.createCurriculumStudyData(dto);
 
         //then
-        for (int i = 0; i < result.getList().size(); i++) {
-            Assertions.assertThat(result.getList().get(i).getCurriculumId()).isEqualTo(chapters.get(i).getCurriculumId());
-            Assertions.assertThat(result.getList().get(i).getText()).isEqualTo(chapters.get(i).getCurriculumName());
+        List<Studies> created = studyRepository.findAllByUser(user);
+
+        for (Studies study : created) {
+            Assertions.assertThat(study.getCurriculum()).isIn(curriculums);
+            Assertions.assertThat(study.getTextDef()).isNull();
+            Assertions.assertThat(study.getTextCode()).isNull();
+            Assertions.assertThat(study.getTextQuiz()).isNull();
+            Assertions.assertThat(study.getLevel()).isNull();
         }
     }
 
     @Test
     @DisplayName("createCurriculumStudyData 등록되지 않은 user는 예외 발생")
     void invalidUserData() {
-        //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        List<Curriculums> curriculums = new ArrayList<>();
+
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
+
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
+
+        curriculums.add(root);
+        curriculums.addAll(chapters);
+        curriculums.addAll(sub);
 
         //when
         DataCallDto dto = new DataCallDto();
@@ -111,23 +150,36 @@ class StudyServiceTest {
             //then
             Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 유저 테이블 id 입니다.");
         }
-
     }
 
     @Test
     @DisplayName("createCurriculumStudyData 등록되지 않은 root는 예외 발생")
     void invalidRootCurriculumData() {
-        //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        List<Curriculums> curriculums = new ArrayList<>();
+
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
 
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
+
+        curriculums.add(root);
+        curriculums.addAll(chapters);
+        curriculums.addAll(sub);
         //when
         DataCallDto dto = new DataCallDto();
         dto.setUserId(user.getUserId());
@@ -145,16 +197,31 @@ class StudyServiceTest {
     @Test
     @DisplayName("createCurriculumStudyData root 커리큘럼이 아니면 예외 발생")
     void invalidRootData() {
-        //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        List<Curriculums> curriculums = new ArrayList<>();
+
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
+
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
+
+        curriculums.add(root);
+        curriculums.addAll(chapters);
+        curriculums.addAll(sub);
 
         //when
         DataCallDto dto = new DataCallDto();
@@ -174,23 +241,44 @@ class StudyServiceTest {
     @DisplayName("createCurriculumStudyData 이미 생성된 Study 데이터가 존재하면 예외 발생")
     void DuplicateCreationData() {
         //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        List<Curriculums> curriculums = new ArrayList<>();
+
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
 
-        List<Studies> studies = new ArrayList<>();
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
-        for (int i = 0; i < 2; i++) {
-            studies.add(Studies.createStudy(user, chapters.get(i),false, null, LevelType.EASY));
-            studies.add(Studies.createStudy(user, chapters.get(i),false, null, LevelType.NORMAL));
-            studies.add(Studies.createStudy(user, chapters.get(i),false, null, LevelType.HARD));
+        curriculums.add(root);
+        curriculums.addAll(chapters);
+        curriculums.addAll(sub);
+
+        // study
+        List<Studies> studies = new ArrayList<>();
+        for (Curriculums chapter : chapters) {
+            studies.add(Studies.createStudy(user, chapter, false, null, null, null, null));
         }
+        for (Curriculums subChapter : sub) {
+            studies.add(Studies.createStudy(user, subChapter, false,
+                    String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", subChapter.getChapterNum(), subChapter.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", subChapter.getChapterNum(), subChapter.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", subChapter.getChapterNum(), subChapter.getSubChapterNum()), null));
+        }
+        studyRepository.saveAll(studies);
 
         //when
         DataCallDto dto = new DataCallDto();
@@ -206,38 +294,52 @@ class StudyServiceTest {
         }
     }
 
+    // temp
     @Test
     @DisplayName("getCurriculumProgress 메서드 정상 테스트")
     void getCurriculumProgress() {
         //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        Curriculums root = Curriculums.createCurriculum(null, null, "루트", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터3", "키워드3: not testable", null, null, false, 3, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
 
-        List<Studies> studies = new ArrayList<>();
-        List<Studies> easy = new ArrayList<>();
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터1", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
-        for (Curriculums chapter : chapters) {
-            if (chapter.isTestable()) {
-                Studies easyStudy = Studies.createStudy(user, chapter, true, null, LevelType.EASY);
-                easy.add(easyStudy);
-                studies.add(easyStudy);
-                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
-                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
-            } else {
-                Studies easyStudy = Studies.createStudy(user, chapter, true, null, LevelType.EASY);
-                easy.add(easyStudy);
-                studies.add(easyStudy);
-            }
+        List<Studies> studies = new ArrayList<>();
+        List<Studies> chapStudy = new ArrayList<>();
+        List<Studies> subChapStudy = new ArrayList<>();
+
+        studies.add(Studies.createStudy(user, root, false, null, null, null, null));
+
+        for (Curriculums curriculums : chapters) {
+            Studies temp = Studies.createStudy(user, curriculums, false, null, null, null, null);
+            studies.add(temp);
+            chapStudy.add(temp);
         }
 
+        for (Curriculums curriculums : sub) {
+
+            Studies temp = Studies.createStudy(user, curriculums, false,
+                    String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null);
+            studies.add(temp);
+            subChapStudy.add(temp);
+        }
         studyRepository.saveAll(studies);
 
         //when
@@ -246,47 +348,73 @@ class StudyServiceTest {
         dto.setCurriculumId(root.getCurriculumId());
 
         CurriculumPassedDto result = studyService.getCurriculumProgress(dto);
+        Deque<Studies> deque = new ArrayDeque<>(subChapStudy);
 
         //then
         for (int i = 0; i < result.getList().size(); i++) {
-            Assertions.assertThat(result.getList().get(i).getCurriculumId()).isEqualTo(chapters.get(i).getCurriculumId());
-            Assertions.assertThat(result.getList().get(i).getCurriculumName()).isEqualTo(chapters.get(i).getCurriculumName());
-            Assertions.assertThat(result.getList().get(i).getPassed()).isEqualTo(easy.get(i).isPassed());
+
+            CurriculumPassedElementDto elementDto = result.getList().get(i);
+
+            Assertions.assertThat(elementDto.getCurriculumId()).isEqualTo(chapStudy.get(i).getCurriculum().getCurriculumId());
+            Assertions.assertThat(elementDto.getCurriculumName()).isEqualTo(chapStudy.get(i).getCurriculum().getCurriculumName());
+            Assertions.assertThat(elementDto.getPassed()).isEqualTo(chapStudy.get(i).isPassed());
+
+            List<CurriculumPassedElementDto> subChap = elementDto.getSubChapters();
+
+            for (int j = 0; j < subChap.size(); j++) {
+                CurriculumPassedElementDto subChapElement = subChap.get(j);
+                Studies temp = deque.removeFirst();
+                Assertions.assertThat(subChapElement.getCurriculumId()).isEqualTo(temp.getCurriculum().getCurriculumId());
+                Assertions.assertThat(subChapElement.getCurriculumName()).isEqualTo(temp.getCurriculum().getCurriculumName());
+                Assertions.assertThat(subChapElement.getPassed()).isEqualTo(temp.isPassed());
+            }
         }
     }
 
     @Test
     @DisplayName("getCurriculumProgress 등록되지 않은 user는 예외 발생")
     void invalidUser() {
-        //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터3", "키워드3: not testable", null, null, false, 3, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
 
-        List<Studies> studies = new ArrayList<>();
-        List<Studies> easy = new ArrayList<>();
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
-        for (Curriculums chapter : chapters) {
-            if (chapter.isTestable()) {
-                Studies easyStudy = Studies.createStudy(user, chapter, true, null, LevelType.EASY);
-                easy.add(easyStudy);
-                studies.add(easyStudy);
-                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
-                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
-            } else {
-                Studies easyStudy = Studies.createStudy(user, chapter, true, null, LevelType.EASY);
-                easy.add(easyStudy);
-                studies.add(easyStudy);
-            }
+        List<Studies> studies = new ArrayList<>();
+        List<Studies> chapStudy = new ArrayList<>();
+        List<Studies> subChapStudy = new ArrayList<>();
+
+        studies.add(Studies.createStudy(user, root, false, null, null, null, null));
+
+        for (Curriculums curriculums : chapters) {
+            Studies temp = Studies.createStudy(user, curriculums, false, null, null, null, null);
+            studies.add(temp);
+            chapStudy.add(temp);
         }
 
+        for (Curriculums curriculums : sub) {
+
+            Studies temp = Studies.createStudy(user, curriculums, false,
+                    String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null);
+            studies.add(temp);
+            subChapStudy.add(temp);
+        }
         studyRepository.saveAll(studies);
 
         //when
@@ -306,35 +434,47 @@ class StudyServiceTest {
     @Test
     @DisplayName("getCurriculumProgress 등록되지 않은 root는 예외 발생")
     void invalidRoot() {
-        //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터3", "키워드3: not testable", null, null, false, 3, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
 
-        List<Studies> studies = new ArrayList<>();
-        List<Studies> easy = new ArrayList<>();
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
-        for (Curriculums chapter : chapters) {
-            if (chapter.isTestable()) {
-                Studies easyStudy = Studies.createStudy(user, chapter, true, null, LevelType.EASY);
-                easy.add(easyStudy);
-                studies.add(easyStudy);
-                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
-                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
-            } else {
-                Studies easyStudy = Studies.createStudy(user, chapter, true, null, LevelType.EASY);
-                easy.add(easyStudy);
-                studies.add(easyStudy);
-            }
+        List<Studies> studies = new ArrayList<>();
+        List<Studies> chapStudy = new ArrayList<>();
+        List<Studies> subChapStudy = new ArrayList<>();
+
+        studies.add(Studies.createStudy(user, root, false, null, null, null, null));
+
+        for (Curriculums curriculums : chapters) {
+            Studies temp = Studies.createStudy(user, curriculums, false, null, null, null, null);
+            studies.add(temp);
+            chapStudy.add(temp);
         }
 
+        for (Curriculums curriculums : sub) {
+
+            Studies temp = Studies.createStudy(user, curriculums, false,
+                    String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null);
+            studies.add(temp);
+            subChapStudy.add(temp);
+        }
         studyRepository.saveAll(studies);
 
         //when
@@ -354,35 +494,47 @@ class StudyServiceTest {
     @Test
     @DisplayName("getCurriculumProgress root가 아닌 curriculum은 예외 발생")
     void invalidChapter() {
-        //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
+
+        // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        chapters.add(Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터2", "키워드2: easy", "키워드2: normal", "키워드2: hard", true, 2, 1));
-        chapters.add(Curriculums.createCurriculum(root, "챕터3", "키워드3: not testable", null, null, false, 3, 1));
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
         curriculumRepository.saveAll(chapters);
 
-        List<Studies> studies = new ArrayList<>();
-        List<Studies> easy = new ArrayList<>();
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
-        for (Curriculums chapter : chapters) {
-            if (chapter.isTestable()) {
-                Studies easyStudy = Studies.createStudy(user, chapter, true, null, LevelType.EASY);
-                easy.add(easyStudy);
-                studies.add(easyStudy);
-                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
-                studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
-            } else {
-                Studies easyStudy = Studies.createStudy(user, chapter, true, null, LevelType.EASY);
-                easy.add(easyStudy);
-                studies.add(easyStudy);
-            }
+        List<Studies> studies = new ArrayList<>();
+        List<Studies> chapStudy = new ArrayList<>();
+        List<Studies> subChapStudy = new ArrayList<>();
+
+        studies.add(Studies.createStudy(user, root, false, null, null, null, null));
+
+        for (Curriculums curriculums : chapters) {
+            Studies temp = Studies.createStudy(user, curriculums, false, null, null, null, null);
+            studies.add(temp);
+            chapStudy.add(temp);
         }
 
+        for (Curriculums curriculums : sub) {
+
+            Studies temp = Studies.createStudy(user, curriculums, false,
+                    String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null);
+            studies.add(temp);
+            subChapStudy.add(temp);
+        }
         studyRepository.saveAll(studies);
 
         //when
@@ -401,183 +553,179 @@ class StudyServiceTest {
 
     @Test
     @DisplayName("chapterPass 메서드 통과 상황 정상 테스트")
-    public void chapterPass() throws Exception {
-        //given
+    void chapterPass() {
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
+        // 커리큘럼
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
-        Curriculums chapter = Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1);
-        curriculumRepository.save(chapter);
+
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
+
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.EASY));
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
+        List<Studies> chapStudy = new ArrayList<>();
+        List<Studies> subChapStudy = new ArrayList<>();
+
+        studies.add(Studies.createStudy(user, root, false, null, null, null, null));
+
+        for (Curriculums curriculums : chapters) {
+            Studies temp = Studies.createStudy(user, curriculums, false, null, null, null, null);
+            studies.add(temp);
+            chapStudy.add(temp);
+        }
+
+        for (Curriculums curriculums : sub) {
+
+            Studies temp = Studies.createStudy(user, curriculums, false,
+                    String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), LevelType.EASY);
+            studies.add(temp);
+            subChapStudy.add(temp);
+        }
         studyRepository.saveAll(studies);
 
         //when
         CurriculumPassCallDto dto = new CurriculumPassCallDto();
         dto.setUserId(user.getUserId());
-        dto.setCurriculumId(chapter.getCurriculumId());
-        // EASY - NORMAL 까지 모두 통과 상황 가정
-        dto.setCurrentLevel(LevelType.EASY);
-        dto.setNextLevel(LevelType.NORMAL);
+        dto.setCurriculumId(subChapStudy.get(0).getCurriculum().getCurriculumId());
 
-        try {
-            //when
-            studyService.chapterPass(dto);
-        } catch (Exception e) {
-            //then
-            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 루트 커리큘럼 id 입니다.");
-        }
-    }
+        boolean result = studyService.subChapterPass(dto);
 
-    @Test
-    @DisplayName("chapterPass 메서드 미통과 상황 정상 테스트")
-    public void chapterFail() throws Exception {
-        //given
-        Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
-        userRepository.save(user);
-
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
-        curriculumRepository.save(root);
-        Curriculums chapter = Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1);
-        curriculumRepository.save(chapter);
-
-        List<Studies> studies = new ArrayList<>();
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.EASY));
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
-        studyRepository.saveAll(studies);
-
-        //when
-        CurriculumPassCallDto dto = new CurriculumPassCallDto();
-        dto.setUserId(user.getUserId());
-        dto.setCurriculumId(chapter.getCurriculumId());
-        // EASY - EASY로 설정 시, 챕터 미통과 처리
-        dto.setCurrentLevel(LevelType.EASY);
-        dto.setNextLevel(LevelType.EASY);
-
-        String result = studyService.chapterPass(dto);
-
-        //then
-        for (Studies study : studies) {
-            // 모든 난이도 false
-            Assertions.assertThat(study.isPassed()).isEqualTo(false);
-        }
-        Assertions.assertThat(result).isEqualTo("챕터 학습 미완료");
+        Assertions.assertThat(result).isTrue();
+        Assertions.assertThat(subChapStudy.get(0).isPassed()).isTrue();
     }
 
     @Test
     @DisplayName("chapterPass 학습중이 아닌 챕터 통과 요청시 예외 발생")
-    public void notStartCurriculum() throws Exception {
+    void notStartCurriculum() {
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 1);
+        // 커리큘럼
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
-        Curriculums chapter = Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1);
-        curriculumRepository.save(chapter);
 
-        // root에 포함되지 않는 chapter
-        Curriculums root2 = Curriculums.createCurriculum(null, "루트 커리큘럼2", "", "", "", false, 0, 1);
-        curriculumRepository.save(root2);
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
 
-        Curriculums notIncluded = Curriculums.createCurriculum(root2, "챕터", "키워드: easy", "키워드: normal", "키워드: hard", true, 1, 1);
-        curriculumRepository.save(notIncluded);
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.EASY));
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
-        studyRepository.saveAll(studies);
+        List<Studies> chapStudy = new ArrayList<>();
+        List<Studies> subChapStudy = new ArrayList<>();
 
-        //when
-        CurriculumPassCallDto dto = new CurriculumPassCallDto();
-        dto.setUserId(user.getUserId());
-        dto.setCurriculumId(notIncluded.getCurriculumId());
-        dto.setCurrentLevel(LevelType.EASY);
-        dto.setNextLevel(LevelType.HARD);
+        studies.add(Studies.createStudy(user, root, false, null, null, null, null));
 
-        try {
-            //when
-            studyService.chapterPass(dto);
-        } catch (Exception e) {
-            //then
-            Assertions.assertThat(e.getMessage()).isEqualTo("학습중인 챕터가 아닙니다.");
+        for (Curriculums curriculums : chapters) {
+            Studies temp = Studies.createStudy(user, curriculums, false, null, null, null, null);
+            studies.add(temp);
+            chapStudy.add(temp);
         }
-    }
 
-    @Test
-    @DisplayName("chapterPass 맞지 않는 Level 설정 시 예외 발생")
-    public void invalidLevelSet() throws Exception {
-        //given
-        Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
-        userRepository.save(user);
+        for (Curriculums curriculums : sub) {
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 2);
-        curriculumRepository.save(root);
-        Curriculums chapter = Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1);
-        curriculumRepository.save(chapter);
-
-        List<Studies> studies = new ArrayList<>();
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.EASY));
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.NORMAL));
-        studies.add(Studies.createStudy(user, chapter, false, null, LevelType.HARD));
+            Studies temp = Studies.createStudy(user, curriculums, false,
+                    String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null);
+            studies.add(temp);
+            subChapStudy.add(temp);
+        }
         studyRepository.saveAll(studies);
 
         //when
         CurriculumPassCallDto dto = new CurriculumPassCallDto();
         dto.setUserId(user.getUserId());
-        dto.setCurriculumId(chapter.getCurriculumId());
-        // HARD - EASY로 설정 시, 예외 발생
-        dto.setCurrentLevel(LevelType.HARD);
-        dto.setNextLevel(LevelType.EASY);
+        dto.setCurriculumId(sub.get(0).getCurriculumId());
 
         try {
             //when
-            studyService.chapterPass(dto);
+            studyService.subChapterPass(dto);
         } catch (Exception e) {
             //then
-            Assertions.assertThat(e.getMessage()).isEqualTo("유효하지 않은 currentLevel 과 NextLevel 입니다.");
+            Assertions.assertThat(e.getMessage()).isEqualTo("학습중이 아닌 서브 챕터입니다.");
         }
     }
 
     @Test
     @DisplayName("getCurriculumText 정상 로직 테스트(이미 생성된 text 리턴)")
-    public void getCurriculumText() throws Exception {
+    void getCurriculumText() {
         //given
+        // 유저
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        Curriculums root = Curriculums.createCurriculum(null, "루트 커리큘럼", "", "", "", false, 0, 1);
+        // 커리큘럼
+        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
         curriculumRepository.save(root);
-        Curriculums chapter = Curriculums.createCurriculum(root, "챕터1", "키워드1: easy", "키워드1: normal", "키워드1: hard", true, 1, 1);
-        curriculumRepository.save(chapter);
+
+        // 챕터
+        List<Curriculums> chapters = new ArrayList<>();
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        chapters.add(chap1);
+        curriculumRepository.saveAll(chapters);
+
+        // 서브 챕터
+        List<Curriculums> sub = new ArrayList<>();
+        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+        curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();
-        studies.add(Studies.createStudy(user, chapter, false, "학습 text: EASY", LevelType.EASY));
-        studies.add(Studies.createStudy(user, chapter, false, "학습 text: NORMAL", LevelType.NORMAL));
-        studies.add(Studies.createStudy(user, chapter, false, "학습 text: HARD", LevelType.HARD));
+        List<Studies> chapStudy = new ArrayList<>();
+        List<Studies> subChapStudy = new ArrayList<>();
+
+        // study
+        studies.add(Studies.createStudy(user, root, false, null, null, null, null));
+
+        for (Curriculums curriculums : chapters) {
+            Studies temp = Studies.createStudy(user, curriculums, false, null, null, null, null);
+            studies.add(temp);
+            chapStudy.add(temp);
+        }
+
+        for (Curriculums curriculums : sub) {
+
+            Studies temp = Studies.createStudy(user, curriculums, false,
+                    String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
+                    String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null);
+            studies.add(temp);
+            subChapStudy.add(temp);
+        }
         studyRepository.saveAll(studies);
 
+        //when
+        CurriculumTextCallDto dto = new CurriculumTextCallDto();
+        dto.setUserId(user.getUserId());
+        dto.setCurriculumId(sub.get(0).getCurriculumId());
+        dto.setTextType(TextType.DEF);
+        dto.setLevelType(LevelType.EASY);
 
-        LevelType[] arr = new LevelType[]{LevelType.EASY, LevelType.NORMAL, LevelType.HARD};
+        StudyTextDto result = studyService.getCurriculumText(dto);
 
-        for (LevelType levelType : arr) {
-            //when
-            CurriculumTextCallDto dto = new CurriculumTextCallDto();
-            dto.setUserId(user.getUserId());
-            dto.setCurriculumId(chapter.getCurriculumId());
-            dto.setLevelType(levelType);
-
-            //then
-            StudyTextDto result = studyService.getCurriculumText(dto);
-            Assertions.assertThat(result.getText()).isEqualTo("학습 text: " + levelType);
-        }
+        //then
+        Assertions.assertThat(result.getText()).isEqualTo("챕터 1 - 서브챕터 1: DEF 학습 자료");
     }
-
-
 }

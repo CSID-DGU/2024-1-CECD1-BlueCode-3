@@ -4,6 +4,8 @@ import com.bluecode.chatbot.domain.Curriculums;
 import com.bluecode.chatbot.repository.CurriculumRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -19,14 +21,13 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class ApiService {
 
-    @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
-    private CurriculumRepository curriculumRepository;
+    private final RestTemplate restTemplate;
+    private final CurriculumRepository curriculumRepository;
 
     @Value("${api.key}")
     private String apiKey;
@@ -36,6 +37,7 @@ public class ApiService {
     // gpt API에 응답을 요청
     public String sendPostRequest(List<Map<String, String>> messages, Long curriculumId) {
         String rules = loadRules(curriculumId); // 규칙 로드
+        log.info("rules: {}", rules);
         messages.add(Map.of("role", "system", "content", rules));
         Map<String, Object> body = Map.of(
                 "model", "gpt-4o",
@@ -53,7 +55,7 @@ public class ApiService {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new RuntimeException("API 호출 실패! Status: " + response.getStatusCode());
+            throw new IllegalArgumentException("API 호출 실패! Status: " + response.getStatusCode());
         }
     }
 
@@ -63,16 +65,13 @@ public class ApiService {
             JsonNode root = objectMapper.readTree(response);
             return root.path("choices").path(0).path("message").path("content").asText();
         } catch (IOException e) {
-            throw new RuntimeException("JSON 응답 파싱 에러", e);
+            throw new IllegalArgumentException("JSON 응답 파싱 에러", e);
         }
     }
 
     // 루트 커리큘럼 출력
     private String getRootCurriculumName(Curriculums curriculum) {
-        while (curriculum.getParent() != null) {
-            curriculum = curriculum.getParent();
-        }
-        return curriculum.getCurriculumName();
+        return curriculum.getRoot().getCurriculumName();
     }
 
     // rules.txt 파일에서 응답 규칙을 로드
@@ -85,7 +84,7 @@ public class ApiService {
             String rules = new String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8);
             return rules.replace("Plang", rootCurriculumName);
         } catch (IOException e) {
-            throw new RuntimeException("응답 규칙 로드 실패", e);
+            throw new IllegalArgumentException("응답 규칙 로드 실패", e);
         }
     }
 }
