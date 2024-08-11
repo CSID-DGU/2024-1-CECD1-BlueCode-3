@@ -27,6 +27,28 @@ function Study_theory() {
   const [process, setProcess] = useState(0);
   const color = {color : "#008BFF"};
 
+  const [date, setDate] = useState(true);
+  const [curriculum, setCurriculum] = useState(false);
+  const [tag, setTag] = useState(false);
+
+  const selectDate = () => {
+    setDate(true);
+    setCurriculum(false);
+    setTag(false);
+  }
+
+  const selectCurriculum = () => {
+    setDate(false);
+    setCurriculum(true);
+    setTag(false);
+  }
+
+  const selectTag = () => {
+    setDate(false);
+    setCurriculum(false);
+    setTag(true);
+  }
+
   return (
     <TestSection>
       <SectionBar>
@@ -54,16 +76,98 @@ function Study_theory() {
         </NavSection>
         <ContentSection width={contentWidth}>
           <Order>
-            <OrderType> ㅇ 날짜별 </OrderType>
-            <OrderType> ㅇ 과정별 </OrderType>
-            <OrderType> ㅇ 태그별 </OrderType>
+            <OrderType style={date?color:{}} onClick={selectDate}> ㅇ 날짜별 </OrderType>
+            <OrderType style={curriculum?color:{}} onClick={selectCurriculum}> ㅇ 과정별 </OrderType>
+            <OrderType style={tag?color:{}} onClick={selectTag}> ㅇ 태그별 </OrderType>
           </Order>
-          <QuestionRecord>
-            <QuestionTitle>
-
-            </QuestionTitle>
-            <QuestionContent>
-
+          <QuestionRecord height={height}>
+            {date && <QuestionTitle>
+              <QuestionDate> - 오늘 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 어제 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 8월 8일 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 8월 7일 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 8월 6일 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+            </QuestionTitle>}
+            {curriculum && <QuestionTitle>
+              <QuestionDate> - 제1장 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 제2장 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 제3장 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 제4장 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 제5장 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+            </QuestionTitle>}
+            {tag && <QuestionTitle>
+              <QuestionDate> - 개념 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 코드 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+              <QuestionDate> - 오류 </QuestionDate>
+              <QuestionList>
+                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
+                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
+              </QuestionList>
+            </QuestionTitle>}
+            <QuestionContent height={height}>
+              <Dialog_client> <p> 구체적인 질문 </p> </Dialog_client>
+              <Dialog_server> <p>구체적인 답변+구체적인 답변+구체적인 답변+구체적인 답변+구체적인 답변 </p> </Dialog_server>
             </QuestionContent>
           </QuestionRecord>
         </ContentSection>
@@ -183,15 +287,76 @@ const OrderType = styled.div`
 
 const QuestionRecord = styled.div`
   display : flex;
+  margin-top : 1rem;
+  height : ${(props) => `${(props.height - 265) / 16}rem`};
 `
 
 const QuestionTitle = styled.div`
-  width : 42.5rem;
-  height : 32.875rem;
+  width : 40rem;
+  padding : 0.75rem 1.25rem 1.25rem;
+  overflow : scroll;
+  height : 30.375rem;
+
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `
 
+const QuestionDate = styled.div`
+  font-weight : bold;
+  margin : 0.5rem 0rem;
+ `
+
+ const QuestionList = styled.div`
+  margin : 0.5rem 0rem 1.5rem 0.75rem;
+ `
+
+ const QuestionListSub = styled.div`
+  padding : 0.05rem;
+ `
+
 const QuestionContent = styled.div`
-  width : 42.5rem;
+  display : flex;
+  width : 37.5rem;
+  padding : 1.25rem;
+  overflow : scroll;
+  align-item : right;
   border-radius : 1rem;
+  flex-direction : column;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  height : ${(props) => `${(props.height - 265) / 16}rem`};
+
+  &::-webkit-scrollbar {
+    display : none;
+  }
+`
+
+const Dialog_client = styled.div`
+  display : flex;
+  justify-content : flex-end;
+
+  p {
+    margin : 0.5rem 0;
+    width : fit-content;
+    background : #FFFFFF;
+    padding : 0.75rem 1rem;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
+    border-radius : 1.5rem 1.5rem 0rem 1.5rem;
+  }
+`
+
+const Dialog_server = styled.div`
+  p {
+    color : #FFFFFF;
+    margin : 0.5rem 0;
+    width : fit-content;
+    padding : 0.75rem 1rem;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    background : rgba(0, 139, 255, 0.75);
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
+    border-radius : 1.5rem 1.5rem 1.5rem 0rem;
+  }
 `

@@ -3,9 +3,11 @@ package com.bluecode.chatbot.config.jwt;
 import com.bluecode.chatbot.domain.Users;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -15,6 +17,7 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class TokenProvider {
     private final JwtProperties jwtProperties;
 
@@ -74,13 +77,21 @@ public class TokenProvider {
 
     // jwt 토큰으로 인증 정보 가져옴
     public Authentication getAuthentication(String token){
-        Claims claims=getClaims(token);
 
+        Long userId=getUserId(token);
         Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
 
-        return new UsernamePasswordAuthenticationToken(
-                new org.springframework.security.core.userdetails.User(claims.getSubject(),"",authorities),token,authorities
-        );
+        return new UsernamePasswordAuthenticationToken(userId, token, authorities);
+        // 기존에는 security context 에 userdetails 를 저장, 현재는 토큰에서 추출된 userId를 저장하여 token에서의 userid와 requeset에서의 userid를 컨트롤러에서 비교
+
+
+        //Claims claims=getClaims(token);
+        //UserDetails userDetails = new org.springframework.security.core.userdetails.User(claims.getSubject(), "", authorities);
+        //return new UsernamePasswordAuthenticationToken(userDetails, token, authorities);
+
+        //return new UsernamePasswordAuthenticationToken(
+        //        new org.springframework.security.core.userdetails.User(claims.getSubject(),"",authorities),token,authorities
+        //);
     }
 
     private Claims getClaims(String token){

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
 import Input from '../../input.png';
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 
@@ -26,15 +26,34 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
-  const color = {color : "#008BFF"};
+  const color = { color : "#008BFF" };
 
 
   const [dialog, setDialog] = useState("");
-  const [div, setDiv] = useState([]);
+  const [dialogs, setDiv] = useState([]);
   const AddDialog = () => {
-    setDiv([...div, <Dialog> {dialog} </Dialog>]);
-    setDialog("");
+    if(dialog) {
+      setDiv([...dialogs, <Dialog> {dialog} </Dialog>]);
+      setDialog("");
+    }
   }
+  
+  const chat = useRef();
+  const scrollToBottom = () => {
+    chat.current?.scrollIntoView();
+  };
+
+  useEffect(()=>{
+    scrollToBottom();
+  }, [dialogs]);
+
+  const [divValue, setDivValue] = useState('');
+  const borderStyle = { borderRadius : "0.5rem", borderBottom : "0.25rem solid #008BFF" };
+  const getDivValue = (divVal) => {
+    setDivValue(divVal);
+  }
+
+  
 
   return (
     <TestSection>
@@ -57,17 +76,18 @@ function Study_theory() {
           <Dynamic>
           </Dynamic>
         </NavSection>
-        <ContentSection width={contentWidth}>
+        <ContentSection width={width}>
             <Chat height={height}>
-              {div.map(div => div)}
+              {dialogs.map(div => div)}
+              <div ref={chat}></div>
             </Chat>
             <ChatType>
-              <Type> #개념 </Type>
-              <Type> #코드 </Type>
-              <Type> #오류 </Type>
+              <Type style={divValue === "개념"?borderStyle:{}} onClick={()=>getDivValue("개념")}> #개념 </Type>
+              <Type style={divValue === "코드"?borderStyle:{}} onClick={()=>getDivValue("코드")}> #코드 </Type>
+              <Type style={divValue === "오류"?borderStyle:{}} onClick={()=>getDivValue("오류")}> #오류 </Type>
             </ChatType>
             <ChatInput>
-              <InputArea width={contentWidth} value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
+              <InputArea width={width} value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
               <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>          
             </ChatInput>
         </ContentSection>
@@ -190,6 +210,8 @@ const Dialog = styled.p`
   width : fit-content;
   background : #FFFFFF;
   padding : 0.75rem 1rem;
+  word-break : break-word;
+  overflow-wrap : break-word;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
   border-radius : 1.5rem 1.5rem 0rem 1.5rem;
 `
@@ -211,7 +233,7 @@ const Type = styled.div`
 
   &:hover {
     border-radius : 0.5rem;
-    background : rgba(0, 139, 255, 0.25);
+    border-bottom : 0.25rem solid rgba(0, 139, 255, 0.375);
   }
 `
 
@@ -237,7 +259,7 @@ const InputButton = styled.button`
   color : #FFFFFF;
   height : 2.5rem;
   font-weight : bold;
-  margin : 0.375rem 0;
+  margin : 0.375rem 0rem;
   font-size : 1.25rem;
   background : #008BFF;
   border-radius : 1.25rem;

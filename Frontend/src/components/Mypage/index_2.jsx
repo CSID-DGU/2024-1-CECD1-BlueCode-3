@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import axiosInstance from '../../axiosInstance'
 
 
 function Study_theory() {
@@ -26,6 +28,48 @@ function Study_theory() {
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
   const color = {color : "#008BFF"};
+
+  useEffect(()=>{
+    const getChapters = async () => {
+      try {
+        const rootid = localStorage.getItem('rootid');
+
+        const res = await axiosInstance.get(`/curriculum/curriculum/${rootid}`);
+        setChapter(res.data.list);
+      }
+      catch (err){
+        console.error(err); 
+      }
+    }
+
+    const getCurrentChapters = async () => {
+      try {
+        const rootid = localStorage.getItem('rootid');
+        const userid = localStorage.getItem('userid');
+
+        const datacalldto = {
+          'userId' : userid,
+          'curriculumId': rootid
+        };
+
+        const res = await axiosInstance.post('/curriculum/curriculum/chapters', datacalldto);
+        if(res.data.list[1])
+          setCurrentChapter(res.data.list[1].curriculumId);
+        else
+          setCurrentChapter(0);
+      }
+      catch (err){
+        console.error(err); 
+      }
+    }
+
+    getChapters();
+    getCurrentChapters();
+  }, []);
+
+  const [chapter, setChapter] = useState([]);
+  const [currentChapter, setCurrentChapter] = useState();
+
 
   return (
     <TestSection>
@@ -54,6 +98,9 @@ function Study_theory() {
         </NavSection>
         <ContentSection width={contentWidth}>
           <LectureInfo> ㅇ 이전 교육 복습 </LectureInfo>
+          {chapter.map(item => (
+            <Chapter key={item.id} style={(item.curriculumId <= currentChapter)?color:{}}> {item.text} </Chapter>
+          ))}
         </ContentSection>
       </Content>
     </TestSection>
@@ -162,4 +209,7 @@ const LectureInfo = styled.p`
   font-weight : bold;
   font-size : 1.05rem;
   color : rgba(0, 0, 0, 0.5);
+`
+
+const Chapter = styled.div`
 `

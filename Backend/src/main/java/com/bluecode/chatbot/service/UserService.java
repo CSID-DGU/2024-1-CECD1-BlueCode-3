@@ -1,6 +1,8 @@
 package com.bluecode.chatbot.service;
 
 import com.bluecode.chatbot.domain.Users;
+import com.bluecode.chatbot.dto.UpdateEmailCallDto;
+import com.bluecode.chatbot.dto.UpdatePasswordCallDto;
 import com.bluecode.chatbot.dto.UserAddCallDto;
 import com.bluecode.chatbot.dto.UserInfoResponseDto;
 import com.bluecode.chatbot.repository.UserRepository;
@@ -29,8 +31,8 @@ public class UserService implements UserDetailsService {
     }
 
     // 유저 정보 반환
-    public UserInfoResponseDto getUserInfo(String userLoginId){
-        Optional<Users> user=userRepository.findByLoginId(userLoginId);
+    public UserInfoResponseDto getUserInfo(Long userId){
+        Optional<Users> user=userRepository.findByUserId(userId);
         if(user.isEmpty()){
             throw new IllegalArgumentException("유저 ID 존재하지 않음");
         }
@@ -44,17 +46,18 @@ public class UserService implements UserDetailsService {
         responseDto.setBirth(user.get().getBirth());
         responseDto.setUsername(user.get().getUsername());
         responseDto.setInitTest(user.get().isInitTest());
+        responseDto.setId(user.get().getId());
         return responseDto;
     }
 
 
     // 유저 추가 (회원 가입)
     @Transactional
-    public void addUser(UserAddCallDto userAddCallDto){
+    public Long addUser(UserAddCallDto userAddCallDto){
         // 가입 DTO 넘어올때 중복 체크
-        if(userRepository.existsByUsername(userAddCallDto.getUsername())){
-            throw new IllegalArgumentException("Username already exists");
-        }
+        //if(userRepository.existsByUsername(userAddCallDto.getUsername())){
+        //    throw new IllegalArgumentException("Username already exists");
+        //}
         if (userRepository.existsByEmail(userAddCallDto.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }
@@ -71,6 +74,7 @@ public class UserService implements UserDetailsService {
                 userAddCallDto.getBirth(),
                 false);
         userRepository.save(user);
+        return user.getUserId();
     }
 
     // 유저 이름 , 이메일로 저장되어있는 로그인 id 반환
@@ -85,25 +89,25 @@ public class UserService implements UserDetailsService {
 
     // 비밀번호 수정
     @Transactional
-    public void updatePassword(UserAddCallDto userAddCallDto) throws Exception{
-        Optional<Users> user=userRepository.findByLoginId(userAddCallDto.getId());
+    public void updatePassword(UpdatePasswordCallDto updatePasswordCallDto) throws Exception{
+        Optional<Users> user=userRepository.findByUserId(updatePasswordCallDto.getUserId());
         if(user.isEmpty()){
             throw new IllegalArgumentException("유저 ID 존재하지 않음");
         }
         log.info("해당되는 로그인 id " + user.get().getId());
-        String encodedPassword=bCryptPasswordEncoder.encode(userAddCallDto.getPassword());
+        String encodedPassword=bCryptPasswordEncoder.encode(updatePasswordCallDto.getPassword());
         user.get().setPassword(encodedPassword);
     }
 
     // 이메일 수정
     @Transactional
-    public void updateEmail(UserAddCallDto userAddCallDto) throws Exception{
-        Optional<Users> user=userRepository.findByLoginId(userAddCallDto.getId());
+    public void updateEmail(UpdateEmailCallDto updateEmailCallDto) throws Exception{
+        Optional<Users> user=userRepository.findByUserId(updateEmailCallDto.getUserId());
         if(user.isEmpty()){
             throw new IllegalArgumentException("유저 ID 존재하지 않음");
         }
         log.info("해당되는 로그인 id " + user.get().getId());
-        user.get().setEmail(userAddCallDto.getEmail());
+        user.get().setEmail(updateEmailCallDto.getEmail());
     }
 
     @Transactional
