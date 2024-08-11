@@ -46,4 +46,21 @@ public class Tests {
     // 테스트 타입(초기, 이해도)
     @Enumerated(EnumType.STRING)
     private TestType testType;
+
+    public static Tests createTest(
+            Users user,
+            Quiz quiz,
+            int wrongCount,
+            boolean passed,
+            TestType testType
+    ) {
+        Tests test = new Tests();
+        test.setUser(user);
+        test.setQuiz(quiz);
+        test.setWrongCount(wrongCount);
+        test.setPassed(passed);
+        test.setTestType(testType);
+
+        return test;
+    }
 }

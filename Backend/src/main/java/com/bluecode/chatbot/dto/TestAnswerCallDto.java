@@ -11,6 +11,5 @@ public class TestAnswerCallDto {
 
     private Long testId;
     private Long userId;
-    private Long quizId;
     private String answer;
 }

@@ -22,7 +22,7 @@ public class QuizService {
     private final QuizRepository quizRepository;
 
     // 특정 커리큘럼, 특정 퀴즈 레벨, 특정 유형의 n개의 문제를 뽑는 메서드
-    public List<Quiz> getRandomQuizzesByTypeAndLevel(Curriculums curriculums, QuizType type, QuizLevel level, int count) throws Exception {
+    public List<Quiz> getRandomQuizzesByTypeAndLevel(Curriculums curriculums, QuizType type, QuizLevel level, int count) {
         log.info("getRandomQuizzesByType curriculum: {}, type: {}, level: {}, count: {}", curriculums.getCurriculumName(), type, level, count);
 
         // 루트 커리큘럼을 대상으로 호출 시 Exception 발생
@@ -45,21 +45,21 @@ public class QuizService {
         // count로 정한 수만큼 문제를 선택하여 담은 리스트
         List<Quiz> selectedQuizzes = quizzes.stream()
                 .limit(count)
-                .collect(Collectors.toList());
+                .toList();
 
         log.info("Selected quizzes: {}", selectedQuizzes);
         return selectedQuizzes;
     }
 
     // 특정 커리큘럼, 특정 퀴즈 레벨의 n개의 문제를 뽑는 메서드
-    public List<Quiz> getRandomQuizzesByLevel(Curriculums curriculums, QuizLevel quizLevel, int count) throws Exception {
+    public List<Quiz> getRandomQuizzesByLevel(Curriculums curriculums, QuizLevel quizLevel, int count) {
 
         // 루트 커리큘럼을 대상으로 호출 시 Exception 발생
         if (curriculums.getChapterNum() == 0) {
             throw new IllegalArgumentException("루트 커리큘럼은 유효하지 않습니다.");
         }
 
-        List<Quiz> quizzes = quizRepository.findByCurriculumIdAndLevel(curriculums.getCurriculumId(), quizLevel);
+        List<Quiz> quizzes = quizRepository.findAllByCurriculumIdAndLevel(curriculums.getCurriculumId(), quizLevel);
         log.info("getRandomQuizzesByType curriculum: {}, level: {}, count: {}", curriculums.getCurriculumName(), quizLevel, count);
 
         // 퀴즈가 존재하지 않을 경우 Exception 발생
@@ -71,10 +71,9 @@ public class QuizService {
         Collections.shuffle(quizzes, new Random());
 
         // count로 정한 수만큼 문제를 선택하여 담은 리스트
-        List<Quiz> selectedQuizzes = quizzes.stream()
-                .limit(count)
-                .collect(Collectors.toList());
 
-        return selectedQuizzes;
+        return quizzes.stream()
+                .limit(count)
+                .toList();
     }
 }

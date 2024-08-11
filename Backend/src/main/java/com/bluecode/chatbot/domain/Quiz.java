@@ -49,4 +49,35 @@ public class Quiz {
 
     // 단답식 전용(단어 글자 수 표시 용)
     private int wordCount;
+
+    public static Quiz createQuiz(
+            Curriculums curriculum,
+            QuizType quizType,
+            String text,
+            String answer,
+            QuizLevel level,
+            String q1,
+            String q2,
+            String q3,
+            String q4,
+            String inputs,
+            String outputs,
+            int wordCount
+    ) {
+        Quiz quiz = new Quiz();
+        quiz.setCurriculum(curriculum);
+        quiz.setQuizType(quizType);
+        quiz.setText(text);
+        quiz.setAnswer(answer);
+        quiz.setLevel(level);
+        quiz.setQ1(q1);
+        quiz.setQ2(q2);
+        quiz.setQ3(q3);
+        quiz.setQ4(q4);
+        quiz.setInputs(inputs);
+        quiz.setOutputs(outputs);
+        quiz.setWordCount(wordCount);
+
+        return quiz;
+    }
 }
