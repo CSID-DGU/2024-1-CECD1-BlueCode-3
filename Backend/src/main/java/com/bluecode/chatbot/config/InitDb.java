@@ -61,16 +61,14 @@ public class InitDb {
         private final UserMissionRepository userMissionRepository;
         private final BCryptPasswordEncoder bCryptPasswordEncoder;
         public void userInit() {
-
             String encodedPassword=bCryptPasswordEncoder.encode("1111");
             Users user1 = createUser("testName", "testEmail", "testId", encodedPassword, "11110033", false); // 초기 테스트 미진행 유저
             Users user2 = createUser("testName2", "testEmail2", "testId2", encodedPassword, "22223344", true); // 초기 테스트 진행 유저 (3챕터에서 시작)
-            em.persist(user1);
-            em.persist(user2);
-            em.flush();
+            userRepository.save(user1);
+            userRepository.save(user2);
             log.info("Users have been initialized");
         }
-      
+
         public void curriculumInit() {
 
             // 루트
