@@ -54,8 +54,8 @@ public class MissionConst {
     // study 관련
     public static final String STUDY_COMPLETE = "STUDY_COMPLETE";
 
-    public static String createConstByRootAndChapterName(Curriculums root, Curriculums chapter) {
-        return "STUDY_" + root.getCurriculumName().toUpperCase() + "_" + chapter.getChapterNum() + "_COMPLETE";
+    public static String createConstByRootAndSubChapterName(Curriculums root, Curriculums chapter) {
+        return "STUDY_" + root.getCurriculumName().toUpperCase() + "_CHAP_" + chapter.getChapterNum() + "_SUB_" + chapter.getSubChapterNum() + "_COMPLETE";
     }
 
     public static String createConstByRootName(Curriculums root) {

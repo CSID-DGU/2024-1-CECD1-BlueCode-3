@@ -44,4 +44,21 @@ public class Chats {
 
     // 단계적 질문 진행 현황
     private int level;
+
+    public static Chats createChat(Users user,
+                             Curriculums curriculum,
+                             String question,
+                             String answer,
+                             QuestionType questionType,
+                             int level) {
+        Chats chat = new Chats();
+        chat.setUser(user);
+        chat.setCurriculum(curriculum);
+        chat.setQuestion(question);
+        chat.setAnswer(answer);
+        chat.setQuestionType(questionType);
+        chat.setLevel(level);
+
+        return chat;
+    }
 }
