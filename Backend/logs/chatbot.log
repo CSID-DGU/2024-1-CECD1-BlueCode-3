@@ -4075,3 +4075,320 @@ def greet(name: str) -> str:
 2024-08-12T21:12:47.734+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [StudyTextDto(text=### 파이썬의 변수 선언과 활용<EOL><EOL>#### 1. 변수란?<EOL>변수는 데이터를 저장하기 위한 메모리 공간의 이름입니다. 프로그래밍에서 변수는 특정 값을 (truncated)...]
 2024-08-12T21:12:47.734+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2024-08-12T21:12:47.734+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-08-12T21:17:06.465+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /curriculum/text
+2024-08-12T21:17:06.466+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /curriculum/text
+2024-08-12T21:17:06.466+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/curriculum/text", parameters={}
+2024-08-12T21:17:06.466+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.StudyController#findCurriculumText(CurriculumTextCallDto)
+2024-08-12T21:17:06.466+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [CurriculumTextCallDto(userId=2, curriculumId=14, textType=QUIZ, levelType=null)]
+2024-08-12T21:17:06.467+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.StudyService  : getCurriculumText called with dto: CurriculumTextCallDto(userId=2, curriculumId=14, textType=QUIZ, levelType=null)
+2024-08-12T21:17:06.471+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.StudyService  : subChapterKeyword: 변수 선언과 활용
+2024-08-12T21:17:06.472+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.StudyService  : pLang: 파이썬
+2024-08-12T21:17:06.472+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.StudyService  : chapName: 변수와 자료형
+2024-08-12T21:17:06.473+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.StudyService  : studyTextPrompt: 파이썬의 변수와 자료형 챕터의 키워드 '변수 선언과 활용'에 관한 코딩 테스트 심화 기출 유형의 문제 소개와 자세한 설명 및 답안 코드(상세한 주석이 포함) 제시, 총 1500자 이내
+2024-08-12T21:17:06.473+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-12T21:17:06.474+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-12T21:17:06.474+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-12T21:17:06.474+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Writing [{model=gpt-4o, max_tokens=1500, messages=[{content=파이썬의 변수와 자료형 챕터의 키워드 '변수 선언과 활용'에 관한 코딩 테스트 심화 기출 유형의 문제 소개와 자세한 설명 및 답안 코드(상세한 주석이 포함) 제시, 총 1500자 이내, role=user}, {content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변, role=system}]}] as "application/json"
+2024-08-12T21:17:23.603+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-12T21:17:23.604+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-12T21:17:23.605+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.StudyService  : generatedResponse: {
+  "id": "chatcmpl-9vOGybaWstEUyo6kvV9M2gqzKSrDb",
+  "object": "chat.completion",
+  "created": 1723465028,
+  "model": "gpt-4o-2024-05-13",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "### 문제 소개\n\n**문제: 변수 선언과 자료형 변환을 사용한 영화 티켓 가격 계산기**\n\n사용자가 여러 장의 영화 티켓을 구매하려고 합니다. 티켓 가격은 다음과 같습니다:\n\n- 성인 티켓: 12,000원\n- 청소년 티켓: 8,000원\n- 어린이 티켓: 5,000원\n\n사용자에게 각 티켓의 수량을 입력받아, 총 금액을 계산하는 프로그램을 작성하십시오.\n\n### 문제 설명\n\n1. **변수 선언과 초기화**:\n    - 세 가지 티켓 가격(성인 티켓, 청소년 티켓, 어린이 티켓)을 저장할 변수를 선언합니다.\n    - 사용자로부터 입력받은 티켓 수량을 저장할 변수를 선언합니다.\n\n2. **자료형 변환**:\n    - 입력받은 값은 문자열 타입이므로 이를 정수형으로 변환해야 합니다.\n\n3. **총 금액 계산**:\n    - 각 티켓의 수량에 해당 티켓 가격을 곱하여 총 금액을 계산하고, 이를 출력합니다.\n\n### 답안 코드\n\n```python\n# 티켓 가격에 해당하는 변수 선언 및 초기화\nadult_ticket_price = 12000  # 성인 티켓 가격\nteen_ticket_price = 8000    # 청소년 티켓 가격\nchild_ticket_price = 5000   # 어린이 티켓 가격\n\n# 사용자로부터 티켓 수량을 입력받아 변수에 저장\n# 입력된 값은 기본적으로 문자열이므로 int() 함수를 사용하여 정수로 변환\nadult_tickets = int(input(\"성인 티켓 수량을 입력하세요: \"))\nteen_tickets = int(input(\"청소년 티켓 수량을 입력하세요: \"))\nchild_tickets = int(input(\"어린이 티켓 수량을 입력하세요: \"))\n\n# 총 금액 계산\ntotal_price = (adult_ticket_price * adult_tickets +\n               teen_ticket_price * teen_tickets +\n               child_ticket_price * child_tickets)\n\n# 결과 출력\nprint(f\"총 영화 티켓 금액은 {total_price}원 입니다.\")\n```\n\n### 자세한 설명\n\n1. **티켓 가격 변수 선언 및 초기화**:\n   ```python\n   adult_ticket_price = 12000  # 성인 티켓 가격\n   teen_ticket_price = 8000    # 청소년 티켓 가격\n   child_ticket_price = 5000   # 어린이 티켓 가격\n   ```\n   - 변수 `adult_ticket_price`, `teen_ticket_price`, `child_ticket_price`를 각각 성인, 청소년, 어린이 티켓의 가격으로 초기화합니다.\n\n2. **사용자 입력 받기**:\n   ```python\n   adult_tickets = int(input(\"성인 티켓 수량을 입력하세요: \"))\n   teen_tickets = int(input(\"청소년 티켓 수량을 입력하세요: \"))\n   child_tickets = int(input(\"어린이 티켓 수량을 입력하세요: \"))\n   ```\n   - `input()` 함수는 사용자로부터 문자열을 입력받습니다.\n   - `int()` 함수를 사용하여 문자열을 정수형으로 변환하여 각각 `adult_tickets`, `teen_tickets`, `child_tickets` 변수에 저장합니다.\n\n3. **총 금액 계산**:\n   ```python\n   total_price = (adult_ticket_price * adult_tickets +\n                  teen_ticket_price * teen_tickets +\n                  child_ticket_price * child_tickets)\n   ```\n   - 각 티켓 수량에 해당 티켓 가격을 곱한 뒤 이를 모두 더하여 `total_price` 변수에 저장합니다.\n\n4. **결과 출력**:\n   ```python\n   print(f\"총 영화 티켓 금액은 {total_price}원 입니다.\")\n   ```\n   - 최종 계산된 총 금액을 출력합니다. f-string을 사용하여 변수 값을 문자열에 쉽게 포함시킵니다.\n\n이 프로그램은 사용자로부터 각 티켓의 수량을 입력받아 총 금액을 계산하여 출력하는 방식으로 동작합니다. 이를 통해 변수 선언, 자료형 변환, 산술 연산 등을 이해할 수 있습니다.",
+        "refusal": null
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 143,
+    "completion_tokens": 884,
+    "total_tokens": 1027
+  },
+  "system_fingerprint": "fp_3aa7262c27"
+}
+
+2024-08-12T21:17:23.605+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.StudyService  : generatedText: ### 문제 소개
+
+**문제: 변수 선언과 자료형 변환을 사용한 영화 티켓 가격 계산기**
+
+사용자가 여러 장의 영화 티켓을 구매하려고 합니다. 티켓 가격은 다음과 같습니다:
+
+- 성인 티켓: 12,000원
+- 청소년 티켓: 8,000원
+- 어린이 티켓: 5,000원
+
+사용자에게 각 티켓의 수량을 입력받아, 총 금액을 계산하는 프로그램을 작성하십시오.
+
+### 문제 설명
+
+1. **변수 선언과 초기화**:
+    - 세 가지 티켓 가격(성인 티켓, 청소년 티켓, 어린이 티켓)을 저장할 변수를 선언합니다.
+    - 사용자로부터 입력받은 티켓 수량을 저장할 변수를 선언합니다.
+
+2. **자료형 변환**:
+    - 입력받은 값은 문자열 타입이므로 이를 정수형으로 변환해야 합니다.
+
+3. **총 금액 계산**:
+    - 각 티켓의 수량에 해당 티켓 가격을 곱하여 총 금액을 계산하고, 이를 출력합니다.
+
+### 답안 코드
+
+```python
+# 티켓 가격에 해당하는 변수 선언 및 초기화
+adult_ticket_price = 12000  # 성인 티켓 가격
+teen_ticket_price = 8000    # 청소년 티켓 가격
+child_ticket_price = 5000   # 어린이 티켓 가격
+
+# 사용자로부터 티켓 수량을 입력받아 변수에 저장
+# 입력된 값은 기본적으로 문자열이므로 int() 함수를 사용하여 정수로 변환
+adult_tickets = int(input("성인 티켓 수량을 입력하세요: "))
+teen_tickets = int(input("청소년 티켓 수량을 입력하세요: "))
+child_tickets = int(input("어린이 티켓 수량을 입력하세요: "))
+
+# 총 금액 계산
+total_price = (adult_ticket_price * adult_tickets +
+               teen_ticket_price * teen_tickets +
+               child_ticket_price * child_tickets)
+
+# 결과 출력
+print(f"총 영화 티켓 금액은 {total_price}원 입니다.")
+```
+
+### 자세한 설명
+
+1. **티켓 가격 변수 선언 및 초기화**:
+   ```python
+   adult_ticket_price = 12000  # 성인 티켓 가격
+   teen_ticket_price = 8000    # 청소년 티켓 가격
+   child_ticket_price = 5000   # 어린이 티켓 가격
+   ```
+   - 변수 `adult_ticket_price`, `teen_ticket_price`, `child_ticket_price`를 각각 성인, 청소년, 어린이 티켓의 가격으로 초기화합니다.
+
+2. **사용자 입력 받기**:
+   ```python
+   adult_tickets = int(input("성인 티켓 수량을 입력하세요: "))
+   teen_tickets = int(input("청소년 티켓 수량을 입력하세요: "))
+   child_tickets = int(input("어린이 티켓 수량을 입력하세요: "))
+   ```
+   - `input()` 함수는 사용자로부터 문자열을 입력받습니다.
+   - `int()` 함수를 사용하여 문자열을 정수형으로 변환하여 각각 `adult_tickets`, `teen_tickets`, `child_tickets` 변수에 저장합니다.
+
+3. **총 금액 계산**:
+   ```python
+   total_price = (adult_ticket_price * adult_tickets +
+                  teen_ticket_price * teen_tickets +
+                  child_ticket_price * child_tickets)
+   ```
+   - 각 티켓 수량에 해당 티켓 가격을 곱한 뒤 이를 모두 더하여 `total_price` 변수에 저장합니다.
+
+4. **결과 출력**:
+   ```python
+   print(f"총 영화 티켓 금액은 {total_price}원 입니다.")
+   ```
+   - 최종 계산된 총 금액을 출력합니다. f-string을 사용하여 변수 값을 문자열에 쉽게 포함시킵니다.
+
+이 프로그램은 사용자로부터 각 티켓의 수량을 입력받아 총 금액을 계산하여 출력하는 방식으로 동작합니다. 이를 통해 변수 선언, 자료형 변환, 산술 연산 등을 이해할 수 있습니다.
+2024-08-12T21:17:23.606+09:00  INFO 20976 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.StudyService  : getCurriculumText returning: StudyTextDto(text=### 문제 소개
+
+**문제: 변수 선언과 자료형 변환을 사용한 영화 티켓 가격 계산기**
+
+사용자가 여러 장의 영화 티켓을 구매하려고 합니다. 티켓 가격은 다음과 같습니다:
+
+- 성인 티켓: 12,000원
+- 청소년 티켓: 8,000원
+- 어린이 티켓: 5,000원
+
+사용자에게 각 티켓의 수량을 입력받아, 총 금액을 계산하는 프로그램을 작성하십시오.
+
+### 문제 설명
+
+1. **변수 선언과 초기화**:
+    - 세 가지 티켓 가격(성인 티켓, 청소년 티켓, 어린이 티켓)을 저장할 변수를 선언합니다.
+    - 사용자로부터 입력받은 티켓 수량을 저장할 변수를 선언합니다.
+
+2. **자료형 변환**:
+    - 입력받은 값은 문자열 타입이므로 이를 정수형으로 변환해야 합니다.
+
+3. **총 금액 계산**:
+    - 각 티켓의 수량에 해당 티켓 가격을 곱하여 총 금액을 계산하고, 이를 출력합니다.
+
+### 답안 코드
+
+```python
+# 티켓 가격에 해당하는 변수 선언 및 초기화
+adult_ticket_price = 12000  # 성인 티켓 가격
+teen_ticket_price = 8000    # 청소년 티켓 가격
+child_ticket_price = 5000   # 어린이 티켓 가격
+
+# 사용자로부터 티켓 수량을 입력받아 변수에 저장
+# 입력된 값은 기본적으로 문자열이므로 int() 함수를 사용하여 정수로 변환
+adult_tickets = int(input("성인 티켓 수량을 입력하세요: "))
+teen_tickets = int(input("청소년 티켓 수량을 입력하세요: "))
+child_tickets = int(input("어린이 티켓 수량을 입력하세요: "))
+
+# 총 금액 계산
+total_price = (adult_ticket_price * adult_tickets +
+               teen_ticket_price * teen_tickets +
+               child_ticket_price * child_tickets)
+
+# 결과 출력
+print(f"총 영화 티켓 금액은 {total_price}원 입니다.")
+```
+
+### 자세한 설명
+
+1. **티켓 가격 변수 선언 및 초기화**:
+   ```python
+   adult_ticket_price = 12000  # 성인 티켓 가격
+   teen_ticket_price = 8000    # 청소년 티켓 가격
+   child_ticket_price = 5000   # 어린이 티켓 가격
+   ```
+   - 변수 `adult_ticket_price`, `teen_ticket_price`, `child_ticket_price`를 각각 성인, 청소년, 어린이 티켓의 가격으로 초기화합니다.
+
+2. **사용자 입력 받기**:
+   ```python
+   adult_tickets = int(input("성인 티켓 수량을 입력하세요: "))
+   teen_tickets = int(input("청소년 티켓 수량을 입력하세요: "))
+   child_tickets = int(input("어린이 티켓 수량을 입력하세요: "))
+   ```
+   - `input()` 함수는 사용자로부터 문자열을 입력받습니다.
+   - `int()` 함수를 사용하여 문자열을 정수형으로 변환하여 각각 `adult_tickets`, `teen_tickets`, `child_tickets` 변수에 저장합니다.
+
+3. **총 금액 계산**:
+   ```python
+   total_price = (adult_ticket_price * adult_tickets +
+                  teen_ticket_price * teen_tickets +
+                  child_ticket_price * child_tickets)
+   ```
+   - 각 티켓 수량에 해당 티켓 가격을 곱한 뒤 이를 모두 더하여 `total_price` 변수에 저장합니다.
+
+4. **결과 출력**:
+   ```python
+   print(f"총 영화 티켓 금액은 {total_price}원 입니다.")
+   ```
+   - 최종 계산된 총 금액을 출력합니다. f-string을 사용하여 변수 값을 문자열에 쉽게 포함시킵니다.
+
+이 프로그램은 사용자로부터 각 티켓의 수량을 입력받아 총 금액을 계산하여 출력하는 방식으로 동작합니다. 이를 통해 변수 선언, 자료형 변환, 산술 연산 등을 이해할 수 있습니다.)
+2024-08-12T21:17:23.626+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-08-12T21:17:23.626+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [StudyTextDto(text=### 문제 소개<EOL><EOL>**문제: 변수 선언과 자료형 변환을 사용한 영화 티켓 가격 계산기**<EOL><EOL>사용자가 여러 장의 영화 티켓을 구매하려고 합니다. 티 (truncated)...]
+2024-08-12T21:17:23.627+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-08-12T21:17:23.627+09:00 DEBUG 20976 --- [chatbot] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-08-12T21:22:04.200+09:00  INFO 20976 --- [chatbot] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2024-08-12T21:22:04.343+09:00  INFO 20976 --- [chatbot] [Thread-6] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12T21:22:04.345+09:00  INFO 20976 --- [chatbot] [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-08-12T21:22:04.348+09:00  INFO 20976 --- [chatbot] [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-08-12T21:22:04.403+09:00  INFO 20976 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 20976 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-08-12T21:22:04.404+09:00  INFO 20976 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-08-12T21:22:04.597+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-12T21:22:04.597+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-12T21:22:04.599+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2024-08-12T21:22:04.631+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-12T21:22:04.631+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-12T21:22:04.657+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 9 JPA repository interfaces.
+2024-08-12T21:22:04.660+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-12T21:22:04.660+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-12T21:22:04.663+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.663+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.663+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.663+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.663+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.663+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.664+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.664+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.664+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:04.664+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-08-12T21:22:04.743+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-08-12T21:22:04.743+09:00  INFO 20976 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-12T21:22:04.743+09:00  INFO 20976 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-12T21:22:04.770+09:00  INFO 20976 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-12T21:22:04.770+09:00  INFO 20976 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 365 ms
+2024-08-12T21:22:04.777+09:00  INFO 20976 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-08-12T21:22:04.788+09:00  INFO 20976 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2b9fe4c6
+2024-08-12T21:22:04.788+09:00  INFO 20976 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-08-12T21:22:04.789+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-08-12T21:22:04.809+09:00  INFO 20976 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-12T21:22:04.817+09:00  INFO 20976 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-12T21:22:04.825+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-12T21:22:04.827+09:00  WARN 20976 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-12T21:22:04.910+09:00  INFO 20976 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-12T21:22:05.692+09:00  INFO 20976 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12T21:22:05.867+09:00  INFO 20976 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
+2024-08-12T21:22:06.294+09:00  WARN 20976 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-12T21:22:06.320+09:00 DEBUG 20976 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 39 mappings in 'requestMappingHandlerMapping'
+2024-08-12T21:22:06.340+09:00 DEBUG 20976 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-12T21:22:06.346+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@20483403, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4b6c0a96, org.springframework.security.web.context.SecurityContextHolderFilter@43bf4209, org.springframework.security.web.header.HeaderWriterFilter@6fbc7677, org.springframework.web.filter.CorsFilter@27c57f1c, org.springframework.security.web.authentication.logout.LogoutFilter@6aa03de9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7e64c2e9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5f3548c3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@f809a74, org.springframework.security.web.access.ExceptionTranslationFilter@421c7d83, org.springframework.security.web.access.intercept.AuthorizationFilter@478dfc0c]
+2024-08-12T21:22:06.357+09:00 DEBUG 20976 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-12T21:22:06.359+09:00 DEBUG 20976 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-12T21:22:06.382+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-12T21:22:06.390+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-08-12T21:22:06.391+09:00  INFO 20976 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 2.011 seconds (process running for 619.731)
+2024-08-12T21:22:06.392+09:00  INFO 20976 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-08-12T21:22:06.393+09:00  INFO 20976 --- [chatbot] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-08-12T21:22:32.308+09:00  INFO 20976 --- [chatbot] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2024-08-12T21:22:32.431+09:00  INFO 20976 --- [chatbot] [Thread-8] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12T21:22:32.432+09:00  INFO 20976 --- [chatbot] [Thread-8] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-08-12T21:22:32.435+09:00  INFO 20976 --- [chatbot] [Thread-8] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-08-12T21:22:32.507+09:00  INFO 20976 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 20976 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-08-12T21:22:32.507+09:00  INFO 20976 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-08-12T21:22:32.693+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-12T21:22:32.693+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-12T21:22:32.694+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 Redis repository interfaces.
+2024-08-12T21:22:32.721+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-12T21:22:32.721+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-12T21:22:32.748+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 9 JPA repository interfaces.
+2024-08-12T21:22:32.750+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-12T21:22:32.750+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-12T21:22:32.753+09:00  INFO 20976 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-08-12T21:22:32.822+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-08-12T21:22:32.823+09:00  INFO 20976 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-12T21:22:32.823+09:00  INFO 20976 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-12T21:22:32.855+09:00  INFO 20976 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-12T21:22:32.855+09:00  INFO 20976 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 346 ms
+2024-08-12T21:22:32.861+09:00  INFO 20976 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2024-08-12T21:22:32.871+09:00  INFO 20976 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4d8c3cd7
+2024-08-12T21:22:32.871+09:00  INFO 20976 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2024-08-12T21:22:32.871+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-08-12T21:22:32.888+09:00  INFO 20976 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-12T21:22:32.891+09:00  INFO 20976 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-12T21:22:32.895+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-12T21:22:32.896+09:00  WARN 20976 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-12T21:22:32.953+09:00  INFO 20976 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-12T21:22:33.946+09:00  INFO 20976 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-12T21:22:34.100+09:00  INFO 20976 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
+2024-08-12T21:22:34.548+09:00  WARN 20976 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-12T21:22:34.562+09:00 DEBUG 20976 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 39 mappings in 'requestMappingHandlerMapping'
+2024-08-12T21:22:34.581+09:00 DEBUG 20976 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-12T21:22:34.586+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@22cbbf37, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6e8d8f5c, org.springframework.security.web.context.SecurityContextHolderFilter@3ac180e7, org.springframework.security.web.header.HeaderWriterFilter@7951b27a, org.springframework.web.filter.CorsFilter@290560c5, org.springframework.security.web.authentication.logout.LogoutFilter@1a7ace1c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@26dbe789, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@583c1ecd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4354fb72, org.springframework.security.web.access.ExceptionTranslationFilter@2ffa3c7b, org.springframework.security.web.access.intercept.AuthorizationFilter@5b9625a2]
+2024-08-12T21:22:34.595+09:00 DEBUG 20976 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-12T21:22:34.597+09:00 DEBUG 20976 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-12T21:22:34.615+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-12T21:22:34.621+09:00  INFO 20976 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-08-12T21:22:34.624+09:00  INFO 20976 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 2.136 seconds (process running for 647.963)
+2024-08-12T21:22:34.625+09:00  INFO 20976 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-08-12T21:22:34.625+09:00  INFO 20976 --- [chatbot] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
