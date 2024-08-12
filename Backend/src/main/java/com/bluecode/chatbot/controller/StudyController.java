@@ -21,7 +21,7 @@ public class StudyController {
         return ResponseEntity.ok().body(result);
     }
 
-    // 유저의 첫 학습 시 root 내 챕터들의 커리큘럼 학습 Study 데이터 생성 요청
+    // 유저의 첫 학습 시 root 내 챕터들의 Study 데이터 초기화
     @PostMapping("/create")
     public ResponseEntity<CurriculumChapResponseDto> createChapterStudyData(@RequestBody DataCallDto dto) {
 
