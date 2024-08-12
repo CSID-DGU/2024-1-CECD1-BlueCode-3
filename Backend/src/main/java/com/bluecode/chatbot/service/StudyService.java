@@ -439,7 +439,7 @@ public class StudyService {
     private String requestGptText(String keyword, Long curriculumId, TextType textType) {
         Curriculums currentCurriculum = curriculumRepository.findById(curriculumId).orElse(null);
 
-        // 루트 커리큘럼 정보 조회 (pLang 추출)
+        // 루트 커리큘럼 이름 조회
         String pLang = currentCurriculum != null ? currentCurriculum.getRoot().getCurriculumName() : "알 수 없음";
         log.info("pLang: {}", pLang);
 
