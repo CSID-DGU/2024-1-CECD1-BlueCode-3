@@ -37,7 +37,7 @@ public class StudyController {
         return ResponseEntity.ok().body(curriculumPassedDto);
     }
 
-    // 유저가 요청한 커리큘럼 챕터의 학습 내용 텍스트 요청
+    // 유저가 요청한 커리큘럼 챕터의 학습 text 요청(GPT API 사용)
     @PostMapping("/text")
     public ResponseEntity<StudyTextDto> findCurriculumText(@RequestBody CurriculumTextCallDto curriculumTextCallDto) {
 
