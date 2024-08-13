@@ -295,7 +295,7 @@ public class TestService {
         CodeRequestDto codeRequestDto = new CodeRequestDto();
         codeRequestDto.setUserId(dto.getUserId());
         codeRequestDto.setCode(dto.getAnswer());
-        codeRequestDto.setLanguage("python"); // 고정된 값 또는 설정에 따라 변동 가능
+        codeRequestDto.setLanguage(test.getQuiz().getCurriculum().getLangType().toString()); // 고정된 값 또는 설정에 따라 변동 가능
         codeRequestDto.setQuizId(test.getQuiz().getQuizId());
 
         // 코드실행서버 서버 API URL
