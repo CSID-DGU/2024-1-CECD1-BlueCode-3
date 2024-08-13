@@ -3,7 +3,6 @@ package com.bluecode.chatbot.config;
 import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.repository.*;
 import jakarta.annotation.PostConstruct;
-import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -54,6 +53,7 @@ public class InitDb {
         private final UserRepository userRepository;
         private final CurriculumRepository curriculumRepository;
         private final QuizRepository quizRepository;
+        private final QuizCaseRepository quizCaseRepository;
         private final TestRepository testRepository;
         private final StudyRepository studyRepository;
         private final ChatRepository chatRepository;
@@ -185,37 +185,41 @@ public class InitDb {
             }
             Curriculums root = rootCurriculums.get(0);
             List<Curriculums> lists = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, false);
-            if (lists.size() < 3) {
-                throw new NoSuchElementException("Not enough chapters found");
-            }
 
             List<Quiz> quizList = new ArrayList<>();
 
-            // 객관식
-            for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 객관식", lists.get(i).getChapterNum()), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 객관식", lists.get(i).getChapterNum()), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 객관식", lists.get(i).getChapterNum()), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 객관식", lists.get(i).getChapterNum()), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "", 0));
-            }
+            for (Curriculums curriculums : lists) {
+                // 객관식
+                quizList.add(createQuiz(curriculums, QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 객관식", curriculums.getChapterNum()), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", 0));
+                quizList.add(createQuiz(curriculums, QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 객관식", curriculums.getChapterNum()), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", 0));
 
-            // 단답형
-            for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.NORMAL, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.EASY, "", "", "", "","","",2));
-            }
-
-            // 코드 작성형
-            for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.NORMAL, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.EASY, "", "", "", "","1\n2","3",0));
+                // 단답형
+                quizList.add(createQuiz(curriculums, QuizType.WORD, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 단답형", curriculums.getChapterNum()), "정답", QuizLevel.NORMAL, null, null, null, null, 2));
+                quizList.add(createQuiz(curriculums, QuizType.WORD, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 단답형", curriculums.getChapterNum()), "정답", QuizLevel.EASY, null, null, null, null, 2));
             }
 
             quizRepository.saveAll(quizList);
+
+            List<Quiz> codeQuiz = new ArrayList<>();
+
+            // 코드 작성형
+            for (Curriculums list : lists) {
+                Quiz code = createQuiz(list, QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 코드작성형", list.getChapterNum()), null, QuizLevel.HARD, null, null, null, null, 0);
+                codeQuiz.add(code);
+                codeQuiz.add(createQuiz(list, QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 코드작성형", list.getChapterNum()), null, QuizLevel.HARD, null, null, null, null, 0));
+                codeQuiz.add(code);
+            }
+
+            quizRepository.saveAll(codeQuiz);
+
+            List<QuizCase> quizCases = new ArrayList<>();
+
+            for (Quiz quiz : codeQuiz) {
+                quizCases.add(QuizCase.createQuizCase(quiz, "1\n2", "3"));
+                quizCases.add(QuizCase.createQuizCase(quiz, "3\n4", "7"));
+            }
+
+            quizCaseRepository.saveAll(quizCases);
         }
 
         public void studyInit() {
