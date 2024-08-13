@@ -394,8 +394,11 @@ public class StudyService {
 
             if (study.getTextDef() == null) {
                 String subChapterKeyword = study.getCurriculum().getCurriculumName();
-                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                log.info("subChapterKeyword: {}", subChapterKeyword);
+                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId(), textType); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                log.info("generatedResponse: {}", generatedResponse);
                 String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
+                log.info("generatedText: {}", generatedText);
                 study.setTextDef(generatedText);
             }
             return study.getTextDef();
@@ -404,8 +407,11 @@ public class StudyService {
 
             if (study.getTextCode() == null) {
                 String subChapterKeyword = study.getCurriculum().getCurriculumName();
-                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                log.info("subChapterKeyword: {}", subChapterKeyword);
+                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId(), textType); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                log.info("generatedResponse: {}", generatedResponse);
                 String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
+                log.info("generatedText: {}", generatedText);
                 study.setTextCode(generatedText);
             }
             return study.getTextCode();
@@ -414,8 +420,11 @@ public class StudyService {
 
             if (study.getTextQuiz() == null) {
                 String subChapterKeyword = study.getCurriculum().getCurriculumName();
-                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId()); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                log.info("subChapterKeyword: {}", subChapterKeyword);
+                String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId(), textType); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
+                log.info("generatedResponse: {}", generatedResponse);
                 String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
+                log.info("generatedText: {}", generatedText);
                 study.setTextQuiz(generatedText);
             }
             return study.getTextQuiz();
@@ -427,11 +436,38 @@ public class StudyService {
     }
 
     // GPT API를 호출하여 학습 내용 생성
-    private String requestGptText(String keyword, Long curriculumId) {
-        List<Map<String, String>> messages = new ArrayList<>();
+    private String requestGptText(String keyword, Long curriculumId, TextType textType) {
+        Curriculums currentCurriculum = curriculumRepository.findById(curriculumId).orElse(null);
 
-        // TODO: 프롬프트 튜닝 진행 필요(학습 자료의 구조 등등)
-        messages.add(Map.of("role", "user", "content", "다음 키워드에 대해 자세한 학습 내용을 생성해줘. (키워드: " + keyword + ")"));
+        // 루트 커리큘럼 이름 조회
+        String pLang = currentCurriculum != null ? currentCurriculum.getRoot().getCurriculumName() : "알 수 없음";
+        log.info("pLang: {}", pLang);
+
+        // 현재 커리큘럼 이름 조회
+        String chapName = currentCurriculum != null ? currentCurriculum.getParent().getCurriculumName() : "알 수 없음";
+        log.info("chapName: {}", chapName);
+
+        // 프롬프트 조립
+        String prompt = String.format(
+                "%s의 %s 챕터의 키워드 '%s'에 관한 %s",
+                pLang,
+                chapName,
+                keyword,
+                getPromptByType(textType)
+        );
+
+        // API 호출
+        List<Map<String, String>> messages = new ArrayList<>();
+        messages.add(Map.of("role", "user", "content", prompt));
+        log.info("studyTextPrompt: {}", prompt);
         return apiService.sendPostRequest(messages, curriculumId);
+    }
+
+    private String getPromptByType(TextType textType) {
+        return switch (textType) {
+            case DEF -> "모든 이론에 대한 최대한 많은 정보를 서술, 총 1500자 이내";
+            case CODE -> "간단한 예제 코드를 5개 이상 서술, 총 1500자 이내";
+            case QUIZ -> "코딩 테스트 심화 기출 유형의 문제 소개와 자세한 설명 및 답안 코드(상세한 주석 포함) 제시, 총 1500자 이내";
+        };
     }
 }
