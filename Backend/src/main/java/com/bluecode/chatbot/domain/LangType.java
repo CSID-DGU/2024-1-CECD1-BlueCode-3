@@ -1,6 +1,11 @@
 package com.bluecode.chatbot.domain;
 
-
+/**
+ * 코드작성형 대상 언어 표시용
+ * PYTHON("python")
+ * JAVA("java")
+ * CPP("cpp")
+ */
 
 public enum LangType {
 

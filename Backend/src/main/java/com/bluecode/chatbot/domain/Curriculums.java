@@ -54,6 +54,7 @@ public class Curriculums implements Comparable<Curriculums> {
     // 서브챕터 커리큘럼 여부
     private boolean leafNode;
 
+    @Enumerated(EnumType.STRING)
     private LangType langType;
 
     public static Curriculums createCurriculum(
