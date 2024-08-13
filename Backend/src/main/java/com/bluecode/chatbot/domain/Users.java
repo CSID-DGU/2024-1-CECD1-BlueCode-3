@@ -3,13 +3,13 @@ package com.bluecode.chatbot.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,6 +39,11 @@ public class Users implements UserDetails {
     @UpdateTimestamp
     @Column(insertable = false)
     private LocalDateTime recentAccess;
+
+    // 가입 일자
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime registerDateTime;
 
     // 연속 접속일수
     private int streakCount;
