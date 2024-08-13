@@ -1,5 +1,5 @@
-from service.java_execution import JavaExecution
-from service.python_execution import PythonExecution
+from service.lang_execution_class.java_execution import JavaExecution
+from service.lang_execution_class.python_execution import PythonExecution
 import uuid
 import subprocess
 import uuid
@@ -16,11 +16,11 @@ class CodeService:
         self.quiz_id = quiz_id
 
     def execute_code(self, language, code, quiz_cases):
-        logger.info(f'코드 실행 시작 language={language}, quiz_id={self.quiz_id}')
+        logger.info(f'코드 실행 시작 language={language}, user_id={self.user_id}, quiz_id={self.quiz_id}')
         
         strategy = self.get_code_execution_class(language)
         if not strategy:
-            logger.error(f'지원하지 않는 language: {language}')
+            logger.error(f'지원하지 않는 language: {language} | {self.user_id}, {self.quiz_id}')
             return {'error': 'Unsupported language'}
 
         unique_id = str(uuid.uuid4())
@@ -31,18 +31,18 @@ class CodeService:
         for index, quiz_case in enumerate(quiz_cases):
             inputs = quiz_case.input
             expected_output = quiz_case.output
-            logger.info(f'Running case {index + 1} with inputs={inputs}')
+            logger.info(f'{self.user_id}, {self.quiz_id} 실행 시작 case {index + 1} with inputs={inputs}')
 
             try:
                 stdout, stderr = strategy.run_code(inputs)
                 if stderr:
-                    logger.error(f'채점 중 사용자 코드 에러 발생: {stderr}')
+                    logger.error(f'채점 중 사용자 코드 에러 발생: {self.user_id}, {self.quiz_id}, {stderr}')
                     strategy.cleanup()
-                    return {'result': f'오류 발생 {stderr}'}
+                    return {'result': f'실행 오류 {stderr}'}
 
                 output = stdout
                 if output != expected_output:
-                    logger.warning('오답 도출')
+                    logger.warning(f'오답 도출 {self.user_id}, {self.quiz_id}')
                     strategy.cleanup()
                     return {'result': '오답'}
 
