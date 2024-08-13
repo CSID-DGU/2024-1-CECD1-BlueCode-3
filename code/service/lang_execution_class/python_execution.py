@@ -1,7 +1,7 @@
 import subprocess
 import os
 import time
-from service.code_execution import CodeExecution
+from service.lang_execution_class.code_execution import CodeExecution
 
 class PythonExecution(CodeExecution):
     def __init__(self, user_id, quiz_id):
