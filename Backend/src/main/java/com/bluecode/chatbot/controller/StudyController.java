@@ -21,7 +21,7 @@ public class StudyController {
         return ResponseEntity.ok().body(result);
     }
 
-    // 유저의 root 내 챕터들의 커리큘럼 학습 Study 데이터 생성 요청
+    // 유저의 첫 학습 시 root 내 챕터들의 Study 데이터 초기화
     @PostMapping("/create")
     public ResponseEntity<CurriculumChapResponseDto> createChapterStudyData(@RequestBody DataCallDto dto) {
 
@@ -37,7 +37,7 @@ public class StudyController {
         return ResponseEntity.ok().body(curriculumPassedDto);
     }
 
-    // 유저가 요청한 커리큘럼 챕터의 학습 내용 텍스트 요청
+    // 유저가 요청한 커리큘럼 챕터의 학습 text 요청(GPT API 사용)
     @PostMapping("/text")
     public ResponseEntity<StudyTextDto> findCurriculumText(@RequestBody CurriculumTextCallDto curriculumTextCallDto) {
 
