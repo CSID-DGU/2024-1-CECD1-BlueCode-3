@@ -1,16 +1,10 @@
 package com.bluecode.chatbot.controller;
 
-import com.bluecode.chatbot.dto.UpdateEmailCallDto;
-import com.bluecode.chatbot.dto.UpdatePasswordCallDto;
-import com.bluecode.chatbot.dto.UserAddCallDto;
-import com.bluecode.chatbot.dto.UserInfoResponseDto;
+import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,14 +47,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/checkAuth/getUserInfo/{loginId}")
-    public ResponseEntity getUserInfo(@PathVariable Long loginId, @AuthenticationPrincipal Long userId){
+    @PostMapping("/checkAuth/getUserInfo")
+    public ResponseEntity getUserInfo(@RequestBody UserIdDto userIdDto){
         try {
-            if (!userId.equals(loginId)) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("토큰과 요청 파라미터가 일치하지않음");
-            }
-
-            UserInfoResponseDto responseDto=userService.getUserInfo(loginId);
+            UserInfoResponseDto responseDto=userService.getUserInfo(userIdDto.getUserId());
             return ResponseEntity.ok(responseDto);
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
