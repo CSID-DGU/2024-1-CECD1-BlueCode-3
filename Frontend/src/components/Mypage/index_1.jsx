@@ -40,7 +40,10 @@ function Study_theory() {
     const getUserInfo = async () => {
      try {
       const userid = localStorage.getItem('userid');
-      const res = await axiosInstance.get(`/checkAuth/checkAuth/getUserInfo/${userid}`);
+      const UserIdDto = {
+        'userId' : userid
+      };
+      const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo',UserIdDto);
       setTestValid(res.data.initTest);
       setPoint(res.data.exp + 50);
      }
@@ -67,7 +70,20 @@ function Study_theory() {
         console.error(err); 
       }
     };
-    
+
+    // 루트 커리큘럼에 대한 챕터들 정보 불러와서 로컬스토리지에 저장
+    const getChapters = async () => {
+      try {
+        const rootid = localStorage.getItem('rootid');
+        const res = await axiosInstance.get(`/curriculum/curriculum/${rootid}`);
+        localStorage.setItem("chapters",JSON.stringify(res.data.list));
+      }
+      catch (err){
+        console.error(err); 
+      }
+    }
+
+    getChapters(); // 챕터 데이터를 불러오는 함수
     getUserInfo(); // 데이터를 불러오는 함수 호출
     getMissionInfo();
   }, []);

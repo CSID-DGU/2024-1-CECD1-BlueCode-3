@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
 import React, { useEffect, useState } from 'react';
+import axiosInstance from '../../axiosInstance';
 
 function Study_theory() {
   const [answer, setAnswer] = useState('');
 
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
+
+  const [curriculumIds, setCurriculumIds] = useState([]);
+  const [currentcurriculumId, setcurrentcurriculumId] = useState(0);
 
   const handleResize = () => {
     setWidth(window.innerWidth);
@@ -50,8 +54,70 @@ function Study_theory() {
     return ()=>clearInterval(timerId);
   }, [time]);
 
-    // 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
 
+
+
+  useEffect(() => {
+
+    const getCurriculumIdData =  () => {
+      const storedData = JSON.parse(localStorage.getItem('chapters'));
+      if (storedData && Array.isArray(storedData)){
+        // 상위 리스트의 curriculumId만 추출 (subChapters는 무시)
+        const topLevelIds = storedData.map(item => item.curriculumId);
+        
+        // 추출된 ID 배열을 상태에 저장
+        setCurriculumIds(topLevelIds);
+      }
+    };
+
+    getCurriculumIdData();
+  }, []);
+
+  useEffect(() => {
+    // curriculumIds 상태가 변경될 때마다 호출
+    console.log('Updated curriculumIds:', curriculumIds);
+  }, [curriculumIds]);
+
+  /*
+  const getChapterQuiz =  async () =>{
+    const userid = localStorage.getItem('userid');
+    console.log("불러올려고 하는 curri id "+ curriculumIds[currentcurriculumId])
+      const DataCallDto = {
+        'userId': userid,
+        'curriculumId': curriculumIds[currentcurriculumId]
+      };
+      try {
+        const res = await axiosInstance.post('/test/test/create/init', DataCallDto);
+        console.log(res);
+        return;// 요청이 성공하면 함수 종료
+      } catch (err) {
+        console.error(err);
+        if (err.response && err.response.status === 400) {
+          setcurrentcurriculumId(currentcurriculumId + 1); // currentcurriculumId를 증가시킴
+          console.log(`400 error received. Retrying with currentcurriculumId ${curriculumIds[currentcurriculumId]}`);
+        } else {
+          // 400 외의 에러는 재시도하지 않고 종료
+          return;
+        }
+      }
+  }
+*/
+const getChapterQuiz =  async () =>{
+  const userid = localStorage.getItem('userid');
+  console.log("불러올려고 하는 curri id "+ curriculumIds[currentcurriculumId])
+    const DataCallDto = {
+      'userId': userid,
+      'curriculumId': "3"
+    };
+    try {
+      const res = await axiosInstance.post('/test/test/create/init', DataCallDto);
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+}
+
+  // 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
   const [qtype, setQtype] = useState(1);
   const [type, setType] = useState('');
   useEffect(()=>{
@@ -64,10 +130,12 @@ function Study_theory() {
   })
 
   return (
+    
     <TestSection>
       <SectionBar>
         <Logo>
           <img src={BCODE} alt="Logo"></img>
+          <button onClick={getChapterQuiz}>Test API</button>
         </Logo>
       </SectionBar>
       <Content>
@@ -130,6 +198,7 @@ function Study_theory() {
       </Content>
     </TestSection>
   );
+  
 }
 
 export default Study_theory;

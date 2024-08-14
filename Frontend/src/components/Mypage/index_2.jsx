@@ -30,6 +30,9 @@ function Study_theory() {
   const color = {color : "#008BFF"};
 
   useEffect(()=>{
+
+    // 챕터 데이터는 계속 쓰기에 마이페이지 인덱스1에서 접근시 로드하고 local storage에서 로딩 되게
+    /*
     const getChapters = async () => {
       try {
         const rootid = localStorage.getItem('rootid');
@@ -40,6 +43,11 @@ function Study_theory() {
       catch (err){
         console.error(err); 
       }
+    }*/
+
+    const getChapters = () =>{
+      const chaptersData=JSON.parse(localStorage.getItem("chapters"));
+      setChapter(chaptersData);
     }
 
     const getCurrentChapters = async () => {
