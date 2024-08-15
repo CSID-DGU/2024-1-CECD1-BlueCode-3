@@ -13,5 +13,6 @@ public class CurriculumChapElementDto {
 
     private Long curriculumId;
     private String text;
+    private boolean testable;
     private List<CurriculumChapElementDto> subChapters;
 }
