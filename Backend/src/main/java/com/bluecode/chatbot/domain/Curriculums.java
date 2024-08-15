@@ -54,6 +54,9 @@ public class Curriculums implements Comparable<Curriculums> {
     // 서브챕터 커리큘럼 여부
     private boolean leafNode;
 
+    @Enumerated(EnumType.STRING)
+    private LangType langType;
+
     public static Curriculums createCurriculum(
             Curriculums parent,
             Curriculums root,
@@ -63,7 +66,8 @@ public class Curriculums implements Comparable<Curriculums> {
             int subChapterNum,
             int totalChapterCount,
             boolean isLeaf,
-            boolean isRoot
+            boolean isRoot,
+            LangType langType
     ) {
         Curriculums curriculums = new Curriculums();
         curriculums.setCurriculumName(curriculumName);
@@ -75,6 +79,7 @@ public class Curriculums implements Comparable<Curriculums> {
         curriculums.setTotalChapterCount(totalChapterCount);
         curriculums.setRootNode(isRoot);
         curriculums.setLeafNode(isLeaf);
+        curriculums.setLangType(langType);
 
         return curriculums;
     }

@@ -8,8 +8,11 @@ import com.bluecode.chatbot.repository.TestRepository;
 import com.bluecode.chatbot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +28,13 @@ public class TestService {
     private final TestRepository testRepository;
     private final UserRepository userRepository;
     private final QuizRepository quizRepository;
+    private final RestTemplate restTemplate;
 
     // 미션 처리를 위한 클래스
     private final ApplicationEventPublisher eventPublisher;
+
+    @Value("${flask.url}")
+    private String url;
 
     // 초기 테스트 구성
     public TestResponseDto createInitTest(DataCallDto dto) {
@@ -180,128 +187,157 @@ public class TestService {
     public TestAnswerResponseDto submitAnswerNum(TestAnswerCallDto dto) {
         log.info("submitAnswer with dto: {}", dto);
 
-        Optional<Users> user = userRepository.findById(dto.getUserId());
-        Optional<Tests> test = testRepository.findById(dto.getTestId());
+        Optional<Users> usersOptional = userRepository.findById(dto.getUserId());
+        Optional<Tests> testsOptional = testRepository.findById(dto.getTestId());
 
-        if (user.isEmpty()) {
+        if (usersOptional.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
         }
 
-        if (test.isEmpty()) {
+        if (testsOptional.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 테스트 id 입니다.");
         }
 
-        if (test.get().getQuiz().getQuizType() != QuizType.NUM) {
-            throw new IllegalArgumentException("해당 문제는 객관식이 아닙니다. quizType: " + test.get().getQuiz().getQuizType());
+        Users user = usersOptional.get();
+        Tests test = testsOptional.get();
+
+        if (test.getQuiz().getQuizType() != QuizType.NUM) {
+            throw new IllegalArgumentException("해당 문제는 객관식이 아닙니다. quizType: " + test.getQuiz().getQuizType());
         }
 
         // 사용자 답안 채점
-        boolean passed = test.get().getQuiz().getAnswer().equals(dto.getAnswer());
-        test.get().setPassed(passed);
-
-        if (passed) {
-
-            // test 정답 제출 미션 처리 로직
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_PASS));
-
-            if (test.get().getQuiz().getLevel().equals(QuizLevel.EASY)) {
-                eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_EASY_PASS));
-            } else if (test.get().getQuiz().getLevel().equals(QuizLevel.NORMAL)) {
-                eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_NORMAL_PASS));
-            } else if (test.get().getQuiz().getLevel().equals(QuizLevel.HARD)) {
-                eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_HARD_PASS));
-            }
-
-        } else {
-
-            // 오답 횟수 증가
-            test.get().setWrongCount(test.get().getWrongCount() + 1);
-            // test 오답 제출 미션 처리 로직
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_FAIL));
+        boolean passed = test.getQuiz().getAnswer().equals(dto.getAnswer());
+        if (test.getWrongCount() == 0) {
+            test.setPassed(true);
         }
 
-        testRepository.save(test.get());
+        // 테스트 채점 및 미션 처리
+        publishPassMission(passed, user, test);
+        testRepository.save(test);
+
+        TestAnswerResponseDto responseDto = new TestAnswerResponseDto();
+        responseDto.setPassed(passed);
+
+        publishMission(user, test);
+
+        log.info("submitAnswer response: {}", responseDto);
+        return responseDto;
+    }
+
+
+    // 단답형 문제 답안 판정
+    public TestAnswerResponseDto submitAnswerWord(TestAnswerCallDto dto) {
+        log.info("submitAnswer with dto: {}", dto);
+
+        Optional<Users> usersOptional = userRepository.findById(dto.getUserId());
+        Optional<Tests> testsOptional = testRepository.findById(dto.getTestId());
+
+
+        if (usersOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (testsOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 테스트 id 입니다.");
+        }
+
+        Users user = usersOptional.get();
+        Tests test = testsOptional.get();
+
+        if (test.getQuiz().getQuizType() != QuizType.WORD) {
+            throw new IllegalArgumentException("해당 문제는 단답형이 아닙니다. quizType: " + test.getQuiz().getQuizType());
+        }
+
+        // 사용자 답안 채점
+        boolean passed = test.getQuiz().getAnswer().equals(dto.getAnswer());
+        if (test.getWrongCount() == 0) {
+            test.setPassed(true);
+        }
+
+        // 테스트 채점 및 미션 처리
+        publishPassMission(passed, user, test);
+        testRepository.save(test);
 
         TestAnswerResponseDto responseDto = new TestAnswerResponseDto();
         responseDto.setPassed(passed);
 
         // test 제출 관련 미션 처리 로직
-        eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_SUBMIT));
-
-        // 난이도별 test 제출 미션 처리 로직
-        if (test.get().getQuiz().getLevel().equals(QuizLevel.EASY)) {
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT));
-        } else if (test.get().getQuiz().getLevel().equals(QuizLevel.NORMAL)) {
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT));
-        } else if (test.get().getQuiz().getLevel().equals(QuizLevel.HARD)) {
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT));
-        }
+        publishMission(user, test);
 
         log.info("submitAnswer response: {}", responseDto);
         return responseDto;
     }
 
     // 단답형 문제 답안 판정
-    public TestAnswerResponseDto submitAnswerWord(TestAnswerCallDto dto) {
+    public TestAnswerResponseDto submitAnswerCode(TestAnswerCallDto dto) {
         log.info("submitAnswer with dto: {}", dto);
 
-        Optional<Users> user = userRepository.findById(dto.getUserId());
-        Optional<Tests> test = testRepository.findById(dto.getTestId());
+        Optional<Users> usersOptional = userRepository.findById(dto.getUserId());
+        Optional<Tests> testsOptional = testRepository.findById(dto.getTestId());
 
 
-        if (user.isEmpty()) {
+        if (usersOptional.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
         }
 
-        if (test.isEmpty()) {
+        if (testsOptional.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 테스트 id 입니다.");
         }
 
-        if (test.get().getQuiz().getQuizType() != QuizType.WORD) {
-            throw new IllegalArgumentException("해당 문제는 단답형이 아닙니다. quizType: " + test.get().getQuiz().getQuizType());
+        Users user = usersOptional.get();
+        Tests test = testsOptional.get();
+
+        if (test.getQuiz().getQuizType() != QuizType.CODE) {
+            throw new IllegalArgumentException("해당 문제는 코드작성형이 아닙니다. quizType: " + test.getQuiz().getQuizType());
         }
+
+        // 데이터 변환
+        CodeRequestDto codeRequestDto = new CodeRequestDto();
+        codeRequestDto.setUserId(dto.getUserId());
+        codeRequestDto.setCode(dto.getAnswer());
+        codeRequestDto.setLanguage(test.getQuiz().getCurriculum().getLangType().toString()); // 고정된 값 또는 설정에 따라 변동 가능
+        codeRequestDto.setQuizId(test.getQuiz().getQuizId());
+
+        // 코드실행서버 서버 API URL
+        String postUrl = url + "/code/run_code";
+
+        // 요청 헤더와 바디 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
+        HttpEntity<CodeRequestDto> requestEntity = new HttpEntity<>(codeRequestDto, headers);
+
+        // API 호출
+        ResponseEntity<CodeResponseDto> responseEntity = restTemplate.exchange(
+                postUrl,
+                HttpMethod.POST,
+                requestEntity,
+                CodeResponseDto.class
+        );
+
+        // 결과 처리
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
+            throw new IllegalArgumentException("코드 실행 서버 접근 불가");
+        }
+
+        CodeResponseDto responseBody = responseEntity.getBody();
+        boolean passed = "정답".equals(responseBody.getResult());
 
         // 사용자 답안 채점
-        boolean passed = test.get().getQuiz().getAnswer().equals(dto.getAnswer());
-        test.get().setPassed(passed);
-
-        if (passed) {
-
-            // test 정답 제출 미션 처리 로직
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_PASS));
-
-            if (test.get().getQuiz().getLevel().equals(QuizLevel.EASY)) {
-                eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_EASY_PASS));
-            } else if (test.get().getQuiz().getLevel().equals(QuizLevel.NORMAL)) {
-                eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_NORMAL_PASS));
-            } else if (test.get().getQuiz().getLevel().equals(QuizLevel.HARD)) {
-                eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_HARD_PASS));
-            }
-
-        } else {
-
-            // 오답 횟수 증가
-            test.get().setWrongCount(test.get().getWrongCount() + 1);
-            // test 오답 제출 미션 처리 로직
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_FAIL));
+        if (test.getWrongCount() == 0) {
+            test.setPassed(true);
         }
 
-        testRepository.save(test.get());
+        // 테스트 채점 및 미션 처리
+        publishPassMission(passed, user, test);
+        testRepository.save(test);
 
         TestAnswerResponseDto responseDto = new TestAnswerResponseDto();
         responseDto.setPassed(passed);
+        // 코드작성형 실행 결과 태그 설정
+        responseDto.setResult(responseBody.getResult());
 
         // test 제출 관련 미션 처리 로직
-        eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_SUBMIT));
-
-        // 난이도별 test 제출 미션 처리 로직
-        if (test.get().getQuiz().getLevel().equals(QuizLevel.EASY)) {
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT));
-        } else if (test.get().getQuiz().getLevel().equals(QuizLevel.NORMAL)) {
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT));
-        } else if (test.get().getQuiz().getLevel().equals(QuizLevel.HARD)) {
-            eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT));
-        }
+        publishMission(user, test);
 
         log.info("submitAnswer response: {}", responseDto);
         return responseDto;
@@ -328,5 +364,42 @@ public class TestService {
         eventPublisher.publishEvent(new UserActionEvent(this, user.get(), ServiceType.TEST, MissionConst.TEST_INIT_COMPLETE));
 
         return "초기 테스트 완료";
+    }
+
+
+    // 공통 제출 미션 처리
+    private void publishMission(Users user, Tests test) {
+        // test 제출 관련 미션 처리 로직
+        eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_SUBMIT));
+
+        // 난이도별 test 제출 미션 처리 로직
+        if (test.getQuiz().getLevel().equals(QuizLevel.EASY)) {
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_EASY_SUBMIT));
+        } else if (test.getQuiz().getLevel().equals(QuizLevel.NORMAL)) {
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_NORMAL_SUBMIT));
+        } else if (test.getQuiz().getLevel().equals(QuizLevel.HARD)) {
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_HARD_SUBMIT));
+        }
+    }
+
+    // 공통 채점 미션 처리
+    private void publishPassMission(boolean passed, Users user, Tests test) {
+        if (passed) {
+            // test 정답 제출 미션 처리 로직
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_PASS));
+
+            if (test.getQuiz().getLevel().equals(QuizLevel.EASY)) {
+                eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_EASY_PASS));
+            } else if (test.getQuiz().getLevel().equals(QuizLevel.NORMAL)) {
+                eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_NORMAL_PASS));
+            } else if (test.getQuiz().getLevel().equals(QuizLevel.HARD)) {
+                eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_HARD_PASS));
+            }
+        } else {
+            // 오답 횟수 증가
+            test.setWrongCount(test.getWrongCount() + 1);
+            // test 오답 제출 미션 처리 로직
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.TEST, MissionConst.TEST_FAIL));
+        }
     }
 }
