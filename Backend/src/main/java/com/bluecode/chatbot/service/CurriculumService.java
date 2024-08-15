@@ -18,7 +18,6 @@ public class CurriculumService {
 
     private final CurriculumRepository curriculumRepository;
 
-    // 커리큘럼 챕터 목록 로드
     public CurriculumChapResponseDto getCurriculumChapters(CurriculumChapCallDto dto) {
         log.info("getCurriculumChapters called with dto: {}", dto);
 
@@ -62,14 +61,15 @@ public class CurriculumService {
                 CurriculumChapElementDto subChapterDto = new CurriculumChapElementDto();
                 subChapterDto.setCurriculumId(subChapter.getCurriculumId());
                 subChapterDto.setText(subChapter.getCurriculumName());
-                // 서브 챕터 추가
-                subChapterList.add(subChapterDto);
+                subChapterDto.setTestable(subChapter.isTestable()); // testable 값 추가
+                subChapterList.add(subChapterDto); // 서브 챕터 추가
             }
 
             // 서브 챕터 list 챕터 dto에 추가
             CurriculumChapElementDto chapterDto = new CurriculumChapElementDto();
             chapterDto.setCurriculumId(chapter.getCurriculumId());
             chapterDto.setText(chapter.getCurriculumName());
+            chapterDto.setTestable(chapter.isTestable());
             chapterDto.setSubChapters(subChapterList);
 
             chapterList.add(chapterDto);
