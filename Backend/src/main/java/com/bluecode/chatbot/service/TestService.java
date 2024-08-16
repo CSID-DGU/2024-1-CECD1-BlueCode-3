@@ -246,7 +246,7 @@ public class TestService {
 
         // 사용자 답안 채점
         boolean passed = test.getQuiz().getAnswer().equals(dto.getAnswer());
-        if (test.getWrongCount() == 0) {
+        if (passed && test.getWrongCount() == 0) {
             test.setPassed(true);
         }
 
@@ -255,7 +255,7 @@ public class TestService {
         testRepository.save(test);
 
         TestAnswerResponseDto responseDto = new TestAnswerResponseDto();
-        responseDto.setPassed(passed);
+        responseDto.setPassed(test.isPassed());
 
         publishMission(user, test);
 
@@ -288,7 +288,7 @@ public class TestService {
 
         // 사용자 답안 채점
         boolean passed = test.getQuiz().getAnswer().equals(dto.getAnswer());
-        if (test.getWrongCount() == 0) {
+        if (passed && test.getWrongCount() == 0) {
             test.setPassed(true);
         }
 
@@ -297,7 +297,7 @@ public class TestService {
         testRepository.save(test);
 
         TestAnswerResponseDto responseDto = new TestAnswerResponseDto();
-        responseDto.setPassed(passed);
+        responseDto.setPassed(test.isPassed());
 
         // test 제출 관련 미션 처리 로직
         publishMission(user, test);
@@ -361,7 +361,7 @@ public class TestService {
         boolean passed = "정답".equals(responseBody.getResult());
 
         // 사용자 답안 채점
-        if (test.getWrongCount() == 0) {
+        if (passed && test.getWrongCount() == 0) {
             test.setPassed(true);
         }
 
@@ -370,7 +370,7 @@ public class TestService {
         testRepository.save(test);
 
         TestAnswerResponseDto responseDto = new TestAnswerResponseDto();
-        responseDto.setPassed(passed);
+        responseDto.setPassed(test.isPassed());
         // 코드작성형 실행 결과 태그 설정
         responseDto.setResult(responseBody.getResult());
 
