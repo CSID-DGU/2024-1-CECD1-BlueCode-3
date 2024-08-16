@@ -246,6 +246,7 @@ public class TestService {
                 quiz.setQ2(rootNode.path("q2").asText(null));
                 quiz.setQ3(rootNode.path("q3").asText(null));
                 quiz.setQ4(rootNode.path("q4").asText(null));
+                quiz.setAnswer(rootNode.path("ans").asText(null));
             } else if (quiz.getQuizType() == QuizType.CODE) {
                 List<QuizCase> cases = new ArrayList<>();
                 JsonNode inputNode = rootNode.path("input");
@@ -262,6 +263,7 @@ public class TestService {
                 }
                 quiz.setQuizCases(cases);
             } else if (quiz.getQuizType() == QuizType.WORD) {
+                quiz.setAnswer(rootNode.path("ans").asText(null));
                 quiz.setWordCount(rootNode.path("wordCount").asInt(0));
             }
 
