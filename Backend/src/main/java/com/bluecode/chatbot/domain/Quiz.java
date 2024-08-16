@@ -24,6 +24,7 @@ public class Quiz {
     private QuizType quizType;
 
     // 문제 내용
+    @Column(name = "text_def", columnDefinition = "MEDIUMTEXT")
     private String text;
 
     // 문제 정답

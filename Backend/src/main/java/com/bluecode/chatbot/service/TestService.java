@@ -6,6 +6,7 @@ import com.bluecode.chatbot.repository.CurriculumRepository;
 import com.bluecode.chatbot.repository.QuizRepository;
 import com.bluecode.chatbot.repository.TestRepository;
 import com.bluecode.chatbot.repository.UserRepository;
+import com.bluecode.chatbot.repository.QuizCaseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +34,10 @@ public class TestService {
     private final TestRepository testRepository;
     private final UserRepository userRepository;
     private final QuizRepository quizRepository;
+    private final QuizCaseRepository quizCaseRepository;  // QuizCaseRepository 추가
     private final RestTemplate restTemplate;
+
+    private final Random random = new Random();
 
     // 미션 처리를 위한 클래스
     private final ApplicationEventPublisher eventPublisher;
@@ -64,20 +73,30 @@ public class TestService {
         }
 
         // 각 난이도별로 퀴즈를 랜덤하게 선택
-        List<Quiz> hardQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.NUM, QuizLevel.HARD, 2);
-        List<Quiz> normalQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.NUM, QuizLevel.NORMAL, 1);
-        List<Quiz> easyQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.NUM, QuizLevel.EASY, 1);
-
-        // HARD - NORMAL - EASY - HARD 순으로 문제셋 구성
         List<Quiz> testQuizzes = new ArrayList<>();
-        testQuizzes.add(hardQuizzes.get(0));
-        testQuizzes.add(normalQuizzes.get(0));
-        testQuizzes.add(easyQuizzes.get(0));
-        testQuizzes.add(hardQuizzes.get(1));
+
+        // 랜덤으로 기존 데이터베이스 문제를 가져올지 또는 GPT API로 생성할지 결정
+        boolean useGPT = random.nextBoolean();
+
+        if (useGPT) {
+            // GPT API를 사용해 문제를 생성
+            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.HARD));
+            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.NORMAL));
+            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.EASY));
+            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.HARD));
+        } else {
+            // 데이터베이스에서 문제를 가져옴
+            List<Quiz> hardQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.NUM, QuizLevel.HARD, 2);
+            List<Quiz> normalQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.NUM, QuizLevel.NORMAL, 1);
+            List<Quiz> easyQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.NUM, QuizLevel.EASY, 1);
+
+            testQuizzes.add(hardQuizzes.get(0));
+            testQuizzes.add(normalQuizzes.get(0));
+            testQuizzes.add(easyQuizzes.get(0));
+            testQuizzes.add(hardQuizzes.get(1));
+        }
 
         List<Tests> tests = new ArrayList<>();
-
-        // tests 테이블에 생성된 초기 테스트 현황 생성 및 저장
         for (Quiz quiz : testQuizzes) {
             Tests test = new Tests();
             test.setUser(user.get());
@@ -90,28 +109,7 @@ public class TestService {
             tests.add(test);
         }
 
-        TestResponseDto responseDto = new TestResponseDto();
-        List<TestResponseElementDto> testElements = new ArrayList<>();
-
-        for (int i = 0; i < tests.size(); i++) {
-
-            TestResponseElementDto element = new TestResponseElementDto();
-            element.setTestId(tests.get(i).getTestId());
-            element.setQuizId(testQuizzes.get(i).getQuizId());
-            element.setText(testQuizzes.get(i).getText());
-            element.setLevel(testQuizzes.get(i).getLevel());
-            element.setQuizType(testQuizzes.get(i).getQuizType());
-            element.setQ1(testQuizzes.get(i).getQ1());
-            element.setQ2(testQuizzes.get(i).getQ2());
-            element.setQ3(testQuizzes.get(i).getQ3());
-            element.setQ4(testQuizzes.get(i).getQ4());
-            testElements.add(element);
-        }
-
-        responseDto.setTests(testElements);
-
-        log.info("createInitTest response: {}", responseDto);
-        return responseDto;
+        return createTestResponseDto(tests, testQuizzes);
     }
 
     // 이해도 테스트 구성
@@ -133,19 +131,28 @@ public class TestService {
         }
 
         // 각 난이도별로 퀴즈를 랜덤하게 선택
-        List<Quiz> hardQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.HARD, 1);
-        List<Quiz> normalQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.NORMAL, 1);
-        List<Quiz> easyQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.EASY, 1);
-
-        // EASY - NORMAL - HARD 순으로 문제셋 구성
         List<Quiz> testQuizzes = new ArrayList<>();
-        testQuizzes.add(easyQuizzes.get(0));
-        testQuizzes.add(normalQuizzes.get(0));
-        testQuizzes.add(hardQuizzes.get(0));
+
+        // 랜덤으로 기존 데이터베이스 문제를 가져올지 또는 GPT API로 생성할지 결정
+        boolean useGPT = random.nextBoolean();
+
+        if (useGPT) {
+            // GPT API를 사용해 문제를 생성
+            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.EASY));
+            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.NORMAL));
+            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.HARD));
+        } else {
+            // 데이터베이스에서 문제를 가져옴
+            List<Quiz> hardQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.HARD, 1);
+            List<Quiz> normalQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.NORMAL, 1);
+            List<Quiz> easyQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.EASY, 1);
+
+            testQuizzes.add(easyQuizzes.get(0));
+            testQuizzes.add(normalQuizzes.get(0));
+            testQuizzes.add(hardQuizzes.get(0));
+        }
 
         List<Tests> tests = new ArrayList<>();
-
-        // tests 테이블에 생성된 초기 테스트 현황 생성 및 저장
         for (Quiz quiz : testQuizzes) {
             Tests test = new Tests();
             test.setUser(user.get());
@@ -158,30 +165,123 @@ public class TestService {
             tests.add(test);
         }
 
-        TestResponseDto responseDto = new TestResponseDto();
-        List<TestResponseElementDto> testElements = new ArrayList<>();
+        return createTestResponseDto(tests, testQuizzes);
+    }
 
-        for (int i = 0; i < tests.size(); i++) {
+    // gpt api를 사용해 문제 생성 요청
+    private List<Quiz> generateQuizzesFromGPT(Curriculums chapter, QuizType type, QuizLevel level) {
+        String gptResponse = quizService.createQuizFromGPT(chapter.getCurriculumId(), type, level);
+        log.info("GPT Response: {}", gptResponse); // gpt 응답 원문 확인 로그
+        return parseGeneratedQuiz(gptResponse, chapter, type, level);
+    }
 
-            TestResponseElementDto element = new TestResponseElementDto();
-            element.setTestId(tests.get(i).getTestId());
-            element.setQuizId(testQuizzes.get(i).getQuizId());
-            element.setText(testQuizzes.get(i).getText());
-            element.setLevel(testQuizzes.get(i).getLevel());
-            element.setQuizType(testQuizzes.get(i).getQuizType());
-            element.setQ1(testQuizzes.get(i).getQ1());
-            element.setQ2(testQuizzes.get(i).getQ2());
-            element.setQ3(testQuizzes.get(i).getQ3());
-            element.setQ4(testQuizzes.get(i).getQ4());
-            element.setWordCount(testQuizzes.get(i).getWordCount());
-            testElements.add(element);
+    // gpt api 응답에서 문제를 원하는 양식으로 파싱
+    private List<Quiz> parseGeneratedQuiz(String gptResponse, Curriculums curriculum, QuizType type, QuizLevel level) {
+        List<Quiz> quizzes = new ArrayList<>();
+        String[] quizSections = gptResponse.split("content:@\\{|}@");
+        Map<Long, List<QuizCase>> quizCaseMap = new HashMap<>(); // Quiz ID를 키로 QuizCase 리스트 저장
+
+        for (String section : quizSections) {
+            if (section.isBlank()) continue;
+
+            Quiz quiz = new Quiz();
+            quiz.setCurriculum(curriculum);
+            quiz.setLevel(level);
+
+            // 정규 표현식을 사용하여 문제 정보 추출
+            Pattern textPattern = Pattern.compile("text:\\$\\{(.*?)\\}$");
+            Matcher textMatcher = textPattern.matcher(section);
+            if (textMatcher.find()) {
+                quiz.setText(textMatcher.group(1));
+            }
+
+            // 문제 유형에 따라 추가 정보 추출
+            switch (type) {
+                case NUM:
+                    quiz.setAnswer(extractContent(section, "ans"));
+                    quiz.setQ1(extractContent(section, "q1"));
+                    quiz.setQ2(extractContent(section, "q2"));
+                    quiz.setQ3(extractContent(section, "q3"));
+                    quiz.setQ4(extractContent(section, "q4"));
+                    break;
+                case WORD:
+                    quiz.setAnswer(extractContent(section, "ans"));
+                    // 정답의 글자 수를 추출하여 저장
+                    Matcher wordCountMatcher = Pattern.compile("count:\\$\\{(.*?)\\}$").matcher(section);
+                    if (wordCountMatcher.find()) {
+                        quiz.setWordCount(Integer.parseInt(wordCountMatcher.group(1)));
+                    }
+                    break;
+                case CODE:
+                    List<QuizCase> cases = new ArrayList<>();
+                    for (int i = 1; i <= 10; i++) {
+                        String input = extractContent(section, "예제 입력" + i);
+                        String output = extractContent(section, "예제 출력" + i);
+                        if (input != null && output != null) {
+                            cases.add(QuizCase.createQuizCase(quiz, input, output));
+                        }
+                    }
+                    quizCaseMap.put(quiz.getQuizId(), cases); // Quiz ID를 키로 QuizCase 리스트 저장
+
+                    quizzes.add(quizRepository.save(quiz));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported quiz type: " + type);
+            }
+
+            quizzes.add(quizRepository.save(quiz));
         }
 
-        responseDto.setTests(testElements);
-
-        log.info("createNormalTest response: {}", responseDto);
-        return responseDto;
+        return quizzes;
     }
+
+    private String extractContent(String section, String keyword) {
+        Matcher matcher = Pattern.compile(String.format("%s:\\$\\{(.*?)\\}$", keyword)).matcher(section);
+        return matcher.find() ? matcher.group(1) : "";
+    }
+
+    private List<QuizCase> extractQuizCases(String section, Quiz quiz) {
+        List<QuizCase> cases = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            String input = extractContent(section, "예제 입력" + i);
+            String output = extractContent(section, "예제 출력" + i);
+            if (input != null && output != null) {
+                cases.add(QuizCase.createQuizCase(quiz, input, output));
+            }
+        }
+        return cases;
+    }
+
+    private TestResponseDto createTestResponseDto(List<Tests> tests, List<Quiz> quizzes) {
+        List<TestResponseElementDto> testDtos = new ArrayList<>();
+
+        for (int i = 0; i < tests.size(); i++) {
+            Tests test = tests.get(i);
+            Quiz quiz = quizzes.get(i);
+
+            TestResponseElementDto dto = new TestResponseElementDto();
+            // Tests 객체에서 값 가져오기
+            dto.setTestId(test.getTestId());
+            // Quiz 객체에서 값 가져오기
+            dto.setQuizId(quiz.getQuizId());
+            dto.setText(quiz.getText());
+            dto.setLevel(quiz.getLevel());
+            dto.setQuizType(quiz.getQuizType());
+            dto.setQ1(quiz.getQ1());
+            dto.setQ2(quiz.getQ2());
+            dto.setQ3(quiz.getQ3());
+            dto.setQ4(quiz.getQ4());
+            dto.setWordCount(quiz.getWordCount());
+
+            testDtos.add(dto);
+        }
+
+        TestResponseDto dto = new TestResponseDto();
+        dto.setTests(testDtos);
+
+        return dto;
+    }
+
 
     // 객관식 문제 답안 판정
     public TestAnswerResponseDto submitAnswerNum(TestAnswerCallDto dto) {
