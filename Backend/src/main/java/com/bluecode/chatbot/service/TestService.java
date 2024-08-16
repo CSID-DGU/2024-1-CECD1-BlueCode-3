@@ -3,6 +3,7 @@ package com.bluecode.chatbot.service;
 import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.repository.CurriculumRepository;
+import com.bluecode.chatbot.repository.QuizRepository;
 import com.bluecode.chatbot.repository.TestRepository;
 import com.bluecode.chatbot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class TestService {
 
     private final QuizService quizService;
     private final CurriculumRepository curriculumRepository;
+    private final QuizRepository quizRepository;
     private final TestRepository testRepository;
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
@@ -156,11 +158,13 @@ public class TestService {
 
         List<Tests> tests = new ArrayList<>();
         for (Quiz quiz : testQuizzes) {
+            Quiz savedQuiz = quizRepository.save(quiz);
+
             Tests test = new Tests();
             test.setUser(user.get());
-            test.setQuiz(quiz);
+            test.setQuiz(savedQuiz); // 저장된 Quiz 객체를 참조
             test.setPassed(false);
-            test.setTestType(TestType.NORMAL);
+            test.setTestType(TestType.INIT);
             test.setWrongCount(0);
 
             testRepository.save(test);

@@ -155,10 +155,11 @@ public class QuizService {
                     "7. 단, 'wordCount'는 0으로 표기\n\n";
         } else if (level == QuizLevel.HARD && type == QuizType.CODE) {
             return "1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정\n" +
-                    "2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용, 출력 내용, 예제 입력, 예제 출력으로 구성할 것\n" +
+                    "2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용 설명, 출력 내용 설명, 예제 입력(1-3개), 예제 출력(1-3개)으로 구성할 것\n" +
                     "3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것\n" +
                     "4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것\n" +
-                    "5. 'text' 안에 출력한 예제 입력과 예제 출력과 같은 내용으로 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것\n" +
+                    "5. 'text' 안에 출력한 예제 입력과 예제 출력과 같은 내용으로 'examples'에 리스트 형태로 " +
+                    "각각 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것(서로 대응하는 입력과 출력을 묶어서 리스트 형태로 구현)\n" +
                     "6. 그 외의 값은 모두 null로 표기\n" +
                     "7. 단, 'wordCount'는 0으로 표기\n\n";
         } else {
@@ -168,17 +169,30 @@ public class QuizService {
 
     private String quizTemplate() {
         return "{\n" +
-                "\"text\": \"문제 내용\"\n" +
-                "\"level\": \"QuizLevel\",\n" +
-                "\"quizType\": \"QuizType\",\n" +
-                "\"q1\": \"보기1 내용\",\n" +
-                "\"q2\": \"보기2 내용\",\n" +
-                "\"q3\": \"보기3 내용\",\n" +
-                "\"q4\": \"보기4 내용\",\n" +
-                "\"input\": \"입력 예제 내용\",\n" +
-                "\"output\": \"출력 예제 내용\",\n" +
-                "\"ans\": \"정답 내용\",\n" +
-                "\"wordCount\": 정답 글자 수\n" +
+                "  \"text\": \"문제 내용\",\n" +
+                "  \"level\": \"QuizLevel\",\n" +
+                "  \"quizType\": \"QuizType\",\n" +
+                "  \"q1\": \"보기1 내용\",\n" +
+                "  \"q2\": \"보기2 내용\",\n" +
+                "  \"q3\": \"보기3 내용\",\n" +
+                "  \"q4\": \"보기4 내용\",\n" +
+                "  \"examples\": [\n" +
+                "    {\n" +
+                "      \"input\": \"입력 예제 내용 1\",\n" +
+                "      \"output\": \"출력 예제 내용 1\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"input\": \"입력 예제 내용 2\",\n" +
+                "      \"output\": \"출력 예제 내용 2\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"input\": \"입력 예제 내용 3\",\n" +
+                "      \"output\": \"출력 예제 내용 3\"\n" +
+                "    }\n" +
+                "    // 추가 입력/출력 예제 가능\n" +
+                "  ],\n" +
+                "  \"ans\": \"정답 내용\",\n" +
+                "  \"wordCount\": 정답 글자 수\n" +
                 "}\n";
     }
 
@@ -327,17 +341,15 @@ public class QuizService {
 
         try {
             JsonNode rootNode = objectMapper.readTree(gptResponse);
+
+            // Quiz 객체 생성 및 설정
             Quiz quiz = new Quiz();
             quiz.setCurriculum(curriculum);
-            quiz.setLevel(level);
-
-            // JSON에서 문제 정보 추출
-            String text = rootNode.path("text").asText();
-            quiz.setText(String.valueOf(text));
             quiz.setQuizType(QuizType.valueOf(rootNode.path("quizType").asText()));
             quiz.setLevel(QuizLevel.valueOf(rootNode.path("level").asText()));
+            quiz.setText(rootNode.path("text").asText());
 
-            // 문제 유형에 따라 추가 정보 추출
+            // 문제 유형에 따라 추가 정보 설정
             if (quiz.getQuizType() == QuizType.NUM) {
                 quiz.setQ1(rootNode.path("q1").asText(null));
                 quiz.setQ2(rootNode.path("q2").asText(null));
@@ -345,17 +357,27 @@ public class QuizService {
                 quiz.setQ4(rootNode.path("q4").asText(null));
                 quiz.setAnswer(rootNode.path("ans").asText(null));
             } else if (quiz.getQuizType() == QuizType.CODE) {
-                QuizCase quizCase = new QuizCase();
-                quizCase.setInput(rootNode.path("input").asText(null));
-                quizCase.setOutput(rootNode.path("output").asText(null));
+                // Quiz 엔티티를 먼저 저장하여 quizId를 생성
+                quiz = quizRepository.save(quiz);
 
-                quizCaseRepository.save(quizCase);
+                // examples 리스트에서 input-output 쌍을 추출하고 QuizCase에 저장
+                JsonNode examplesNode = rootNode.path("examples");
+                if (examplesNode.isArray()) {
+                    for (JsonNode exampleNode : examplesNode) {
+                        QuizCase quizCase = QuizCase.createQuizCase(
+                                quiz,
+                                exampleNode.path("input").asText(null),
+                                exampleNode.path("output").asText(null)
+                        );
+                        quizCaseRepository.save(quizCase);
+                    }
+                }
             } else if (quiz.getQuizType() == QuizType.WORD) {
                 quiz.setAnswer(rootNode.path("ans").asText(null));
                 quiz.setWordCount(rootNode.path("wordCount").asInt(0));
             }
 
-            quizzes.add(quizRepository.save(quiz));
+            quizzes.add(quiz);
 
         } catch (Exception e) {
             log.error("파싱 오류", e);
