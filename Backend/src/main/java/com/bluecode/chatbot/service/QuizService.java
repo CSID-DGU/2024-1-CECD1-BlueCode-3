@@ -358,7 +358,7 @@ public class QuizService {
             quizzes.add(quizRepository.save(quiz));
 
         } catch (Exception e) {
-            log.error("Failed to parse GPT response", e);
+            log.error("파싱 오류", e);
         }
 
         return quizzes;
