@@ -218,25 +218,38 @@ public class StudyService {
         return responseDto;
     }
 
-    // 부모 커리큘럼의 pass 처리 판정 로직(서브 챕터 -> 챕터)
-    public boolean parentPass(Users user, Curriculums parent) {
+    // 부모 커리큘럼의 pass 처리 판정 로직(서브 챕터 -> 챕터, 챕터 -> 루트)
+    public boolean chapterPass(CurriculumPassCallDto dto) {
 
-        Optional<Studies> parentStudyOptional = studyRepository.findByUserAndCurriculum(user, parent);
+        Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
+        Optional<Curriculums> chapterOptional = curriculumRepository.findById(dto.getCurriculumId());
 
-        if (parentStudyOptional.isEmpty()) {
-            log.error("study가 존재하지 않습니다. user={}, parent={}", user, parent);
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (chapterOptional.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 서브 챕터 커리큘럼 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+        Curriculums chapter = chapterOptional.get();
+        Optional<Studies> chapterStudyOptional = studyRepository.findByUserAndCurriculum(user, chapter);
+
+        if (chapterStudyOptional.isEmpty()) {
+            log.error("study가 존재하지 않습니다. user={}, chapter={}", user, chapter);
             throw new IllegalArgumentException("study가 존재하지 않습니다.");
         }
 
-        Studies parentStudy = parentStudyOptional.get();
-        List<Studies> childStudyList = studyRepository.findAllByUserAndParent(user, parent);
+        Studies chapterStudy = chapterStudyOptional.get();
+        List<Studies> childStudyList = studyRepository.findAllByUserAndParent(user, chapter);
 
         if (childStudyList.isEmpty()) {
-            log.error("자식 study가 존재하지 않습니다. user={}, parent={}", user, parent);
+            log.error("자식 study가 존재하지 않습니다. user={}, chapter={}", user, chapter);
             throw new IllegalArgumentException("자식 study가 존재하지 않습니다.");
         }
 
-        // 통과 여부 확인
+        // 서브 챕터들 학습 완료 여부 확인
         boolean flag = true;
 
         for (Studies childStudy : childStudyList) {
@@ -247,10 +260,38 @@ public class StudyService {
             }
         }
 
-        // 모든 자식 챕터가 통과일 시 부모 챕터도 통과 처리
         if (flag) {
-            parentStudy.setPassed(true);
-            studyRepository.saveAndFlush(parentStudy);
+            // 모든 자식 챕터가 통과일 시 부모 챕터도 통과 처리
+            chapterStudy.setPassed(true);
+            studyRepository.saveAndFlush(chapterStudy);
+
+            // 챕터가 pass 처리 되었을 경우,대상 챕터 학습 미션 완료 처리
+            log.info("MissionConst: {}", MissionConst.createConstByRootName(chapterStudy.getCurriculum()));
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootName(chapterStudy.getCurriculum())));
+
+            Optional<Studies> next = studyRepository.findByUserAndCurriculum(user, chapter.getNext());
+
+            // 다음 챕터에 대한 학습이 존재하면
+            if (next.isPresent()) {
+                // 다음 챕터 난이도는 dto의 level로 설정
+                Studies nextChapterStudy = next.get();
+                nextChapterStudy.setLevel(dto.getLevelType());
+                studyRepository.save(nextChapterStudy);
+            }
+
+            // 루트 Study 통과 처리 업데이트
+            if (!chapterStudy.getCurriculum().isRootNode()) {
+                CurriculumPassCallDto rootDto = new CurriculumPassCallDto();
+                rootDto.setUserId(user.getUserId());
+                rootDto.setCurriculumId(chapter.getRoot().getCurriculumId());
+                boolean flagRoot = chapterPass(rootDto);
+
+                // 루트가 pass 처리 되었을 경우,
+                if (flagRoot) {
+                    // 대상 루트 학습 미션 완료 처리
+                    eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootName(chapterStudy.getCurriculum().getRoot())));
+                }
+            }
         }
 
         return flag;
@@ -297,27 +338,8 @@ public class StudyService {
         log.info("MissionConst: {}", MissionConst.createConstByRootAndSubChapterName(subChapter.getParent(), subChapter));
         eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootAndSubChapterName(subChapter.getParent(), subChapter)));
 
-        // 커리큘럼 학습 완료 공통 미션 처리
+        // 서브 챕터 학습 완료 공통 미션 처리
         eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.STUDY_COMPLETE));
-
-        // 부모인 챕터 Study 통과 처리 업데이트
-        boolean flag = parentPass(user, subChapter.getParent());
-
-        // 챕터가 pass 처리 되었을 경우,
-        if (flag)  {
-            // 대상 챕터 학습 미션 완료 처리
-            log.info("MissionConst: {}", MissionConst.createConstByRootName(subChapter.getParent()));
-            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootName(subChapter.getParent())));
-
-            // 루트 Study 통과 처리 업데이트
-            boolean flagRoot = parentPass(user, subChapter.getRoot());
-
-            // 루트가 pass 처리 되었을 경우,
-            if (flagRoot) {
-                // 대상 루트 학습 미션 완료 처리
-                eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootName(subChapter.getRoot())));
-            }
-        }
 
         return true;
     }
@@ -356,8 +378,13 @@ public class StudyService {
 
         Studies study = studyOptional.get();
 
-        // study 데이터에 완전 최초 접근의 경우,level = null 로 설정 되어있음 --> level 설정 로직
-        setStudyLevel(study, dto.getTextType());
+        // study 데이터에 완전 최초 접근의 경우,level = null 로 설정 되어있음 --> parent와 같은 level로 설정 로직
+        if (study.getLevel() == null) {
+            Optional<Studies> parent = studyRepository.findByUserAndCurriculum(user, subChapter.getParent());
+            Studies chapterStudy = parent.get();
+            setStudyLevel(study, chapterStudy);
+        }
+
 
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         String text = createTextByTextType(study, dto.getTextType());
@@ -371,26 +398,34 @@ public class StudyService {
     }
 
     // 최초 접근에 대한 level 설정 로직
-    private void setStudyLevel(Studies study, TextType type) {
-        if (study.getLevel() == null) {
-            if (type == TextType.DEF) {
-                study.setLevel(LevelType.EASY);
-            } else if (type == TextType.CODE) {
-                study.setLevel(LevelType.NORMAL);
-            } else if (type == TextType.QUIZ) {
-                study.setLevel(LevelType.HARD);
-            } else {
-                log.error("유효하지 않은 TextType 입니다. type: {}", type);
-                throw new IllegalArgumentException("유효하지 않은 TextType 입니다. " + type);
-            }
-        }
+    private void setStudyLevel(Studies study, Studies chapterStudy) {
+        study.setLevel(chapterStudy.getLevel());
     }
 
 
     // textType에 따른 text 열 지정 및 생성
+    /**
+     * 서브 챕터에서 text를 리턴하는 함수.
+     * 접근 가능 text:
+     * EASY(DEF, CODE, QUIZ),
+     * NORMAL(CODE, QUIZ),
+     * HARD(QUIZ)
+     * (만약 대상 text가 null일 경우, gpt로 생성)
+     *
+     * @param study: 대상 study
+     * @param textType: 대상 textType
+     * @return study 내 존재하는 대상 text
+     */
     private String createTextByTextType(Studies study, TextType textType) {
 
         if (textType == TextType.DEF) {
+
+            if (study.getLevel() == LevelType.NORMAL || study.getLevel() == LevelType.HARD) {
+                if (!study.isPassed()) {
+                    log.error("{} 에서 DEF는 생략됩니다.", study.getLevel());
+                    throw new IllegalArgumentException(study.getLevel() + " 에서 DEF는 생략됩니다.");
+                }
+            }
 
             if (study.getTextDef() == null) {
                 String subChapterKeyword = study.getCurriculum().getCurriculumName();
@@ -404,6 +439,13 @@ public class StudyService {
             return study.getTextDef();
 
         } else if (textType == TextType.CODE) {
+
+            if (study.getLevel() == LevelType.HARD) {
+                if (!study.isPassed()) {
+                    log.error("{} 에서 CODE는 생략됩니다.", study.getLevel());
+                    throw new IllegalArgumentException(study.getLevel() + " 에서 CODE는 생략됩니다.");
+                }
+            }
 
             if (study.getTextCode() == null) {
                 String subChapterKeyword = study.getCurriculum().getCurriculumName();
