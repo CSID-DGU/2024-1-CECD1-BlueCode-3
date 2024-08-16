@@ -68,6 +68,11 @@ public class TestService {
         }
 
         // 각 난이도별로 퀴즈를 랜덤하게 선택
+        List<Quiz> hardQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.HARD, 2);
+        List<Quiz> normalQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.NORMAL, 1);
+        List<Quiz> easyQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.EASY, 1);
+
+        // HARD - NORMAL - EASY - HARD 순으로 문제셋 구성
         List<Quiz> testQuizzes = new ArrayList<>();
 
         // 문제는 다음과 같이 구성
