@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.ArrayList;
-
 @Entity
 @Getter
 @Setter
@@ -27,7 +24,7 @@ public class Quiz {
     private QuizType quizType;
 
     // 문제 내용
-    @Column(name = "text_def", columnDefinition = "MEDIUMTEXT")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String text;
 
     // 문제 정답
