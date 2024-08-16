@@ -105,10 +105,12 @@ public class QuizService {
 
         // 예시 문제를 추가하여 메시지에 포함
         String explanation = explanationQuiz(level, type);
+        String template = quizTemplate();
         String example = exampleQuiz(level, type);
         if (!explanation.isEmpty() && !example.isEmpty()) {
             messages.add(Map.of("role", "user", "content", "- 문제 구성 법칙은 다음 설명을 참고: " + explanation
-                    + "- 참고할 수 있는 문제 예시(단, 출력 유형만 참고하고 문제 내용은 참고하지 말 것): " + example));
+                    + "\n- JSON 형식의 문제 템플릿: " + template
+                    + "\n- 참고할 수 있는 문제 형태 예시: " + example));
         }
 
         // ApiService를 사용해 GPT API 호출
@@ -164,11 +166,27 @@ public class QuizService {
         }
     }
 
+    private String quizTemplate() {
+        return "{\n" +
+                "\"text\": \"문제 내용\"\n" +
+                "\"level\": \"QuizLevel\",\n" +
+                "\"quizType\": \"QuizType\",\n" +
+                "\"q1\": \"보기1 내용\",\n" +
+                "\"q2\": \"보기2 내용\",\n" +
+                "\"q3\": \"보기3 내용\",\n" +
+                "\"q4\": \"보기4 내용\",\n" +
+                "\"input\": \"입력 예제 내용\",\n" +
+                "\"output\": \"출력 예제 내용\",\n" +
+                "\"ans\": \"정답 내용\",\n" +
+                "\"wordCount\": 정답 글자 수\n" +
+                "}\n";
+    }
+
     // 예시 문제를 반환
     private String exampleQuiz(QuizLevel level, QuizType type) {
         if (level == QuizLevel.EASY && type == QuizType.NUM) {
             return "{\n" +
-                    "\"text\": \"{다음 설명에 해당하는 자료형은 무엇일까요?\n" +
+                    "\"text\": \"다음 설명에 해당하는 자료형은 무엇일까요?\n" +
                     "\n" +
                     "\"- 순서가 보장되고, 중복되는 값을 허용하며, 요소를 추가, 삭제, 수정할 수 있는 자료형입니다.\",\n" +
                     "\"level\": \"EASY\",\n" +
@@ -241,9 +259,7 @@ public class QuizService {
                     "}\n";
         } else if (level == QuizLevel.HARD && type == QuizType.CODE) {
             return "{\n" +
-                    "\"text\": \"간단한 계산기\n" +
-                    "\n" +
-                    "사용자가 두 개의 정수를 입력하면, 다음의 연산을 수행하는 간단한 계산기 프로그램을 작성하시오.\n" +
+                    "\"text\": \"사용자가 두 개의 정수를 입력하면, 다음의 연산을 수행하는 간단한 계산기 프로그램을 작성하시오.\n" +
                     "\n" +
                     "1. 두 정수의 합\n" +
                     "2. 두 정수의 차\n" +

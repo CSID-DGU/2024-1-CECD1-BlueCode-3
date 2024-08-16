@@ -15981,3 +15981,1037 @@ Caused by: java.lang.IllegalStateException: org.springframework.boot.web.servlet
 2024-08-16T20:48:17.323+09:00  INFO 20872 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-08-16T20:48:17.325+09:00  INFO 20872 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-08-16T20:48:17.331+09:00  INFO 20872 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-08-16T21:43:20.446+09:00  INFO 16560 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 16560 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-08-16T21:43:20.448+09:00  INFO 16560 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-08-16T21:43:20.484+09:00  INFO 16560 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-16T21:43:20.484+09:00  INFO 16560 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-16T21:43:20.958+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-16T21:43:20.959+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-16T21:43:20.979+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-08-16T21:43:21.111+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-16T21:43:21.112+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-16T21:43:21.250+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 136 ms. Found 10 JPA repository interfaces.
+2024-08-16T21:43:21.259+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-16T21:43:21.259+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-16T21:43:21.265+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.266+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.266+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.266+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizCaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.266+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.266+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.266+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.267+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.267+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.267+09:00  INFO 16560 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:43:21.267+09:00  INFO 16560 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2024-08-16T21:43:21.715+09:00  INFO 16560 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-08-16T21:43:21.723+09:00  INFO 16560 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-16T21:43:21.724+09:00  INFO 16560 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-16T21:43:21.772+09:00  INFO 16560 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-16T21:43:21.772+09:00  INFO 16560 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1288 ms
+2024-08-16T21:43:21.790+09:00  INFO 16560 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-08-16T21:43:21.971+09:00  INFO 16560 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@47cf84d4
+2024-08-16T21:43:21.974+09:00  INFO 16560 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-08-16T21:43:21.981+09:00  INFO 16560 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-08-16T21:43:22.072+09:00  INFO 16560 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-16T21:43:22.113+09:00  INFO 16560 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-16T21:43:22.139+09:00  INFO 16560 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-16T21:43:22.324+09:00  INFO 16560 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-16T21:43:22.373+09:00  WARN 16560 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-16T21:43:23.157+09:00  INFO 16560 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-16T21:43:23.957+09:00  INFO 16560 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-16T21:43:24.204+09:00  INFO 16560 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-16T21:43:24.688+09:00  INFO 16560 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
+2024-08-16T21:43:25.994+09:00  WARN 16560 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-16T21:43:26.114+09:00 DEBUG 16560 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 40 mappings in 'requestMappingHandlerMapping'
+2024-08-16T21:43:26.187+09:00 DEBUG 16560 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-16T21:43:26.214+09:00  INFO 16560 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3c4b8ac, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@417cf700, org.springframework.security.web.context.SecurityContextHolderFilter@12ea3bf5, org.springframework.security.web.header.HeaderWriterFilter@172cf5ba, org.springframework.web.filter.CorsFilter@3f89b5a6, org.springframework.security.web.authentication.logout.LogoutFilter@4ffc0c1a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@455dc9a2, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7a22a358, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@79c130ab, org.springframework.security.web.access.ExceptionTranslationFilter@52d42b5a, org.springframework.security.web.access.intercept.AuthorizationFilter@6b953de1]
+2024-08-16T21:43:26.263+09:00 DEBUG 16560 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-16T21:43:26.289+09:00 DEBUG 16560 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-16T21:43:26.415+09:00  INFO 16560 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-16T21:43:26.443+09:00  INFO 16560 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-08-16T21:43:26.457+09:00  INFO 16560 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 6.301 seconds (process running for 6.915)
+2024-08-16T21:43:26.464+09:00  INFO 16560 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-08-16T21:43:34.847+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-16T21:43:34.847+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-08-16T21:43:34.847+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-08-16T21:43:34.847+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-08-16T21:43:34.847+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-08-16T21:43:34.848+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@4cfa59ab
+2024-08-16T21:43:34.848+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@497e005a
+2024-08-16T21:43:34.849+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-08-16T21:43:34.849+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-08-16T21:43:34.860+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /test/create/normal
+2024-08-16T21:43:34.864+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /test/create/normal
+2024-08-16T21:43:34.866+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/test/create/normal", parameters={}
+2024-08-16T21:43:34.867+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createNormalTest(DataCallDto)
+2024-08-16T21:43:34.916+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=6)]
+2024-08-16T21:43:34.923+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.b.chatbot.controller.TestController    : call createNormalTest in TestController: DataCallDto(userId=1, curriculumId=6)
+2024-08-16T21:43:34.935+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T21:43:34.935+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : chapName: 반복문
+2024-08-16T21:43:34.943+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T21:43:34.973+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T21:43:34.979+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T21:43:34.984+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Writing [{model=gpt-4o, max_tokens=1500, messages=[{content=파이썬에서 반복문 챕터의 'for, while, break, continue, else, 반복문 중첩, 리스트 컴프리헨션'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 주관식 문제로 quizLevel은 'EASY', quizType은 'WORD'으로 설정
+2. 문제 전체 내용은 'text'에 한 번에 표기할 것
+3. 2-3줄의 이론으로 '()' 괄호 안에 들어갈 단어를 맞추는 형식의 문제를 낼 것
+4. 정답은 마지막에 'ans'에 넣을 것
+5. 정답은 하나의 단어로 이루어지도록 할 것
+6. 정답의 글자 수는 'wordCount'에 표기할 것
+7. 그 외의 값은 모두 null로 표기
+
+- 참고할 수 있는 문제 예시(단, 출력 유형만 참고하고 문제 내용은 참고하지 말 것): {
+"text": "다음 괄호 안에 들어갈 알맞은 답을 적으세요.
+
+- 파이썬에서 변수의 자료형을 확인하기 위해 사용하는 함수는 (    )이다. 이 함수는 변수나 값을 입력받아 그 자료형을 반환한다.",
+"level": "EASY",
+"quizType": "WORD",
+"q1": null,
+"q2": null,
+"q3": null,
+"q4": null,
+"input": null,
+"output": null,
+"ans": "type",
+"wordCount": 4
+}
+, role=user}, {content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변, role=system}]}] as "application/json"
+2024-08-16T21:43:37.731+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T21:43:37.732+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T21:43:37.738+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : GPT Response: {"text": "다음 괄호 안에 들어갈 알맞은 답을 적으세요.- 파이썬에서 반복문을 조기 종료하기 위해서 사용하는 키워드는 (    )이다. 이 키워드는 반복 조건이 아직 남아 있어도 반복문을 종료시킨다.","level": "EASY","quizType": "WORD","q1": null,"q2": null,"q3": null,"q4": null,"input": null,"output": null,"ans": "break","wordCount": 5}
+2024-08-16T21:43:37.751+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T21:43:37.753+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : chapName: 반복문
+2024-08-16T21:43:37.754+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T21:43:37.754+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T21:43:37.755+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T21:43:37.755+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Writing [{model=gpt-4o, max_tokens=1500, messages=[{content=파이썬에서 반복문 챕터의 'for, while, break, continue, else, 반복문 중첩, 리스트 컴프리헨션'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 주관식 문제로 quizLevel은 'NORMAL', quizType은 'WORD'으로 설정
+2. 간단한 실습 예제 코드를 보여주고 실행 결과를 맞추도록 할 것
+3. 문제 전체 내용은 'text'에 예시 코드와 문제 내용을 한 번에 표기할 것
+4. 정답은 마지막에 'ans'에 넣을 것
+5. 정답은 하나의 단어로 이루어지도록 할 것
+6. 정답의 글자 수는 'wordCount'에 표기할 것
+7. 그 외의 값은 모두 null로 표기
+
+- 참고할 수 있는 문제 예시(단, 출력 유형만 참고하고 문제 내용은 참고하지 말 것): {
+"text": "```
+x = 7
+y = 3
+result = x // y + x % y
+print(result)
+```
+
+위 파이썬 코드의 실행 결과를 적으시오.",
+"level": "NORMAL",
+"quizType": "WORD",
+"q1": null,
+"q2": null,
+"q3": null,
+"q4": null,
+"input": null,
+"output": null,
+"ans": "7",
+"wordCount": 1
+}
+, role=user}, {content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변, role=system}]}] as "application/json"
+2024-08-16T21:43:41.088+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T21:43:41.089+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T21:43:41.089+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : GPT Response: {"text": "numbers = [1, 2, 3, 4, 5]result = []for num in numbers:    if num % 2 == 0:        continue    result.append(num * 2)print(result)위 파이썬 코드의 실행 결과를 적으시오.","level": "NORMAL","quizType": "WORD","q1": null,"q2": null,"q3": null,"q4": null,"input": null,"output": null,"ans": "[2, 6, 10]","wordCount": 7}
+2024-08-16T21:43:41.095+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T21:43:41.095+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : chapName: 반복문
+2024-08-16T21:43:41.097+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T21:43:41.097+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T21:43:41.097+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T21:43:41.097+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Writing [{model=gpt-4o, max_tokens=1500, messages=[{content=파이썬에서 반복문 챕터의 'for, while, break, continue, else, 반복문 중첩, 리스트 컴프리헨션'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정
+2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용, 출력 내용, 예제 입력, 예제 출력으로 구성할 것
+3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것
+4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것
+5. 'text' 안에 출력한 예제 입력과 예제 출력과 같은 내용으로 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것
+6. 그 외의 값은 모두 null로 표기
+7. 단, 'wordCount'는 0으로 표기
+
+- 참고할 수 있는 문제 예시(단, 출력 유형만 참고하고 문제 내용은 참고하지 말 것): {
+"text": "간단한 계산기
+
+사용자가 두 개의 정수를 입력하면, 다음의 연산을 수행하는 간단한 계산기 프로그램을 작성하시오.
+
+1. 두 정수의 합
+2. 두 정수의 차
+3. 두 정수의 곱
+4. 두 정수의 몫과 나머지
+
+입력:
+- 두 개의 정수를 각각 한 줄에 입력받습니다.
+
+출력:
+- 입력된 두 정수의 합, 차, 곱, 몫과 나머지를 순서대로 출력합니다.
+
+예제 입력:
+```
+10
+3
+```
+
+예제 출력:
+```
+합: 13
+차: 7
+곱: 30
+몫: 3, 나머지: 1
+```",
+"level": "HARD",
+"quizType": "CODE",
+"q1": null,
+"q2": null,
+"q3": null,
+"q4": null,
+"input": "```
+10
+3
+```",
+"output": "```
+합: 13
+차: 7
+곱: 30
+몫: 3, 나머지: 1
+```",
+"ans": null,
+"wordCount": 0
+}
+, role=user}, {content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변, role=system}]}] as "application/json"
+2024-08-16T21:43:50.653+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T21:43:50.675+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T21:43:50.677+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : GPT Response: text복잡한 리스트 처리하기다음 조건을 만족하는 파이썬 프로그램을 작성하시오.조건:1. 정수 N(1 <= N <= 100)과 정수 리스트 A(N)이 주어진다.2. 리스트에 대해서 짝수와 홀수 구분 없이 오름차순으로 정렬된 리스트 B를 구한다.3. 리스트 B에서 각 짝수와 홀수의 개수를 구하고, 각각 짝수는 2로 나누고 홀수는 그대로 둔다.4. 연속으로 짝수가 나오면 해당 구간의 최대 값을 저장하고, 연속으로 홀수가 나오면 해당 구간의 최소 값을 저장하라.5. 최종 결과 리스트 C를 구하라.입력:- 첫 번째 줄에 정수 N이 주어진다.- 두 번째 줄에 정수 N개의 정수 리스트 A가 주어진다.출력:- 리스트 C를 출력하라.예제 입력:66 3 8 1 7 2예제 출력:[1, 6, 0] 설명:1. 리스트 A: [6, 3, 8, 1, 7, 2]2. 리스트 B: [1, 2, 3, 6, 7, 8]3. 짝수: [2, 6, 8], 홀수: [1, 3, 7]4. 짝수 개수: 3, 홀수 개수: 35. 짝수: [1, 3, 8//2] = [1, 1, 4] -> 최대값=6 (짝수연속)6. 홀수: [1, 3, 7//1] = [3, 1, 1] -> 최소값=0 (홀수연속)7. 최종 결과 리스트 C: [1, 6, 0]"level": "HARD","quizType": "CODE","q1": null,"q2": null,"q3": null,"q4": null,"input": "66 3 8 1 7 2","output": "[1, 6, 0]","ans": null,"wordCount": 0
+2024-08-16T21:43:50.681+09:00 ERROR 16560 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : Failed to parse GPT response
+
+com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'text복잡한': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: (String)"text복잡한 리스트 처리하기다음 조건을 만족하는 파이썬 프로그램을 작성하시오.조건:1. 정수 N(1 <= N <= 100)과 정수 리스트 A(N)이 주어진다.2. 리스트에 대해서 짝수와 홀수 구분 없이 오름차순으로 정렬된 리스트 B를 구한다.3. 리스트 B에서 각 짝수와 홀수의 개수를 구하고, 각각 짝수는 2로 나누고 홀수는 그대로 둔다.4. 연속으로 짝수가 나오면 해당 구간의 최대 값을 저장하고, 연속으로 홀수가 나오면 해당 구간의 최소 값을 저장하라.5. 최종 결과 리스트 C를 구하라.입력:- 첫 번째 줄에 정수 N이 주어진다.- 두 번째 줄에 정수 N개의 정수 리스트 A가 주어진다.출력:- 리스트 C를 출력하라.예제 입력:66 3 8 1 7 2예제 출력:[1, 6, 0] 설명:1. 리스트 A: [6, 3, 8, 1, 7, 2]2. 리스트 B: [1, 2, 3, 6, 7, 8]3. 짝수: [2, 6, 8], 홀수: [1, 3, 7]4. 짝수 개수: 3, 홀수 개수: 35. 짝수"[truncated 265 chars]; line: 1, column: 8]
+	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:2477) ~[jackson-core-2.15.4.jar:2.15.4]
+	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:760) ~[jackson-core-2.15.4.jar:2.15.4]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:3041) ~[jackson-core-2.15.4.jar:2.15.4]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:3019) ~[jackson-core-2.15.4.jar:2.15.4]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._matchToken(ReaderBasedJsonParser.java:2793) ~[jackson-core-2.15.4.jar:2.15.4]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._matchTrue(ReaderBasedJsonParser.java:2747) ~[jackson-core-2.15.4.jar:2.15.4]
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:770) ~[jackson-core-2.15.4.jar:2.15.4]
+	at com.fasterxml.jackson.databind.ObjectMapper._readTreeAndClose(ObjectMapper.java:4854) ~[jackson-databind-2.15.4.jar:2.15.4]
+	at com.fasterxml.jackson.databind.ObjectMapper.readTree(ObjectMapper.java:3219) ~[jackson-databind-2.15.4.jar:2.15.4]
+	at com.bluecode.chatbot.service.QuizService.parseGeneratedQuiz(QuizService.java:313) ~[main/:na]
+	at com.bluecode.chatbot.service.QuizService.generateQuizzesFromGPT(QuizService.java:303) ~[main/:na]
+	at com.bluecode.chatbot.service.TestService.createNormalTest(TestService.java:144) ~[main/:na]
+	at com.bluecode.chatbot.controller.TestController.createNormalTest(TestController.java:34) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.20.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.20.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.2.4.jar:6.2.4]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230) ~[spring-security-config-6.2.4.jar:6.2.4]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2024-08-16T21:43:50.711+09:00  INFO 16560 --- [chatbot] [http-nio-8080-exec-2] c.b.chatbot.controller.TestController    : createNormalTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=9, quizId=67, text=다음 괄호 안에 들어갈 알맞은 답을 적으세요.- 파이썬에서 반복문을 조기 종료하기 위해서 사용하는 키워드는 (    )이다. 이 키워드는 반복 조건이 아직 남아 있어도 반복문을 종료시킨다., level=EASY, quizType=WORD, q1=null, q2=null, q3=null, q4=null, wordCount=5), TestResponseElementDto(testId=10, quizId=68, text=numbers = [1, 2, 3, 4, 5]result = []for num in numbers:    if num % 2 == 0:        continue    result.append(num * 2)print(result)위 파이썬 코드의 실행 결과를 적으시오., level=NORMAL, quizType=WORD, q1=null, q2=null, q3=null, q4=null, wordCount=7)])
+2024-08-16T21:43:50.721+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-08-16T21:43:50.721+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=9, quizId=67, text=다음 괄호 안에 들어갈 알맞은 답을 적으세요.- 파 (truncated)...]
+2024-08-16T21:43:50.728+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-08-16T21:43:50.728+09:00 DEBUG 16560 --- [chatbot] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-08-16T21:47:37.371+09:00  INFO 16560 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-16T21:47:37.374+09:00  INFO 16560 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-08-16T21:47:37.378+09:00  INFO 16560 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-08-16T21:56:30.841+09:00  INFO 30552 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 30552 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-08-16T21:56:30.844+09:00  INFO 30552 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-08-16T21:56:30.886+09:00  INFO 30552 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-16T21:56:30.887+09:00  INFO 30552 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-16T21:56:31.408+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-16T21:56:31.409+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-16T21:56:31.422+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-08-16T21:56:31.556+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-16T21:56:31.557+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-16T21:56:31.684+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 125 ms. Found 10 JPA repository interfaces.
+2024-08-16T21:56:31.692+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-16T21:56:31.692+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-16T21:56:31.698+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.698+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.698+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.699+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizCaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.699+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.699+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.699+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.699+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.699+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.699+09:00  INFO 30552 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-16T21:56:31.699+09:00  INFO 30552 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2024-08-16T21:56:32.135+09:00  INFO 30552 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-08-16T21:56:32.142+09:00  INFO 30552 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-16T21:56:32.143+09:00  INFO 30552 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-16T21:56:32.186+09:00  INFO 30552 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-16T21:56:32.187+09:00  INFO 30552 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1300 ms
+2024-08-16T21:56:32.203+09:00  INFO 30552 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-08-16T21:56:32.375+09:00  INFO 30552 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7996960e
+2024-08-16T21:56:32.377+09:00  INFO 30552 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-08-16T21:56:32.383+09:00  INFO 30552 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-08-16T21:56:32.467+09:00  INFO 30552 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-16T21:56:32.506+09:00  INFO 30552 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-16T21:56:32.532+09:00  INFO 30552 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-16T21:56:32.706+09:00  INFO 30552 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-16T21:56:32.764+09:00  WARN 30552 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-16T21:56:33.477+09:00  INFO 30552 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-16T21:56:34.241+09:00  INFO 30552 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-16T21:56:34.438+09:00  INFO 30552 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-16T21:56:34.894+09:00  INFO 30552 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
+2024-08-16T21:56:36.060+09:00  WARN 30552 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-16T21:56:36.175+09:00 DEBUG 30552 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 40 mappings in 'requestMappingHandlerMapping'
+2024-08-16T21:56:36.276+09:00 DEBUG 30552 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-16T21:56:36.303+09:00  INFO 30552 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@135fcd13, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4c73922a, org.springframework.security.web.context.SecurityContextHolderFilter@5aea18ab, org.springframework.security.web.header.HeaderWriterFilter@7185a42, org.springframework.web.filter.CorsFilter@543ed653, org.springframework.security.web.authentication.logout.LogoutFilter@489c0c5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f687e9b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4a9281f6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1d7bbdff, org.springframework.security.web.access.ExceptionTranslationFilter@7a22a358, org.springframework.security.web.access.intercept.AuthorizationFilter@7904deec]
+2024-08-16T21:56:36.361+09:00 DEBUG 30552 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-16T21:56:36.389+09:00 DEBUG 30552 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-16T21:56:36.517+09:00  INFO 30552 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-16T21:56:36.542+09:00  INFO 30552 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-08-16T21:56:36.552+09:00  INFO 30552 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 6.018 seconds (process running for 6.672)
+2024-08-16T21:56:36.555+09:00  INFO 30552 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-08-16T21:56:41.027+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-16T21:56:41.027+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-08-16T21:56:41.027+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-08-16T21:56:41.027+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-08-16T21:56:41.027+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-08-16T21:56:41.028+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1ffc5342
+2024-08-16T21:56:41.029+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@268f1b2
+2024-08-16T21:56:41.029+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-08-16T21:56:41.029+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-08-16T21:56:41.042+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /test/create/normal
+2024-08-16T21:56:41.049+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /test/create/normal
+2024-08-16T21:56:41.050+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/test/create/normal", parameters={}
+2024-08-16T21:56:41.052+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createNormalTest(DataCallDto)
+2024-08-16T21:56:41.119+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=6)]
+2024-08-16T21:56:41.127+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.b.chatbot.controller.TestController    : call createNormalTest in TestController: DataCallDto(userId=1, curriculumId=6)
+2024-08-16T21:56:41.142+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T21:56:41.142+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : chapName: 반복문
+2024-08-16T21:56:41.153+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T21:56:41.190+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T21:56:41.197+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T21:56:41.202+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Writing [{messages=[{role=user, content=파이썬에서 반복문 챕터의 'for, while, break, continue, else, 반복문 중첩, 리스트 컴프리헨션'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+}, {role=user, content=- 문제 구성 법칙은 다음 설명을 참고: 1. 객관식 문제로 quizLevel은 'EASY', quizType은 'NUM'으로 설정
+2. 문제 전체 내용은 'text'에 표기할 것
+3. 문제 보기는 각각 'q1', 'q2', 'q3', 'q4'에 넣을 것
+4. 2-3줄의 이론과 관련한 내용으로 문제를 낼 것
+5. 보기 번호가 아닌 정답 내용을 마지막에 'ans'에 넣을 것
+6. 그 외의 값은 모두 null로 표기
+7. 단, 'wordCount'는 0으로 표기
+
+
+- JSON 형식의 문제 템플릿: {
+"text": "문제 내용"
+"level": "QuizLevel",
+"quizType": "QuizType",
+"q1": "보기1 내용",
+"q2": "보기2 내용",
+"q3": "보기3 내용",
+"q4": "보기4 내용",
+"input": "입력 예제 내용",
+"output": "출력 예제 내용",
+"ans": "정답 내용",
+"wordCount": 정답 글자 수
+}
+
+- 참고할 수 있는 문제 형태 예시: {
+"text": "다음 설명에 해당하는 자료형은 무엇일까요?
+
+"- 순서가 보장되고, 중복되는 값을 허용하며, 요소를 추가, 삭제, 수정할 수 있는 자료형입니다.",
+"level": "EASY",
+"quizType": "NUM",
+"q1": "튜플",
+"q2": "리스트",
+"q3": "딕셔너리",
+"q4": "집합",
+"input": null,
+"output": null,
+"ans": "리스트",
+"wordCount": 0
+}
+}, {role=system, content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변}], max_tokens=1500, model=gpt-4o}] as "application/json"
+2024-08-16T21:56:45.320+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T21:56:45.321+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T21:56:45.327+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : GPT Response: {"text": "다음 중 break 문을 사용하여 반복문을 중단하는 올바른 방법은 무엇일까요?","level": "EASY","quizType": "NUM","q1": "for i in range(5):\n    if i == 2:\n         print(i)\n         break\n    print(i)","q2": "for i in range(5):\n    if i == 2:\n         continue\n    break\nprint(i)","q3": "for i in range(5):\n    if i == 2:\n         break","q4": "for i in range(5):\n    if i == 2:\n         break\nprint(i)","input": null,"output": null,"ans": "for i in range(5):\n    if i == 2:\n         break\nprint(i)","wordCount": 0}
+2024-08-16T21:56:45.342+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T21:56:45.342+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : chapName: 반복문
+2024-08-16T21:56:45.344+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T21:56:45.344+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T21:56:45.344+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T21:56:45.344+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Writing [{messages=[{role=user, content=파이썬에서 반복문 챕터의 'for, while, break, continue, else, 반복문 중첩, 리스트 컴프리헨션'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+}, {role=user, content=- 문제 구성 법칙은 다음 설명을 참고: 1. 객관식 문제로 quizLevel은 'NORMAL', quizType은 'NUM'으로 설정
+2. 간단한 실습 예제 코드를 보여주고 실행 결과를 맞추도록 할 것
+3. 문제 전체 내용은 'text'에 예시 코드와 문제 내용을 한 번에 표기할 것
+4. 문제 보기는 각각 'q1', 'q2', 'q3', 'q4'에 넣을 것
+5. 보기 번호가 아닌 정답 내용을 마지막에 'ans'에 넣을 것
+6. 그 외의 값은 모두 null로 표기
+7. 단, 'wordCount'는 0으로 표기
+
+
+- JSON 형식의 문제 템플릿: {
+"text": "문제 내용"
+"level": "QuizLevel",
+"quizType": "QuizType",
+"q1": "보기1 내용",
+"q2": "보기2 내용",
+"q3": "보기3 내용",
+"q4": "보기4 내용",
+"input": "입력 예제 내용",
+"output": "출력 예제 내용",
+"ans": "정답 내용",
+"wordCount": 정답 글자 수
+}
+
+- 참고할 수 있는 문제 형태 예시: {
+"text": "```
+x = 10
+y = 3
+print(x // y)
+```
+
+위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",
+"level": "NORMAL",
+"quizType": "NUM",
+"q1": "3.33333333333",
+"q2": "3",
+"q3": "1",
+"q4": "오류 발생",
+"input": null,
+"output": null,
+"ans": "3",
+"wordCount": 0
+}
+}, {role=system, content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변}], max_tokens=1500, model=gpt-4o}] as "application/json"
+2024-08-16T21:56:52.393+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T21:56:52.393+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T21:56:52.394+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : GPT Response: {"text": "다음 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것은 무엇인가요? \nresult = []\nfor i in range(3):\n    for j in range(2):\n        if i == j:\n            continue\n        result.append((i, j))\nprint(result)\n","level": "NORMAL","quizType": "NUM","q1": "[(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]","q2": "[(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]","q3": "[(0, 1), (1, 0), (2, 0), (2, 1)]","q4": "[(1, 0), (1, 1), (2, 0), (2, 2)]","input": null,"output": null,"ans": "[(0, 1), (1, 0), (2, 0), (2, 1)]","wordCount": 0}
+2024-08-16T21:56:52.408+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T21:56:52.408+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : chapName: 반복문
+2024-08-16T21:56:52.410+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T21:56:52.410+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T21:56:52.410+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T21:56:52.410+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Writing [{messages=[{role=user, content=파이썬에서 반복문 챕터의 'for, while, break, continue, else, 반복문 중첩, 리스트 컴프리헨션'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+}, {role=user, content=- 문제 구성 법칙은 다음 설명을 참고: 1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정
+2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용, 출력 내용, 예제 입력, 예제 출력으로 구성할 것
+3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것
+4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것
+5. 'text' 안에 출력한 예제 입력과 예제 출력과 같은 내용으로 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것
+6. 그 외의 값은 모두 null로 표기
+7. 단, 'wordCount'는 0으로 표기
+
+
+- JSON 형식의 문제 템플릿: {
+"text": "문제 내용"
+"level": "QuizLevel",
+"quizType": "QuizType",
+"q1": "보기1 내용",
+"q2": "보기2 내용",
+"q3": "보기3 내용",
+"q4": "보기4 내용",
+"input": "입력 예제 내용",
+"output": "출력 예제 내용",
+"ans": "정답 내용",
+"wordCount": 정답 글자 수
+}
+
+- 참고할 수 있는 문제 형태 예시: {
+"text": "사용자가 두 개의 정수를 입력하면, 다음의 연산을 수행하는 간단한 계산기 프로그램을 작성하시오.
+
+1. 두 정수의 합
+2. 두 정수의 차
+3. 두 정수의 곱
+4. 두 정수의 몫과 나머지
+
+입력:
+- 두 개의 정수를 각각 한 줄에 입력받습니다.
+
+출력:
+- 입력된 두 정수의 합, 차, 곱, 몫과 나머지를 순서대로 출력합니다.
+
+예제 입력:
+```
+10
+3
+```
+
+예제 출력:
+```
+합: 13
+차: 7
+곱: 30
+몫: 3, 나머지: 1
+```",
+"level": "HARD",
+"quizType": "CODE",
+"q1": null,
+"q2": null,
+"q3": null,
+"q4": null,
+"input": "```
+10
+3
+```",
+"output": "```
+합: 13
+차: 7
+곱: 30
+몫: 3, 나머지: 1
+```",
+"ans": null,
+"wordCount": 0
+}
+}, {role=system, content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변}], max_tokens=1500, model=gpt-4o}] as "application/json"
+2024-08-16T21:56:58.405+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T21:56:58.406+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T21:56:58.408+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.bluecode.chatbot.service.QuizService   : GPT Response: {"text": "다음은 2차원 리스트가 주어졌을 때, 특정 조건을 만족하는 요소를 찾아내고 해당 요소의 기존 값에 특정 값을 더하는 프로그램을 작성하는 문제입니다.문제 설명:- 2차원 리스트와 특정 값을 입력받아, 리스트에서 각 요소에 대해 특정 조건을 확인하고, 그 조건을 만족하는 요소에 특정 값을 더합니다.- 특정 조건: 요소의 값이 짝수일 경우 - 특정 값: 짝수 요소에 더할 값 입력:- 첫 번째 줄에 2차원 리스트의 크기(행x열)를 나타내는 두 정수를 입력받습니다.- 이어서 각 행별로 리스트의 요소를 입력받습니다.- 마지막 줄에 짝수 요소에 더할 특정 값을 입력받습니다.출력:- 변환된 2차원 리스트를 출력합니다.예제 입력:2 31 2 34 5 62예제 출력:1 4 36 5 8","level": "HARD","quizType": "CODE","q1": null,"q2": null,"q3": null,"q4": null,"input": "2 31 2 34 5 62","output": "1 4 36 5 8","ans": null,"wordCount": 0}
+2024-08-16T21:56:58.434+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-2] c.b.chatbot.controller.TestController    : createNormalTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=9, quizId=67, text=다음 중 break 문을 사용하여 반복문을 중단하는 올바른 방법은 무엇일까요?, level=EASY, quizType=NUM, q1=for i in range(5):
+    if i == 2:
+         print(i)
+         break
+    print(i), q2=for i in range(5):
+    if i == 2:
+         continue
+    break
+print(i), q3=for i in range(5):
+    if i == 2:
+         break, q4=for i in range(5):
+    if i == 2:
+         break
+print(i), wordCount=0), TestResponseElementDto(testId=10, quizId=68, text=다음 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것은 무엇인가요? 
+result = []
+for i in range(3):
+    for j in range(2):
+        if i == j:
+            continue
+        result.append((i, j))
+print(result)
+, level=NORMAL, quizType=NUM, q1=[(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)], q2=[(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)], q3=[(0, 1), (1, 0), (2, 0), (2, 1)], q4=[(1, 0), (1, 1), (2, 0), (2, 2)], wordCount=0), TestResponseElementDto(testId=11, quizId=69, text=다음은 2차원 리스트가 주어졌을 때, 특정 조건을 만족하는 요소를 찾아내고 해당 요소의 기존 값에 특정 값을 더하는 프로그램을 작성하는 문제입니다.문제 설명:- 2차원 리스트와 특정 값을 입력받아, 리스트에서 각 요소에 대해 특정 조건을 확인하고, 그 조건을 만족하는 요소에 특정 값을 더합니다.- 특정 조건: 요소의 값이 짝수일 경우 - 특정 값: 짝수 요소에 더할 값 입력:- 첫 번째 줄에 2차원 리스트의 크기(행x열)를 나타내는 두 정수를 입력받습니다.- 이어서 각 행별로 리스트의 요소를 입력받습니다.- 마지막 줄에 짝수 요소에 더할 특정 값을 입력받습니다.출력:- 변환된 2차원 리스트를 출력합니다.예제 입력:2 31 2 34 5 62예제 출력:1 4 36 5 8, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0)])
+2024-08-16T21:56:58.444+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-08-16T21:56:58.445+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=9, quizId=67, text=다음 중 break 문을 사용하여 반복문을 중단하는 (truncated)...]
+2024-08-16T21:56:58.451+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-08-16T21:56:58.451+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-08-16T22:05:04.163+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /test/create/init
+2024-08-16T22:05:04.163+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /test/create/init
+2024-08-16T22:05:04.163+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/test/create/init", parameters={}
+2024-08-16T22:05:04.163+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createInitTest(DataCallDto)
+2024-08-16T22:05:04.164+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=6)]
+2024-08-16T22:05:04.164+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.controller.TestController    : call createInitTest in TestController: DataCallDto(userId=1, curriculumId=6)
+2024-08-16T22:05:04.164+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : createInitTest with userId: 1, curriculumId: 6
+2024-08-16T22:05:04.168+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 반복문, type: CODE, level: HARD, count: 2
+2024-08-16T22:05:04.173+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@771f8ec, com.bluecode.chatbot.domain.Quiz@2367d2d7]
+2024-08-16T22:05:04.173+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 반복문, type: NUM, level: NORMAL, count: 1
+2024-08-16T22:05:04.176+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@3a7dab9e]
+2024-08-16T22:05:04.176+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 반복문, type: NUM, level: EASY, count: 1
+2024-08-16T22:05:04.177+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@2cda2e2c]
+2024-08-16T22:05:04.188+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.controller.TestController    : createInitTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=12, quizId=69, text=다음은 2차원 리스트가 주어졌을 때, 특정 조건을 만족하는 요소를 찾아내고 해당 요소의 기존 값에 특정 값을 더하는 프로그램을 작성하는 문제입니다.문제 설명:- 2차원 리스트와 특정 값을 입력받아, 리스트에서 각 요소에 대해 특정 조건을 확인하고, 그 조건을 만족하는 요소에 특정 값을 더합니다.- 특정 조건: 요소의 값이 짝수일 경우 - 특정 값: 짝수 요소에 더할 값 입력:- 첫 번째 줄에 2차원 리스트의 크기(행x열)를 나타내는 두 정수를 입력받습니다.- 이어서 각 행별로 리스트의 요소를 입력받습니다.- 마지막 줄에 짝수 요소에 더할 특정 값을 입력받습니다.출력:- 변환된 2차원 리스트를 출력합니다.예제 입력:2 31 2 34 5 62예제 출력:1 4 36 5 8, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0), TestResponseElementDto(testId=13, quizId=17, text=테스트 문제-챕터 5: 초급자 1번째 - 객관식, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4, wordCount=0), TestResponseElementDto(testId=14, quizId=67, text=다음 중 break 문을 사용하여 반복문을 중단하는 올바른 방법은 무엇일까요?, level=EASY, quizType=NUM, q1=for i in range(5):
+    if i == 2:
+         print(i)
+         break
+    print(i), q2=for i in range(5):
+    if i == 2:
+         continue
+    break
+print(i), q3=for i in range(5):
+    if i == 2:
+         break, q4=for i in range(5):
+    if i == 2:
+         break
+print(i), wordCount=0), TestResponseElementDto(testId=15, quizId=54, text=테스트 문제-챕터 5: 중급자 2번째 - 코드작성형, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0)])
+2024-08-16T22:05:04.188+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-08-16T22:05:04.188+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=12, quizId=69, text=다음은 2차원 리스트가 주어졌을 때, 특정 조건을 (truncated)...]
+2024-08-16T22:05:04.189+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-08-16T22:05:04.189+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-08-16T22:06:00.360+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /test/create/init
+2024-08-16T22:06:00.360+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /test/create/init
+2024-08-16T22:06:00.360+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/test/create/init", parameters={}
+2024-08-16T22:06:00.360+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createInitTest(DataCallDto)
+2024-08-16T22:06:00.361+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=5)]
+2024-08-16T22:06:00.361+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.b.chatbot.controller.TestController    : call createInitTest in TestController: DataCallDto(userId=1, curriculumId=5)
+2024-08-16T22:06:00.361+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.TestService   : createInitTest with userId: 1, curriculumId: 5
+2024-08-16T22:06:00.364+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 조건문, type: CODE, level: HARD, count: 2
+2024-08-16T22:06:00.365+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@4b7d3523, com.bluecode.chatbot.domain.Quiz@143db36]
+2024-08-16T22:06:00.365+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 조건문, type: NUM, level: NORMAL, count: 1
+2024-08-16T22:06:00.366+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@73c59cc2]
+2024-08-16T22:06:00.366+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 조건문, type: NUM, level: EASY, count: 1
+2024-08-16T22:06:00.367+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@709503c9]
+2024-08-16T22:06:00.383+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-6] c.b.chatbot.controller.TestController    : createInitTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=16, quizId=51, text=테스트 문제-챕터 4: 중급자 1번째 - 코드작성형, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0), TestResponseElementDto(testId=17, quizId=13, text=테스트 문제-챕터 4: 초급자 1번째 - 객관식, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4, wordCount=0), TestResponseElementDto(testId=18, quizId=14, text=테스트 문제-챕터 4: 입문자 1번째 - 객관식, level=EASY, quizType=NUM, q1=오답1, q2=오답2, q3=오답3, q4=정답4, wordCount=0), TestResponseElementDto(testId=19, quizId=52, text=테스트 문제-챕터 4: 중급자 2번째 - 코드작성형, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0)])
+2024-08-16T22:06:00.383+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-08-16T22:06:00.384+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=16, quizId=51, text=테스트 문제-챕터 4: 중급자 1번째 - 코드작성 (truncated)...]
+2024-08-16T22:06:00.384+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-08-16T22:06:00.384+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-08-16T22:06:02.157+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /test/create/init
+2024-08-16T22:06:02.157+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /test/create/init
+2024-08-16T22:06:02.158+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/test/create/init", parameters={}
+2024-08-16T22:06:02.158+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createInitTest(DataCallDto)
+2024-08-16T22:06:02.158+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=5)]
+2024-08-16T22:06:02.159+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.b.chatbot.controller.TestController    : call createInitTest in TestController: DataCallDto(userId=1, curriculumId=5)
+2024-08-16T22:06:02.159+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.TestService   : createInitTest with userId: 1, curriculumId: 5
+2024-08-16T22:06:02.165+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 조건문, type: CODE, level: HARD, count: 2
+2024-08-16T22:06:02.167+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@18151bab, com.bluecode.chatbot.domain.Quiz@48061097]
+2024-08-16T22:06:02.167+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 조건문, type: NUM, level: NORMAL, count: 1
+2024-08-16T22:06:02.169+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@23c741c4]
+2024-08-16T22:06:02.169+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 조건문, type: NUM, level: EASY, count: 1
+2024-08-16T22:06:02.171+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@15f4d76e]
+2024-08-16T22:06:02.178+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-7] c.b.chatbot.controller.TestController    : createInitTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=20, quizId=52, text=테스트 문제-챕터 4: 중급자 2번째 - 코드작성형, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0), TestResponseElementDto(testId=21, quizId=13, text=테스트 문제-챕터 4: 초급자 1번째 - 객관식, level=NORMAL, quizType=NUM, q1=오답1, q2=오답2, q3=정답3, q4=오답4, wordCount=0), TestResponseElementDto(testId=22, quizId=14, text=테스트 문제-챕터 4: 입문자 1번째 - 객관식, level=EASY, quizType=NUM, q1=오답1, q2=오답2, q3=오답3, q4=정답4, wordCount=0), TestResponseElementDto(testId=23, quizId=51, text=테스트 문제-챕터 4: 중급자 1번째 - 코드작성형, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0)])
+2024-08-16T22:06:02.179+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-08-16T22:06:02.179+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=20, quizId=52, text=테스트 문제-챕터 4: 중급자 2번째 - 코드작성 (truncated)...]
+2024-08-16T22:06:02.180+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-08-16T22:06:02.180+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-08-16T22:06:03.355+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /test/create/init
+2024-08-16T22:06:03.356+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /test/create/init
+2024-08-16T22:06:03.356+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/test/create/init", parameters={}
+2024-08-16T22:06:03.356+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createInitTest(DataCallDto)
+2024-08-16T22:06:03.357+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=5)]
+2024-08-16T22:06:03.357+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.b.chatbot.controller.TestController    : call createInitTest in TestController: DataCallDto(userId=1, curriculumId=5)
+2024-08-16T22:06:03.357+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : createInitTest with userId: 1, curriculumId: 5
+2024-08-16T22:06:03.368+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T22:06:03.368+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : chapName: 조건문
+2024-08-16T22:06:03.372+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T22:06:03.372+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T22:06:03.373+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T22:06:03.373+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Writing [{messages=[{role=user, content=파이썬에서 조건문 챕터의 'if, elif, else, 조건문 중첩'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+}, {role=user, content=- 문제 구성 법칙은 다음 설명을 참고: 1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정
+2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용, 출력 내용, 예제 입력, 예제 출력으로 구성할 것
+3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것
+4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것
+5. 'text' 안에 출력한 예제 입력과 예제 출력과 같은 내용으로 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것
+6. 그 외의 값은 모두 null로 표기
+7. 단, 'wordCount'는 0으로 표기
+
+
+- JSON 형식의 문제 템플릿: {
+"text": "문제 내용"
+"level": "QuizLevel",
+"quizType": "QuizType",
+"q1": "보기1 내용",
+"q2": "보기2 내용",
+"q3": "보기3 내용",
+"q4": "보기4 내용",
+"input": "입력 예제 내용",
+"output": "출력 예제 내용",
+"ans": "정답 내용",
+"wordCount": 정답 글자 수
+}
+
+- 참고할 수 있는 문제 형태 예시: {
+"text": "사용자가 두 개의 정수를 입력하면, 다음의 연산을 수행하는 간단한 계산기 프로그램을 작성하시오.
+
+1. 두 정수의 합
+2. 두 정수의 차
+3. 두 정수의 곱
+4. 두 정수의 몫과 나머지
+
+입력:
+- 두 개의 정수를 각각 한 줄에 입력받습니다.
+
+출력:
+- 입력된 두 정수의 합, 차, 곱, 몫과 나머지를 순서대로 출력합니다.
+
+예제 입력:
+```
+10
+3
+```
+
+예제 출력:
+```
+합: 13
+차: 7
+곱: 30
+몫: 3, 나머지: 1
+```",
+"level": "HARD",
+"quizType": "CODE",
+"q1": null,
+"q2": null,
+"q3": null,
+"q4": null,
+"input": "```
+10
+3
+```",
+"output": "```
+합: 13
+차: 7
+곱: 30
+몫: 3, 나머지: 1
+```",
+"ans": null,
+"wordCount": 0
+}
+}, {role=system, content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변}], max_tokens=1500, model=gpt-4o}] as "application/json"
+2024-08-16T22:06:09.951+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T22:06:09.952+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T22:06:09.954+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : GPT Response: {"text": "사용자가 세 개의 정수를 입력하면, 다음의 조건을 만족하는 결과를 출력하는 프로그램을 작성하시오.조건:1. 세 정수 중 가장 큰 수를 찾으세요.2. 세 정수 중 가장 작은 수를 찾으세요.3. 세 정수 중 가장 큰 수와 가장 작은 수의 차이를 구하세요.4. 세 정수의 합이 짝수인지 홀수인지 판단하세요.입력:- 세 개의 정수를 각각 한 줄에 입력받습니다.출력:- 가장 큰 수, 가장 작은 수, 두 수의 차이, 합의 짝홀 여부를 순서대로 출력합니다.예제 입력:725예제 출력:가장 큰 수: 7가장 작은 수: 2차이: 5합의 짝홀 여부: 홀수","level": "HARD","quizType": "CODE","q1": null,"q2": null,"q3": null,"q4": null,"input": "725","output": "가장 큰 수: 7가장 작은 수: 2차이: 5합의 짝홀 여부: 홀수","ans": null,"wordCount": 0}
+2024-08-16T22:06:09.975+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T22:06:09.975+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : chapName: 조건문
+2024-08-16T22:06:09.977+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T22:06:09.978+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T22:06:09.978+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T22:06:09.978+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Writing [{messages=[{role=user, content=파이썬에서 조건문 챕터의 'if, elif, else, 조건문 중첩'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+}, {role=user, content=- 문제 구성 법칙은 다음 설명을 참고: 1. 객관식 문제로 quizLevel은 'NORMAL', quizType은 'NUM'으로 설정
+2. 간단한 실습 예제 코드를 보여주고 실행 결과를 맞추도록 할 것
+3. 문제 전체 내용은 'text'에 예시 코드와 문제 내용을 한 번에 표기할 것
+4. 문제 보기는 각각 'q1', 'q2', 'q3', 'q4'에 넣을 것
+5. 보기 번호가 아닌 정답 내용을 마지막에 'ans'에 넣을 것
+6. 그 외의 값은 모두 null로 표기
+7. 단, 'wordCount'는 0으로 표기
+
+
+- JSON 형식의 문제 템플릿: {
+"text": "문제 내용"
+"level": "QuizLevel",
+"quizType": "QuizType",
+"q1": "보기1 내용",
+"q2": "보기2 내용",
+"q3": "보기3 내용",
+"q4": "보기4 내용",
+"input": "입력 예제 내용",
+"output": "출력 예제 내용",
+"ans": "정답 내용",
+"wordCount": 정답 글자 수
+}
+
+- 참고할 수 있는 문제 형태 예시: {
+"text": "```
+x = 10
+y = 3
+print(x // y)
+```
+
+위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",
+"level": "NORMAL",
+"quizType": "NUM",
+"q1": "3.33333333333",
+"q2": "3",
+"q3": "1",
+"q4": "오류 발생",
+"input": null,
+"output": null,
+"ans": "3",
+"wordCount": 0
+}
+}, {role=system, content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변}], max_tokens=1500, model=gpt-4o}] as "application/json"
+2024-08-16T22:06:15.121+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T22:06:15.122+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T22:06:15.123+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : GPT Response: {  "text": "\nnum = 15\nif num > 20:\n    print('20보다 큽니다')\nelif num > 10:\n    if num < 17:\n        print('10보다 크고 17보다 작습니다')\n    else:\n        print('10보다 크고 17보다 큽니다')\nelse:\n    print('10보다 작거나 같습니다')\n\n\n위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",  "level": "NORMAL",  "quizType": "NUM",  "q1": "20보다 큽니다",  "q2": "10보다 크고 17보다 작습니다",  "q3": "10보다 크고 17보다 큽니다",  "q4": "10보다 작거나 같습니다",  "input": null,  "output": null,  "ans": "10보다 크고 17보다 작습니다",  "wordCount": 0}
+2024-08-16T22:06:15.141+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T22:06:15.142+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : chapName: 조건문
+2024-08-16T22:06:15.145+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T22:06:15.145+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T22:06:15.146+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T22:06:15.146+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Writing [{messages=[{role=user, content=파이썬에서 조건문 챕터의 'if, elif, else, 조건문 중첩'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+}, {role=user, content=- 문제 구성 법칙은 다음 설명을 참고: 1. 객관식 문제로 quizLevel은 'EASY', quizType은 'NUM'으로 설정
+2. 문제 전체 내용은 'text'에 표기할 것
+3. 문제 보기는 각각 'q1', 'q2', 'q3', 'q4'에 넣을 것
+4. 2-3줄의 이론과 관련한 내용으로 문제를 낼 것
+5. 보기 번호가 아닌 정답 내용을 마지막에 'ans'에 넣을 것
+6. 그 외의 값은 모두 null로 표기
+7. 단, 'wordCount'는 0으로 표기
+
+
+- JSON 형식의 문제 템플릿: {
+"text": "문제 내용"
+"level": "QuizLevel",
+"quizType": "QuizType",
+"q1": "보기1 내용",
+"q2": "보기2 내용",
+"q3": "보기3 내용",
+"q4": "보기4 내용",
+"input": "입력 예제 내용",
+"output": "출력 예제 내용",
+"ans": "정답 내용",
+"wordCount": 정답 글자 수
+}
+
+- 참고할 수 있는 문제 형태 예시: {
+"text": "다음 설명에 해당하는 자료형은 무엇일까요?
+
+"- 순서가 보장되고, 중복되는 값을 허용하며, 요소를 추가, 삭제, 수정할 수 있는 자료형입니다.",
+"level": "EASY",
+"quizType": "NUM",
+"q1": "튜플",
+"q2": "리스트",
+"q3": "딕셔너리",
+"q4": "집합",
+"input": null,
+"output": null,
+"ans": "리스트",
+"wordCount": 0
+}
+}, {role=system, content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변}], max_tokens=1500, model=gpt-4o}] as "application/json"
+2024-08-16T22:06:18.165+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T22:06:18.165+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T22:06:18.165+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : GPT Response: {"text": "다음 코드에서 출력값으로 올바른 것은 무엇일까요?x = 10if x > 20:    print('A')elif x > 5:    print('B')else:    print('C')위 코드에서 x는 10입니다. 조건문을 순차적으로 평가하여 어떤 값이 출력되는지 선택하세요.","level": "EASY","quizType": "NUM","q1": "A","q2": "B","q3": "C","q4": "D","input": null,"output": null,"ans": "B","wordCount": 0}
+2024-08-16T22:06:18.173+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : rootChapName: 파이썬
+2024-08-16T22:06:18.173+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : chapName: 조건문
+2024-08-16T22:06:18.174+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.ApiService    : rules: 1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변
+2024-08-16T22:06:18.174+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
+2024-08-16T22:06:18.175+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
+2024-08-16T22:06:18.175+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Writing [{messages=[{role=user, content=파이썬에서 조건문 챕터의 'if, elif, else, 조건문 중첩'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
+
+}, {role=user, content=- 문제 구성 법칙은 다음 설명을 참고: 1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정
+2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용, 출력 내용, 예제 입력, 예제 출력으로 구성할 것
+3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것
+4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것
+5. 'text' 안에 출력한 예제 입력과 예제 출력과 같은 내용으로 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것
+6. 그 외의 값은 모두 null로 표기
+7. 단, 'wordCount'는 0으로 표기
+
+
+- JSON 형식의 문제 템플릿: {
+"text": "문제 내용"
+"level": "QuizLevel",
+"quizType": "QuizType",
+"q1": "보기1 내용",
+"q2": "보기2 내용",
+"q3": "보기3 내용",
+"q4": "보기4 내용",
+"input": "입력 예제 내용",
+"output": "출력 예제 내용",
+"ans": "정답 내용",
+"wordCount": 정답 글자 수
+}
+
+- 참고할 수 있는 문제 형태 예시: {
+"text": "사용자가 두 개의 정수를 입력하면, 다음의 연산을 수행하는 간단한 계산기 프로그램을 작성하시오.
+
+1. 두 정수의 합
+2. 두 정수의 차
+3. 두 정수의 곱
+4. 두 정수의 몫과 나머지
+
+입력:
+- 두 개의 정수를 각각 한 줄에 입력받습니다.
+
+출력:
+- 입력된 두 정수의 합, 차, 곱, 몫과 나머지를 순서대로 출력합니다.
+
+예제 입력:
+```
+10
+3
+```
+
+예제 출력:
+```
+합: 13
+차: 7
+곱: 30
+몫: 3, 나머지: 1
+```",
+"level": "HARD",
+"quizType": "CODE",
+"q1": null,
+"q2": null,
+"q3": null,
+"q4": null,
+"input": "```
+10
+3
+```",
+"output": "```
+합: 13
+차: 7
+곱: 30
+몫: 3, 나머지: 1
+```",
+"ans": null,
+"wordCount": 0
+}
+}, {role=system, content=1. 파이썬 교육 전문교사 역할
+2. 파이썬 외 다른 언어 답변 금지
+3. 파이썬 코딩 학습 외 질문에 답변 금지
+4. 파이썬 관련 질문에 반드시 답변
+5. 응답은 반드시 한국어로 답변}], max_tokens=1500, model=gpt-4o}] as "application/json"
+2024-08-16T22:06:24.272+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
+2024-08-16T22:06:24.273+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
+2024-08-16T22:06:24.274+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : GPT Response: {"text": "문제 제목: 특정 조건에 따라 문자열 변환하기문제 설명:사용자가 하나의 문자열을 입력하면, 다음의 규칙에 따라 문자열을 변환하는 프로그램을 작성하시오.1. 문자열의 길이가 짝수인 경우:    - 모든 문자를 대문자로 변환2. 문자열의 길이가 홀수인 경우:    - 문자열의 첫 글자와 마지막 글자를 제외하고 나머지는 '*'    - 단, 문자열의 길이가 1인 경우 그대로 출력입력 내용:- 하나의 문자열을 입력받습니다. (문자열의 길이는 최대 100자)출력 내용:- 주어진 조건에 따라 변환된 문자열을 출력합니다.예제 입력:hello예제 출력:h***o추가 예제 입력:Python추가 예제 출력:PYTHON","level": "HARD","quizType": "CODE","q1": null,"q2": null,"q3": null,"q4": null,"input": "hello","output": "h***o","ans": null,"wordCount": 0}
+2024-08-16T22:06:24.293+09:00  INFO 30552 --- [chatbot] [http-nio-8080-exec-8] c.b.chatbot.controller.TestController    : createInitTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=24, quizId=70, text=사용자가 세 개의 정수를 입력하면, 다음의 조건을 만족하는 결과를 출력하는 프로그램을 작성하시오.조건:1. 세 정수 중 가장 큰 수를 찾으세요.2. 세 정수 중 가장 작은 수를 찾으세요.3. 세 정수 중 가장 큰 수와 가장 작은 수의 차이를 구하세요.4. 세 정수의 합이 짝수인지 홀수인지 판단하세요.입력:- 세 개의 정수를 각각 한 줄에 입력받습니다.출력:- 가장 큰 수, 가장 작은 수, 두 수의 차이, 합의 짝홀 여부를 순서대로 출력합니다.예제 입력:725예제 출력:가장 큰 수: 7가장 작은 수: 2차이: 5합의 짝홀 여부: 홀수, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0), TestResponseElementDto(testId=25, quizId=71, text=
+num = 15
+if num > 20:
+    print('20보다 큽니다')
+elif num > 10:
+    if num < 17:
+        print('10보다 크고 17보다 작습니다')
+    else:
+        print('10보다 크고 17보다 큽니다')
+else:
+    print('10보다 작거나 같습니다')
+
+
+위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요., level=NORMAL, quizType=NUM, q1=20보다 큽니다, q2=10보다 크고 17보다 작습니다, q3=10보다 크고 17보다 큽니다, q4=10보다 작거나 같습니다, wordCount=0), TestResponseElementDto(testId=26, quizId=72, text=다음 코드에서 출력값으로 올바른 것은 무엇일까요?x = 10if x > 20:    print('A')elif x > 5:    print('B')else:    print('C')위 코드에서 x는 10입니다. 조건문을 순차적으로 평가하여 어떤 값이 출력되는지 선택하세요., level=EASY, quizType=NUM, q1=A, q2=B, q3=C, q4=D, wordCount=0), TestResponseElementDto(testId=27, quizId=73, text=문제 제목: 특정 조건에 따라 문자열 변환하기문제 설명:사용자가 하나의 문자열을 입력하면, 다음의 규칙에 따라 문자열을 변환하는 프로그램을 작성하시오.1. 문자열의 길이가 짝수인 경우:    - 모든 문자를 대문자로 변환2. 문자열의 길이가 홀수인 경우:    - 문자열의 첫 글자와 마지막 글자를 제외하고 나머지는 '*'    - 단, 문자열의 길이가 1인 경우 그대로 출력입력 내용:- 하나의 문자열을 입력받습니다. (문자열의 길이는 최대 100자)출력 내용:- 주어진 조건에 따라 변환된 문자열을 출력합니다.예제 입력:hello예제 출력:h***o추가 예제 입력:Python추가 예제 출력:PYTHON, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0)])
+2024-08-16T22:06:24.294+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-08-16T22:06:24.294+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=24, quizId=70, text=사용자가 세 개의 정수를 입력하면, 다음의 조건을 (truncated)...]
+2024-08-16T22:06:24.296+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-08-16T22:06:24.296+09:00 DEBUG 30552 --- [chatbot] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
