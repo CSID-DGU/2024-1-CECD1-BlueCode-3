@@ -3,6 +3,10 @@ package com.bluecode.chatbot.service;
 import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.repository.CurriculumRepository;
 import com.bluecode.chatbot.repository.QuizRepository;
+import com.bluecode.chatbot.repository.QuizCaseRepository;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,7 @@ import java.util.*;
 public class QuizService {
 
     private final QuizRepository quizRepository;
+    private final QuizCaseRepository quizCaseRepository;
     private final ApiService apiService;
     private final CurriculumRepository curriculumRepository;
 
@@ -286,5 +291,60 @@ public class QuizService {
         } else {
             return ""; // 해당하지 않는 경우 빈 문자열 반환
         }
+    }
+
+    // gpt api를 사용해 문제 생성 요청
+    public List<Quiz> generateQuizzesFromGPT(Curriculums chapter, QuizType type, QuizLevel level) {
+        String gptResponse = createQuizFromGPT(chapter.getCurriculumId(), type, level);
+        gptResponse = gptResponse.replace("`", "").replace("\n", "")
+                .replace("json", "").replace("python", "");
+
+        log.info("GPT Response: {}", gptResponse); // gpt 응답 원문 확인 로그
+        return parseGeneratedQuiz(gptResponse, chapter, type, level);
+    }
+
+    // gpt api 응답 JSON에서 구성 요소 파싱
+    private List<Quiz> parseGeneratedQuiz(String gptResponse, Curriculums curriculum, QuizType type, QuizLevel level) {
+        List<Quiz> quizzes = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // 알 수 없는 속성 허용
+
+        try {
+            JsonNode rootNode = objectMapper.readTree(gptResponse);
+            Quiz quiz = new Quiz();
+            quiz.setCurriculum(curriculum);
+            quiz.setLevel(level);
+
+            // JSON에서 문제 정보 추출
+            String text = rootNode.path("text").asText();
+            quiz.setText(String.valueOf(text));
+            quiz.setQuizType(QuizType.valueOf(rootNode.path("quizType").asText()));
+            quiz.setLevel(QuizLevel.valueOf(rootNode.path("level").asText()));
+
+            // 문제 유형에 따라 추가 정보 추출
+            if (quiz.getQuizType() == QuizType.NUM) {
+                quiz.setQ1(rootNode.path("q1").asText(null));
+                quiz.setQ2(rootNode.path("q2").asText(null));
+                quiz.setQ3(rootNode.path("q3").asText(null));
+                quiz.setQ4(rootNode.path("q4").asText(null));
+                quiz.setAnswer(rootNode.path("ans").asText(null));
+            } else if (quiz.getQuizType() == QuizType.CODE) {
+                QuizCase quizCase = new QuizCase();
+                quizCase.setInput(rootNode.path("input").asText(null));
+                quizCase.setOutput(rootNode.path("output").asText(null));
+
+                quizCaseRepository.save(quizCase);
+            } else if (quiz.getQuizType() == QuizType.WORD) {
+                quiz.setAnswer(rootNode.path("ans").asText(null));
+                quiz.setWordCount(rootNode.path("wordCount").asInt(0));
+            }
+
+            quizzes.add(quizRepository.save(quiz));
+
+        } catch (Exception e) {
+            log.error("Failed to parse GPT response", e);
+        }
+
+        return quizzes;
     }
 }

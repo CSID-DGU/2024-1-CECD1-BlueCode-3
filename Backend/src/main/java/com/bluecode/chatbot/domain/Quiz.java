@@ -75,7 +75,4 @@ public class Quiz {
 
         return quiz;
     }
-
-    @OneToMany(mappedBy = "quiz")
-    private List<QuizCase> quizCases = new ArrayList<>();
 }

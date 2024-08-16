@@ -3,11 +3,8 @@ package com.bluecode.chatbot.service;
 import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.dto.*;
 import com.bluecode.chatbot.repository.CurriculumRepository;
-import com.bluecode.chatbot.repository.QuizRepository;
 import com.bluecode.chatbot.repository.TestRepository;
 import com.bluecode.chatbot.repository.UserRepository;
-import com.bluecode.chatbot.repository.QuizCaseRepository;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,17 +12,11 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -36,8 +27,6 @@ public class TestService {
     private final CurriculumRepository curriculumRepository;
     private final TestRepository testRepository;
     private final UserRepository userRepository;
-    private final QuizRepository quizRepository;
-    private final QuizCaseRepository quizCaseRepository;  // QuizCaseRepository 추가
     private final RestTemplate restTemplate;
 
     private final Random random = new Random();
@@ -83,10 +72,10 @@ public class TestService {
 
         if (useGPT) {
             // GPT API를 사용해 문제를 생성
-            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.CODE, QuizLevel.HARD));
-            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.NORMAL));
-            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.EASY));
-            testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), QuizType.CODE, QuizLevel.HARD));
+            testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), QuizType.CODE, QuizLevel.HARD));
+            testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.NORMAL));
+            testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.EASY));
+            testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), QuizType.CODE, QuizLevel.HARD));
         } else {
             // 데이터베이스에서 문제를 가져옴
             List<Quiz> hardQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.CODE, QuizLevel.HARD, 2);
@@ -152,7 +141,7 @@ public class TestService {
 
                 // 난이도별 허용되는 문제 유형 중 랜덤으로 선택
                 QuizType randomType = allowedTypes.get(new Random().nextInt(allowedTypes.size()));
-                testQuizzes.addAll(generateQuizzesFromGPT(chapter.get(), randomType, level));
+                testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), randomType, level));
             }
         } else {
             // 데이터베이스에서 문제를 가져옴
@@ -212,69 +201,7 @@ public class TestService {
         return dto;
     }
 
-    // gpt api를 사용해 문제 생성 요청
-    private List<Quiz> generateQuizzesFromGPT(Curriculums chapter, QuizType type, QuizLevel level) {
-        String gptResponse = quizService.createQuizFromGPT(chapter.getCurriculumId(), type, level);
-        gptResponse = gptResponse.replace("`", "").replace("\n", "")
-                .replace("json", "").replace("python", "");
 
-        log.info("GPT Response: {}", gptResponse); // gpt 응답 원문 확인 로그
-        return parseGeneratedQuiz(gptResponse, chapter, type, level);
-    }
-
-    // gpt api 응답 JSON에서 구성 요소 파싱
-    private List<Quiz> parseGeneratedQuiz(String gptResponse, Curriculums curriculum, QuizType type, QuizLevel level) {
-        List<Quiz> quizzes = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // 알 수 없는 속성 허용
-
-        try {
-            JsonNode rootNode = objectMapper.readTree(gptResponse);
-            Quiz quiz = new Quiz();
-            quiz.setCurriculum(curriculum);
-            quiz.setLevel(level);
-
-            // JSON에서 문제 정보 추출
-            String text = rootNode.path("text").asText();
-            quiz.setText(String.valueOf(text));
-            quiz.setQuizType(QuizType.valueOf(rootNode.path("quizType").asText()));
-            quiz.setLevel(QuizLevel.valueOf(rootNode.path("level").asText()));
-
-            // 문제 유형에 따라 추가 정보 추출
-            if (quiz.getQuizType() == QuizType.NUM) {
-                quiz.setQ1(rootNode.path("q1").asText(null));
-                quiz.setQ2(rootNode.path("q2").asText(null));
-                quiz.setQ3(rootNode.path("q3").asText(null));
-                quiz.setQ4(rootNode.path("q4").asText(null));
-                quiz.setAnswer(rootNode.path("ans").asText(null));
-            } else if (quiz.getQuizType() == QuizType.CODE) {
-                List<QuizCase> cases = new ArrayList<>();
-                JsonNode inputNode = rootNode.path("input");
-                JsonNode outputNode = rootNode.path("output");
-
-                if (inputNode.isArray() && outputNode.isArray()) {
-                    for (int i = 0; i < inputNode.size(); i++) {
-                        QuizCase quizCase = new QuizCase();
-                        quizCase.setQuiz(quiz);
-                        quizCase.setInput(inputNode.get(i).asText());
-                        quizCase.setOutput(outputNode.get(i).asText());
-                        cases.add(quizCase);
-                    }
-                }
-                quiz.setQuizCases(cases);
-            } else if (quiz.getQuizType() == QuizType.WORD) {
-                quiz.setAnswer(rootNode.path("ans").asText(null));
-                quiz.setWordCount(rootNode.path("wordCount").asInt(0));
-            }
-
-            quizzes.add(quizRepository.save(quiz));
-
-        } catch (Exception e) {
-            log.error("Failed to parse GPT response", e);
-        }
-
-        return quizzes;
-    }
 
     // 객관식 문제 답안 판정
     public TestAnswerResponseDto submitAnswerNum(TestAnswerCallDto dto) {
