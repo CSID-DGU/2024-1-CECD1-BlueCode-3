@@ -8,6 +8,7 @@ import com.bluecode.chatbot.repository.TestRepository;
 import com.bluecode.chatbot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.sqm.ParsingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.*;
@@ -69,25 +70,28 @@ public class TestService {
         // 각 난이도별로 퀴즈를 랜덤하게 선택
         List<Quiz> testQuizzes = new ArrayList<>();
 
-        // 랜덤으로 기존 데이터베이스 문제를 가져올지 또는 GPT API로 생성할지 결정
-        boolean useGPT = random.nextBoolean();
+        // 문제는 다음과 같이 구성
+        QuizType[] quizTypes = {QuizType.CODE, QuizType.NUM, QuizType.NUM, QuizType.CODE};
+        QuizLevel[] quizLevels = {QuizLevel.HARD, QuizLevel.NORMAL, QuizLevel.EASY, QuizLevel.HARD};
 
-        if (useGPT) {
-            // GPT API를 사용해 문제를 생성
-            testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), QuizType.CODE, QuizLevel.HARD));
-            testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.NORMAL));
-            testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), QuizType.NUM, QuizLevel.EASY));
-            testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), QuizType.CODE, QuizLevel.HARD));
-        } else {
-            // 데이터베이스에서 문제를 가져옴
-            List<Quiz> hardQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.CODE, QuizLevel.HARD, 2);
-            List<Quiz> normalQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.NUM, QuizLevel.NORMAL, 1);
-            List<Quiz> easyQuizzes = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), QuizType.NUM, QuizLevel.EASY, 1);
+        for (int i = 0; i < quizTypes.length; i++) {
+            Quiz quiz = null;
+            boolean useGPT = random.nextBoolean();  // GPT API 사용 여부를 랜덤으로 결정
 
-            testQuizzes.add(hardQuizzes.get(0));
-            testQuizzes.add(normalQuizzes.get(0));
-            testQuizzes.add(easyQuizzes.get(0));
-            testQuizzes.add(hardQuizzes.get(1));
+            if (useGPT) {
+                try {
+                    // GPT API를 사용해 문제를 생성하는 방식
+                    testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), quizTypes[i], quizLevels[i]));
+                } catch (ParsingException e) {
+                    // 파싱 오류 발생 시 데이터베이스에서 대체 문제를 가져옴
+                    log.error("GPT API 파싱 오류 발생. 데이터베이스에서 대체 문제 로드", e);
+                    testQuizzes.addAll(quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizTypes[i], quizLevels[i], 1));
+                }
+            }
+            else {
+                // 데이터베이스에서 문제를 가져오는 방식
+                testQuizzes.addAll(quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizTypes[i], quizLevels[i], 1));
+            }
         }
 
         List<Tests> tests = new ArrayList<>();
@@ -129,33 +133,39 @@ public class TestService {
         // 각 난이도별로 퀴즈를 랜덤하게 선택
         List<Quiz> testQuizzes = new ArrayList<>();
 
-        // 랜덤으로 기존 데이터베이스 문제를 가져올지 또는 GPT API로 생성할지 결정
-        boolean useGPT = random.nextBoolean();
+        // 문제는 다음과 같이 구성
+        QuizLevel[] quizLevels = {QuizLevel.EASY, QuizLevel.NORMAL, QuizLevel.HARD};
 
-        if (useGPT) {
-            // GPT API를 사용해 문제를 생성
-            for (QuizLevel level : QuizLevel.values()) {
-                List<QuizType> allowedTypes = new ArrayList<>();
-                if (level == QuizLevel.EASY || level == QuizLevel.NORMAL) {
-                    allowedTypes.add(QuizType.NUM);
-                    allowedTypes.add(QuizType.WORD);
-                } else {
-                    allowedTypes.add(QuizType.CODE);
-                }
+        // 난이도별로 랜덤으로 quizType을 선택
+        for (int i = 0; i < quizLevels.length; i++) {
+            QuizType quizType;
+            QuizLevel level = quizLevels[i];
 
-                // 난이도별 허용되는 문제 유형 중 랜덤으로 선택
-                QuizType randomType = allowedTypes.get(new Random().nextInt(allowedTypes.size()));
-                testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), randomType, level));
+            if (level == QuizLevel.NORMAL || level == QuizLevel.EASY) {
+                // EASY 또는 NORMAL 레벨의 경우, NUM 또는 WORD 중 랜덤으로 선택
+                quizType = random.nextBoolean() ? QuizType.NUM : QuizType.WORD;
+            } else {
+                // HARD 레벨의 경우, 항상 CODE
+                quizType = QuizType.CODE;
             }
-        } else {
-            // 데이터베이스에서 문제를 가져옴
-            List<Quiz> hardQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.HARD, 1);
-            List<Quiz> normalQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.NORMAL, 1);
-            List<Quiz> easyQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.EASY, 1);
 
-            testQuizzes.add(easyQuizzes.get(0));
-            testQuizzes.add(normalQuizzes.get(0));
-            testQuizzes.add(hardQuizzes.get(0));
+            Quiz quiz = null;
+            boolean useGPT = random.nextBoolean();  // GPT API 사용 여부를 랜덤으로 결정
+
+            if (useGPT) {
+                try {
+                    // GPT API를 사용해 문제를 생성하는 방식
+                    testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), quizType, level));
+
+                } catch (ParsingException e) {
+                    // 파싱 오류 발생 시 데이터베이스에서 대체 문제를 가져옴
+                    log.error("GPT API 파싱 오류 발생. 데이터베이스에서 대체 문제 로드", e);
+                    testQuizzes.addAll(quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizType, level, 1));
+                }
+            } else {
+                // 데이터베이스에서 문제를 가져오는 방식
+                testQuizzes.addAll(quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizType, level, 1));
+            }
         }
 
         List<Tests> tests = new ArrayList<>();
@@ -207,8 +217,6 @@ public class TestService {
         return dto;
     }
 
-
-
     // 객관식 문제 답안 판정
     public TestAnswerResponseDto submitAnswerNum(TestAnswerCallDto dto) {
         log.info("submitAnswer with dto: {}", dto);
@@ -249,7 +257,6 @@ public class TestService {
         log.info("submitAnswer response: {}", responseDto);
         return responseDto;
     }
-
 
     // 단답형 문제 답안 판정
     public TestAnswerResponseDto submitAnswerWord(TestAnswerCallDto dto) {
@@ -391,7 +398,6 @@ public class TestService {
 
         return "초기 테스트 완료";
     }
-
 
     // 공통 제출 미션 처리
     private void publishMission(Users user, Tests test) {

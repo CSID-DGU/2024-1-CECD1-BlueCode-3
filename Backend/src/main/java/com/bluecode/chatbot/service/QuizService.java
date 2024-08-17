@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.sqm.ParsingException;
 import org.springframework.stereotype.Service;
 
 import java.security.Provider;
@@ -396,6 +397,7 @@ public class QuizService {
 
         } catch (Exception e) {
             log.error("파싱 오류", e);
+            throw new ParsingException("GPT 응답 파싱 중 오류 발생");
         }
 
         return quizzes;
