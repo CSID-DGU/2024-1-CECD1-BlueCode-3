@@ -25,6 +25,7 @@ import java.util.Random;
 @Slf4j
 public class TestService {
 
+    private final StudyService studyService;
     private final QuizService quizService;
     private final CurriculumRepository curriculumRepository;
     private final QuizRepository quizRepository;
@@ -117,22 +118,34 @@ public class TestService {
         return createTestResponseDto(tests, testQuizzes);
     }
 
-    // 이해도 테스트 구성
+    // 이해도 테스트 생성
     public TestResponseDto createNormalTest(DataCallDto dto) {
 
-        Optional<Users> user = userRepository.findByUserId(dto.getUserId());
-        Optional<Curriculums> chapter = curriculumRepository.findById(dto.getCurriculumId());
+        Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
+        Optional<Curriculums> chapterOptional = curriculumRepository.findById(dto.getCurriculumId());
 
-        if (user.isEmpty()) {
+        if (userOptional.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
         }
 
-        if (chapter.isEmpty()) {
+        if (chapterOptional.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 커리큘럼 id 입니다.");
         }
 
-        if (!chapter.get().isTestable()) {
+        Users user = userOptional.get();
+        Curriculums chapter = chapterOptional.get();
+
+        if (!chapter.isTestable()) {
             throw new IllegalArgumentException("테스트를 진행하지 않는 챕터입니다.");
+        }
+
+        // 챕터 내 서브챕터 Study 모두 passed = true인지 검사
+        boolean validateChapterStudy = studyService.validateChapterStudy(user, chapter);
+
+        // false일 경우, exception 발생(이해도 테스트 생성 불가)
+        if (!validateChapterStudy) {
+            log.error("해당 챕터 내 서브챕터 학습 미완료 user: {}, chapter: {}", user.getUserId(), chapter.getCurriculumName());
+            throw new IllegalArgumentException("해당 챕터 내 서브챕터 학습 미완료");
         }
 
         // 각 난이도별로 퀴즈를 랜덤하게 선택
@@ -160,16 +173,16 @@ public class TestService {
             if (useGPT) {
                 try {
                     // GPT API를 사용해 문제를 생성하는 방식
-                    testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), quizType, level));
+                    testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter, quizType, level));
 
                 } catch (ParsingException e) {
                     // 파싱 오류 발생 시 데이터베이스에서 대체 문제를 가져옴
                     log.error("GPT API 파싱 오류 발생. 데이터베이스에서 대체 문제 로드", e);
-                    testQuizzes.addAll(quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizType, level, 1));
+                    testQuizzes.addAll(quizService.getRandomQuizzesByTypeAndLevel(chapter, quizType, level, 1));
                 }
             } else {
                 // 데이터베이스에서 문제를 가져오는 방식
-                testQuizzes.addAll(quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizType, level, 1));
+                testQuizzes.addAll(quizService.getRandomQuizzesByTypeAndLevel(chapter, quizType, level, 1));
             }
         }
 
@@ -178,8 +191,8 @@ public class TestService {
             Quiz savedQuiz = quizRepository.save(quiz);
 
             Tests test = new Tests();
-            test.setUser(user.get());
             test.setQuiz(savedQuiz); // 저장된 Quiz 객체를 참조
+            test.setUser(user);
             test.setPassed(false);
             test.setTestType(TestType.INIT);
             test.setWrongCount(0);
