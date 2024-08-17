@@ -8,6 +8,7 @@ import Mypage_info from './components/Mypage/index_4.jsx';
 import Chatbot from './components/Chatbot/index.jsx';
 import Study_theory from './components/Study/index_theory.jsx'
 import Study_training from './components/Study/index_training.jsx'
+import Study_comprehension from './components/Study/index_comprehension.jsx'
 import Test from './components/Test/index.jsx';
 import Test_ex from './components/Test/index_ex.jsx';
 import Tmp from './components/Test/tmp.jsx';
@@ -22,6 +23,7 @@ function App() {
       <Route path="/tmp" element={<Tmp />}></Route>
       <Route path="/study_theory" element={<Study_theory />}></Route>
       <Route path="/study_training" element={<Study_training />}></Route>
+      <Route path="/study_comprehension" element={<Study_comprehension />}></Route>
       <Route path="/mypage/todo" element={<Mypage_todo />}></Route>
       <Route path="/mypage/lecture" element={<Mypage_lecture />}></Route>
       <Route path="/mypage/question" element={<Mypage_question />}></Route>

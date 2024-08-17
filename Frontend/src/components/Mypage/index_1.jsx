@@ -76,7 +76,7 @@ function Study_theory() {
       try {
         const rootid = localStorage.getItem('rootid');
         const res = await axiosInstance.get(`/curriculum/curriculum/${rootid}`);
-        localStorage.setItem("chapters",JSON.stringify(res.data.list));
+        localStorage.setItem("chapters", JSON.stringify(res.data.list));
       }
       catch (err){
         console.error(err); 

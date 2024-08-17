@@ -89,6 +89,24 @@ function App() {
   };
 
 
+  const nonHashloginClick = () => {
+    const LoginCallDto = {
+      'id' : loginData.id,
+      'password' : loginData.password
+    };
+    axios.post('/api/api/auth/login', LoginCallDto, config)
+      .then((response) => {
+        const accessToken = response.data.accessToken;
+        localStorage.setItem("userid",response.data.userid);
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("rootid", 1);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error); 
+      });
+  };
+
   const createUserClick = async () => {
 
     const hash_passwd = SHA256(createUserData.create_password).toString();
@@ -187,6 +205,8 @@ const getCurriculumInfoWithAuth = async () => {
           placeholder="Password"
         />
         <button onClick={loginClick}>Login</button>
+        <button onClick={nonHashloginClick}>nonhashLogin</button>
+
       </div>
       <div>
         <input
