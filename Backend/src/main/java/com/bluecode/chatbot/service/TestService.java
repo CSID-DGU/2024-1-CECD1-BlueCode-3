@@ -92,9 +92,11 @@ public class TestService {
 
         List<Tests> tests = new ArrayList<>();
         for (Quiz quiz : testQuizzes) {
+            Quiz savedQuiz = quizRepository.save(quiz);
+
             Tests test = new Tests();
             test.setUser(user.get());
-            test.setQuiz(quiz);
+            test.setQuiz(savedQuiz); // 저장된 Quiz 객체를 참조
             test.setPassed(false);
             test.setTestType(TestType.INIT);
             test.setWrongCount(0);
