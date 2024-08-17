@@ -145,6 +145,7 @@ public class StudyService {
         return curriculumService.getCurriculumChapters(callDto);
     }
 
+
     // 유저의 커리큘럼 진행 현황 로드
     public CurriculumPassedDto getCurriculumProgress(DataCallDto dto) {
         log.info("getCurriculumProgress called with dto: {}", dto);
@@ -218,6 +219,7 @@ public class StudyService {
         return responseDto;
     }
 
+
     // 부모 커리큘럼의 pass 처리 판정 로직(서브 챕터 -> 챕터, 챕터 -> 루트)
     public boolean chapterPass(CurriculumPassCallDto dto) {
 
@@ -229,7 +231,7 @@ public class StudyService {
         }
 
         if (chapterOptional.isEmpty()) {
-            throw new IllegalArgumentException("유효하지 않은 서브 챕터 커리큘럼 id 입니다.");
+            throw new IllegalArgumentException("유효하지 않은 챕터 커리큘럼 id 입니다.");
         }
 
         Users user = userOptional.get();
@@ -244,12 +246,18 @@ public class StudyService {
         Studies chapterStudy = chapterStudyOptional.get();
         List<Studies> childStudyList = studyRepository.findAllByUserAndParent(user, chapter);
 
+        // 대상이 root가 아니면 next 챕터의 next의 level을 dto에서 제공한 값으로 변경하는데 이용
+        if (!chapterStudy.getCurriculum().isRootNode() && !chapterStudy.getCurriculum().isLeafNode() && dto.getLevelType() == null) {
+            log.error("챕터 pass 처리는 LevelType이 필수입니다. dto: {}", dto);
+            throw new IllegalArgumentException("챕터 pass 처리는 LevelType이 필수입니다.");
+        }
+
         if (childStudyList.isEmpty()) {
             log.error("자식 study가 존재하지 않습니다. user={}, chapter={}", user, chapter);
             throw new IllegalArgumentException("자식 study가 존재하지 않습니다.");
         }
 
-        // 서브 챕터들 학습 완료 여부 확인
+        //챕터: 서브 챕터(루트: 챕터)들 학습 완료 여부 확인
         boolean flag = true;
 
         for (Studies childStudy : childStudyList) {
@@ -279,7 +287,7 @@ public class StudyService {
                 studyRepository.save(nextChapterStudy);
             }
 
-            // 루트 Study 통과 처리 업데이트
+            // 현재 대상 study가 root가 아니면 root Study 통과 처리 업데이트
             if (!chapterStudy.getCurriculum().isRootNode()) {
                 CurriculumPassCallDto rootDto = new CurriculumPassCallDto();
                 rootDto.setUserId(user.getUserId());
@@ -296,6 +304,7 @@ public class StudyService {
 
         return flag;
     }
+
 
     // 유저의 서브 챕터 커리큘럼 학습 완료 처리
     public boolean subChapterPass(CurriculumPassCallDto dto) {
@@ -331,7 +340,7 @@ public class StudyService {
 
         // 해당 서브챕터 pass 처리
         study.setPassed(true);
-        studyRepository.saveAndFlush(study);
+        studyRepository.save(study);
         log.info("subChapter pass 처리 완료: {}, {}", study.getCurriculum().getCurriculumName(), study.isPassed());
 
         // 특정 서브 챕터 완료 미션 처리
@@ -343,6 +352,7 @@ public class StudyService {
 
         return true;
     }
+
 
     // 유저의 커리큘럼 학습 내용 로드
     public StudyTextDto getCurriculumText(CurriculumTextCallDto dto) {
@@ -382,9 +392,9 @@ public class StudyService {
         if (study.getLevel() == null) {
             Optional<Studies> parent = studyRepository.findByUserAndCurriculum(user, subChapter.getParent());
             Studies chapterStudy = parent.get();
-            setStudyLevel(study, chapterStudy);
+            // 최초 접근에 대한 level 설정 로직
+            study.setLevel(chapterStudy.getLevel());
         }
-
 
         // 학습 내용이 없으면 GPT API를 호출하여 학습 내용 생성
         String text = createTextByTextType(study, dto.getTextType());
@@ -397,11 +407,27 @@ public class StudyService {
         return responseDto;
     }
 
-    // 최초 접근에 대한 level 설정 로직
-    private void setStudyLevel(Studies study, Studies chapterStudy) {
-        study.setLevel(chapterStudy.getLevel());
-    }
 
+    // 해당 챕터의 서브 챕터 학습 완료 여부 확인
+    public boolean validateChapterStudy(Users user, Curriculums chapter) {
+
+        List<Studies> subChapterStudies = studyRepository.findAllByUserAndParent(user, chapter);
+
+        if (subChapterStudies.isEmpty()) {
+            log.error("서브 챕터 커리큘럼 대상 Study가 존재하지 않습니다. user: {}, subChapter 대상 study 개수: {}", user.getUserId(), subChapterStudies.size());
+            throw new IllegalArgumentException("서브 챕터 커리큘럼 대상 Study가 존재하지 않습니다.");
+        }
+
+        // 하나의 서브챕터라도 passed = false일 경우, false 리턴
+        for (Studies subChapterStudy : subChapterStudies) {
+            if (!subChapterStudy.isPassed()) {
+                return false;
+            }
+        }
+
+        // 모든 서브챕터의 paassed = true일 경우, true 리턴
+        return true;
+    }
 
     // textType에 따른 text 열 지정 및 생성
     /**
