@@ -7,9 +7,12 @@ import com.bluecode.chatbot.repository.QuizCaseRepository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.security.Provider;
 import java.util.*;
 
 @Service
@@ -155,7 +158,7 @@ public class QuizService {
                     "7. 단, 'wordCount'는 0으로 표기\n\n";
         } else if (level == QuizLevel.HARD && type == QuizType.CODE) {
             return "1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정\n" +
-                    "2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용 설명, 출력 내용 설명, 예제 입력(1-3개), 예제 출력(1-3개)으로 구성할 것\n" +
+                    "2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용 설명, 출력 내용 설명, 예제 입력(1개 이상), 예제 출력(1개 이상)으로 구성할 것\n" +
                     "3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것\n" +
                     "4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것\n" +
                     "5. 'text' 안에 출력한 예제 입력과 예제 출력과 같은 내용으로 'examples'에 리스트 형태로 " +
@@ -182,12 +185,12 @@ public class QuizService {
                 "      \"output\": \"출력 예제 내용 1\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"input\": \"입력 예제 내용 2\",\n" +
-                "      \"output\": \"출력 예제 내용 2\"\n" +
+                "      \"input\": \"입력 예제 내용 2(존재할 경우 사용)\",\n" +
+                "      \"output\": \"출력 예제 내용 2(존재할 경우 사용)\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"input\": \"입력 예제 내용 3\",\n" +
-                "      \"output\": \"출력 예제 내용 3\"\n" +
+                "      \"input\": \"입력 예제 내용 3(존재할 경우 사용)\",\n" +
+                "      \"output\": \"출력 예제 내용 3(존재할 경우 사용)\"\n" +
                 "    }\n" +
                 "    // 추가 입력/출력 예제 가능\n" +
                 "  ],\n" +
@@ -305,16 +308,16 @@ public class QuizService {
                     "\"q2\": null,\n" +
                     "\"q3\": null,\n" +
                     "\"q4\": null,\n" +
-                    "\"input\": \"```\n" +
-                    "10\n" +
-                    "3\n" +
-                    "```\",\n" +
-                    "\"output\": \"```\n" +
-                    "합: 13\n" +
+                    "\"examples\": [\n" +
+                    "    {\n" +
+                    "      \"input\": \"10\n" +
+                    "3\",\n" +
+                    "      \"output\": \"합: 13\n" +
                     "차: 7\n" +
                     "곱: 30\n" +
-                    "몫: 3, 나머지: 1\n" +
-                    "```\",\n" +
+                    "몫: 3, 나머지: 1\"\n" +
+                    "    }\n" +
+                    "  ],\n" +
                     "\"ans\": null,\n" +
                     "\"wordCount\": 0\n" +
                     "}\n";
@@ -326,10 +329,21 @@ public class QuizService {
     // gpt api를 사용해 문제 생성 요청
     public List<Quiz> generateQuizzesFromGPT(Curriculums chapter, QuizType type, QuizLevel level) {
         String gptResponse = createQuizFromGPT(chapter.getCurriculumId(), type, level);
-        gptResponse = gptResponse.replace("`", "").replace("\n", "")
-                .replace("json", "").replace("python", "");
+
+        // JSON 앞뒤 백틱(```) 제거
+        if (gptResponse.startsWith("```")) {
+            gptResponse = gptResponse.substring(3); // 앞쪽 백틱 제거
+        }
+        if (gptResponse.endsWith("```")) {
+            gptResponse = gptResponse.substring(0, gptResponse.length() - 3); // 뒤쪽 백틱 제거
+        }
+
+        // 응답 json에서 불필요한 이스케이프 문자 등을 제거
+        gptResponse = gptResponse.replace("json", "").replace("python", "")
+                .replaceAll("(?<=\\w):\\s*[\r\n\t]+", ": ");
 
         log.info("GPT Response: {}", gptResponse); // gpt 응답 원문 확인 로그
+
         return parseGeneratedQuiz(gptResponse, chapter, type, level);
     }
 
@@ -338,6 +352,7 @@ public class QuizService {
         List<Quiz> quizzes = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // 알 수 없는 속성 허용
+        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true); // 알 수 없는 문자 허용
 
         try {
             JsonNode rootNode = objectMapper.readTree(gptResponse);
