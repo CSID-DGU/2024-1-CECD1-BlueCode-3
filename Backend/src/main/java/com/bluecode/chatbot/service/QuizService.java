@@ -338,7 +338,7 @@ public class QuizService {
             gptResponse = gptResponse.substring(0, gptResponse.length() - 3); // 뒤쪽 백틱 제거
         }
 
-        // 응답 json에서 불필요한 이스케이프 문자 등을 제거
+        // 응답 json 필드에 있는 불필요한 이스케이프 문자 등을 제거
         gptResponse = gptResponse.replace("json", "").replace("python", "")
                 .replaceAll("(?<=\\w):\\s*[\r\n\t]+", ": ");
 
