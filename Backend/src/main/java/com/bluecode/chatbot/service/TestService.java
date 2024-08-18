@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
 
 @Service
 @RequiredArgsConstructor
@@ -68,18 +70,18 @@ public class TestService {
             throw new IllegalArgumentException("테스트를 진행하지 않는 챕터입니다.");
         }
 
-        // HARD - NORMAL - EASY - HARD 순으로 문제셋 구성
         List<Quiz> testQuizzes = new ArrayList<>();
 
         // 문제는 다음과 같이 구성
         QuizLevel[] quizLevels = {QuizLevel.HARD, QuizLevel.NORMAL, QuizLevel.EASY, QuizLevel.HARD};
 
-        // 첫번째 문제의 Id 값을 저장(4번째 문제와 중복 회피)
-        Long firstQuizId = null;
+        // 이미 생성된 quizId를 기록하는 집합
+        Set<Long> usedQuizIds = new HashSet<>();
 
         for (int i = 0; i < quizLevels.length; i++) {
             QuizType quizType;
             QuizLevel level = quizLevels[i];
+            log.info("현재 QuizLevel: {}", level);
 
             if (level == QuizLevel.NORMAL || level == QuizLevel.EASY) {
                 // EASY 또는 NORMAL 레벨의 경우, NUM 또는 WORD 중 랜덤으로 선택
@@ -98,38 +100,36 @@ public class TestService {
             double gptProbability = (quizCount > 0) ? 1.0 / quizCount : 1.0;
             boolean useGPT = random.nextDouble() < gptProbability; // 데이터베이스 문제 개수에 따라 GPT API 생성 확률이 조정됨
 
-            // GPT API 사용 여부를 랜덤으로 결정
-            if (useGPT) {
-                try {
-                    // GPT API를 사용해 문제를 생성하는 방식
-                    testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), quizType, level));
-                } catch (ParsingException e) {
-                    // 파싱 오류 발생 시 데이터베이스에서 대체 문제를 가져옴
-                    log.error("GPT API 파싱 오류 발생. 데이터베이스에서 대체 문제 로드", e);
-                    List<Quiz> tempQuiz = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizType, level, 1);
-                    if (!tempQuiz.get(0).getQuizId().equals(firstQuizId)) { // 첫번째 문제와 네번째 문제가 중복되지 않는 경우
-                        testQuizzes.addAll(tempQuiz);
-                    }
-                    else {
-                        // 중복이 되면 새롭게 GPT API로 문제 생성
-                        testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), quizType, level));
-                    }
-                }
-            }
-            else {
-                // 데이터베이스에서 문제를 가져오는 방식
-                List<Quiz> tempQuiz = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizType, level, 1);
-                if (!tempQuiz.get(0).getQuizId().equals(firstQuizId)) { // 첫번째 문제와 네번째 문제가 중복되지 않는 경우
-                    testQuizzes.addAll(tempQuiz);
-                }
-                else {
-                    // 중복이 되면 새롭게 GPT API로 문제 생성
-                    testQuizzes.addAll(quizService.generateQuizzesFromGPT(chapter.get(), quizType, level));
-                }
-            }
+            List<Quiz> newQuiz; // 현재 생성한 문제
+            boolean differentQuizId = false; // 중복된 quizId가 존재하지 않는지 여부
 
-            if (i == 0) {
-                firstQuizId = testQuizzes.get(0).getQuizId();
+            // 중복되지 않은 문제를 찾을 때까지 반복
+            while (!differentQuizId) {
+                if (useGPT) {
+                    try {
+                        // GPT API를 사용해 문제를 생성하는 방식
+                        newQuiz = quizService.generateQuizzesFromGPT(chapter.get(), quizType, level);
+                    } catch (ParsingException e) {
+                        log.error("GPT API 파싱 오류 발생. 데이터베이스에서 대체 문제 로드", e);
+                        newQuiz = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizType, level, 1);
+                        useGPT = false;  // 파싱 오류 발생 시 다시 데이터베이스에서 문제를 가져오도록 함
+                    }
+                } else {
+                    // 데이터베이스에서 문제를 가져오는 방식
+                    newQuiz = quizService.getRandomQuizzesByTypeAndLevel(chapter.get(), quizType, level, 1);
+                }
+
+                // 새로 생성된 문제의 quizId가 이미 사용된 quizId와 중복되지 않는지 검사
+                Long newQuizId = newQuiz.get(0).getQuizId();
+                if (!usedQuizIds.contains(newQuizId)) {
+                    differentQuizId = true;
+                    testQuizzes.addAll(newQuiz);
+                    usedQuizIds.add(newQuizId);  // 새로 생성된 quizId를 기록
+                    log.info("선택된 QuizId: {}", newQuizId);
+                } else {
+                    log.warn("중복된 QuizId 발생: {} - GPT로 문제 재생성 시도", newQuizId);
+                    useGPT = true;  // 중복이 발생하면 GPT를 사용해 새 문제를 생성
+                }
             }
         }
 

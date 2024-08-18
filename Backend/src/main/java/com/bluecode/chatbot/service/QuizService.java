@@ -336,6 +336,8 @@ public class QuizService {
 
             // 문제 유형에 따라 추가 정보 설정
             if (quiz.getQuizType() == QuizType.NUM) {
+                // Quiz 엔티티를 먼저 저장하여 quizId를 생성
+                quiz = quizRepository.save(quiz);
                 quiz.setQ1(rootNode.path("q1").asText(null));
                 quiz.setQ2(rootNode.path("q2").asText(null));
                 quiz.setQ3(rootNode.path("q3").asText(null));
@@ -358,6 +360,8 @@ public class QuizService {
                     }
                 }
             } else if (quiz.getQuizType() == QuizType.WORD) {
+                // Quiz 엔티티를 먼저 저장하여 quizId를 생성
+                quiz = quizRepository.save(quiz);
                 quiz.setAnswer(rootNode.path("ans").asText(null));
                 quiz.setWordCount(rootNode.path("wordCount").asInt(0));
             }
