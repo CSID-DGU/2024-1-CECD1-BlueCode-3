@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
 import React, { useEffect, useState } from 'react';
+import axiosInstance from '../../axiosInstance';
+import useChapterData from '../../useChapterData';
 
 function Study_theory() {
   const [answer, setAnswer] = useState('');
 
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
+
+  const [curriculumIds, setCurriculumIds] = useState([]);
+  const [currentcurriculumId, setcurrentcurriculumId] = useState(0);
 
   const handleResize = () => {
     setWidth(window.innerWidth);
@@ -31,7 +36,7 @@ function Study_theory() {
 
   useEffect(()=>{
     const tick = () => {
-      if(time > 0) {
+      if(time >= 0) {
         setTime(time - 1);
         
         const minute = time / 60;
@@ -50,20 +55,174 @@ function Study_theory() {
     return ()=>clearInterval(timerId);
   }, [time]);
 
-    // 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
+  useEffect(() => {
 
-  const [qtype, setQtype] = useState(1);
+    const getCurriculumIdData =  () => {
+      const storedData = JSON.parse(localStorage.getItem('chapters'));
+      if (storedData && Array.isArray(storedData)){
+
+        // 상위 리스트의 curriculumId만 추출 (subChapters는 무시)
+        const testableCurriculumIds = storedData
+          .filter(chapter => chapter.testable)  // testable이 true인 챕터만 필터링
+          .map(chapter => chapter.curriculumId);  // curriculumId만 추출
+        console.log(testableCurriculumIds)
+
+        // 추출된 ID 배열을 상태에 저장
+        setCurriculumIds(testableCurriculumIds);
+      }
+    };
+
+    getCurriculumIdData();
+  }, []);
+
+  useEffect(() => {
+    // curriculumIds 상태가 변경될 때마다 호출
+    console.log('Updated curriculumIds:', curriculumIds);
+    if(curriculumIds.length > 0){
+      getChapterQuiz();
+    }
+  }, [curriculumIds]);
+
+  const [res, setRes] = useState();
+  const [data, setData] = useState([]);
+  const [order, setOrder] = useState(0);
+
+  useEffect(() => {
+    // data 상태가 변경될 때마다 실행
+    console.log(data);
+    if (data.length > 0) {
+      console.log(data[0]);
+      console.log(data[0].text);
+    }
+  }, [data]);
+
+const getChapterQuiz =  async () =>{
+  const userid = localStorage.getItem('userid');
+  if(curriculumIds[currentcurriculumId]!=null){
+    console.log("불러올려고 하는 curri id "+ curriculumIds[currentcurriculumId])
+
+    const DataCallDto = {
+      'userId': userid,
+      'curriculumId': curriculumIds[currentcurriculumId]
+    };
+
+    try {
+      //초기 테스트용 4 문제 호출 api
+      const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
+      
+      setData(response.data.tests); //4문제를 Data에 저장
+      setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
+    } catch (err) {
+      console.error(err);
+    }
+  }else{
+    console.log("불러올려고 하는 인덱스 " + currentcurriculumId + " 는 범위를 벗어남")
+  }
+}
+
+
+const submitAnswer = async () => {
+  var response;
+  if (answer) {
+    const userid = localStorage.getItem('userid');
+    const TestAnswerCallDto = {
+      'userId': userid,
+      'testId': data[order].testId,
+      'quizId': data[order].quizId,
+      'answer': answer
+    };
+    
+    try {
+      // 문제 타입 객관식
+      if (qtype === "NUM") {
+        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+        // console.log("객관식 정답 요청 " + response.data.passed);
+      }
+      else if (qtype === "WORD") {
+        response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        // console.log("주관식 정답 요청 " + response.data.passed);
+      }
+      else if (qtype === "CODE") {
+        response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
+        // console.log("서술식 정답 요청 " + response.data.passed);
+      }
+      
+
+      // 첫번째 중급자 문제를 맞출 경우 -> 다음 챕터
+      // 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 맞출 경우 -> 두번째 중급자 문제로
+      // 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 틀릴 경우
+      // 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 틀리고 -> 입문자 문제를 맞추거나 틀릴 경우
+      if(response.data.passed) {
+        if (order === 0) {
+          alert("중급자 문제를 맞추셨습니다.");
+          alert("다음 챕터의 문제로 넘어갑니다.");
+          getChapterQuiz();
+        }
+        else if (order === 1) {
+          alert("초급자 문제를 맞추셨습니다.");
+          alert("두번째 중급자 문제를 제시하겠습니다.");
+          setOrder(3);
+        }
+        else if (order === 2) {
+          alert("입문자 문제를 맞추셨습니다. 당신은 입문자입니다.");
+          setOrder(0);
+        }
+        else if (order === 3) {
+          alert("두번째 중급자 문제를 맞추셨습니다.");
+          alert("다음 챕터의 문제로 넘어갑니다.");
+          getChapterQuiz();
+        }
+      }
+      else {
+        if (order === 0) {
+          alert("첫 번째 중급자 문제를 틀리셨습니다.");
+          alert("초급자 문제로 넘어갑니다.");
+          setOrder(1);
+        }
+        else if (order === 1) {
+          alert("초급자 문제를 틀리셨습니다.");
+          alert("입문자 문제로 넘어갑니다.");
+          setOrder(2);
+        }
+        else if (order === 2) {
+          alert("입문자 문제를 틀리셨습니다.");
+          alert("시작 챕터가 설정되었습니다.");
+          setOrder(0);
+        }
+        else if (order === 3) {
+          alert("두 번째 중급자 문제를 틀리셨습니다.");
+          alert("다음 챕터의 문제로 넘어가시겠습니까?");
+          setOrder(0);
+        }
+      }
+
+        } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+
+  // 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
+  const [qtype, setQtype] = useState('');
   const [type, setType] = useState('');
+  // 객관식 : NUM , 단답형 : WORD , 코드 작성형 : CODE
   useEffect(()=>{
-    if(qtype === 1)
+
+    if(data[order]){
+      setQtype(data[order].quizType);
+    }
+
+    if(qtype === "NUM")
       setType('객관식');
-    else if(qtype === 2)
+    else if(qtype === "WORD")
       setType('주관식');
-    else if(qtype === 3)
+    else if(qtype === "CODE")
       setType('서술식');
   })
 
   return (
+    
     <TestSection>
       <SectionBar>
         <Logo>
@@ -97,39 +256,40 @@ function Study_theory() {
         </NavSection>
         <ContentSection width={contentWidth}>
           <QuestionArea>
-            <Question> 1번. 구체적인 문제 </Question>
+            <Question> {data.length > 0 ? <div>{data[order].text}</div> : <div>Loading...</div>} </Question>
             <View> 보기 </View>
           </QuestionArea>
           <AnswerArea>
             <Answer> {type} 답안 </Answer>
-            {qtype === 1 && (<SelectionArea>
+            {qtype === "NUM" && (<SelectionArea>
               <Selection>
                 <input type="radio" id="first" value="1" checked={answer==="1"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="first"> first </Label>
+                <Label for="first"> {data.length > 0 ? <div>{data[order].q1}</div> : <div>Loading...</div>} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="second" value="2" checked={answer==="2"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="second"> second </Label>
+                <Label for="second"> {data.length > 0 ? <div>{data[order].q2}</div> : <div>Loading...</div>} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="third" value="3" checked={answer==="3"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="third"> third </Label>
+                <Label for="third"> {data.length > 0 ? <div>{data[order].q3}</div> : <div>Loading...</div>} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="fourth" value="4" checked={answer==="4"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="fourth"> fourth </Label>
+                <Label for="fourth"> {data.length > 0 ? <div>{data[order].q4}</div> : <div>Loading...</div>} </Label>
               </Selection>
             </SelectionArea>)}
-            {qtype === 2 && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
-            {qtype === 3 && (<CodeArea onChange={(e)=>setAnswer(e.target.value)}></CodeArea>)}
+            {qtype === "WORD" && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
+            {qtype === "CODE" && (<CodeArea onChange={(e)=>setAnswer(e.target.value)}></CodeArea>)}
             <Submit>
-              <Button> 제출 </Button>
+              <Button onClick={submitAnswer}> 제출 </Button>
             </Submit>
           </AnswerArea>
         </ContentSection>
       </Content>
     </TestSection>
   );
+  
 }
 
 export default Study_theory;

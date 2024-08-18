@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+import org.springframework.security.access.AccessDeniedException;
 @Slf4j
 @RestControllerAdvice
 public class GlobalControllerAdvice {
@@ -23,6 +23,13 @@ public class GlobalControllerAdvice {
     public ErrorResultDto handleIllegalStateException(IllegalStateException e) {
         log.error("IllegalStateException: {}", e.getMessage(), e);
         return new ErrorResultDto(HttpStatus.NOT_FOUND.value(), e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ErrorResultDto handleAccessDeniedException(AccessDeniedException  e) {
+        log.error("AccessDeniedException: {}", e.getMessage(), e);
+        return new ErrorResultDto(HttpStatus.FORBIDDEN.value(), e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
