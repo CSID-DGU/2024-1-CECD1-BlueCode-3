@@ -3,7 +3,6 @@ package com.bluecode.chatbot.config;
 import com.bluecode.chatbot.domain.*;
 import com.bluecode.chatbot.repository.*;
 import jakarta.annotation.PostConstruct;
-import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -54,6 +53,7 @@ public class InitDb {
         private final UserRepository userRepository;
         private final CurriculumRepository curriculumRepository;
         private final QuizRepository quizRepository;
+        private final QuizCaseRepository quizCaseRepository;
         private final TestRepository testRepository;
         private final StudyRepository studyRepository;
         private final ChatRepository chatRepository;
@@ -73,106 +73,106 @@ public class InitDb {
         public void curriculumInit() {
 
             // 루트
-            Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 11, false, true);
+            Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 11, false, true, LangType.PYTHON);
             curriculumRepository.save(root);
 
             // 챕터
-            Curriculums chap1 = Curriculums.createCurriculum(root, root, "파이썬 환경", false, 1, 0, 1, false, false);
-            Curriculums chap2 = Curriculums.createCurriculum(root, root, "변수와 자료형", true, 2, 0, 13, false, false);
-            Curriculums chap3 = Curriculums.createCurriculum(root, root, "문자열 처리", true, 3, 0, 9, false, false);
-            Curriculums chap4 = Curriculums.createCurriculum(root, root, "조건문", true, 4, 0, 2, false, false);
-            Curriculums chap5 = Curriculums.createCurriculum(root, root, "반복문", true, 5, 0, 5, false, false);
-            Curriculums chap6 = Curriculums.createCurriculum(root, root, "함수", true, 6, 0, 12, false, false);
-            Curriculums chap7 = Curriculums.createCurriculum(root, root, "자료구조", true, 7, 0, 6, false, false);
-            Curriculums chap8 = Curriculums.createCurriculum(root, root, "파일 처리", true, 8, 0, 6, false, false);
-            Curriculums chap9 = Curriculums.createCurriculum(root, root, "예외 처리", true, 9, 0, 4, false, false);
-            Curriculums chap10 = Curriculums.createCurriculum(root, root, "클래스와 객체", true, 10, 0, 10, false, false);
-            Curriculums chap11 = Curriculums.createCurriculum(root, root, "모듈과 패키지", false, 11, 0, 2, false, false);
+            Curriculums chap1 = Curriculums.createCurriculum(root, root, "파이썬 환경", false, 1, 0, 1, false, false, LangType.PYTHON);
+            Curriculums chap2 = Curriculums.createCurriculum(root, root, "변수와 자료형", true, 2, 0, 13, false, false, LangType.PYTHON);
+            Curriculums chap3 = Curriculums.createCurriculum(root, root, "문자열 처리", true, 3, 0, 9, false, false, LangType.PYTHON);
+            Curriculums chap4 = Curriculums.createCurriculum(root, root, "조건문", true, 4, 0, 2, false, false, LangType.PYTHON);
+            Curriculums chap5 = Curriculums.createCurriculum(root, root, "반복문", true, 5, 0, 5, false, false, LangType.PYTHON);
+            Curriculums chap6 = Curriculums.createCurriculum(root, root, "함수", true, 6, 0, 12, false, false, LangType.PYTHON);
+            Curriculums chap7 = Curriculums.createCurriculum(root, root, "자료구조", true, 7, 0, 6, false, false, LangType.PYTHON);
+            Curriculums chap8 = Curriculums.createCurriculum(root, root, "파일 처리", true, 8, 0, 6, false, false, LangType.PYTHON);
+            Curriculums chap9 = Curriculums.createCurriculum(root, root, "예외 처리", true, 9, 0, 4, false, false, LangType.PYTHON);
+            Curriculums chap10 = Curriculums.createCurriculum(root, root, "클래스와 객체", true, 10, 0, 10, false, false, LangType.PYTHON);
+            Curriculums chap11 = Curriculums.createCurriculum(root, root, "모듈과 패키지", false, 11, 0, 2, false, false, LangType.PYTHON);
             curriculumRepository.saveAll(Arrays.asList(chap1, chap2, chap3, chap4, chap5, chap6, chap7, chap8, chap9, chap10, chap11));
 
             // 서브 챕터
             List<Curriculums> sub = new ArrayList<>();
 
-            sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap2, root, "변수 선언과 활용", false, 2, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "정수와 실수", false, 2, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "문자와 문자열", false, 2, 3, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "불리언", false, 2, 4, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "입력 input()과 출력 print()", false, 2, 5, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "int(), float()", false, 2, 6, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "str(), bool()", false, 2, 7, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "list(), tuple()", false, 2, 8, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "set(), dict()", false, 2, 9, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "chr(), ord()", false, 2, 10, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "산술 연산자 - '+', '-', '*', '/', '//', '%', '**'", false, 2, 11, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "비교 연산자 - '==', '!=', '>', '<', '>=', '<='", false, 2, 12, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap2, root, "논리 연산자 - 'and', 'or', 'not'", false, 2, 2, 13, true, false));
+            sub.add(Curriculums.createCurriculum(chap2, root, "변수 선언과 활용", false, 2, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "정수와 실수", false, 2, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "문자와 문자열", false, 2, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "불리언", false, 2, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "입력 input()과 출력 print()", false, 2, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "int(), float()", false, 2, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "str(), bool()", false, 2, 7, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "list(), tuple()", false, 2, 8, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "set(), dict()", false, 2, 9, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "chr(), ord()", false, 2, 10, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "산술 연산자 - '+', '-', '*', '/', '//', '%', '**'", false, 2, 11, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "비교 연산자 - '==', '!=', '>', '<', '>=', '<='", false, 2, 12, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, "논리 연산자 - 'and', 'or', 'not'", false, 2, 13, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap3, root, "인덱싱 및 슬라이싱", false, 3, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "upper(), lower()", false, 3, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "strip(), lstrip(), rstrip()", false, 3, 3, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "replace(), split(), join()", false, 3, 4, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "find(), count()", false, 3, 5, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "isalpha(), isdigit(), isalnum()", false, 3, 6, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "startswith(), endswith()", false, 3, 7, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "capitalize(), title(), swapcase()", false, 3, 8, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap3, root, "포맷 - '%', format(), f-string, Template", false, 3, 9, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap3, root, "인덱싱 및 슬라이싱", false, 3, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, "upper(), lower()", false, 3, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, "strip(), lstrip(), rstrip()", false, 3, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, "replace(), split(), join()", false, 3, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, "find(), count()", false, 3, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, "isalpha(), isdigit(), isalnum()", false, 3, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, "startswith(), endswith()", false, 3, 7, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, "capitalize(), title(), swapcase()", false, 3, 8, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, "포맷 - '%', format(), f-string, Template", false, 3, 9, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap4, root, "if, elif, else", false, 4, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap4, root, "조건문 중첩", false, 4, 2, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap4, root, "if, elif, else", false, 4, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap4, root, "조건문 중첩", false, 4, 2, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap5, root, "for", false, 5, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap5, root, "while", false, 5, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap5, root, "break, continue, else", false, 5, 3, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap5, root, "반복문 중첩", false, 5, 4, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap5, root, "리스트 컴프리헨션", false, 5, 5, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap5, root, "for", false, 5, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, "while", false, 5, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, "break, continue, else", false, 5, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, "반복문 중첩", false, 5, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, "리스트 컴프리헨션", false, 5, 5, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap6, root, "def", false, 6, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "매개변수와 반환값", false, 6, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "위치 인자와 키워드 인자", false, 6, 3, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "가변 인자", false, 6, 4, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "재귀 함수", false, 6, 5, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "람다 함수", false, 6, 6, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "len(), sum()", false, 6, 7, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "min(), max()", false, 6, 8, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "sorted(), zip()", false, 6, 9, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "range(), enumerate()", false, 6, 10, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "abs(), round()", false, 6, 11, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap6, root, "map(), filter(), reduce()", false, 6, 12, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap6, root, "def", false, 6, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "매개변수와 반환값", false, 6, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "위치 인자와 키워드 인자", false, 6, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "가변 인자", false, 6, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "재귀 함수", false, 6, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "람다 함수", false, 6, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "len(), sum()", false, 6, 7, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "min(), max()", false, 6, 8, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "sorted(), zip()", false, 6, 9, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "range(), enumerate()", false, 6, 10, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "abs(), round()", false, 6, 11, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, "map(), filter(), reduce()", false, 6, 12, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap7, root, "리스트와 리스트 메서드", false, 7, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap7, root, "튜플과 튜플 불변성", false, 7, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap7, root, "딕셔너리와 딕셔너리 메서드", false, 7, 3, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap7, root, "집합과 집합 연산", false, 7, 4, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap7, root, "큐와 스택", false, 7, 5, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap7, root, "링크드 리스트", false, 7, 6, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap7, root, "리스트와 리스트 메서드", false, 7, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, "튜플과 튜플 불변성", false, 7, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, "딕셔너리와 딕셔너리 메서드", false, 7, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, "집합과 집합 연산", false, 7, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, "큐와 스택", false, 7, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, "링크드 리스트", false, 7, 6, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap8, root, "파일 열기 모드('r', 'w', 'a', 'x', 바이너리, 추가 옵션)", false, 8, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap8, root, "파일 읽기 - read(), readline(), readlines()", false, 8, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap8, root, "파일 쓰기 - write(), writelines()", false, 8, 3, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap8, root, "csv 파일 처리", false, 8, 4, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap8, root, "json 파일 처리", false, 8, 5, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap8, root, "json 데이터 파싱 및 생성", false, 8, 6, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap8, root, "파일 열기 모드('r', 'w', 'a', 'x', 바이너리, 추가 옵션)", false, 8, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, "파일 읽기 - read(), readline(), readlines()", false, 8, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, "파일 쓰기 - write(), writelines()", false, 8, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, "csv 파일 처리", false, 8, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, "json 파일 처리", false, 8, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, "json 데이터 파싱 및 생성", false, 8, 6, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap9, root, "예외 발생 원리", false, 9, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap9, root, "try, except, else, finally", false, 9, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap9, root, "다양한 종류의 예외", false, 9, 3, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap9, root, "사용자 정의 예외", false, 9, 4, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap9, root, "예외 발생 원리", false, 9, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, "try, except, else, finally", false, 9, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, "다양한 종류의 예외", false, 9, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, "사용자 정의 예외", false, 9, 4, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap10, root, "객체 지향 프로그래밍의 개념", false, 10, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "클래스", false, 10, 2, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "객체 생성", false, 10, 3, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "생성자(__init__)", false, 10, 4, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "소멸자(__del__)", false, 10, 5, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "상속", false, 10, 6, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "메서드 오버라이딩(오버로딩과의 차이점)", false, 10, 7, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "다형성", false, 10, 8, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "접근 제어자", false, 10, 9, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap10, root, "게터와 세터", false, 10, 10, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap10, root, "객체 지향 프로그래밍의 개념", false, 10, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "클래스", false, 10, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "객체 생성", false, 10, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "생성자(__init__)", false, 10, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "소멸자(__del__)", false, 10, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "상속", false, 10, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "메서드 오버라이딩(오버로딩과의 차이점)", false, 10, 7, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "다형성", false, 10, 8, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "접근 제어자", false, 10, 9, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, "게터와 세터", false, 10, 10, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap11, root, "모듈의 개념과 import", false, 11, 1, 1, true, false));
-            sub.add(Curriculums.createCurriculum(chap11, root, "표준 라이브러리 - math, datetime, os", false, 11, 2, 1, true, false));
+            sub.add(Curriculums.createCurriculum(chap11, root, "모듈의 개념과 import", false, 11, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap11, root, "표준 라이브러리 - math, datetime, os", false, 11, 2, 1, true, false, LangType.PYTHON));
 
             curriculumRepository.saveAll(sub);
         }
@@ -185,37 +185,41 @@ public class InitDb {
             }
             Curriculums root = rootCurriculums.get(0);
             List<Curriculums> lists = curriculumRepository.findAllByRootAndLeafNodeOrderByChapterNumAndSubChapterNum(root, false);
-            if (lists.size() < 3) {
-                throw new NoSuchElementException("Not enough chapters found");
-            }
 
             List<Quiz> quizList = new ArrayList<>();
 
-            // 객관식
-            for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 객관식", lists.get(i).getChapterNum()), "1", QuizLevel.HARD, "정답1", "오답2", "오답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 객관식", lists.get(i).getChapterNum()), "2", QuizLevel.HARD, "오답1", "정답2", "오답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 객관식", lists.get(i).getChapterNum()), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", "", "", 0));
-                quizList.add(createQuiz(lists.get(i), QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 객관식", lists.get(i).getChapterNum()), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", "", "", 0));
-            }
+            for (Curriculums curriculums : lists) {
+                // 객관식
+                quizList.add(createQuiz(curriculums, QuizType.NUM, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 객관식", curriculums.getChapterNum()), "3", QuizLevel.NORMAL, "오답1", "오답2", "정답3", "오답4", 0));
+                quizList.add(createQuiz(curriculums, QuizType.NUM, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 객관식", curriculums.getChapterNum()), "4", QuizLevel.EASY, "오답1", "오답2", "오답3", "정답4", 0));
 
-            // 단답형
-            for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.HARD, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.NORMAL, "", "", "", "","","",2));
-                quizList.add(createQuiz(lists.get(i), QuizType.WORD, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 단답형", lists.get(i).getChapterNum()), "정답", QuizLevel.EASY, "", "", "", "","","",2));
-            }
-
-            // 코드 작성형
-            for (int i = 0; i < lists.size(); i++) {
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.HARD, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.NORMAL, "", "", "", "","1\n2","3",0));
-                quizList.add(createQuiz(lists.get(i), QuizType.CODE, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 코드작성형", lists.get(i).getChapterNum()), "", QuizLevel.EASY, "", "", "", "","1\n2","3",0));
+                // 단답형
+                quizList.add(createQuiz(curriculums, QuizType.WORD, String.format("테스트 문제-챕터 %d: 초급자 1번째 - 단답형", curriculums.getChapterNum()), "정답", QuizLevel.NORMAL, null, null, null, null, 2));
+                quizList.add(createQuiz(curriculums, QuizType.WORD, String.format("테스트 문제-챕터 %d: 입문자 1번째 - 단답형", curriculums.getChapterNum()), "정답", QuizLevel.EASY, null, null, null, null, 2));
             }
 
             quizRepository.saveAll(quizList);
+
+            List<Quiz> codeQuiz = new ArrayList<>();
+
+            // 코드 작성형
+            for (Curriculums list : lists) {
+                Quiz code = createQuiz(list, QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 1번째 - 코드작성형", list.getChapterNum()), null, QuizLevel.HARD, null, null, null, null, 0);
+                codeQuiz.add(code);
+                codeQuiz.add(createQuiz(list, QuizType.CODE, String.format("테스트 문제-챕터 %d: 중급자 2번째 - 코드작성형", list.getChapterNum()), null, QuizLevel.HARD, null, null, null, null, 0));
+                codeQuiz.add(code);
+            }
+
+            quizRepository.saveAll(codeQuiz);
+
+            List<QuizCase> quizCases = new ArrayList<>();
+
+            for (Quiz quiz : codeQuiz) {
+                quizCases.add(QuizCase.createQuizCase(quiz, "1\n2", "3"));
+                quizCases.add(QuizCase.createQuizCase(quiz, "3\n4", "7"));
+            }
+
+            quizCaseRepository.saveAll(quizCases);
         }
 
         public void studyInit() {
