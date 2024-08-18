@@ -47,6 +47,9 @@ class StudyServiceTest {
     private QuizRepository quizRepository;
 
     @Autowired
+    private QuizCaseRepository quizCaseRepository;
+
+    @Autowired
     private UserMissionRepository userMissionRepository;
 
     @BeforeEach
@@ -55,6 +58,7 @@ class StudyServiceTest {
         studyRepository.deleteAll();
         chatRepository.deleteAll();
         testRepository.deleteAll();
+        quizCaseRepository.deleteAll();
         quizRepository.deleteAll();
         userMissionRepository.deleteAll();
         userRepository.deleteAll();
@@ -71,19 +75,35 @@ class StudyServiceTest {
         // 커리큘럼
         List<Curriculums> curriculums = new ArrayList<>();
 
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         curriculums.add(root);
@@ -116,27 +136,36 @@ class StudyServiceTest {
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        // 커리큘럼
-        List<Curriculums> curriculums = new ArrayList<>();
-
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
-        curriculumRepository.saveAll(sub);
 
-        curriculums.add(root);
-        curriculums.addAll(chapters);
-        curriculums.addAll(sub);
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
+        curriculumRepository.saveAll(sub);
 
         //when
         DataCallDto dto = new DataCallDto();
@@ -162,19 +191,35 @@ class StudyServiceTest {
         // 커리큘럼
         List<Curriculums> curriculums = new ArrayList<>();
 
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         curriculums.add(root);
@@ -204,19 +249,35 @@ class StudyServiceTest {
         // 커리큘럼
         List<Curriculums> curriculums = new ArrayList<>();
 
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         curriculums.add(root);
@@ -248,19 +309,35 @@ class StudyServiceTest {
         // 커리큘럼
         List<Curriculums> curriculums = new ArrayList<>();
 
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         curriculums.add(root);
@@ -304,19 +381,35 @@ class StudyServiceTest {
         userRepository.save(user);
 
         // 커리큘럼
-        Curriculums root = Curriculums.createCurriculum(null, null, "루트", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터1", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();
@@ -378,22 +471,36 @@ class StudyServiceTest {
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        // 커리큘럼
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
-        curriculumRepository.saveAll(sub);
 
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
+        curriculumRepository.saveAll(sub);
         List<Studies> studies = new ArrayList<>();
         List<Studies> chapStudy = new ArrayList<>();
         List<Studies> subChapStudy = new ArrayList<>();
@@ -438,20 +545,35 @@ class StudyServiceTest {
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        // 커리큘럼
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();
@@ -498,20 +620,35 @@ class StudyServiceTest {
         Users user = Users.createUser("testName", "testEmail", "testId", "1111", "11110033", false);
         userRepository.save(user);
 
-        // 커리큘럼
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();
@@ -559,19 +696,35 @@ class StudyServiceTest {
         userRepository.save(user);
 
         // 커리큘럼
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();
@@ -616,19 +769,35 @@ class StudyServiceTest {
         userRepository.save(user);
 
         // 커리큘럼
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();
@@ -677,19 +846,35 @@ class StudyServiceTest {
         userRepository.save(user);
 
         // 커리큘럼
-        Curriculums root = Curriculums.createCurriculum(null, null, "파이썬", false, 0, 0, 2, false, true);
+        // 루트
+        Curriculums root = Curriculums.createCurriculum(null, null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",true, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, null, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, null, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, null, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
+        chapters.add(chap2);
+        chapters.add(chap3);
+        curriculumRepository.saveAll(chapters);
+
+        chap1.setNext(chap2);
+        chap2.setNext(chap3);
+        chap3.setNext(null);
         curriculumRepository.saveAll(chapters);
 
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
-        sub.add(Curriculums.createCurriculum(chap1, root, "파이썬 설치", false, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", false, 1, 2, 1, true, false));
+
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, null, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, null, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, null, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
+
         curriculumRepository.saveAll(sub);
 
         List<Studies> studies = new ArrayList<>();

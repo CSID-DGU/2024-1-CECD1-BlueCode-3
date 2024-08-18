@@ -24,6 +24,7 @@ public class Quiz {
     private QuizType quizType;
 
     // 문제 내용
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String text;
 
     // 문제 정답
@@ -42,11 +43,6 @@ public class Quiz {
 
     private String q4;
 
-    // 코드작성식 전용
-    private String inputs;
-
-    private String outputs;
-
     // 단답식 전용(단어 글자 수 표시 용)
     private int wordCount;
 
@@ -60,8 +56,6 @@ public class Quiz {
             String q2,
             String q3,
             String q4,
-            String inputs,
-            String outputs,
             int wordCount
     ) {
         Quiz quiz = new Quiz();
@@ -74,8 +68,6 @@ public class Quiz {
         quiz.setQ2(q2);
         quiz.setQ3(q3);
         quiz.setQ4(q4);
-        quiz.setInputs(inputs);
-        quiz.setOutputs(outputs);
         quiz.setWordCount(wordCount);
 
         return quiz;

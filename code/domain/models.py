@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Enum, ForeignKey
+from sqlalchemy import Column, Integer, String, Enum, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
 from enum import Enum as PyEnum
 
@@ -30,3 +30,11 @@ class Quiz(Base):
     inputs = Column(String, nullable=True)
     outputs = Column(String, nullable=True)
     word_count = Column(Integer, nullable=True)
+
+class QuizCase(Base):
+    __tablename__ = 'quiz_case'
+
+    quiz_case_id = Column(Integer, primary_key=True)
+    quiz_id = Column(Integer, nullable=False)
+    input = Column(Text, nullable=False)
+    output = Column(Text, nullable=False)
