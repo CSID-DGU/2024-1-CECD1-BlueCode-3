@@ -136,7 +136,10 @@ function Study_theory() {
     const getUserInfo = async () => {
      try {
       const userid = localStorage.getItem('userid');
-      const res = await axiosInstance.get(`/checkAuth/checkAuth/getUserInfo/${userid}`);
+      const UserIdDto = {
+        'userId' : userid
+      };
+      const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo',UserIdDto);
       
       setId(res.data.id);
       setEmail(res.data.email);

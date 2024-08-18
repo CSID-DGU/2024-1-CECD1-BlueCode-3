@@ -2,9 +2,7 @@ import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
-import axiosInstance from '../../axiosInstance'
-
+import useChapterData from '../../useChapterData';
 
 function Study_theory() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -29,47 +27,7 @@ function Study_theory() {
   const [process, setProcess] = useState(0);
   const color = {color : "#008BFF"};
 
-  useEffect(()=>{
-    const getChapters = async () => {
-      try {
-        const rootid = localStorage.getItem('rootid');
-
-        const res = await axiosInstance.get(`/curriculum/curriculum/${rootid}`);
-        setChapter(res.data.list);
-      }
-      catch (err){
-        console.error(err); 
-      }
-    }
-
-    const getCurrentChapters = async () => {
-      try {
-        const rootid = localStorage.getItem('rootid');
-        const userid = localStorage.getItem('userid');
-
-        const datacalldto = {
-          'userId' : userid,
-          'curriculumId': rootid
-        };
-
-        const res = await axiosInstance.post('/curriculum/curriculum/chapters', datacalldto);
-        if(res.data.list[1])
-          setCurrentChapter(res.data.list[1].curriculumId);
-        else
-          setCurrentChapter(0);
-      }
-      catch (err){
-        console.error(err); 
-      }
-    }
-
-    getChapters();
-    getCurrentChapters();
-  }, []);
-
-  const [chapter, setChapter] = useState([]);
-  const [currentChapter, setCurrentChapter] = useState();
-
+  const { chapter, subChapter, subChapterId, currentChapter } = useChapterData();
 
   return (
     <TestSection>
@@ -98,8 +56,15 @@ function Study_theory() {
         </NavSection>
         <ContentSection width={contentWidth}>
           <LectureInfo> ㅇ 이전 교육 복습 </LectureInfo>
-          {chapter.map(item => (
-            <Chapter key={item.id} style={(item.curriculumId <= currentChapter)?color:{}}> {item.text} </Chapter>
+          {chapter.map((chapterTitle, index) => (
+            <div key={index}>
+            <h2>{chapterTitle}</h2>
+            <div style={{ marginLeft: '20px' }}>
+            {subChapter[index].map((subItem, subIndex) => (
+              <p key={subIndex} style={currentChapter[index]&&currentChapter[index][subIndex]?color:{}}> {subItem}</p>
+              ))}
+            </div>
+          </div>
           ))}
         </ContentSection>
       </Content>
@@ -212,4 +177,5 @@ const LectureInfo = styled.p`
 `
 
 const Chapter = styled.div`
+  margin : 1rem;
 `

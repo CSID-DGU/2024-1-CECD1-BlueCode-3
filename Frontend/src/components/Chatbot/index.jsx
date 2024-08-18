@@ -3,6 +3,7 @@ import BCODE from '../../logo_w.png'
 import Input from '../../input.png';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
 
 
 function Study_theory() {
@@ -30,11 +31,18 @@ function Study_theory() {
 
 
   const [dialog, setDialog] = useState("");
-  const [dialogs, setDiv] = useState([]);
+  const [dialogs, setDialogs] = useState([]);
   const AddDialog = () => {
     if(dialog) {
-      setDiv([...dialogs, <Dialog> {dialog} </Dialog>]);
+      setDialogs([...dialogs, <Dialog> {dialog} </Dialog>]);
       setDialog("");
+      
+      try {
+
+      }
+      catch (err) {
+        
+      }
     }
   }
   
@@ -53,7 +61,9 @@ function Study_theory() {
     setDivValue(divVal);
   }
 
-  
+
+
+
 
   return (
     <TestSection>
