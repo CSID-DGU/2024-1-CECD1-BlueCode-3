@@ -68,11 +68,6 @@ public class TestService {
             throw new IllegalArgumentException("테스트를 진행하지 않는 챕터입니다.");
         }
 
-        // 각 난이도별로 퀴즈를 랜덤하게 선택
-        List<Quiz> hardQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.HARD, 2);
-        List<Quiz> normalQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.NORMAL, 1);
-        List<Quiz> easyQuizzes = quizService.getRandomQuizzesByLevel(chapter.get(), QuizLevel.EASY, 1);
-
         // HARD - NORMAL - EASY - HARD 순으로 문제셋 구성
         List<Quiz> testQuizzes = new ArrayList<>();
 
