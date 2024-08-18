@@ -1,6 +1,7 @@
 package com.bluecode.chatbot.service;
 
 import com.bluecode.chatbot.domain.Curriculums;
+import com.bluecode.chatbot.domain.LangType;
 import com.bluecode.chatbot.dto.CurriculumChapCallDto;
 import com.bluecode.chatbot.dto.CurriculumChapElementDto;
 import com.bluecode.chatbot.dto.CurriculumChapResponseDto;
@@ -58,14 +59,14 @@ class CurriculumServiceTest {
         //given
 
         // 루트
-        Curriculums root = Curriculums.createCurriculum(null, null, "루트", false, 0, 0, 3, false, true);
+        Curriculums root = Curriculums.createCurriculum(null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
         List<Curriculums> chapters = new ArrayList<>();
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",false, 1, 0, 2, false, false);
-        Curriculums chap2 = Curriculums.createCurriculum(root, root, "챕터2",false, 2, 0,2, false, false);
-        Curriculums chap3 = Curriculums.createCurriculum(root, root, "챕터3",false, 3, 0,2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
+        Curriculums chap2 = Curriculums.createCurriculum(root, root, "챕터2",false, 2, 0,2, false, false, LangType.PYTHON);
+        Curriculums chap3 = Curriculums.createCurriculum(root, root, "챕터3",false, 3, 0,2, false, false, LangType.PYTHON);
         chapters.add(chap1);
         chapters.add(chap2);
         chapters.add(chap3);
@@ -74,12 +75,12 @@ class CurriculumServiceTest {
         // 서브 챕터
         List<Curriculums> sub = new ArrayList<>();
 
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap2, root, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap2, root, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap3, root, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false));
-        sub.add(Curriculums.createCurriculum(chap3, root, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터1", true, 1, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap1, root, "챕터1: 서브 챕터2", true, 1, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, "챕터2: 서브 챕터1", true, 2, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap2, root, "챕터2: 서브 챕터2", true, 2, 2, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, "챕터3: 서브 챕터1", false, 3, 1, 1, true, false, LangType.PYTHON));
+        sub.add(Curriculums.createCurriculum(chap3, root, "챕터3: 서브 챕터2", true, 3, 2, 1, true, false, LangType.PYTHON));
 
         curriculumRepository.saveAll(sub);
 
@@ -137,11 +138,11 @@ class CurriculumServiceTest {
     void invalidNonRootId() {
         //given
         // 루트
-        Curriculums root = Curriculums.createCurriculum(null, null, "루트", false, 0, 0, 3, false, true);
+        Curriculums root = Curriculums.createCurriculum(null, null, "루트", false, 0, 0, 3, false, true, LangType.PYTHON);
         curriculumRepository.save(root);
 
         // 챕터
-        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",false, 1, 0, 2, false, false);
+        Curriculums chap1 = Curriculums.createCurriculum(root, root, "챕터1",false, 1, 0, 2, false, false, LangType.PYTHON);
         curriculumRepository.save(chap1);
 
         //when

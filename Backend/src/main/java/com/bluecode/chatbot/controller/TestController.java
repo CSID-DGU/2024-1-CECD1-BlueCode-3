@@ -59,6 +59,17 @@ public class TestController {
         return ResponseEntity.ok().body(answer);
     }
 
+    // 코드작성형 문제 채점
+    @PostMapping("/test/submit/code")
+    public ResponseEntity<TestAnswerResponseDto> submitAnswerCode(@RequestBody TestAnswerCallDto dto) {
+
+        log.info("call submitAnswerWord in TestController: {}", dto);
+
+        TestAnswerResponseDto answer = testService.submitAnswerCode(dto);
+        log.info("submitAnswerNum passed: {}", answer);
+        return ResponseEntity.ok().body(answer);
+    }
+
     // user 테이블에 초기 테스트 완료 처리
     @GetMapping("/test/complete/init/{userId}")
     public ResponseEntity<String> completeInitTest(@PathVariable Long userId) {
