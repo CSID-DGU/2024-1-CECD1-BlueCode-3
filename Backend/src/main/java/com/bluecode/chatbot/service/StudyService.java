@@ -188,6 +188,7 @@ public class StudyService {
             // 챕터 레벨 데이터 구성
             chapterDto.setCurriculumId(chapter.getCurriculum().getCurriculumId());
             chapterDto.setCurriculumName(chapter.getCurriculum().getCurriculumName());
+            chapterDto.setLevel(chapter.getLevel());
             chapterDto.setPassed(chapter.isPassed());
 
             List<CurriculumPassedElementDto> subChapterDtoList = new ArrayList<>();
@@ -200,6 +201,7 @@ public class StudyService {
                 CurriculumPassedElementDto subChapterDto = new CurriculumPassedElementDto();
                 subChapterDto.setCurriculumId(subChapterStudy.getCurriculum().getCurriculumId());
                 subChapterDto.setCurriculumName(subChapterStudy.getCurriculum().getCurriculumName());
+                subChapterDto.setLevel(subChapterStudy.getLevel());
                 subChapterDto.setPassed(subChapterStudy.isPassed());
 
                 // 서브 챕터 dto 리스트에 추가
