@@ -13,5 +13,4 @@ public class CurriculumTextCallDto {
     private Long userId;
     private Long curriculumId;
     private TextType textType;
-    private LevelType levelType;
 }

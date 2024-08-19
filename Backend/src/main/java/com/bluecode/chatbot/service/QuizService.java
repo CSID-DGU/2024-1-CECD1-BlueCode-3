@@ -162,10 +162,11 @@ public class QuizService {
                     "2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용 설명, 출력 내용 설명, 예제 입력(2개 이상), 예제 출력(2개 이상)으로 구성할 것\n" +
                     "3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것\n" +
                     "4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것\n" +
-                    "5. 'text' 안에 출력한 예제 입력과 예제 출력과 같은 내용으로 'examples'에 리스트 형태로 " +
+                    "5. 'text' 안에 출력한 예제 입력과 예제 출력과는 다른 내용으로 'examples'에 리스트 형태로 " +
                     "각각 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것(서로 대응하는 입력과 출력을 묶어서 리스트 형태로 구현)\n" +
                     "6. 그 외의 값은 모두 null로 표기\n" +
-                    "7. 단, 'wordCount'는 0으로 표기\n\n";
+                    "7. 단, 'wordCount'는 0으로 표기\n" +
+                    "8. 또한 랜덤과 관련된 문제는 출제 금지\n\n";
         } else {
             return ""; // 해당하지 않는 경우 빈 문자열 반환
         }
@@ -279,11 +280,11 @@ public class QuizService {
                     "\"q4\": null,\n" +
                     "\"examples\": [\n" +
                     "    {\n" +
-                    "      \"input\": \"```\\n점수를 입력하세요: 85\\n```,\n" +
-                    "      \"output\": \"```\\nB\\n```\n" +
+                    "      \"input\": \"```\\n점수를 입력하세요: 59\\n```,\n" +
+                    "      \"output\": \"```\\nF\\n```\n" +
                     "    },\n" +
                     "    {\n" +
-                    "      \"input\": \"```\\n점수를 입력하세요: 105\\n```,\n" +
+                    "      \"input\": \"```\\n점수를 입력하세요: -10\\n```,\n" +
                     "      \"output\": \"```\\n잘못된 점수입니다.\\n```\n" +
                     "    }\n" +
                     "  ],\n" +
@@ -307,8 +308,10 @@ public class QuizService {
             gptResponse = gptResponse.substring(0, gptResponse.length() - 3); // 뒤쪽 백틱 제거
         }
 
-        // 응답 json 필드에 있는 불필요한 이스케이프 문자 등을 제거
-        gptResponse = gptResponse.replace("json", "").replace("python", "")
+        String root = chapter.getRoot().getCurriculumName(); // 루트 커리큘럼
+
+        // 응답 json 필드에 있는 불필요한 이스케이프 문자 또는 형식 문구 제거
+        gptResponse = gptResponse.replace("json", "").replace(root, "")
                 .replaceAll("(?<=\\w):\\s*[\r\n\t]+", ": ");
 
         log.info("GPT Response: {}", gptResponse); // gpt 응답 원문 확인 로그
@@ -335,6 +338,8 @@ public class QuizService {
 
             // 문제 유형에 따라 추가 정보 설정
             if (quiz.getQuizType() == QuizType.NUM) {
+                // Quiz 엔티티를 먼저 저장하여 quizId를 생성
+                quiz = quizRepository.save(quiz);
                 quiz.setQ1(rootNode.path("q1").asText(null));
                 quiz.setQ2(rootNode.path("q2").asText(null));
                 quiz.setQ3(rootNode.path("q3").asText(null));
@@ -357,6 +362,8 @@ public class QuizService {
                     }
                 }
             } else if (quiz.getQuizType() == QuizType.WORD) {
+                // Quiz 엔티티를 먼저 저장하여 quizId를 생성
+                quiz = quizRepository.save(quiz);
                 quiz.setAnswer(rootNode.path("ans").asText(null));
                 quiz.setWordCount(rootNode.path("wordCount").asInt(0));
             }
