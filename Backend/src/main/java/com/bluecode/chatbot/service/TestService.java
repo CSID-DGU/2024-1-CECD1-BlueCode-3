@@ -128,8 +128,8 @@ public class TestService {
                     usedQuizIds.add(newQuizId);  // 새로 생성된 quizId를 기록
                     log.info("선택된 QuizId: {}", newQuizId);
                 } else {
-                    log.warn("중복된 QuizId 발생: {} - GPT로 문제 재생성 시도", newQuizId);
-                    useGPT = true;  // 중복이 발생하면 GPT를 사용해 새 문제를 생성
+                    log.warn("중복된 QuizId 발생: {} - 문제 재생성 시도", newQuizId);
+                    useGPT = true;  // 중복이 발생하면 해당 루프 재진행
                 }
             }
         }
@@ -241,8 +241,8 @@ public class TestService {
                     usedQuizIds.add(newQuizId);  // 새로 생성된 quizId를 기록
                     log.info("선택된 QuizId: {}", newQuizId);
                 } else {
-                    log.warn("중복된 QuizId 발생: {} - GPT로 문제 재생성 시도", newQuizId);
-                    useGPT = true;  // 중복이 발생하면 GPT를 사용해 새 문제를 생성
+                    log.warn("중복된 QuizId 발생: {} - 문제 재생성 시도", newQuizId);
+                    useGPT = true;  // 중복이 발생하면 해당 루프 재진행
                 }
             }
         }

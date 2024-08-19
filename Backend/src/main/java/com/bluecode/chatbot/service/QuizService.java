@@ -308,8 +308,10 @@ public class QuizService {
             gptResponse = gptResponse.substring(0, gptResponse.length() - 3); // 뒤쪽 백틱 제거
         }
 
-        // 응답 json 필드에 있는 불필요한 이스케이프 문자 등을 제거
-        gptResponse = gptResponse.replace("json", "").replace("python", "")
+        String root = chapter.getRoot().getCurriculumName(); // 루트 커리큘럼
+
+        // 응답 json 필드에 있는 불필요한 이스케이프 문자 또는 형식 문구 제거
+        gptResponse = gptResponse.replace("json", "").replace(root, "")
                 .replaceAll("(?<=\\w):\\s*[\r\n\t]+", ": ");
 
         log.info("GPT Response: {}", gptResponse); // gpt 응답 원문 확인 로그
