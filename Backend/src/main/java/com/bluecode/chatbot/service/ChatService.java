@@ -58,6 +58,11 @@ public class ChatService {
             for (Chats chats : history) {
                 conversationHistory.add(chats.getQuestion());
             }
+
+            // GPT API에 보낼 사용자 질문 기록을 최대 10개까지만 허용
+            if (conversationHistory.size() > 10) {
+                conversationHistory = conversationHistory.subList(conversationHistory.size() - 10, conversationHistory.size());
+            }
         }
 
         conversationHistory.add(userMessage);
