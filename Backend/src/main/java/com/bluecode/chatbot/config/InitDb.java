@@ -86,7 +86,7 @@ public class InitDb {
             Curriculums chap7 = Curriculums.createCurriculum(root, root, null, "자료구조", true, 7, 0, 6, false, false, LangType.PYTHON);
             Curriculums chap8 = Curriculums.createCurriculum(root, root, null, "파일 처리", false, 8, 0, 6, false, false, LangType.PYTHON);
             Curriculums chap9 = Curriculums.createCurriculum(root, root, null, "예외 처리", true, 9, 0, 4, false, false, LangType.PYTHON);
-            Curriculums chap10 = Curriculums.createCurriculum(root, root, null, "클래스와 객체", true, 10, 0, 10, false, false, LangType.PYTHON);
+            Curriculums chap10 = Curriculums.createCurriculum(root, root, null, "클래스와 객체", false, 10, 0, 10, false, false, LangType.PYTHON);
             Curriculums chap11 = Curriculums.createCurriculum(root, root, null, "모듈과 패키지", false, 11, 0, 2, false, false, LangType.PYTHON);
             curriculumRepository.saveAll(Arrays.asList(chap1, chap2, chap3, chap4, chap5, chap6, chap7, chap8, chap9, chap10, chap11));
 
@@ -417,34 +417,34 @@ public class InitDb {
                     "사용자 정의 예외 발생\n프로그램 종료", QuizLevel.NORMAL,0));
 
             // 챕터 10
-            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
-                    "다음 설명에 해당하는 객체지향 프로그래밍의 특징은 무엇일까요?\n\n- 서로 다른 클래스의 객체를 동일한 타입으로 취급하여 공통된 인터페이스를 통해 다양한 객체를 사용할 수 있습니다.\n- 예를 들어, 동물 클래스의 메서드를 호출하여 다양한 동물 객체의 울음소리를 들을 수 있습니다.",
-                    "상속",
-                    "다형성",
-                    "캡슐화",
-                    "추상화",
-                    "다형성", QuizLevel.EASY,0));
-            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
-                    "클래스의 생성자 (init) 메서드의 주된 역할은 무엇일까요?",
-                    "객체가 소멸될 때 자동으로 호출되어 자원을 해제하는 역할",
-                    "객체가 생성될 때 초기화 작업을 수행하는 역할",
-                    "클래스의 속성 값을 변경하는 역할",
-                    "클래스의 메서드를 호출하는 역할",
-                    "객체가 생성될 때 초기화 작업을 수행하는 역할", QuizLevel.EASY,0));
-            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
-                    "```\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n\n    def sound(self):\n        print(\"동물의 소리\")\n\nclass Dog(Animal):\n    def sound(self):\n        print(\"멍멍\")\n\ndog = Dog(\"멍멍이\")\ndog.sound()\n```\n\n위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",
-                    "동물의 소리",
-                    "멍멍",
-                    "오류 발생",
-                    "아무것도 출력되지 않음",
-                    "멍멍", QuizLevel.NORMAL,0));
-            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
-                    "```\nclass Person:\n    def __init__(self, name, age):\n        self.__name = name\n        self.__age = age\n\n    def get_name(self):\n        return self.__name\n\nperson = Person(\"홍길동\", 30)\nprint(person.name)\n```\n\n위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",
-                    "홍길동",
-                    "30",
-                    "오류 발생",
-                    "아무것도 출력되지 않음",
-                    "오류 발생", QuizLevel.NORMAL,0));
+//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
+//                    "다음 설명에 해당하는 객체지향 프로그래밍의 특징은 무엇일까요?\n\n- 서로 다른 클래스의 객체를 동일한 타입으로 취급하여 공통된 인터페이스를 통해 다양한 객체를 사용할 수 있습니다.\n- 예를 들어, 동물 클래스의 메서드를 호출하여 다양한 동물 객체의 울음소리를 들을 수 있습니다.",
+//                    "상속",
+//                    "다형성",
+//                    "캡슐화",
+//                    "추상화",
+//                    "다형성", QuizLevel.EASY,0));
+//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
+//                    "클래스의 생성자 (init) 메서드의 주된 역할은 무엇일까요?",
+//                    "객체가 소멸될 때 자동으로 호출되어 자원을 해제하는 역할",
+//                    "객체가 생성될 때 초기화 작업을 수행하는 역할",
+//                    "클래스의 속성 값을 변경하는 역할",
+//                    "클래스의 메서드를 호출하는 역할",
+//                    "객체가 생성될 때 초기화 작업을 수행하는 역할", QuizLevel.EASY,0));
+//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
+//                    "```\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n\n    def sound(self):\n        print(\"동물의 소리\")\n\nclass Dog(Animal):\n    def sound(self):\n        print(\"멍멍\")\n\ndog = Dog(\"멍멍이\")\ndog.sound()\n```\n\n위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",
+//                    "동물의 소리",
+//                    "멍멍",
+//                    "오류 발생",
+//                    "아무것도 출력되지 않음",
+//                    "멍멍", QuizLevel.NORMAL,0));
+//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
+//                    "```\nclass Person:\n    def __init__(self, name, age):\n        self.__name = name\n        self.__age = age\n\n    def get_name(self):\n        return self.__name\n\nperson = Person(\"홍길동\", 30)\nprint(person.name)\n```\n\n위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",
+//                    "홍길동",
+//                    "30",
+//                    "오류 발생",
+//                    "아무것도 출력되지 않음",
+//                    "오류 발생", QuizLevel.NORMAL,0));
 
             // 답답형
             // 챕터 2
@@ -658,34 +658,34 @@ public class InitDb {
                     "THIS IS A CUSTOM ERROR - Error handled.", QuizLevel.NORMAL,39));
 
             // 챕터 10
-            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
-                    "다음 괄호 안에 들어갈 알맞은 답을 적으세요.\n\n- 클래스 내에서 객체가 생성될 때 자동으로 호출되는 특별한 메서드로, 이 메서드는 객체의 초기화를 담당하며 ' __(        )__'으로 정의된다.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    "init", QuizLevel.EASY,4));
-            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
-                    "",
-                    null,
-                    null,
-                    null,
-                    null,
-                    "", QuizLevel.EASY,0));
-            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
-                    "```\nclass MyClass:\n    def __init__(self, value):\n        self.__value = value\n\n    def get_value(self):\n        return self.__value\n\n    def set_value(self, value):\n        if value > 0:\n            self.__value = value\n        else:\n            raise ValueError(\"Value must be positive\")\n\nobj = MyClass(10)\nobj.set_value(20)\nprint(obj.get_value())\n\ntry:\n    obj.set_value(-5)\nexcept ValueError as e:\n    print(e)\n```\n\n위 파이썬 코드의 실행 결과를 적으시오.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    "20 Value must be positive", QuizLevel.NORMAL,25));
-            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
-                    "```\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n\n    def speak(self):\n        return f\"{self.name} makes a sound\"\n\nclass Dog(Animal):\n    def speak(self):\n        return f\"{self.name} barks\"\n\nanimals = [Animal(\"Generic Animal\"), Dog(\"Buddy\")]\n\nfor animal in animals:\n    print(animal.speak())\n```\n\n위 파이썬 코드의 실행 결과를 적으시오.",
-                    null,
-                    null,
-                    null,
-                    null,
-                    "Generic Animal makes a sound Buddy barks", QuizLevel.NORMAL,41));
+//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
+//                    "다음 괄호 안에 들어갈 알맞은 답을 적으세요.\n\n- 클래스 내에서 객체가 생성될 때 자동으로 호출되는 특별한 메서드로, 이 메서드는 객체의 초기화를 담당하며 ' __(        )__'으로 정의된다.",
+//                    null,
+//                    null,
+//                    null,
+//                    null,
+//                    "init", QuizLevel.EASY,4));
+//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
+//                    "",
+//                    null,
+//                    null,
+//                    null,
+//                    null,
+//                    "", QuizLevel.EASY,0));
+//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
+//                    "```\nclass MyClass:\n    def __init__(self, value):\n        self.__value = value\n\n    def get_value(self):\n        return self.__value\n\n    def set_value(self, value):\n        if value > 0:\n            self.__value = value\n        else:\n            raise ValueError(\"Value must be positive\")\n\nobj = MyClass(10)\nobj.set_value(20)\nprint(obj.get_value())\n\ntry:\n    obj.set_value(-5)\nexcept ValueError as e:\n    print(e)\n```\n\n위 파이썬 코드의 실행 결과를 적으시오.",
+//                    null,
+//                    null,
+//                    null,
+//                    null,
+//                    "20 Value must be positive", QuizLevel.NORMAL,25));
+//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
+//                    "```\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n\n    def speak(self):\n        return f\"{self.name} makes a sound\"\n\nclass Dog(Animal):\n    def speak(self):\n        return f\"{self.name} barks\"\n\nanimals = [Animal(\"Generic Animal\"), Dog(\"Buddy\")]\n\nfor animal in animals:\n    print(animal.speak())\n```\n\n위 파이썬 코드의 실행 결과를 적으시오.",
+//                    null,
+//                    null,
+//                    null,
+//                    null,
+//                    "Generic Animal makes a sound Buddy barks", QuizLevel.NORMAL,41));
 
             quizRepository.saveAll(quizList);
 
@@ -750,12 +750,12 @@ public class InitDb {
                     null, null, null, null, null, QuizLevel.HARD,0));
 
             // 챕터 10
-            quizListCode.add(Quiz.createQuiz(chapter.get(9), QuizType.CODE,
-                    "차량 관리 시스템\n\n자동차를 관리하는 프로그램을 작성하세요. 자동차는 Car라는 클래스로 표현되며, 각 자동차는 브랜드(brand), 모델(model), 연식(year)을 속성으로 가집니다. 이때, 다음 요구사항을 충족해야 합니다.\n\n1. Car 클래스는 __init__ 생성자를 통해 객체를 초기화할 수 있어야 합니다.\n2. 모든 자동차 객체는 기본적으로 연료(fuel)가 100으로 시작하며, fuel 속성은 외부에서 직접 접근할 수 없고, get_fuel() 메서드를 통해 접근할 수 있습니다.\n3. 연료를 감소시키는 drive() 메서드를 구현하세요. 이 메서드는 주행 거리를 입력받아 그에 비례하여 연료를 감소시킵니다. 연료는 10km당 1씩 감소합니다. 연료가 부족할 경우, 주행을 중단하고 \"연료가 부족합니다.\"라는 메시지를 출력합니다.\n4. 연료를 충전하는 refuel() 메서드를 구현하세요. 이 메서드는 연료를 입력받아 현재 연료에 더해줍니다. 단, 연료는 100을 초과할 수 없습니다.\n5. Car 클래스를 상속받은 ElectricCar 클래스를 구현하세요. 이 클래스는 Car 클래스와 동일한 속성을 가지되, 연료 대신 배터리(battery) 속성을 가지며, 배터리도 외부에서 직접 접근할 수 없고, get_battery() 메서드를 통해 접근할 수 있습니다.\n6. ElectricCar 클래스의 drive() 메서드는 배터리를 1km당 2씩 감소시키며, 배터리가 부족할 경우 \"배터리가 부족합니다.\"라는 메시지를 출력합니다.\n\n입력 예제 1:\n```\nmy_car = Car(\"Toyota\", \"Camry\", 2022)\nmy_car.drive(50)\nmy_car.get_fuel()\nmy_car.refuel(30)\nmy_car.get_fuel()\n\nmy_electric_car = ElectricCar(\"Tesla\", \"Model S\", 2022)\nmy_electric_car.drive(30)\nmy_electric_car.get_battery()\nmy_electric_car.refuel(50)\nmy_electric_car.get_battery()\n```\n\n출력 예제 1:\n```\n연료가 부족합니다.\n50\n80\n배터리가 부족합니다.\n40\n```",
-                    null, null, null, null, null, QuizLevel.HARD,0));
-            quizListCode.add(Quiz.createQuiz(chapter.get(9), QuizType.CODE,
-                    "도형 클래스 설계\n\n다양한 도형을 표현할 수 있는 클래스를 설계하세요. 각 도형은 Shape라는 기본 클래스로부터 상속받으며, 다음과 같은 요구사항을 만족해야 합니다.\n\n1. Shape 클래스는 면적(area)을 계산하는 calculate_area() 메서드를 포함하며, 기본적으로 \"Not implemented\" 메시지를 출력하는 메서드입니다.\n2. Circle, Rectangle, Triangle 클래스는 각각 Shape 클래스를 상속받으며, 자신의 도형에 맞는 면적 계산 메서드를 오버라이딩합니다.\n3. 각 클래스는 생성자에서 도형의 특성을 초기화하며, 예를 들어 Circle은 반지름, Rectangle은 가로와 세로, Triangle은 밑변과 높이를 초기화해야 합니다.\n4. 각각의 클래스에서 면적을 계산하는 메서드 calculate_area()를 구현하세요.\n- 원의 면적: 𝜋 × 반지름**2 \n- 사각형의 면적: 가로 × 세로\n- 삼각형의 면적: ½ × 밑변 × 높이\n\n입력 예제 1:\n```\ncircle = Circle(5)\nrectangle = Rectangle(4, 6)\ntriangle = Triangle(3, 4)\n\nprint(circle.calculate_area())\nprint(rectangle.calculate_area())\nprint(triangle.calculate_area())\n```\n\n출력 예제 1:\n```\n78.5\n24\n6.0\n```",
-                    null, null, null, null, null, QuizLevel.HARD,0));
+//            quizListCode.add(Quiz.createQuiz(chapter.get(9), QuizType.CODE,
+//                    "차량 관리 시스템\n\n자동차를 관리하는 프로그램을 작성하세요. 자동차는 Car라는 클래스로 표현되며, 각 자동차는 브랜드(brand), 모델(model), 연식(year)을 속성으로 가집니다. 이때, 다음 요구사항을 충족해야 합니다.\n\n1. Car 클래스는 __init__ 생성자를 통해 객체를 초기화할 수 있어야 합니다.\n2. 모든 자동차 객체는 기본적으로 연료(fuel)가 100으로 시작하며, fuel 속성은 외부에서 직접 접근할 수 없고, get_fuel() 메서드를 통해 접근할 수 있습니다.\n3. 연료를 감소시키는 drive() 메서드를 구현하세요. 이 메서드는 주행 거리를 입력받아 그에 비례하여 연료를 감소시킵니다. 연료는 10km당 1씩 감소합니다. 연료가 부족할 경우, 주행을 중단하고 \"연료가 부족합니다.\"라는 메시지를 출력합니다.\n4. 연료를 충전하는 refuel() 메서드를 구현하세요. 이 메서드는 연료를 입력받아 현재 연료에 더해줍니다. 단, 연료는 100을 초과할 수 없습니다.\n5. Car 클래스를 상속받은 ElectricCar 클래스를 구현하세요. 이 클래스는 Car 클래스와 동일한 속성을 가지되, 연료 대신 배터리(battery) 속성을 가지며, 배터리도 외부에서 직접 접근할 수 없고, get_battery() 메서드를 통해 접근할 수 있습니다.\n6. ElectricCar 클래스의 drive() 메서드는 배터리를 1km당 2씩 감소시키며, 배터리가 부족할 경우 \"배터리가 부족합니다.\"라는 메시지를 출력합니다.\n\n입력 예제 1:\n```\nmy_car = Car(\"Toyota\", \"Camry\", 2022)\nmy_car.drive(50)\nmy_car.get_fuel()\nmy_car.refuel(30)\nmy_car.get_fuel()\n\nmy_electric_car = ElectricCar(\"Tesla\", \"Model S\", 2022)\nmy_electric_car.drive(30)\nmy_electric_car.get_battery()\nmy_electric_car.refuel(50)\nmy_electric_car.get_battery()\n```\n\n출력 예제 1:\n```\n연료가 부족합니다.\n50\n80\n배터리가 부족합니다.\n40\n```",
+//                    null, null, null, null, null, QuizLevel.HARD,0));
+//            quizListCode.add(Quiz.createQuiz(chapter.get(9), QuizType.CODE,
+//                    "도형 클래스 설계\n\n다양한 도형을 표현할 수 있는 클래스를 설계하세요. 각 도형은 Shape라는 기본 클래스로부터 상속받으며, 다음과 같은 요구사항을 만족해야 합니다.\n\n1. Shape 클래스는 면적(area)을 계산하는 calculate_area() 메서드를 포함하며, 기본적으로 \"Not implemented\" 메시지를 출력하는 메서드입니다.\n2. Circle, Rectangle, Triangle 클래스는 각각 Shape 클래스를 상속받으며, 자신의 도형에 맞는 면적 계산 메서드를 오버라이딩합니다.\n3. 각 클래스는 생성자에서 도형의 특성을 초기화하며, 예를 들어 Circle은 반지름, Rectangle은 가로와 세로, Triangle은 밑변과 높이를 초기화해야 합니다.\n4. 각각의 클래스에서 면적을 계산하는 메서드 calculate_area()를 구현하세요.\n- 원의 면적: 𝜋 × 반지름**2 \n- 사각형의 면적: 가로 × 세로\n- 삼각형의 면적: ½ × 밑변 × 높이\n\n입력 예제 1:\n```\ncircle = Circle(5)\nrectangle = Rectangle(4, 6)\ntriangle = Triangle(3, 4)\n\nprint(circle.calculate_area())\nprint(rectangle.calculate_area())\nprint(triangle.calculate_area())\n```\n\n출력 예제 1:\n```\n78.5\n24\n6.0\n```",
+//                    null, null, null, null, null, QuizLevel.HARD,0));
 
 
             quizRepository.saveAll(quizListCode);
@@ -955,7 +955,6 @@ public class InitDb {
 
             List<Curriculums> chapter = child.stream().filter(i -> !i.isLeafNode()).toList();
             List<Curriculums> subChapter = child.stream().filter(Curriculums::isLeafNode).toList();
-            Deque<Curriculums> deque = new ArrayDeque<>(subChapter);
 
             List<Tests> tests = new ArrayList<>();
 
