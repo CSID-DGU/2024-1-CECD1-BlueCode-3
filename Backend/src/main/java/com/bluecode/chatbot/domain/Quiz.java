@@ -50,12 +50,12 @@ public class Quiz {
             Curriculums curriculum,
             QuizType quizType,
             String text,
-            String answer,
-            QuizLevel level,
             String q1,
             String q2,
             String q3,
             String q4,
+            String answer,
+            QuizLevel level,
             int wordCount
     ) {
         Quiz quiz = new Quiz();
