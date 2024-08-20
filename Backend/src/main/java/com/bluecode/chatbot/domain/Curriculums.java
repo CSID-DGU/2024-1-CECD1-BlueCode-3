@@ -28,9 +28,15 @@ public class Curriculums implements Comparable<Curriculums> {
     @JoinColumn(name = "root_id")
     private Curriculums root;
 
+    // 대상 커리큘럼의 다음 커리큘럼
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "next_id")
     private Curriculums next;
+
+    // 대상 커리큘럼의 이전 커리큘럼
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "before_id")
+    private Curriculums before;
 
     // 자식 정의
     @JsonIgnore
@@ -64,6 +70,7 @@ public class Curriculums implements Comparable<Curriculums> {
     public static Curriculums createCurriculum(
             Curriculums parent,
             Curriculums root,
+            Curriculums before,
             Curriculums next,
             String curriculumName,
             boolean testable,
@@ -78,6 +85,7 @@ public class Curriculums implements Comparable<Curriculums> {
         curriculums.setCurriculumName(curriculumName);
         curriculums.setParent(parent);
         curriculums.setRoot(root);
+        curriculums.setBefore(before);
         curriculums.setNext(next);
         curriculums.setTestable(testable);
         curriculums.setSubChapterNum(subChapterNum);
