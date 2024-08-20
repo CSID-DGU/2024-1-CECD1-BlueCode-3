@@ -23,10 +23,12 @@ public interface CurriculumRepository extends JpaRepository<Curriculums, Long> {
     // root 커리큘럼 기반 루트 파생 커리큘럼 리스트 검색
     List<Curriculums> findAllByRoot(Curriculums root);
 
-    // root 커리큘럼 기반 리프 노드 커리큘럼 리스트 검색
+    // root 커리큘럼, 리프 노드 여부 기반 커리큘럼 리스트 검색
     @Query("select c from Curriculums c " +
             "join fetch c.root " +
             "join fetch c.parent " +
+            "left join fetch c.before " +
+            "left join fetch c.next " +
             "where c.root = :root " +
             "and c.leafNode = :leafNode " +
             "order by c.chapterNum asc, c.subChapterNum asc")
