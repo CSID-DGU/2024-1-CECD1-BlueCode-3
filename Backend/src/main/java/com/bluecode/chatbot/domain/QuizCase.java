@@ -16,8 +16,10 @@ public class QuizCase {
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String input;
 
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String output;
 
     public static QuizCase createQuizCase(Quiz quiz, String input, String output) {
