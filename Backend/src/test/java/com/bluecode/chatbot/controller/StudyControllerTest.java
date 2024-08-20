@@ -78,11 +78,9 @@ class StudyControllerTest {
 
         final long curriculum_Id=11;
         final long user_Id= 2;
-        final LevelType levelType=LevelType.HARD;
         final CurriculumTextCallDto curriculumTextCallDto=new CurriculumTextCallDto();
         curriculumTextCallDto.setCurriculumId(curriculum_Id);
         curriculumTextCallDto.setUserId(user_Id);
-        curriculumTextCallDto.setLevelType(levelType);
 
         final String reqeustBody=objectMapper.writeValueAsString(curriculumTextCallDto);
         ResultActions resultActions=mockMvc.perform(post(url)
@@ -104,11 +102,9 @@ class StudyControllerTest {
         final String url="/curriculum/chaptertext";
         final long curriculum_Id=7;
         final long user_Id= 2;
-        final LevelType levelType=LevelType.HARD;
         final CurriculumTextCallDto curriculumTextCallDto=new CurriculumTextCallDto();
         curriculumTextCallDto.setCurriculumId(curriculum_Id);
         curriculumTextCallDto.setUserId(user_Id);
-        curriculumTextCallDto.setLevelType(levelType);
 
         final String reqeustBody=objectMapper.writeValueAsString(curriculumTextCallDto);
         ResultActions resultActions=mockMvc.perform(post(url)
