@@ -18,6 +18,8 @@ public interface StudyRepository extends JpaRepository<Studies, Long> {
     @Query("select s from Studies s " +
             "join fetch s.user " +
             "join fetch s.curriculum " +
+            "left join fetch s.curriculum.next " +
+            "left join fetch s.curriculum.before " +
             "where s.user = :user " +
             "and s.curriculum.root = :root")
     List<Studies> findAllByUserAndRoot(@Param("user") Users user, @Param("root") Curriculums root);
@@ -49,6 +51,8 @@ public interface StudyRepository extends JpaRepository<Studies, Long> {
     @Query("select s from Studies s " +
             "join fetch s.user " +
             "join fetch s.curriculum " +
+            "left join fetch s.curriculum.next " +
+            "left join fetch s.curriculum.before " +
             "where s.user = :user " +
             "and s.curriculum.parent = :parent")
     List<Studies> findAllByUserAndParent(@Param("user") Users user, @Param("parent") Curriculums parent);
