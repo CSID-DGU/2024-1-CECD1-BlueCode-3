@@ -273,7 +273,7 @@ public class StudyService {
         if (flag) {
             // 모든 자식 챕터가 통과일 시 부모 챕터도 통과 처리
             chapterStudy.setPassed(true);
-            studyRepository.saveAndFlush(chapterStudy);
+            studyRepository.save(chapterStudy);
 
             // 챕터가 pass 처리 되었을 경우,대상 챕터 학습 미션 완료 처리
             log.info("MissionConst: {}", MissionConst.createConstByRootName(chapterStudy.getCurriculum()));
@@ -410,7 +410,7 @@ public class StudyService {
     }
 
 
-    // 해당 챕터의 서브 챕터 학습 완료 여부 확인
+    // 해당 챕터의 서브 챕터 학습 완료 여부 확인(testService 내 활용)
     public boolean validateChapterStudy(Users user, Curriculums chapter) {
 
         List<Studies> subChapterStudies = studyRepository.findAllByUserAndParent(user, chapter);
@@ -427,7 +427,7 @@ public class StudyService {
             }
         }
 
-        // 모든 서브챕터의 paassed = true일 경우, true 리턴
+        // 모든 서브챕터의 passed = true일 경우, true 리턴
         return true;
     }
 
@@ -539,5 +539,222 @@ public class StudyService {
             case CODE -> "간단한 예제 코드를 5개 이상 서술, 총 1500자 이내";
             case QUIZ -> "코딩 테스트 심화 기출 유형의 문제 소개와 자세한 설명 및 답안 코드(상세한 주석 포함) 제시, 총 1500자 이내";
         };
+    }
+
+    // 초기 테스트 진행 중, 대상 챕터의 테스트는 통과하여 해당 챕터와 서브챕터 대상 study의 passed = true, level을 설정하는 과정
+    public initChapterPassResponseDto initPass(initChapterPassRequestDto dto) {
+
+        log.info("initPass dto: {}", dto);
+
+        Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
+        Optional<Curriculums> chapterOptional = curriculumRepository.findById(dto.getCurriculumId());
+
+        if (userOptional.isEmpty()) {
+            log.error("유효하지 않은 유저 테이블 id 입니다. dto: {}", dto);
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (chapterOptional.isEmpty()) {
+            log.error("유효하지 않은 챕터 커리큘럼 id 입니다. dto: {}", dto);
+            throw new IllegalArgumentException("유효하지 않은 챕터 커리큘럼 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+        Curriculums chapter = chapterOptional.get();
+
+        // 검색한 curriculum이 chapter가 아닐 시, Exception 발생
+        if (chapter.isRootNode() || chapter.isLeafNode()) {
+            log.error("대상 커리큘럼은 챕터가 아닙니다. name: {}, isRoot: {}, isLeaf: {}", chapter.getCurriculumName(), chapter.isRootNode(), chapter.isLeafNode());
+            throw new IllegalArgumentException("대상 커리큘럼은 챕터가 아닙니다.");
+        }
+
+        Optional<Studies> studyOptional = studyRepository.findByUserAndCurriculum(user, chapter);
+
+        if (studyOptional.isEmpty()) {
+            log.error("유효하지 않은 study 입니다.");
+            throw new IllegalArgumentException("유효하지 않은 study 입니다.");
+        }
+
+        List<Studies> totalStudy = new ArrayList<>();
+
+        // 챕터 대상 study
+        Studies chapterStudy = studyOptional.get();
+        totalStudy.add(chapterStudy);
+
+        // passed = true & dto에서 전달한 level로 저장(null --> dto.getLevel())
+        chapterStudy.setLevel(dto.getLevel());
+        chapterStudy.setPassed(true);
+
+
+
+        // 대상 챕터 내 서브챕터 study 리스트에서 위와 동일한 로직 처리
+        List<Studies> subChapterStudies = studyRepository.findAllByUserAndParent(user, chapter);
+        for (Studies subChapterStudy : subChapterStudies) {
+            subChapterStudy.setPassed(true);
+            subChapterStudy.setLevel(dto.getLevel());
+            totalStudy.add(subChapterStudy);
+
+            // 특정 서브 챕터 완료 미션 처리
+            log.info("MissionConst: {}", MissionConst.createConstByRootAndSubChapterName(subChapterStudy.getCurriculum().getParent(), subChapterStudy.getCurriculum()));
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootAndSubChapterName(subChapterStudy.getCurriculum().getParent(), subChapterStudy.getCurriculum())));
+
+            // 학습 완료 공통 미션 처리
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.STUDY_COMPLETE));
+        }
+
+        studyRepository.saveAll(totalStudy);
+
+        // 만약 이전 챕터가 testable = false일 경우, 연쇄적으로 pass 처리 필요
+        if (!chapterStudy.getCurriculum().getBefore().isTestable()) {
+            initPassByBeforeChapter(user, chapterStudy.getCurriculum().getBefore());
+        }
+
+        // 완료 처리 dto 리턴
+        initChapterPassResponseDto responseDto = new initChapterPassResponseDto();
+        responseDto.setComplete(true);
+
+        return responseDto;
+    }
+
+    // 대상 챕터의 이전 챕터가 testable = false일 경우, 연쇄적으로 pass 처리 로직
+    private boolean initPassByBeforeChapter(Users user, Curriculums beforeChapter) {
+
+        Curriculums recursionCurriculum = beforeChapter;
+
+        // 이전 챕터의 testable = false 일 때 반복
+        while (recursionCurriculum != null && !recursionCurriculum.isTestable()) {
+            Optional<Studies> studyOptional = studyRepository.findByUserAndCurriculum(user, recursionCurriculum);
+
+            if (studyOptional.isEmpty()) {
+                log.error("유효하지 않은 study 입니다.");
+                throw new IllegalArgumentException("유효하지 않은 study 입니다.");
+            }
+
+            // 챕터 대상 study
+            Studies chapterStudy = studyOptional.get();
+
+            // passed = true & dto에서 전달한 level로 저장(null --> dto.getLevel())
+            chapterStudy.setLevel(LevelType.EASY);
+            chapterStudy.setPassed(true);
+            studyRepository.save(chapterStudy);
+
+            // 대상 챕터가 pass 처리 되었을 경우,대상 챕터 학습 미션 완료 처리
+            log.info("MissionConst: {}", MissionConst.createConstByRootName(chapterStudy.getCurriculum()));
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootName(chapterStudy.getCurriculum())));
+
+            // 대상 챕터 내 서브챕터 study 리스트에서 위와 동일한 로직 처리
+            List<Studies> subChapterStudies = studyRepository.findAllByUserAndParent(user, recursionCurriculum);
+            for (Studies subChapterStudy : subChapterStudies) {
+                subChapterStudy.setPassed(true);
+                subChapterStudy.setLevel(LevelType.EASY);
+                studyRepository.save(subChapterStudy);
+
+                // 특정 서브 챕터 완료 미션 처리
+                log.info("MissionConst: {}", MissionConst.createConstByRootAndSubChapterName(subChapterStudy.getCurriculum().getParent(), subChapterStudy.getCurriculum()));
+                eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.createConstByRootAndSubChapterName(subChapterStudy.getCurriculum().getParent(), subChapterStudy.getCurriculum())));
+
+                // 챕터 학습 완료 공통 미션 처리
+                eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.STUDY, MissionConst.STUDY_COMPLETE));
+            }
+
+            // 이전 챕터로 계속 진행
+            recursionCurriculum = recursionCurriculum.getBefore();
+        }
+
+        return true;
+    }
+
+    // 초기 테스트를 종료할 때, 종료 시점 챕터 대상 Study 내 level 설정 로직
+    public initChapterPassResponseDto initComplete(initChapterPassRequestDto dto) {
+
+        Optional<Users> userOptional = userRepository.findByUserId(dto.getUserId());
+        Optional<Curriculums> chapterOptional = curriculumRepository.findById(dto.getCurriculumId());
+
+        if (userOptional.isEmpty()) {
+            log.error("유효하지 않은 유저 테이블 id 입니다. dto: {}", dto);
+            throw new IllegalArgumentException("유효하지 않은 유저 테이블 id 입니다.");
+        }
+
+        if (chapterOptional.isEmpty()) {
+            log.error("유효하지 않은 챕터 커리큘럼 id 입니다. dto: {}", dto);
+            throw new IllegalArgumentException("유효하지 않은 챕터 커리큘럼 id 입니다.");
+        }
+
+        Users user = userOptional.get();
+        Curriculums chapter = chapterOptional.get();
+
+        // 검색한 curriculum이 chapter가 아닐 시, Exception 발생
+        if (chapter.isRootNode() || chapter.isLeafNode()) {
+            log.error("대상 커리큘럼은 챕터가 아닙니다. name: {}, isRoot: {}, isLeaf: {}", chapter.getCurriculumName(), chapter.isRootNode(), chapter.isLeafNode());
+            throw new IllegalArgumentException("대상 커리큘럼은 챕터가 아닙니다.");
+        }
+
+        Optional<Studies> studyOptional = studyRepository.findByUserAndCurriculum(user, chapter);
+
+        if (studyOptional.isEmpty()) {
+            log.error("유효하지 않은 study 입니다.");
+            throw new IllegalArgumentException("유효하지 않은 study 입니다.");
+        }
+
+        // 챕터 대상 study
+        Studies chapterStudy = studyOptional.get();
+
+        // 초기 테스트가 종료되었을 때, 현재 챕터보다 이전 챕터의 testable = false일 경우, testable = false가 최초로 나타나는 챕터가 시작점이 되어야 함.
+        // 예시: 챕터1(testable = false) - 챕터2(testable = false) - 챕터3(testable = true) 이고, 챕터 3에서 해당 method 호출 시,
+        // 결과: 챕터1(testable = false, passed = false, leve = EASY) - 챕터2(testable = false, passed = false, leve = null) - 챕터3(testable = false, passed = false, leve = null)
+        // 즉, 1챕터의 level만 설정이 되어야 함.
+        if (chapterStudy.getCurriculum().getBefore().isTestable() == false) {
+            initCompleteForBefore(user, chapterStudy.getCurriculum().getBefore());
+        } else {
+            // passed = true & dto에서 전달한 level로 저장(null --> dto.getLevel())
+            chapterStudy.setLevel(dto.getLevel());
+        }
+
+        // 완료 처리 dto 리턴
+        initChapterPassResponseDto responseDto = new initChapterPassResponseDto();
+        responseDto.setComplete(true);
+        return responseDto;
+    }
+
+    // 초기 테스트가 종료되었을 때, 현재 챕터보다 이전 챕터의 testable = false일 경우, 해당 챕터가 시작점을 탐색하고 level을 설정하는 로직
+    private boolean initCompleteForBefore(Users user, Curriculums beforeChapter) {
+        Curriculums recursionCurriculum = beforeChapter;
+
+        // 이전 챕터가 존재하고 testable = false 일 때 반복
+        while (recursionCurriculum != null && !recursionCurriculum.isTestable()) {
+            Optional<Studies> studyOptional = studyRepository.findByUserAndCurriculum(user, recursionCurriculum);
+
+            if (studyOptional.isEmpty()) {
+                log.error("유효하지 않은 study 입니다.");
+                throw new IllegalArgumentException("유효하지 않은 study 입니다.");
+            }
+
+            if (recursionCurriculum.getBefore() != null) {
+                if (recursionCurriculum.getBefore().isTestable()) {
+                    // 이전 챕터의 testable = true일 경우, 현재 챕터가 시작 지점이 됨
+                    // 챕터 대상 study
+                    Studies chapterStudy = studyOptional.get();
+
+                    // dto에서 전달한 level로 저장(null --> dto.getLevel())
+                    chapterStudy.setLevel(LevelType.EASY);
+                    studyRepository.save(chapterStudy);
+                    return true;
+                } else {
+                    // 이전 챕터로 계속 진행
+                    recursionCurriculum = recursionCurriculum.getBefore();
+                }
+            } else {
+                // 이전챕터가 존재하지 않을 경우, 1챕터가 시작지점이 됨
+                // 챕터 대상 study
+                Studies chapterStudy = studyOptional.get();
+
+                // dto에서 전달한 level로 저장(null --> dto.getLevel())
+                chapterStudy.setLevel(LevelType.EASY);
+                studyRepository.save(chapterStudy);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -52,9 +52,24 @@ public class StudyController {
         return ResponseEntity.ok(result);
     }
 
+    // 대상 챕터의 이해도 테스트를 완료하여 study의 passed = true로 설정하는 과정
     @PostMapping("/chapter/pass")
     public ResponseEntity<Boolean> chapterPass(@RequestBody CurriculumPassCallDto dto) {
         boolean result = studyService.chapterPass(dto);
         return ResponseEntity.ok(result);
+    }
+
+    // 초기 테스트 진행 중, 대상 챕터의 테스트는 통과하여 해당 챕터와 서브챕터 대상 study의 passed = true, level을 설정하는 과정
+    @PostMapping("/init/pass")
+    public ResponseEntity<initChapterPassResponseDto> initChapterPass(@RequestBody initChapterPassRequestDto dto) {
+        initChapterPassResponseDto result = studyService.initPass(dto);
+        return ResponseEntity.ok().body(result);
+    }
+
+    // 초기 테스트를 완료하여 학습 시작 챕터의 난이도를 설정하는 과정
+    @PostMapping("/init/complete")
+    public ResponseEntity<initChapterPassResponseDto> initChapterComplete(@RequestBody initChapterPassRequestDto dto) {
+        initChapterPassResponseDto result = studyService.initComplete(dto);
+        return ResponseEntity.ok().body(result);
     }
 }
