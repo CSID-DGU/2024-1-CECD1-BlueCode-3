@@ -1,8 +1,8 @@
 package com.bluecode.runcode.model;
 
-public class RunCodeInfo {
+public class RunCodeInfo { // 서버 -> 클라이언트
     private String runResult;
-    private boolean awaitingInput;  // 입력 대기 상태
+    private boolean awaitingInput;  // 입력 대기 상태(입력 함수 1개 이상 true, 없으면 false)
 
     // 기본 생성자
     public RunCodeInfo() {

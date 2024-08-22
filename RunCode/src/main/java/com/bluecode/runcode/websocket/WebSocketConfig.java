@@ -15,6 +15,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
         this.codeExecutionHandler = codeExecutionHandler;
     }
 
+    // 로컬 환경에서는 ws://localhost:8080/codeSocket 로 url 설정
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(codeExecutionHandler, "/codeSocket").setAllowedOrigins("*");

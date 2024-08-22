@@ -56,11 +56,11 @@ public class CodeExecutionWebSocketHandler extends TextWebSocketHandler {
                 session.sendMessage(new TextMessage(responseMessage));
             }
         } else if ("input".equals(action)) {
-            // 입력 처리 로직
+            // 입력 처리
             String input = jsonNode.get("data").asText();
             log.info("받은 input 내용: {}", input);
     
-            // 수정된 부분: session 객체도 함께 전달
+            // input과 함께 session 객체도 전달
             RunCodeInfo runCodeInfo = runCodeService.sendInputToProcess(session.getId(), input, session);
             
             // 최종 결과를 클라이언트에 전송

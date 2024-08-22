@@ -22,7 +22,7 @@ import com.bluecode.runcode.model.UserCodeInfo;
 @Service
 public class RunCodeService {
 
-    // 세션 ID와 해당 세션의 프로세스를 매핑하는 Map
+    // 세션 ID와 해당 세션의 프로세스를 매핑
     private Map<String, Process> sessionProcessMap = new ConcurrentHashMap<>();
     private Map<String, String> sessionCodeMap = new ConcurrentHashMap<>();
     private Map<String, Integer> sessionInputCountMap = new ConcurrentHashMap<>();
@@ -56,6 +56,7 @@ public class RunCodeService {
         }
     }
 
+    // 언어별로 코드에 포함된 입력 함수의 개수를 처리
     private int countInputFunctions(String language, String code) {
         int count = 0;
         switch (language.toLowerCase()) {
@@ -75,6 +76,7 @@ public class RunCodeService {
         return count;
     }
 
+    // 코드에 포함된 입력 함수 감지
     private int countOccurrences(String text, String substring) {
         int count = 0;
         int index = 0;
@@ -144,6 +146,7 @@ public class RunCodeService {
         StringBuilder outputBuilder = new StringBuilder();
         StringBuilder errorBuilder = new StringBuilder();
     
+        // 디버깅용 로그
         log.info("프로세스 출력 시작");
         log.info("받은 정보 - session: {}, process: {}, language: {}", session, process, language);
     
@@ -189,12 +192,16 @@ public class RunCodeService {
         log.info("프로세스 세팅 - 언어: {}, 코드 텍스트: {}", language, code);
         switch (language.toLowerCase()) {
             case "python":
+                // script.py 파일 생성
                 filePath = Files.createTempFile("script", ".py");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
+
+                // 인터프리터 실행
                 processBuilder.command("python", filePath.toString());
                 break;
 
             case "javascript":
+                // 인터프리터 실행
                 processBuilder.command("node", "-e", code);
                 break;
             
@@ -276,7 +283,7 @@ public class RunCodeService {
         }
     }
 
-    // 리소스 삭제
+    // 리소스 클리어(프로세스 종료 시)
     private void cleanUp(String sessionId) {
         Process process = sessionProcessMap.remove(sessionId);
         sessionCodeMap.remove(sessionId);
