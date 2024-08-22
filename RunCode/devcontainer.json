@@ -1,0 +1,17 @@
+{
+    "name": "RunCodeEnv",
+    "context": "..",
+    "dockerFile": "../.devcontainer/Dockerfile",
+    "settings": {
+      "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+      "vscjava.vscode-java-pack"
+    ],
+    "forwardPorts": [
+      8080
+    ],
+    "postCreateCommand": "echo 'Container is ready!'",
+    "remoteUser": "root"
+  }
+  
