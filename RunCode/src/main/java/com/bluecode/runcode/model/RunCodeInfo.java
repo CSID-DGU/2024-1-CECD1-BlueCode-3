@@ -2,7 +2,7 @@ package com.bluecode.runcode.model;
 
 public class RunCodeInfo { // 서버 -> 클라이언트
     private String runResult;
-    private boolean awaitingInput;  // 입력 대기 상태(입력 함수 1개 이상 true, 없으면 false)
+    private boolean isInputFunc;  // 입력 함수 존재 여부(입력 함수 1개 이상 true, 없으면 false)
 
     // 기본 생성자
     public RunCodeInfo() {
@@ -13,10 +13,10 @@ public class RunCodeInfo { // 서버 -> 클라이언트
         this.runResult = runResult;
     }
 
-    // 입력 대기 상태와 결과 메시지를 설정하는 생성자
-    public RunCodeInfo(String runResult, boolean awaitingInput) {
+    // 입력 함수 존재 여부와 결과 메시지를 설정하는 생성자
+    public RunCodeInfo(String runResult, boolean isInputFunc) {
         this.runResult = runResult;
-        this.awaitingInput = awaitingInput;
+        this.isInputFunc = isInputFunc;
     }
 
     // 결과 가져오기
@@ -29,13 +29,13 @@ public class RunCodeInfo { // 서버 -> 클라이언트
         this.runResult = runResult;
     }
 
-    // 입력 대기 상태 가져오기
+    // 입력 대기 상태(입력 함수 존재 여부 확인) 로드
     public boolean isAwaitingInput() {
-        return awaitingInput;
+        return isInputFunc;
     }
 
-    // 입력 대기 상태 설정하기
-    public void setAwaitingInput(boolean awaitingInput) {
-        this.awaitingInput = awaitingInput;
+    // 입력 대기 상태(입력 함수 존재 여부 확인) 설정
+    public void setAwaitingInput(boolean isInputFunc) {
+        this.isInputFunc = isInputFunc;
     }
 }
