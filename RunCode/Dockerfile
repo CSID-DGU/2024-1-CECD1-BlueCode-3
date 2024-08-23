@@ -20,6 +20,9 @@ COPY . /app/
 # Gradle wrapper 실행권한 설정
 RUN chmod +x ./gradlew
 
+# 작업 디렉토리 내 파일 확인
+RUN ls -a /app
+
 # Gradle을 사용하여 bootJar 실행
 RUN ./gradlew bootJar
 
