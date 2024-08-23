@@ -8,6 +8,8 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,7 +45,7 @@ public class RunCodeService {
 
         // 입력 함수가 있다면 대기 상태로 반환
         if (inputCount > 0) {
-            Process process = startProcess(code, language);
+            Process process = startProcess(code, language, sessionId);
             sessionProcessMap.put(sessionId, process);
             return new RunCodeInfo("입력 대기 중", true);
         } else {
@@ -61,20 +63,41 @@ public class RunCodeService {
         int count = 0;
         switch (language.toLowerCase()) {
             case "python":
-                count = countOccurrences(code, "input(");
+                count += countOccurrences(code, "input(");
+                count += countOccurrences(code, "sys.stdin.read");
+                count += countOccurrences(code, "sys.stdin.readline");
                 break;
             case "java":
-                count = countOccurrences(code, "nextLine()") + countOccurrences(code, "nextInt()");
+                count += countOccurrences(code, "nextLine()");
+                count += countOccurrences(code, "nextInt()");
+                count += countOccurrences(code, "nextDouble()");
+                count += countOccurrences(code, "next()");
+                count += countOccurrences(code, "nextFloat()");
+                count += countOccurrences(code, "nextByte()");
+                count += countOccurrences(code, "nextShort()");
+                count += countOccurrences(code, "nextBoolean()");
+                count += countOccurrences(code, "readLine()");
                 break;
             case "c":
             case "c++":
-                count = countOccurrences(code, "scanf(") + countOccurrences(code, "cin >>");
+                count += countOccurrences(code, "scanf(");
+                count += countOccurrences(code, "scanf_s(");
+                count += countOccurrences(code, "cin >>");
+                count += countOccurrences(code, "gets()");
+                count += countOccurrences(code, "fgets(");
+                count += countOccurrences(code, "getchar()");
+                count += countOccurrences(code, "getch()");
+                count += countOccurrences(code, "getc()");
+                break;
+            case "javascript":
+                count += countOccurrences(code, "readline.createInterface()");
                 break;
             default:
-                throw new IllegalArgumentException("지원하지 않는 언어: " + language);
+                throw new IllegalArgumentException("Unsupported language: " + language);
         }
         return count;
     }
+    
 
     // 코드에 포함된 입력 함수 감지
     private int countOccurrences(String text, String substring) {
@@ -114,10 +137,10 @@ public class RunCodeService {
     }
 
     // 프로세스 시작(단, 실행은 보류)
-    private Process startProcess(String code, String language) {
+    private Process startProcess(String code, String language, String sessionId) {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder();
-            setupProcessBuilder(processBuilder, language, code);
+            setupProcessBuilder(processBuilder, language, code , sessionId);
             log.info("프로세스 시작(실행 대기)");
             return processBuilder.start();
         } catch (IOException e) {
@@ -130,7 +153,7 @@ public class RunCodeService {
     private RunCodeInfo buildAndExecuteCode(WebSocketSession session, String code, String language, String sessionId) throws IOException {
         try{
             ProcessBuilder processBuilder = new ProcessBuilder();
-            setupProcessBuilder(processBuilder, language, code);
+            setupProcessBuilder(processBuilder, language, code, sessionId);
             Process process = processBuilder.start();
             sessionProcessMap.put(sessionId, process);
             log.info("프로세스 빌드 및 실행");
@@ -156,7 +179,7 @@ public class RunCodeService {
     
             if (exitCode == 0) {
                 try (BufferedReader outputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                     BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+                BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
                     String line;
                     while ((line = outputReader.readLine()) != null) {
                         outputBuilder.append(line).append("\n");
@@ -187,28 +210,36 @@ public class RunCodeService {
     }    
 
     // 프로세스 빌더 설정
-    private void setupProcessBuilder(ProcessBuilder processBuilder, String language, String code) throws IOException {
-        Path filePath;
-        log.info("프로세스 세팅 - 언어: {}, 코드 텍스트: {}", language, code);
+    private void setupProcessBuilder(ProcessBuilder processBuilder, String language, String code, String sessionId) throws IOException {
+        // 고유 이름을 가진 임시 디렉토리 생성(동시성 문제 해결용)
+        Path tempDir = Paths.get(System.getProperty("java.io.tmpdir"), sessionId + "_runcode");
+        Files.createDirectories(tempDir);
+        
+        log.info("디렉토리 생성: {}", tempDir);
+
+        Path filePath; // 파일 경로 객체 생성
+
         switch (language.toLowerCase()) {
             case "python":
                 // script.py 파일 생성
-                filePath = Files.createTempFile("script", ".py");
+                filePath = tempDir.resolve("script.py");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
+                processBuilder.command("python", filePath.toString());
 
                 // 인터프리터 실행
                 processBuilder.command("python", filePath.toString());
                 break;
 
             case "javascript":
+                // script.js 파일 생성
+                filePath = tempDir.resolve("script.js");
+                Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
+
                 // 인터프리터 실행
-                processBuilder.command("node", "-e", code);
+                processBuilder.command("node", filePath.toString());
                 break;
             
             case "java":
-                // 임시 디렉터리 생성
-                Path tempDir = Files.createTempDirectory("java_compile");
-
                 // Main.java 파일 생성
                 filePath = tempDir.resolve("Main.java");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
@@ -234,16 +265,16 @@ public class RunCodeService {
 
             case "c":
                 // main.c 파일 생성
-                filePath = Files.createTempFile("main", ".c");
+                filePath = tempDir.resolve("main.c");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
 
                 // 컴파일러 설정
-                ProcessBuilder compileC = new ProcessBuilder("gcc", filePath.toString(), "-o", filePath.getParent().resolve("main").toString());
+                ProcessBuilder compileC = new ProcessBuilder("gcc", filePath.toString(), "-o", tempDir.resolve("main").toString());
                 Process compileCProcess = compileC.start();
                 try {
                     // 컴파일 성공 검사           
                     if (compileCProcess.waitFor() == 0) {
-                        processBuilder.command(filePath.getParent().resolve("main").toString());
+                        processBuilder.command(tempDir.resolve("main").toString());
                     } else {
                         // 컴파일 에러 처리
                         logErrorOutput(compileCProcess);
@@ -257,16 +288,16 @@ public class RunCodeService {
             
             case "c++":
                 // main.cpp 파일 생성
-                filePath = Files.createTempFile("main", ".cpp");
+                filePath = tempDir.resolve("main.cpp");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
 
                 // 컴파일러 설정
-                ProcessBuilder compileCpp = new ProcessBuilder("g++", filePath.toString(), "-o", filePath.getParent().resolve("main").toString());
+                ProcessBuilder compileCpp = new ProcessBuilder("g++", filePath.toString(), "-o", tempDir.resolve("main").toString());
                 Process compileCppProcess = compileCpp.start();
                 try {
                     // 컴파일 성공 검사 
                     if (compileCppProcess.waitFor() == 0) {
-                        processBuilder.command(filePath.getParent().resolve("main").toString());
+                        processBuilder.command(tempDir.resolve("main").toString());
                     } else {
                         // 컴파일 에러 처리
                         logErrorOutput(compileCppProcess);
@@ -286,12 +317,34 @@ public class RunCodeService {
     // 리소스 클리어(프로세스 종료 시)
     private void cleanUp(String sessionId) {
         Process process = sessionProcessMap.remove(sessionId);
-        sessionCodeMap.remove(sessionId);
-        sessionInputCountMap.remove(sessionId);
-        sessionProcessedInputCountMap.remove(sessionId);
-        sessionLanguageMap.remove(sessionId);
         if (process != null) {
             process.destroy();
+            try {
+                process.waitFor();  // 프로세스 종료 대기
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.error("프로세스 종료 대기 중 인터럽트 발생: {}", e.getMessage());
+            }
+        }
+    
+        Path tempDir = Paths.get(System.getProperty("java.io.tmpdir"), sessionId + "_runcode");
+        if (Files.exists(tempDir)) {
+            try {
+                Files.walk(tempDir)
+                    .sorted(Comparator.reverseOrder())
+                    .forEach(path -> {
+                        try {
+                            Files.deleteIfExists(path);  // 파일 및 디렉토리 안전 삭제
+                        } catch (IOException e) {
+                            log.error("파일 또는 디렉토리 삭제 실패: {}", path, e);
+                        }
+                    });
+                log.info("디렉토리 및 모든 파일 삭제 완료: {}", tempDir);
+            } catch (IOException e) {
+                log.error("디렉토리 탐색 및 삭제 중 오류 발생: {}", tempDir, e);
+            }
+        } else {
+            log.warn("삭제 대상 디렉토리가 존재하지 않습니다: {}", tempDir);
         }
     }
 
