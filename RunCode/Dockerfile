@@ -9,13 +9,17 @@ RUN apk add --no-cache \
     py3-pip \
     gcc \
     g++ \
-    python3-dev
+    python3-dev \
+    dos2unix
 
 # 작업 디렉토리 설정
 WORKDIR /app
 
 # 소스 코드 복사
 COPY . /app/
+
+# 라인 엔딩을 Unix 스타일로 변경
+RUN dos2unix ./gradlew
 
 # Gradle wrapper 실행권한 설정
 RUN chmod +x ./gradlew
