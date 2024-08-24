@@ -4,7 +4,8 @@ import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
 import { useRef, useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
 
 
 const extractAndReplaceInputs = (str, replacements) => {
@@ -79,7 +80,7 @@ ${code}
 
 print_collected()
 `;
-
+/*
   useEffect(() => {
     const loadPyodide = async () => {
       const pyodide = await window.loadPyodide();
@@ -87,7 +88,7 @@ print_collected()
     };
     loadPyodide();
   }, []);
-
+*/
   const runPythonCode = async () => {
     if (pyodide) {
       try {
@@ -185,17 +186,149 @@ print_collected()
     setDivValue(divVal);
   }
 
-  const [qtype, setQtype] = useState(3);
-  const [type, setType] = useState('');
+
+  const [res, setRes] = useState();
+  const [data, setData] = useState([]);
+  const [order, setOrder] = useState(0);
+
+  const { chapId } = useParams();
+  const getChapterQuiz =  async (chapterid) =>{
+    const userid = localStorage.getItem('userid');
+
+    const DataCallDto = {
+      'userId': userid,
+      'curriculumId': chapterid
+    };
+
+    try {
+      //이해도 테스트용 3 문제 호출 api
+      const response = await axiosInstance.post('/test/test/create/normal', DataCallDto);
+      setRes(response.data.tests);
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(()=>{
-    if(qtype === 1)
+    getChapterQuiz(chapId);
+
+  }, []);
+
+  useEffect(()=>{
+    if (res) {
+      console.log(res);
+    }
+  }, [res])
+
+  const [type, setType] = useState('');
+  const [qtype, setQtype] = useState('');
+  useEffect(()=>{
+    if(res) {
+      setQtype(res[order].quizType);
+    }
+
+    if(qtype === 'NUM')
       setType('객관식');
-    else if(qtype === 2)
+    else if(qtype === 'WORD')
       setType('주관식');
-    else if(qtype === 3)
+    else if(qtype === 'CODE')
       setType('서술식');
   })
   
+  const navigate = useNavigate();
+  const submitAnswer = async () => {
+    if (answer) {
+      const userid = localStorage.getItem('userid');
+      const TestAnswerCallDto = {
+        'userId': userid,
+        'testId': res[order].testId,
+        'quizId': res[order].quizId,
+        'answer': answer
+      };
+      
+      try {
+        // 문제 타입 객관식
+        /*
+        if (qtype === "NUM") {
+          response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+          // console.log("객관식 정답 요청 " + response.data.passed);
+        }
+        else if (qtype === "WORD") {
+          response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+          // console.log("주관식 정답 요청 " + response.data.passed);
+        }
+        else if (qtype === "CODE") {
+          response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
+          // console.log("서술식 정답 요청 " + response.data.passed);
+        }
+          */
+        const prompt = window.prompt("입력");
+   
+        if(prompt === '1') {
+          if (order === 0) {
+            //입문자 문제 맞출 경우
+            alert("입문자 문제를 맞추셨습니다.");
+            setOrder(1);
+          }
+          else if (order === 1) {
+            alert("초급자 문제를 맞추셨습니다.");
+            setOrder(2);
+          }
+          else if (order === 2) {
+            //중급자 문제 맞출 경우
+            alert("중급자 문제를 맞추셨습니다.");
+            alert("해당 챕터의 이해도 테스트.");
+            postChapterPass(chapId,"HARD");
+            navigate('/mypage/todo');
+          }
+        }
+        else {
+          if (order === 0) {
+            //입문자 문제 틀렸을 경우
+            alert("입문자 문제를 틀리셨습니다.");
+            alert("전반적인 학습을 다시 하세요.");
+            navigate('/mypage/todo');
+          }
+          else if (order === 1) {
+            alert("초급자 문제를 틀리셨습니다.");
+            alert("입문자 난이도로 다음 챕터가 설정되었습니다.");
+            postChapterPass(chapId, "EASY");
+            navigate('/mypage/todo');
+          }
+          else if (order === 2) {
+            alert("중급자 문제를 틀리셨습니다.");
+            alert("초급자 난이도로 다음 챕터가 설정되었습니다.");
+            postChapterPass(chapId, "NORMAL");
+            navigate('/mypage/todo');
+          }
+        }
+  
+          } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
+
+  const postChapterPass =  async (chapterid, level) =>{
+    const userid = localStorage.getItem('userid');
+
+    const CurriculumPassCallDto = {
+      'userId': userid,
+      'curriculumId': chapterid,
+      'levelType': level
+    };
+
+    try {
+      //chapter 이해도 테스트 통과 완료 처리 요청
+      const response = await axiosInstance.post('/curriculum/curriculum/chapter/pass', CurriculumPassCallDto);
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
 
   return (
     <TestSection>
@@ -236,45 +369,40 @@ print_collected()
         </NavSection>
         <ContentSection width={contentWidth}>
           <InstructionSection status={type}>  
-            <Instruction></Instruction>
-            <Buttons>
-              <Before> <img src={Left}></img> </Before>
-              <After> <img src={Right}></img> </After>
-              <GPT onClick={ShowGpt}> GPT </GPT>
-            </Buttons>
+            <Instruction> {res ? <div> {res[order].text} </div> : <div> Loading... </div>} </Instruction>
           </InstructionSection>
-          {qtype !== 3 && (<ChangingSection>
-            {qtype === 1 && (<SelectionArea width={contentWidth}>
+          {type !== '서술식' && (<ChangingSection>
+            {qtype === 'NUM' && (<SelectionArea width={contentWidth}>
               <Selection>
                 <input type="radio" id="first" value="1" checked={answer==="1"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="first"> first </Label>
+                <Label for="first"> {res ? <div> {res[order].q1} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="second" value="2" checked={answer==="2"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="second"> second </Label>
+                <Label for="second"> {res ? <div> {res[order].q2} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="third" value="3" checked={answer==="3"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="third"> third </Label>
+                <Label for="third"> {res ? <div> {res[order].q3} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="fourth" value="4" checked={answer==="4"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="fourth"> fourth </Label>
+                <Label for="fourth"> {res ? <div> {res[order].q4} </div> : <div> Loading... </div>} </Label>
               </Selection>
             </SelectionArea>)}
-            {qtype === 2 && (<WritingArea width={contentWidth} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
-            <Submit_> 제출 </Submit_>
+            {qtype === 'WORD' && (<WritingArea width={contentWidth} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
+            <Submit_ onClick={submitAnswer}> 제출 </Submit_>
           </ChangingSection>)}
-          {qtype === 3 && <TrainSection>
+          {qtype === 'CODE' && <TrainSection>
             <Train height={height} width={contentWidth}>
               <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
               <CodeResultSection>
                 <CodeResult>
                   <p> --- 실행 결과 --- </p>
                   <Buttons_>
-                    <Interpret onClick={runPythonCode}> 실행 </Interpret>
-                    <Save onClick={replaceCode}> 저장 </Save>
-                    <Submit onClick={checkCode}> 제출 </Submit>
+                    <Interpret> 실행 </Interpret>
+                    <Save> 저장 </Save>
+                    <Submit> 제출 </Submit>
                   </Buttons_>
                 </CodeResult>
                 <ResultPre>
@@ -284,21 +412,6 @@ print_collected()
             </Train>
           </TrainSection>}
         </ContentSection>
-        {gptValue && (<ChatbotSection>
-          <Chat height={height}>
-            {dialogs.map(div => div)}
-            <div ref={chat}></div>
-          </Chat>
-          <ChatType>
-            <Type style={divValue === "개념"?borderStyle:{}} onClick={()=>getDivValue("개념")}> #개념 </Type>
-            <Type style={divValue === "코드"?borderStyle:{}} onClick={()=>getDivValue("코드")}> #코드 </Type>
-            <Type style={divValue === "오류"?borderStyle:{}} onClick={()=>getDivValue("오류")}> #오류 </Type>
-          </ChatType>
-          <ChatInput>
-            <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
-            <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>          
-          </ChatInput>
-        </ChatbotSection>)}
       </Content>
     </TestSection>
   );

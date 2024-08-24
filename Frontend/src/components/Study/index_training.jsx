@@ -4,8 +4,8 @@ import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
 import { useRef, useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-
+import { NavLink, useParams, useNavigate ,redirect } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
 
 const extractAndReplaceInputs = (str, replacements) => {
   // 정규 표현식으로 모든 input() 내의 문자열을 추출
@@ -77,7 +77,7 @@ ${code}
 
 print_collected()
 `;
-
+/*
   useEffect(() => {
     const loadPyodide = async () => {
       const pyodide = await window.loadPyodide();
@@ -85,7 +85,7 @@ print_collected()
     };
     loadPyodide();
   }, []);
-
+*/
   const runPythonCode = async () => {
     if (pyodide) {
       try {
@@ -184,6 +184,88 @@ print_collected()
   }
 
 
+  const { subChapId, text } = useParams();
+
+  useEffect(()=>{
+    getStudyText(subChapId, text);
+    console.log(subChapId);
+    console.log(text);
+  }, []);
+
+  const navigate = useNavigate();
+  const redirect = useNavigate();
+  const goToNext = () => {
+    
+    // quiz 에서 다음 누르면 해당 서브챕터 pass 요청
+    if(text==='QUIZ'){
+      const userConfirm = window.confirm("해당 서브 챕터 학습을 마치시겠습니까?");
+      if (userConfirm) {
+        postSubchapterPass(subChapId);
+        navigate('/mypage/lecture');
+      }
+    }
+    else if (text === 'CODE'){  // code 에서 다음 누르면 quiz 학습으로
+      const userConfirm = window.confirm("심화 코드 학습으로 넘어가시겠습니까?");
+      if (userConfirm) {
+        window.location.replace(`/study/training/${subChapId}/QUIZ`);
+        //navigate(`/study/training/${subChapId}/QUIZ`, {replace : true});
+      }
+    }
+  }
+
+  const goBack = ()=> {
+    //이전페이지로 이동
+    // quiz 에서 다음 누르면 해당 서브챕터 pass 요청
+    if(text==='QUIZ'){
+      window.location.replace(`/study/training/${subChapId}/CODE`);
+    }
+    else if (text === 'CODE'){  // code 에서 다음 누르면 quiz 학습으로
+      navigate(-1);
+    }
+  }
+  const [training, setTraining] = useState();
+
+  useEffect(()=>{
+  }, [training]);
+
+  // DEF 이론 , CODE 예시 코드, QUIZ 코드를 이용한 예시 문제
+  const getStudyText = async (subChapterid, textType) => {
+    try {
+      //파라미터에서 파싱하도록 수정
+      const userId = localStorage.getItem('userid');
+  
+      const CurriculumTextCallDto = {
+        'userId': userId,
+        'curriculumId': subChapterid,
+        'textType': textType
+      };
+        
+      const res = await axiosInstance.post('/curriculum/curriculum/text', CurriculumTextCallDto);
+      console.log("학습데이터호출");
+      setTraining(res.data.text);
+    }
+    catch (err){
+      console.error(err); 
+    }
+  }
+
+  const postSubchapterPass = async (subChapterid) => {
+    try {
+      //파라미터에서 파싱하도록 수정
+      const userId = localStorage.getItem('userid');
+
+      const CurriculumPassCallDto = {
+        'userId': userId,
+        'curriculumId': subChapterid
+      };
+      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass',CurriculumPassCallDto);
+      console.log(res);
+    }
+    catch (err){
+      console.error(err); 
+    }
+  }
+
 
   return (
     <TestSection>
@@ -223,10 +305,10 @@ print_collected()
           </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
-          <Instruction></Instruction>
+          <Instruction> {training} </Instruction>
           <Buttons>
-            <Before> <img src={Left}></img> </Before>
-            <After> <img src={Right}></img> </After>
+            <Before onClick={goBack}> <img src={Left}></img> </Before>
+            <After onClick={goToNext}> <img src={Right}></img> </After>
             <GPT onClick={ShowGpt}> GPT </GPT>
           </Buttons>
           <Train height={height} width={contentWidth}>
@@ -356,6 +438,7 @@ const Instruction = styled.div`
   height : 3.75rem;
   margin : 1rem 1rem 0.5rem;
   background : rgba(0, 0, 0, 0.25);
+  overflow : scroll;
 `
 
 const Buttons = styled.div`
