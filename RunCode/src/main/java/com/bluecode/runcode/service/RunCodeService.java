@@ -25,11 +25,11 @@ import com.bluecode.runcode.model.UserCodeInfo;
 public class RunCodeService {
 
     // 세션 ID와 해당 세션의 프로세스를 매핑
-    private Map<String, Process> sessionProcessMap = new ConcurrentHashMap<>();
-    private Map<String, String> sessionCodeMap = new ConcurrentHashMap<>();
-    private Map<String, Integer> sessionInputCountMap = new ConcurrentHashMap<>();
-    private Map<String, Integer> sessionProcessedInputCountMap = new ConcurrentHashMap<>();
-    private Map<String, String> sessionLanguageMap = new ConcurrentHashMap<>();
+    private final Map<String, Process> sessionProcessMap = new ConcurrentHashMap<>();
+    private final Map<String, String> sessionCodeMap = new ConcurrentHashMap<>();
+    private final Map<String, Integer> sessionInputCountMap = new ConcurrentHashMap<>();
+    private final Map<String, Integer> sessionProcessedInputCountMap = new ConcurrentHashMap<>();
+    private final Map<String, String> sessionLanguageMap = new ConcurrentHashMap<>();
     private static final Logger log = LoggerFactory.getLogger(RunCodeService.class);
 
     public RunCodeInfo executeCode(WebSocketSession session, UserCodeInfo userCodeInfo) {
@@ -62,12 +62,10 @@ public class RunCodeService {
     private int countInputFunctions(String language, String code) {
         int count = 0;
         switch (language.toLowerCase()) {
-            case "python":
+            case "python" -> {
                 count += countOccurrences(code, "input(");
-                count += countOccurrences(code, "sys.stdin.read");
-                count += countOccurrences(code, "sys.stdin.readline");
-                break;
-            case "java":
+            }
+            case "java" -> {
                 count += countOccurrences(code, "nextLine()");
                 count += countOccurrences(code, "nextInt()");
                 count += countOccurrences(code, "nextDouble()");
@@ -77,9 +75,8 @@ public class RunCodeService {
                 count += countOccurrences(code, "nextShort()");
                 count += countOccurrences(code, "nextBoolean()");
                 count += countOccurrences(code, "readLine()");
-                break;
-            case "c":
-            case "c++":
+            }
+            case "c", "c++" -> {
                 count += countOccurrences(code, "scanf(");
                 count += countOccurrences(code, "scanf_s(");
                 count += countOccurrences(code, "cin >>");
@@ -88,12 +85,9 @@ public class RunCodeService {
                 count += countOccurrences(code, "getchar()");
                 count += countOccurrences(code, "getch()");
                 count += countOccurrences(code, "getc()");
-                break;
-            case "javascript":
-                count += countOccurrences(code, "readline.createInterface()");
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported language: " + language);
+            }
+            case "javascript" -> count += countOccurrences(code, "readline.createInterface()");
+            default -> throw new IllegalArgumentException("Unsupported language: " + language);
         }
         return count;
     }
@@ -220,7 +214,7 @@ public class RunCodeService {
         Path filePath; // 파일 경로 객체 생성
 
         switch (language.toLowerCase()) {
-            case "python":
+            case "python" -> {
                 // script.py 파일 생성
                 filePath = tempDir.resolve("script.py");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
@@ -228,18 +222,18 @@ public class RunCodeService {
 
                 // 인터프리터 실행
                 processBuilder.command("python", filePath.toString());
-                break;
+            }
 
-            case "javascript":
+            case "javascript" -> {
                 // script.js 파일 생성
                 filePath = tempDir.resolve("script.js");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
 
                 // 인터프리터 실행
                 processBuilder.command("node", filePath.toString());
-                break;
+            }
             
-            case "java":
+            case "java" -> {
                 // Main.java 파일 생성
                 filePath = tempDir.resolve("Main.java");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
@@ -261,9 +255,9 @@ public class RunCodeService {
                     Thread.currentThread().interrupt(); // 스레드의 인터럽트 상태를 재설정
                     throw new IOException("컴파일 중 인터럽트 발생", e);
                 }
-                break;
+            }
 
-            case "c":
+            case "c" -> {
                 // main.c 파일 생성
                 filePath = tempDir.resolve("main.c");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
@@ -284,9 +278,9 @@ public class RunCodeService {
                     Thread.currentThread().interrupt(); // 스레드의 인터럽트 상태를 재설정
                     throw new IOException("C 컴파일 중 인터럽트 발생", e);
                 }
-                break;
+            }
             
-            case "c++":
+            case "c++" -> {
                 // main.cpp 파일 생성
                 filePath = tempDir.resolve("main.cpp");
                 Files.write(filePath, code.getBytes(StandardCharsets.UTF_8));
@@ -307,10 +301,9 @@ public class RunCodeService {
                     Thread.currentThread().interrupt(); // 스레드의 인터럽트 상태를 재설정
                     throw new IOException("C++ 컴파일 중 인터럽트 발생", e);
                 }
-                break;
+            }
             
-            default:
-                throw new IllegalArgumentException("지원하지 않는 언어: " + language);
+            default -> throw new IllegalArgumentException("지원하지 않는 언어: " + language);
         }
     }
 
