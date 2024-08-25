@@ -21,9 +21,9 @@ function App() {
       <Route path="/test" element={<Test />}></Route>      
       <Route path="/test_ex" element={<Test_ex />}></Route>
       <Route path="/tmp" element={<Tmp />}></Route>
-      <Route path="/study_theory" element={<Study_theory />}></Route>
-      <Route path="/study_training" element={<Study_training />}></Route>
-      <Route path="/study_comprehension" element={<Study_comprehension />}></Route>
+      <Route path="/study/theory/:subChapId/:text" element={<Study_theory />}></Route>
+      <Route path="/study/training/:subChapId/:text" element={<Study_training />}></Route>
+      <Route path="/study/comprehension/:chapId" element={<Study_comprehension />}></Route>
       <Route path="/mypage/todo" element={<Mypage_todo />}></Route>
       <Route path="/mypage/lecture" element={<Mypage_lecture />}></Route>
       <Route path="/mypage/question" element={<Mypage_question />}></Route>

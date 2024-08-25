@@ -47,6 +47,7 @@ public class UserService implements UserDetailsService {
         responseDto.setUsername(user.get().getUsername());
         responseDto.setInitTest(user.get().isInitTest());
         responseDto.setId(user.get().getId());
+        responseDto.setRegisterDateTime(user.get().getRegisterDateTime());
         return responseDto;
     }
 

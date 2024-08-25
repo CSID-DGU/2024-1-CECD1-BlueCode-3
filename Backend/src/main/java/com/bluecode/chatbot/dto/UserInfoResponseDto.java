@@ -3,6 +3,8 @@ package com.bluecode.chatbot.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class UserInfoResponseDto {
@@ -14,4 +16,5 @@ public class UserInfoResponseDto {
     String email;
     Long userId;
     String id;
+    private LocalDateTime registerDateTime;
 }

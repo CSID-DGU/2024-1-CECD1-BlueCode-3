@@ -19,3 +19,4 @@ const scrollToBottom = () => {
 useEffect(()=>{
   scrollToBottom();
 }, [dialogs]);
+}
