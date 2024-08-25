@@ -2,7 +2,11 @@ import styled from 'styled-components';
 import BCODE from '../../logo_w.png'
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../axiosInstance';
-import useChapterData from '../../useChapterData';
+import ReactMarkdown from "react-markdown";
+import { useNavigate } from 'react-router-dom';
+
+//import rehypeHighlight from "rehype-highlight";
+//import "highlight.js/styles/a11y-dark.css";
 
 function Study_theory() {
   const [answer, setAnswer] = useState('');
@@ -71,10 +75,29 @@ function Study_theory() {
         setCurriculumIds(testableCurriculumIds);
       }
     };
+    
 
+    const createCurriculumTable = async () => {  
+      try {
+        const rootid = localStorage.getItem('rootid');
+        const userid = localStorage.getItem('userid');
+  
+        const datacalldto = {
+          'userId' : userid,
+          'curriculumId' : rootid,
+        };
+  
+        const res = await axiosInstance.post('/curriculum/curriculum/create', datacalldto);
+      }
+      catch (err){
+        console.error(err); 
+      }
+    }
+  
+    createCurriculumTable();
     getCurriculumIdData();
   }, []);
-
+  
   useEffect(() => {
     // curriculumIds 상태가 변경될 때마다 호출
     console.log('Updated curriculumIds:', curriculumIds);
@@ -99,7 +122,7 @@ function Study_theory() {
 const getChapterQuiz =  async () =>{
   const userid = localStorage.getItem('userid');
   if(curriculumIds[currentcurriculumId]!=null){
-    console.log("불러올려고 하는 curri id "+ curriculumIds[currentcurriculumId])
+    console.log("불러올려고 하는 curri id "+ curriculumIds[currentcurriculumId]);
 
     const DataCallDto = {
       'userId': userid,
@@ -109,9 +132,8 @@ const getChapterQuiz =  async () =>{
     try {
       //초기 테스트용 4 문제 호출 api
       const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
-      
-      setData(response.data.tests); //4문제를 Data에 저장
-      setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
+      setData(response.data.tests); //4 문제를 Data에 저장
+      console.log(response);
     } catch (err) {
       console.error(err);
     }
@@ -121,6 +143,12 @@ const getChapterQuiz =  async () =>{
 }
 
 
+
+
+
+
+
+const navigate = useNavigate();
 const submitAnswer = async () => {
   var response;
   if (answer) {
@@ -134,6 +162,7 @@ const submitAnswer = async () => {
     
     try {
       // 문제 타입 객관식
+      /*
       if (qtype === "NUM") {
         response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
         // console.log("객관식 정답 요청 " + response.data.passed);
@@ -146,30 +175,53 @@ const submitAnswer = async () => {
         response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
         // console.log("서술식 정답 요청 " + response.data.passed);
       }
-      
+        */
+      const prompt = window.prompt("입력");
+      //입력 예시 -> '1'이면 문제맞춤, '0'이면 틀림
+      /* 첫번째 중급자 문제를 맞출 경우 -> (해당 챕터 중급자) , 다음 챕터 진입 */
+      /* 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 맞출 경우
+                                   -> 두번째 중급자 문제 제시, 맞출 경우
+                                   -> (해당 챕터 중급자) , 다음 챕터 진입 */
+      /* 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 맞출 경우
+                                   -> 두번째 중급자 문제 제시, 틀릴 경우 선택지 제시
+                                   -> 테스트 계속 선택 시 (해당 챕터 중급자), 다음 챕터 진입 
+                                   -> 테스트 중지 선택 시 (해당 챕터 초급자) */
+      /* 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 맞출 경우
+                                   -> 두번째 중급자 문제 제시, 틀릴 경우 선택지 제시
+                                   -> 테스트 중지 선택 시 (해당 챕터 초급자) */
+      /* 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 틀리고
+                                   -> 입문자 문제를 맞추거나 틀릴 경우 (해당 챕터 입문자) */
+      // response.data.passed <- 나중에 사용
 
-      // 첫번째 중급자 문제를 맞출 경우 -> 다음 챕터
-      // 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 맞출 경우 -> 두번째 중급자 문제로
-      // 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 틀릴 경우
-      // 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 틀리고 -> 입문자 문제를 맞추거나 틀릴 경우
-      if(response.data.passed) {
+      if(prompt === '1') {
         if (order === 0) {
           alert("중급자 문제를 맞추셨습니다.");
           alert("다음 챕터의 문제로 넘어갑니다.");
+          setOrder(0);
+          setQnumber(qnumber + 1);
+          updateInitPass("HARD"); 
+          setcurrentcurriculumId(currentcurriculumId + 1); // curriculuid인덱스 1 증가
           getChapterQuiz();
         }
         else if (order === 1) {
           alert("초급자 문제를 맞추셨습니다.");
-          alert("두번째 중급자 문제를 제시하겠습니다.");
+          alert("두번째 중급자 문제를 제시합니다.");
           setOrder(3);
         }
         else if (order === 2) {
-          alert("입문자 문제를 맞추셨습니다. 당신은 입문자입니다.");
+          alert("입문자 문제를 맞추셨습니다.");
+          alert("학습 시작 챕터가 설정되었습니다.");
           setOrder(0);
+          updateInitComplete("EASY");
+          navigate('/mypage/todo');
         }
         else if (order === 3) {
           alert("두번째 중급자 문제를 맞추셨습니다.");
           alert("다음 챕터의 문제로 넘어갑니다.");
+          setOrder(0);
+          setQnumber(qnumber + 1);
+          updateInitPass("HARD");
+          setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
           getChapterQuiz();
         }
       }
@@ -186,12 +238,25 @@ const submitAnswer = async () => {
         }
         else if (order === 2) {
           alert("입문자 문제를 틀리셨습니다.");
-          alert("시작 챕터가 설정되었습니다.");
+          alert("학습 시작 챕터가 설정되었습니다.");
           setOrder(0);
+          updateInitComplete("EASY");
+          navigate('/mypage/todo');
         }
         else if (order === 3) {
           alert("두 번째 중급자 문제를 틀리셨습니다.");
-          alert("다음 챕터의 문제로 넘어가시겠습니까?");
+          const userConfirm = window.confirm("다음 챕터의 문제로 넘어가시겠습니까?");
+          if (userConfirm) {
+            alert("다음 챕터의 문제로 넘어갑니다.");
+            setQnumber(qnumber + 1);
+            updateInitPass("HARD");
+            setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
+            getChapterQuiz();
+          } else {
+            alert("시작 챕터가 설정되었습니다.");
+            updateInitComplete("NORMAL");
+            navigate('/mypage/todo');
+          }
           setOrder(0);
         }
       }
@@ -202,7 +267,44 @@ const submitAnswer = async () => {
   }
 }
 
+// chapter 초기 테스트 내 챕터 통과 완료 처리 요청
+const updateInitPass = async (levelType) => {
+  const userId = localStorage.getItem('userid');
+  const initChapterPassRequestDto  = {
+    'userId': userId,
+    'curriculumId': curriculumIds[currentcurriculumId],
+    'level': levelType
+  };
+  
+  try {
+    const res = await axiosInstance.post('/curriculum/curriculum/init/pass', initChapterPassRequestDto);
+    console.log("curi id "+ curriculumIds[currentcurriculumId]+"에 레벨타입 "+ levelType+ "으로 패스 요청");
+  } catch (err) {
+    console.error(err);
+  }
+}
 
+const updateInitComplete = async (levelType) => {
+  const userId = localStorage.getItem('userid');
+  const initChapterPassRequestDto  = {
+    'userId': userId,
+    'curriculumId': curriculumIds[currentcurriculumId],
+    'level': levelType
+  };
+
+  try {
+    const res = await axiosInstance.post('/curriculum/curriculum/init/complete', initChapterPassRequestDto);
+    await axiosInstance.get(`/test/test/complete/init/${userId}`);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+
+
+
+  const [qnumber, setQnumber] = useState(1);
+  const [qlevel, setQlevel] = useState();
   // 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
   const [qtype, setQtype] = useState('');
   const [type, setType] = useState('');
@@ -213,6 +315,14 @@ const submitAnswer = async () => {
       setQtype(data[order].quizType);
     }
 
+    if (order === 0 || order === 3) {
+      setQlevel("중급자");
+    } else if (order === 1) {
+      setQlevel("초급자");
+    } else {
+      setQlevel("입문자");
+    }
+
     if(qtype === "NUM")
       setType('객관식');
     else if(qtype === "WORD")
@@ -221,6 +331,8 @@ const submitAnswer = async () => {
       setType('서술식');
   })
 
+//{data.length > 0 ? <div> <ReactMarkdown  rehypePlugins={[rehypeHighlight]}> {data[order].text} </ReactMarkdown> </div> : <div> Loading... </div>}
+//{data.length >= 0 ? <div> <ReactMarkdown> {markdown} </ReactMarkdown> </div> : <div> Loading... </div>}
   return (
     
     <TestSection>
@@ -232,11 +344,11 @@ const submitAnswer = async () => {
       <Content>
         <NavSection height={height}>
           <Dynamic>
-            <Nav> 1번 문제 </Nav>
+            <Nav> {qnumber}번 {qlevel} 문제 </Nav>
             <ProgressImg>
               <svg viewBox="0 0 200 200">
                 <Circle></Circle>
-                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * current / 10} ${2 * Math.PI * 75 * (10 - current) / 10}`}
+                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * qnumber / 9} ${2 * Math.PI * 75 * (9 - qnumber) / 9}`}
                            transform={`rotate(-90, 100, 100)`}>
                 </CircleCur>
               </svg>
@@ -254,10 +366,11 @@ const submitAnswer = async () => {
             </ProgressImg>
           </Dynamic>
         </NavSection>
-        <ContentSection width={contentWidth}>
+        <ContentSection width={width}>
           <QuestionArea>
-            <Question> {data.length > 0 ? <div>{data[order].text}</div> : <div>Loading...</div>} </Question>
-            <View> 보기 </View>
+            <Question>
+            {data.length > 0 ? <div>  {data[order].text} </div> : <div> Loading... </div>}
+            </Question>
           </QuestionArea>
           <AnswerArea>
             <Answer> {type} 답안 </Answer>

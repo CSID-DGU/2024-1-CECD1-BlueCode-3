@@ -4,7 +4,8 @@ import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
 import React, { useRef, useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
 
 
 function Study_theory() {
@@ -111,7 +112,64 @@ function Study_theory() {
     setDivValue(divVal);
   }
 
+  const { subChapId, text } = useParams();
 
+  useEffect(()=>{
+    getStudyText(subChapId, text);
+  }, []);
+
+  
+  const [theory, setTheory] = useState('');
+
+  // DEF 이론 , CODE 예시 코드, QUIZ 코드를 이용한 예시 문제
+  const getStudyText = async (subChapterid, textType) => {
+    try {
+      //파라미터에서 파싱하도록 수정
+      const userId = localStorage.getItem('userid');
+
+      const CurriculumTextCallDto = {
+        'userId': userId,
+        'curriculumId': subChapterid,
+        'textType': textType
+      };
+      
+      const res = await axiosInstance.post('/curriculum/curriculum/text', CurriculumTextCallDto);
+      setTheory(res.data.text);
+    }
+    catch (err){
+      console.error(err); 
+    }
+  }
+
+  const navigate = useNavigate();
+  const goToTraining = () => {
+    const userConfirm = window.confirm("예제 코드 학습으로 넘어가시겠습니까?");
+    if (userConfirm) {
+      navigate(`/study/training/${subChapId}/CODE`);
+    }
+  }
+
+  /*
+  const postSubchapterPass = async (subChapterid) => {
+    try {
+      //파라미터에서 파싱하도록 수정
+      const userId = localStorage.getItem('userid');
+
+      const CurriculumPassCallDto = {
+        'userId': userId,
+        'curriculumId': subChapterid
+      };
+      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass',CurriculumPassCallDto);
+      console.log(res);
+    }
+    catch (err){
+      console.error(err); 
+    }
+  }
+    */
+
+  // 한서브챕터를 마이페이지-강의정보 : def<->code<->quiz  ->챕터패스처리  -> 마이페이지 - 강의정보
+  //  
 
   return (
     <TestSection>
@@ -151,10 +209,10 @@ function Study_theory() {
         </Dynamic>
       </NavSection>
       <ContentSection width={contentWidth}>
-        <Instruction height={height}></Instruction>
+        <Instruction height={height}> {theory} </Instruction>
         <Buttons>
           <Before> <img src={Left}></img> </Before>
-          <After> <img src={Right}></img> </After>
+          <After onClick={goToTraining}> <img src={Right}></img> </After>
           <GPT onClick={ShowGpt}> GPT </GPT>
         </Buttons>
       </ContentSection>

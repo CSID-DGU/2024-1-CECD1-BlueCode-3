@@ -36,22 +36,6 @@ function Study_theory() {
   const [challenge, setChallenge] = useState([]);
 
   useEffect(() => {
-    // 서버에서 사용자 정보를 가져오는 함수
-    const getUserInfo = async () => {
-     try {
-      const userid = localStorage.getItem('userid');
-      const UserIdDto = {
-        'userId' : userid
-      };
-      const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo',UserIdDto);
-      setTestValid(res.data.initTest);
-      setPoint(res.data.exp + 50);
-     }
-     catch (err){
-      console.error(err); 
-     }
-    };
-
     const getMissionInfo = async () => {
       try {
        const userid = localStorage.getItem('userid');
@@ -83,10 +67,34 @@ function Study_theory() {
       }
     }
 
-    getChapters(); // 챕터 데이터를 불러오는 함수
+    
     getUserInfo(); // 데이터를 불러오는 함수 호출
+    getChapters(); // 챕터 데이터를 불러오는 함수
     getMissionInfo();
   }, []);
+
+// 서버에서 사용자 정보를 가져오는 함수
+const getUserInfo = async () => {
+  try {
+   const userid = localStorage.getItem('userid');
+   const UserIdDto = {
+     'userId' : userid
+   };
+   const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo', UserIdDto);
+   setTestValid(res.data.initTest);
+   setPoint(res.data.exp);
+  }
+  catch (err){
+   console.error(err); 
+  }
+ };
+
+  useEffect(()=>{
+    getUserInfo();
+    if (testValid) {
+      console.log(testValid);
+    }
+  }, [testValid]);
 
   const navigate = useNavigate();
   const enterExam = () => {

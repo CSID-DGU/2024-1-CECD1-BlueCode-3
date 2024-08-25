@@ -134,22 +134,23 @@ function Study_theory() {
   useEffect(() => {
     // 서버에서 사용자 정보를 가져오는 함수
     const getUserInfo = async () => {
-     try {
-      const userid = localStorage.getItem('userid');
-      const UserIdDto = {
-        'userId' : userid
-      };
-      const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo',UserIdDto);
-      
-      setId(res.data.id);
-      setEmail(res.data.email);
-      setBirthday(setFormat(res.data.birth));
-      setName(res.data.username);
-      setSignInDate("11111111");
-     }
-     catch (err){
-      console.error(err); 
-     }
+      try {
+        const userid = localStorage.getItem('userid');
+        const UserIdDto = {
+          'userId' : userid
+        };
+
+        const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo',UserIdDto);
+        setId(res.data.id);
+        setEmail(res.data.email);
+        setBirthday(setFormat(res.data.birth));
+        setName(res.data.username);
+        const rdate = res.data.registerDateTime;
+        setSignInDate(rdate.substr(0, 4) + "년 " + rdate.substr(5, 2) + "월 " + rdate.substr(8, 2) + "일");
+      }
+      catch (err){
+        console.error(err); 
+      }
     };
     
     getUserInfo(); // 데이터를 불러오는 함수 호출
@@ -209,7 +210,7 @@ function Study_theory() {
             </SubInfo>
             <SubInfo>
               <Element> ㅇ 회원가입 일자 </Element>
-              <SubElement> 구체적인 회원가입 일자 </SubElement>
+              <SubElement> {signInDate} </SubElement>
             </SubInfo>
           </PrivateInfo>
           <ChangingInfo>
