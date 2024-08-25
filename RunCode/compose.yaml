@@ -1,6 +1,0 @@
-services:
-  app:
-    build:
-      context: .  # Dockerfile이 위치한 경로
-    ports:
-      - "8082:8080"  # 포트 매핑
