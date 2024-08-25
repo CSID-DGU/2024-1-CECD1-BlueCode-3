@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -31,13 +32,17 @@ public class RunCodeService {
     private final Map<String, Integer> sessionProcessedInputCountMap = new ConcurrentHashMap<>();
     private final Map<String, String> sessionLanguageMap = new ConcurrentHashMap<>();
     private static final Logger log = LoggerFactory.getLogger(RunCodeService.class);
+    
+    @Autowired
+    private CodeAnalysisService codeAnalysisService;
 
-    public RunCodeInfo executeCode(WebSocketSession session, UserCodeInfo userCodeInfo) {
+    public RunCodeInfo executeCode(WebSocketSession session, UserCodeInfo userCodeInfo) throws IOException, InterruptedException {
         String language = userCodeInfo.getSelectedLang();
         String code = userCodeInfo.getCodeText();
         String sessionId = session.getId();
     
-        int inputCount = countInputFunctions(language, code); // 입력 함수의 개수를 계산하여 저장
+        int inputCount = codeAnalysisService.analyzePythonCode(code); // 입력 함수의 개수를 계산하여 저장
+        log.info("입력함수 개수: {}", inputCount);
         sessionCodeMap.put(sessionId, code);  // 코드를 세션에 저장
         sessionLanguageMap.put(sessionId, language);  // 언어 정보를 세션에 저장
         sessionInputCountMap.put(sessionId, inputCount);
