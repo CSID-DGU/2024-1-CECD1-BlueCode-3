@@ -21,7 +21,7 @@ def session_scope():
         session.close()
 
 @code_blueprint.route('/code/run_code', methods=['POST'])
-def run_code():
+def run_user_code():
     data = request.json
     user_id = data['user_id']
     code = data['code']
@@ -33,6 +33,18 @@ def run_code():
         if not quiz_cases:
             return jsonify({'error': 'Quiz cases not found'}), 404
 
-        service = CodeService(user_id, quiz_id)
-        result = service.execute_code(language, code, quiz_cases)
+        service = CodeService(user_id=user_id, quiz_id=quiz_id, input=None)
+        result = service.run_code(language=language, code=code, quiz_cases=quiz_cases)
         return jsonify(result), 200
+
+@code_blueprint.route('/code/execute_code', methods=['POST'])
+def execute_user_code():
+    data = request.json
+    user_id = data['user_id']
+    code = data['code']
+    language = data['language']
+    input = data['input']
+    
+    service = CodeService(user_id=user_id, quiz_id=None, input=input)
+    result = service.execute_code(language=language, code=code, input=input)
+    return jsonify(result), 200
