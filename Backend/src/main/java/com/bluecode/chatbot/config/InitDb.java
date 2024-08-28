@@ -733,7 +733,7 @@ public class InitDb {
 
             // 챕터 4
             quizListCode.add(Quiz.createQuiz(chapter.get(3), QuizType.CODE,
-                    "점수에 따른 학점 계산기\n\n사용자가 입력한 점수에 따라 학점을 출력하는 프로그램을 작성하세요. 점수는 0에서 100 사이의 정수로 입력됩니다. 다음 규칙에 따라 학점을 출력하세요.\n\n1. 90점 이상: A\n2. 80점 이상 90점 미만: B\n3. 70점 이상 80점 미만: C\n4. 60점 이상 70점 미만: D\n5. 60점 미만: F\n6. 또한, 점수가 0 미만이거나 100을 초과하면 \"잘못된 점수입니다.\"를 출력\n\n입력 예제 1:\n```\n점수를 입력하세요: 85\n```\n\n출력 예제 1:\n```\nB\n```\n\n입력 예제 2:\n```\n점수를 입력하세요: 105\n```\n\n출력 예제 2:\n```\n잘못된 점수입니다.\n```",
+                    "점수에 따른 학점 계산기\n\n사용자가 입력한 점수에 따라 학점을 출력하는 프로그램을 작성하세요. 점수는 0에서 100 사이의 정수로 입력됩니다. 다음 규칙에 따라 학점을 출력하세요.\n\n1. 90점 이상: A\n2. 80점 이상 90점 미만: B\n3. 70점 이상 80점 미만: C\n4. 60점 이상 70점 미만: D\n5. 60점 미만: F\n6. 또한, 점수가 0 미만이거나 100을 초과하면 \"잘못된 점수입니다.\"를 출력\n\n입력 예제 1:\n```\n85\n```\n\n출력 예제 1:\n```\nB\n```\n\n입력 예제 2:\n```\n105\n```\n\n출력 예제 2:\n```\n잘못된 점수입니다.\n```",
                     null, null, null, null, null, QuizLevel.HARD,0));
             quizListCode.add(Quiz.createQuiz(chapter.get(3), QuizType.CODE,
                     "세 수 중 가장 큰 수 찾기\n\n사용자로부터 세 개의 정수를 입력받아, 이 중 가장 큰 수를 출력하는 프로그램을 작성하세요.\n\n입력 예제 1:\n```\n입력된 세 정수: 10 20 15\n```\n\n출력 예제 1:\n```\n가장 큰 수: 20\n```",
@@ -749,7 +749,7 @@ public class InitDb {
 
             // 챕터 6
             quizListCode.add(Quiz.createQuiz(chapter.get(5), QuizType.CODE,
-                    "문자열 암호화/복호화 함수 만들기\n\n사용자로부터 문자열과 암호화 키를 입력받아, 각 문자를 키만큼 오른쪽으로 이동시켜 암호화하고, 다시 복호화하는 프로그램을 작성하세요.\n\n1. 암호화: 각 문자의 아스키 코드 값에 키 값을 더하고, 255를 초과하면 255를 뺀 나머지 값으로 변환합니다.\n2. 복호화: 암호화된 문자의 아스키 코드 값에서 키 값을 빼고, 0 미만이면 255를 더한 값으로 변환합니다.\n3. 영문 대소문자와 공백만 처리합니다.\n\n입력:\n- 문자열: 암호화할 문자열\n- 암호화 키: 정수 (1 이상)\n\n출력:\n- 암호화된 문자열\n- 복호화된 문자열\n\n입력 예제 1:\n```\n암호화할 문자열을 입력하세요: Hello, World!\n암호화 키를 입력하세요: 3\n```\n\n출력 예제 1:\n```\n암호화된 문자열: Khoor, Zruog!\n복호화된 문자열: Hello, World!\n```\n\n힌트:\n- ord() 함수를 사용하여 문자를 아스키 코드 값으로 변환합니다.\n- chr() 함수를 사용하여 아스키 코드 값을 문자로 변환합니다.\n- for 문을 사용하여 문자열의 각 문자를 순회하며 암호화/복호화합니다.",
+                    "문자열 암호화/복호화 함수 만들기\n\n사용자로부터 문자열과 암호화 키를 입력받아, 각 문자를 키만큼 오른쪽으로 이동시켜 암호화하고, 다시 복호화하는 프로그램을 작성하세요.\n\n1. 암호화: 각 문자의 아스키 코드 값에 키 값을 더하고, 255를 초과하면 255를 뺀 나머지 값으로 변환합니다.\n2. 복호화: 암호화된 문자의 아스키 코드 값에서 키 값을 빼고, 0 미만이면 255를 더한 값으로 변환합니다.\n3. 영문 대소문자와 공백만 처리합니다.\n\n입력:\n- 문자열: 암호화할 문자열\n- 암호화 키: 정수 (1 이상)\n\n출력:\n- 암호화된 문자열\n- 복호화된 문자열\n\n입력 예제 1:\n```\nHello, World!\n3\n```\n\n출력 예제 1:\n```\n암호화된 문자열: Khoor, Zruog!\n복호화된 문자열: Hello, World!\n```\n\n힌트:\n- ord() 함수를 사용하여 문자를 아스키 코드 값으로 변환합니다.\n- chr() 함수를 사용하여 아스키 코드 값을 문자로 변환합니다.\n- for 문을 사용하여 문자열의 각 문자를 순회하며 암호화/복호화합니다.",
                     null, null, null, null, null, QuizLevel.HARD,0));
             quizListCode.add(Quiz.createQuiz(chapter.get(5), QuizType.CODE,
                     "문자열 조작 함수 만들기\n\n사용자가 입력한 문자열에서 가장 자주 등장하는 문자와 그 빈도를 출력하는 함수를 작성하시오. 이때, 공백은 무시하고, 대소문자는 구분하지 않습니다.\n\n입력:\n- 하나의 문자열을 입력받습니다.\n\n출력:\n- 가장 자주 등장하는 문자와 그 빈도를 출력합니다.\n\n제한 사항:\n- 함수 내에서 문자열의 모든 문자에 대해 빈도를 계산할 것.\n- 가장 자주 등장하는 문자가 여러 개일 경우, 알파벳 순서로 가장 앞에 있는 문자를 출력할 것.\n\n입력 예제 1:\n```\nHello World\n```\n\n출력 예제 1:\n```\n가장 자주 등장하는 문자: l\n빈도: 3\n```\n\n입력 예제 2:\n```\nThis is a Test\n```\n\n출력 예제 2:\n```\n가장 자주 등장하는 문자: s\n빈도: 3\n```",
@@ -757,15 +757,15 @@ public class InitDb {
 
             // 챕터 7
             quizListCode.add(Quiz.createQuiz(chapter.get(6), QuizType.CODE,
-                    "큐와 스택을 이용한 문자열 처리\n\n입력된 문자열에서 중복된 문자를 제거한 후, 남은 문자를 큐와 스택에 각각 넣고, 큐와 스택의 최종 상태를 반환하는 함수를 작성하시오. 큐는 처음부터 끝까지, 스택은 끝부터 처음까지 순서대로 문자를 넣습니다.\n\n입력:\n- 하나의 문자열 s를 입력 (1 ≤ 문자열 길이 ≤ 100)\n\n출력:\n- 중복된 문자를 제거한 후, 큐와 스택의 최종 상태를 리스트로 반환\n\n입력 예제 1:\n```\ns = \"abacabad\"\n```\n\n출력 예제 1:\n```\n큐: [\'a\', \'b\', \'c\', \'d\']\n스택: [\'d\', \'c\', \'b\', \'a\']\n```\n\n입력 예제 2:\n```\ns = \"abcabcabc\"\n```\n\n출력 예제 2:\n```\n큐: [\'a\', \'b\', \'c\']\n스택: [\'c\', \'b\', \'a\']\n```",
+                    "큐와 스택을 이용한 문자열 처리\n\n입력된 문자열에서 중복된 문자를 제거한 후, 남은 문자를 큐와 스택에 각각 넣고, 큐와 스택의 최종 상태를 반환하는 함수를 작성하시오. 큐는 처음부터 끝까지, 스택은 끝부터 처음까지 순서대로 문자를 넣습니다.\n\n입력:\n- 하나의 문자열 s를 입력 (1 ≤ 문자열 길이 ≤ 100)\n\n출력:\n- 중복된 문자를 제거한 후, 큐와 스택의 최종 상태를 리스트로 반환\n\n입력 예제 1:\n```\nabacabad\n```\n\n출력 예제 1:\n```\n큐: [\'a\', \'b\', \'c\', \'d\']\n스택: [\'d\', \'c\', \'b\', \'a\']\n```\n\n입력 예제 2:\n```\nabcabcabc\n```\n\n출력 예제 2:\n```\n큐: [\'a\', \'b\', \'c\']\n스택: [\'c\', \'b\', \'a\']\n```",
                     null, null, null, null, null, QuizLevel.HARD,0));
             quizListCode.add(Quiz.createQuiz(chapter.get(6), QuizType.CODE,
-                    "튜플과 딕셔너리를 이용한 단어 카운트\n\n입력된 문자열에서 각 단어의 빈도를 계산하고, 이를 (단어, 빈도) 형식의 튜플로 저장한 뒤, 단어의 빈도가 높은 순서대로 출력하는 프로그램을 작성하시오. 단, 빈도가 같은 단어는 알파벳 순으로 정렬합니다.\n\n입력:\n- 하나의 문자열 s를 입력 (1 ≤ 문자열 길이 ≤ 200)\n\n출력:\n- (단어, 빈도) 형식의 튜플을 빈도가 높은 순서대로 출력\n\n입력 예제 1:\n```\ns = \"The quick brown fox jumps over the lazy dog The dog\"\n```\n\n출력 예제 1:\n```\n[(\'the\', 3), (\'dog\', 2), (\'brown\', 1), (\'fox\', 1), (\'jumps\', 1), (\'lazy\', 1), (\'over\', 1), (\'quick\', 1)]\n```\n\n입력 예제 2:\n```\ns = \"Python is great and Python is fun\"\n```\n\n출력 예제 2:\n```\n[(\'python\', 2), (\'is\', 2), (\'and\', 1), (\'fun\', 1), (\'great\', 1)]\n```\n\n제한 사항:\n- 단어의 구분은 공백을 기준으로 합니다.\n- 대소문자는 구분하지 않으며, 출력할 때는 모두 소문자로 변환합니다.",
+                    "튜플과 딕셔너리를 이용한 단어 카운트\n\n입력된 문자열에서 각 단어의 빈도를 계산하고, 이를 (단어, 빈도) 형식의 튜플로 저장한 뒤, 단어의 빈도가 높은 순서대로 출력하는 프로그램을 작성하시오. 단, 빈도가 같은 단어는 알파벳 순으로 정렬합니다.\n\n입력:\n- 하나의 문자열 s를 입력 (1 ≤ 문자열 길이 ≤ 200)\n\n출력:\n- (단어, 빈도) 형식의 튜플을 빈도가 높은 순서대로 출력\n\n입력 예제 1:\n```\nThe quick brown fox jumps over the lazy dog The dog\n```\n\n출력 예제 1:\n```\n[(\'the\', 3), (\'dog\', 2), (\'brown\', 1), (\'fox\', 1), (\'jumps\', 1), (\'lazy\', 1), (\'over\', 1), (\'quick\', 1)]\n```\n\n입력 예제 2:\n```\nPython is great and Python is fun\n```\n\n출력 예제 2:\n```\n[(\'python\', 2), (\'is\', 2), (\'and\', 1), (\'fun\', 1), (\'great\', 1)]\n```\n\n제한 사항:\n- 단어의 구분은 공백을 기준으로 합니다.\n- 대소문자는 구분하지 않으며, 출력할 때는 모두 소문자로 변환합니다.",
                     null, null, null, null, null, QuizLevel.HARD,0));
 
             // 챕터 9
             quizListCode.add(Quiz.createQuiz(chapter.get(8), QuizType.CODE,
-                    "사용자 정의 예외 처리\n\n온라인 쇼핑몰의 결제 시스템을 개발하는 중입니다. 결제 금액을 입력받아 결제를 처리하는 프로그램을 작성하세요. 프로그램은 다음 조건을 만족해야 합니다.\n\n1. 결제 금액이 0 이하일 경우 \"결제 금액이 잘못되었습니다. 0 이상의 금액을 입력하세요.\"라는 메시지를 출력하고 프로그램을 종료합니다.\n2. 입력된 금액이 숫자가 아닌 경우 ValueError를 처리하여 \"잘못된 입력입니다. 숫자를 입력하세요.\"라는 메시지를 출력합니다.\n3. 결제 금액이 올바르면 \"결제가 완료되었습니다.\"와 남은 잔액을 출력합니다.\n4. 모든 결제 과정이 끝나면 \"결제 시스템을 종료합니다.\"라는 메시지를 출력합니다.\n5. 초기 금액은 10000으로 설정합니다.\n\n입력 예제 1:\n```\n결제 금액을 입력하세요: 1000\n```\n\n출력 예제 1:\n```\n결제가 완료되었습니다.\n남은 잔액은 9000원입니다.\n결제 시스템을 종료합니다.\n```\n\n입력 예제 2:\n```\n결제 금액을 입력하세요: -500\n```\n\n출력 예제 2:\n```\n결제 금액이 잘못되었습니다. 0 이상의 금액을 입력하세요.\n결제 시스템을 종료합니다.\n```\n\n입력 예제 3:\n```\n결제 금액을 입력하세요: ABC\n```\n\n출력 예제 3:\n```\n잘못된 입력입니다. 숫자를 입력하세요.\n결제 시스템을 종료합니다.\n```",
+                    "사용자 정의 예외 처리\n\n온라인 쇼핑몰의 결제 시스템을 개발하는 중입니다. 결제 금액을 입력받아 결제를 처리하는 프로그램을 작성하세요. 프로그램은 다음 조건을 만족해야 합니다.\n\n1. 결제 금액이 0 이하일 경우 \"결제 금액이 잘못되었습니다. 0 이상의 금액을 입력하세요.\"라는 메시지를 출력하고 프로그램을 종료합니다.\n2. 입력된 금액이 숫자가 아닌 경우 ValueError를 처리하여 \"잘못된 입력입니다. 숫자를 입력하세요.\"라는 메시지를 출력합니다.\n3. 결제 금액이 올바르면 \"결제가 완료되었습니다.\"와 남은 잔액을 출력합니다.\n4. 모든 결제 과정이 끝나면 \"결제 시스템을 종료합니다.\"라는 메시지를 출력합니다.\n5. 초기 금액은 10000으로 설정합니다.\n\n입력 예제 1:\n```\n1000\n```\n\n출력 예제 1:\n```\n결제가 완료되었습니다.\n남은 잔액은 9000원입니다.\n결제 시스템을 종료합니다.\n```\n\n입력 예제 2:\n```\n-500\n```\n\n출력 예제 2:\n```\n결제 금액이 잘못되었습니다. 0 이상의 금액을 입력하세요.\n결제 시스템을 종료합니다.\n```\n\n입력 예제 3:\n```\nABC\n```\n\n출력 예제 3:\n```\n잘못된 입력입니다. 숫자를 입력하세요.\n결제 시스템을 종료합니다.\n```",
                     null, null, null, null, null, QuizLevel.HARD,0));
             quizListCode.add(Quiz.createQuiz(chapter.get(8), QuizType.CODE,
                     "예외 처리와 사용자 정의 예외 구현하기\n\n당신은 예외 처리를 이용해 안정적인 프로그램을 작성해야 하는 개발자입니다. 주어진 함수 \'process_data\'는 두 개의 정수를 입력받아 다음의 규칙에 따라 처리합니다:\n\n1. 첫 번째 정수를 두 번째 정수로 나누어 그 결과를 반환합니다.\n2. 두 번째 정수가 0일 경우, \'ZeroDivisionError\' 예외를 발생시킵니다.\n3. 두 번째 정수가 음수일 경우, \'NegativeValueError\'라는 사용자 정의 예외를 발생시킵니다.\n4. 이 외의 예외가 발생하면, 이를 처리하여 \"\"Error occurred\"\" 메시지를 출력합니다.\n5. 나눗셈이 성공적으로 완료되면, 결과를 출력하고, 마지막으로 \"\"Process complete\"\"라는 메시지를 출력합니다.\n\n사용자 정의 예외 \'NegativeValueError\'를 직접 구현하고, 위의 요구 사항을 만족하는 \'process_data\' 함수를 작성하세요.\n\n입력:\n\n- 두 개의 정수 \'a\'와 \'b\'가 공백으로 구분되어 한 줄로 주어집니다.\n\n출력:\n\n- 나눗셈 결과가 성공적으로 계산되면 그 결과를 출력합니다.\n- 예외가 발생할 경우, 해당 예외에 맞는 메시지를 출력합니다.\n- 항상 마지막에는 \"\"Process complete\"\" 메시지를 출력합니다.\n\n입력 예제 1:\n```\n10 2\n```\n\n출력 예제 1:\n```\n5.0\nProcess complete\n```\n\n입력 예제 2:\n```\n10 0\n```\n\n출력 예제 2:\n```\ndivision by zero\nProcess complete\n```",
@@ -806,10 +806,10 @@ public class InitDb {
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "문자열: HELLO WORLD\n숫자: -2\n",
+                    "HELLO WORLD\n-2\n",
                     "변경된 문자열은 Hello world이고, 숫자는 1.00입니다."));
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "문자열: 123abc\n숫자: 0\n",
+                    "123abc\n0\n",
                     "변경된 문자열은 123abc이고, 숫자는 3.00입니다."));
 
 
@@ -823,18 +823,18 @@ public class InitDb {
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "점수를 입력하세요: 59\n",
+                    "59\n",
                     "F"));
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "점수를 입력하세요: -10\n",
+                    "-10\n",
                     "잘못된 점수입니다."));
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "입력된 세 정수: 5 5 10\n",
+                    "5 5 10\n",
                     "가장 큰 수: 10"));
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "입력된 세 정수: -3 -7 -2\n",
+                    "-3 -7 -2\n",
                     "가장 큰 수: -2\n"));
 
             quizCode = quizListCode.get(idx++);
@@ -855,11 +855,11 @@ public class InitDb {
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "암호화할 문자열을 입력하세요: This is a secret message.\n암호화 키를 입력하세요: 13\n",
-                    "암호화된 문자열: Guvf vf n frperg zrnag.\n복호화된 문자열: This is a secret message."));
+                    "This is a secret message.\n13\n",
+                    "Guvf vf n frperg zrnag.\n복호화된 문자열: This is a secret message."));
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "암호화할 문자열을 입력하세요:  A-Z a-z 0123456789\n암호화 키를 입력하세요: 1\n",
-                    "암호화된 문자열:  B-A b-y 1234567890\n복호화된 문자열:  A-Z a-z 0123456789"));
+                    "A-Z a-z 0123456789\n1\n",
+                    "B-A b-y 1234567890\n복호화된 문자열:  A-Z a-z 0123456789"));
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
@@ -871,27 +871,27 @@ public class InitDb {
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "s = \"google\"\n",
+                    "google",
                     "큐: [\'g\', \'o\', \'l\', \'e\']\n스택: [\'e\', \'l\', \'o\', \'g\']"));
 
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "s = \"mississippi\"\n",
+                    "mississippi",
                     "큐: [\'m\', \'i\', \'s\', \'p\']\n스택: [\'p\', \'s\', \'i\', \'m\']"));
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "s = \"Python is a programming language. Python is fun! Isn\'t it?\n",
+                    "Python is a programming language. Python is fun! Isn\'t it?",
                     "[(\'python\', 2), (\'is\', 3), (\'a\', 1), (\'programming\', 1), (\'language\', 1), (\'fun\', 1), (\'isn\', 1), (\'it\', 1)]"));
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "s = \"To be or not to be, that is the question. Whether \'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take arms against a sea of troubles, And by opposing end them? To die: to sleep; No more; and by a sleep to say we end The heart-ache and the thousand natural shocks That flesh is heir to, \'tis a consummation Devoutly to be wish\'d. To die, to sleep; To sleep: perchance to dream: ay, there\'s the rub; For in that sleep of death what dreams may come When we have shuffled off this mortal coil, Must give us pause: there\'s the respect That makes calamity of so long life;\"\n",
+                    "To be or not to be, that is the question. Whether \'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take arms against a sea of troubles, And by opposing end them? To die: to sleep; No more; and by a sleep to say we end The heart-ache and the thousand natural shocks That flesh is heir to, \'tis a consummation Devoutly to be wish\'d. To die, to sleep; To sleep: perchance to dream: ay, there\'s the rub; For in that sleep of death what dreams may come When we have shuffled off this mortal coil, Must give us pause: there\'s the respect That makes calamity of so long life",
                     "[(\'to\', 6), (\'the\', 3), (\'and\', 3), (\'be\', 3), (\'of\', 3), (\'a\', 2), (\'in\', 2), (\'sleep\', 2), (\'that\', 2), (\'is\', 2), (\'or\', 2), (\'for\', 1), (\'not\', 1), (\'whether\', 1), (\'tis\', 1), (\'nobler\', 1), (\'mind\', 1), (\'suffer\', 1), (\'slings\', 1), (\'arrows\', 1), (\'outrageous\', 1), (\'fortune\', 1), (\'take\', 1), (\'arms\', 1), (\'against\', 1), (\'sea\', 1), (\'troubles\', 1), (\'by\', 1), (\'opposing\', 1), (\'end\', 1), (\'them\', 1), (\'die\', 2), (\'more\', 1), (\'say\', 1), (\'we\', 1), (\'heart\', 1), (\'ache\', 1), (\'thousand\', 1), (\'natural\', 1), (\'shocks\', 1), (\'flesh\', 1), (\'heir\', 1), (\'consummation\', 1), (\'devoutly\', 1), (\'wishd\', 1), (\'perchance\', 1), (\'dream\', 1), (\'ay\', 1), (\'theres\', 2), (\'rub\', 1), (\'when\', 1), (\'have\', 1), (\'shuffled\', 1), (\'off\', 1), (\'this\', 1), (\'mortal\', 1), (\'coil\', 1), (\'must\', 1), (\'give\', 1), (\'us\', 1), (\'pause\', 1), (\'respect\', 1), (\'makes\', 1), (\'calamity\', 1), (\'so\', 1), (\'long\', 1), (\'life\', 1)]"));
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "결제 금액을 입력하세요: 15000\n",
+                    "15000\n",
                     "잔액이 부족합니다.\n결제 시스템을 종료합니다."));
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "결제 금액을 입력하세요: 0\n",
+                    "0\n",
                     "결제 금액이 잘못되었습니다. 0 이상의 금액을 입력하세요.\n결제 시스템을 종료합니다."));
 
             quizCode = quizListCode.get(idx++);
@@ -901,23 +901,6 @@ public class InitDb {
             quizCases.add(QuizCase.createQuizCase(quizCode,
                     "ten 5\n",
                     "Error occurred\nProcess complete"));
-//            quizCases.add(QuizCase.createQuizCase(quizCode,
-//                    "",
-//                    ""));
-//            quizCode = quizListCode.get(idx++);
-//            quizCases.add(QuizCase.createQuizCase(quizCode,
-//                    "",
-//                    ""));
-//            quizCases.add(QuizCase.createQuizCase(quizCode,
-//                    "",
-//                    ""));
-//            quizCode = quizListCode.get(idx++);
-//            quizCases.add(QuizCase.createQuizCase(quizCode,
-//                    "",
-//                    ""));
-//            quizCases.add(QuizCase.createQuizCase(quizCode,
-//                    "",
-//                    ""));
 
             quizCaseRepository.saveAll(quizCases);
         }
