@@ -33,19 +33,19 @@ const useChapterData = () => {
     
     useEffect(() => {
       if (chapterPass.length > 0) {
-        console.log(chapterPass);
+        //console.log(chapterPass);
       }
     }, [chapterPass]);
     
     useEffect(() => {
       if (subChapter.length > 0) {
-        // console.log(subChapter);
+        //console.log(subChapter);
       }
     }, [subChapter]);
   
     useEffect(() => {
       if (subChapterId.length > 0) {
-        //console.log(subChapterId);
+        console.log(subChapterId);
       }
     }, [subChapterId]);
 
@@ -61,7 +61,7 @@ const useChapterData = () => {
         // console.log(chaptersData);
         if (!chaptersData)
             return;
-  
+  //
         const chapters = chaptersData.map(chapter => chapter.text);
         const chaptersid = chaptersData.map(chapter => chapter.curriculumId);
         setChapter(chapters);

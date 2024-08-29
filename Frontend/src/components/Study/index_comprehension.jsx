@@ -6,6 +6,7 @@ import Input from '../../input.png';
 import { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
+import useChapterData from '../../useChapterData';
 
 
 const extractAndReplaceInputs = (str, replacements) => {
@@ -219,8 +220,9 @@ print_collected()
     if (res) {
       console.log(res);
     }
-  }, [res])
+  }, [res]);
 
+  const { chapter, chaptersid, chapterLevel, chapterPass, subChapter, subChapterId, currentChapter } = useChapterData();
   const [type, setType] = useState('');
   const [qtype, setQtype] = useState('');
   useEffect(()=>{
@@ -278,8 +280,12 @@ print_collected()
           else if (order === 2) {
             //중급자 문제 맞출 경우
             alert("중급자 문제를 맞추셨습니다.");
-            alert("해당 챕터의 이해도 테스트.");
-            postChapterPass(chapId,"HARD");
+    
+            // 사용자의 level: easy / normal / hard(다음챕터레벨설정용) 입력을 받음 (수정필요)
+            const prompt = window.prompt("EASY / NORMAL / HARD 중 택 1");
+            postChapterPass(chapId, prompt);
+
+            
             navigate('/mypage/todo');
           }
         }
@@ -294,12 +300,32 @@ print_collected()
             alert("초급자 문제를 틀리셨습니다.");
             alert("입문자 난이도로 다음 챕터가 설정되었습니다.");
             postChapterPass(chapId, "EASY");
-            navigate('/mypage/todo');
+
+            // 해당 챕터 재학습 선지 제시, 재학습 원할시 해당 챕터를 재학습 아닐경우 마이페이지로
+            //subChapterId , chaptersid
+            const confirm = window.confirm("해당 챕터를 재학습하시겠습니까?");
+            if (confirm) {
+              alert('confirm 실행됨');
+              for (var i = 0; i < chaptersid.length; i++) {
+                
+                if (chapId === chaptersid[i].toString()) {
+                  alert('id찾음');
+
+                  navigate(`/study/theory/${subChapterId[i][0]}/DEF`);
+                }
+              }
+            } else {
+              navigate('/mypage/todo');
+            }
           }
           else if (order === 2) {
             alert("중급자 문제를 틀리셨습니다.");
-            alert("초급자 난이도로 다음 챕터가 설정되었습니다.");
-            postChapterPass(chapId, "NORMAL");
+            // 사용자의 level: easy / normal / hard(다음챕터레벨설정용) 입력을 받음 (수정필요)
+            const prompt = window.prompt("EASY / NORMAL 중 택 1")
+            postChapterPass(chapId, prompt);
+
+
+
             navigate('/mypage/todo');
           }
         }
@@ -402,7 +428,7 @@ print_collected()
                   <Buttons_>
                     <Interpret> 실행 </Interpret>
                     <Save> 저장 </Save>
-                    <Submit> 제출 </Submit>
+                    <Submit onClick={submitAnswer}> 제출 </Submit>
                   </Buttons_>
                 </CodeResult>
                 <ResultPre>

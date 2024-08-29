@@ -7,115 +7,13 @@ import { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate ,redirect } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 
-const extractAndReplaceInputs = (str, replacements) => {
-  // 정규 표현식으로 모든 input() 내의 문자열을 추출
-  const regex = /input\(([^)]*)\)/g;
-  const extractedContents = [];
-  
-  // 모든 매치를 찾고 대체
-  let replaceIndex = 0;
-  const replacedStr = str.replace(regex, (fullMatch, group1) => {
-    extractedContents.push(group1);
-    const replacement = replacements[replaceIndex] || fullMatch; // 대체 문자열이 없으면 원본 유지
-    replaceIndex++;
-    return replacement;
-  });
-
-  return { extracted: extractedContents, replaced: replacedStr };
-};
-
 
 
 function Study_training() {
   const [pyodide, setPyodide] = useState(null);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
-
-  const [savedCode, setSavedCode] = useState("");
-  const [output, setOutput] = useState({ extracted: [], replaced: '' });
-  const [replacements, setReplacements] = useState([]);
-
-  const replaceCode = () => {
-    // 모든 input() 부분에 대해 대체 문자열을 입력받음
-    const newReplacements = [];
-    const regex = /input\(([^)]*)\)/g;
-    let match;
-    while ((match = regex.exec(savedCode)) !== null) {
-      const replacement = prompt(`Replace ${match[0]} with:`);
-      newReplacements.push("'" + replacement + "'");
-    }
-    setReplacements(newReplacements);
-
-    const result = extractAndReplaceInputs(savedCode, newReplacements);
-    setOutput(result);
-  };
-
   
-const codeSended =
-`
-import sys
-import json
-
-class PrintCollector:
-    def __init__(self):
-        self.output = []
-
-    def write(self, text):
-        self.output.append(text)
-
-    def flush(self):
-        pass
-
-collector = PrintCollector()
-sys.stdout = collector
-sys.stderr = collector
-
-def print_collected():
-    return ''.join(collector.output)
-
-${code}
-
-print_collected()
-`;
-/*
-  useEffect(() => {
-    const loadPyodide = async () => {
-      const pyodide = await window.loadPyodide();
-      setPyodide(pyodide);
-    };
-    loadPyodide();
-  }, []);
-*/
-  const runPythonCode = async () => {
-    if (pyodide) {
-      try {
-        const res = await pyodide.runPython(codeSended);
-        setResult(res);
-        setSavedCode(codeSended);
-      } catch (err) {
-        setResult(err.message);
-      }
-    }
-  };
-
-  const checkCode = async () => {
-    if (pyodide) {
-      try {
-        const res = await pyodide.runPython(output.replaced);
-
-        if(Number(res) === 5 || res === "5") {
-          alert("정답입니다.");
-        }
-        else {
-          alert("오답입니다.");
-        }
-      } catch (err) {
-        setResult(err.message);
-      }
-    }
-  };
-
-
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
 
@@ -160,14 +58,137 @@ print_collected()
   }
 
   const [dialog, setDialog] = useState("");
-  const [dialogs, setDiv] = useState([]);
-  const AddDialog = () => {
+  const [dialogs, setDialogs] = useState([]);
+
+  const [step, setStep] = useState(0);
+  const [stepDialogs, setStepDialogs] = useState();
+
+  
+  const AddDialog = async () => {
     if(dialog) {
-      setDiv([...dialogs, <Dialog> {dialog} </Dialog>]);
-      setDialog("");
+      if(!divValue) {
+        setDialogs((pre) => [...pre, <Dialog id="chat"> 태그를 선택해주세요 </Dialog>]);
+      }
+      else {
+        setDialogs((pre) => [...pre, <Dialog id="user"> {dialog} </Dialog>]);
+        try {
+          const res = await getChatResponse(dialog, divValue);
+          
+          setDialogs((pre) => [...pre, <Dialog id="chat"> {res.answerList[0]} </Dialog>]);
+          if (divValue === "CODE" || divValue === "ERRORS") {
+            console.log("1로바꿈")
+            setStep(1);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+        setDialog("");
+      }
     }
   }
-  
+
+
+  const AddStepDialog = async () => {
+    setDialogs((pre) => [...pre, <Dialog id="chat"> {stepDialogs.answerList[step]} </Dialog>]);
+
+    // 백에 next 처리 요청
+    postNextResponse(stepDialogs.chatId);
+    setStep(step + 1);
+    if(step === stepDialogs.answerList.length - 1)
+    {
+      setStepDialogs('');
+      setStep(0);
+    }
+  }
+
+
+  const EndStepDialog = () => {
+    setStep(0);
+  }
+
+  useEffect(()=>{
+    getSubChapterChatHistory();
+  }, []);
+
+//서브 챕터 단위 채팅 히스토리 로드
+const getSubChapterChatHistory =  async () =>{
+  const userid = localStorage.getItem('userid');
+
+  const QuestionCallDto = {
+    'userId': userid,
+    'curriculumId': subChapId
+  };
+  try {
+    const response = await axiosInstance.post('/chat/chat/historyBySubChapter', QuestionCallDto);
+    // console.log(response);
+
+    const dialogsToAdd = [];
+
+    const res = response.data.list;
+    // console.log(res);
+    for (var i = 0; i < res.length; i++) {
+      // console.log(res[i].question);
+      
+      const question = res[i].question
+      dialogsToAdd.push(<Dialog id="user"> {question} </Dialog>);
+
+      //console.log(res[i].answer);
+      const answer = res[i].answer;
+      //console.log(answer.length);
+      for (var j = 0; j < answer.length; j++) {
+        dialogsToAdd.push(<Dialog id="chat"> {answer[j]} </Dialog>);
+      }
+    }
+    setDialogs((pre) => [...pre, ...dialogsToAdd]);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+ //챗봇 답변 요청 (질문 타입 : DEF, CODE, ERRORS )
+ const getChatResponse =  async (dialog, divValue) =>{
+  const userid = localStorage.getItem('userid');
+  console.log("질문 본문 "+dialog+" 질문 타입 "+divValue);
+  const QuestionCallDto = {
+    'userId': userid,
+    'curriculumId': subChapId,
+    "text": dialog,
+    "type": divValue
+  };
+  try {
+    const res = await axiosInstance.post('/chat/chat/response', QuestionCallDto);
+    console.log(res);
+    if(divValue!="DEF" )
+      console.log(res.data)
+      setStepDialogs(res.data);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+
+ //단계적 답변(code,error 타입 질문) 다음 답변 요청
+ const postNextResponse =  async (chatId) =>{
+
+  const NextLevelChatCallDto = {
+    'chatId': chatId
+  };
+  try {
+    const response = await axiosInstance.post('/chat/chat/next', NextLevelChatCallDto);
+    console.log(response);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+useEffect(()=>{
+  if (step){
+    console.log(step);
+  }
+}, [step]);
+
+
   const chat = useRef();
   const scrollToBottom = () => {
     chat.current?.scrollIntoView();
@@ -314,9 +335,9 @@ print_collected()
           <Train height={height} width={contentWidth}>
             <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
             <Buttons_>
-              <Interpret onClick={runPythonCode}> 실행 </Interpret>
-              <Save onClick={replaceCode}> 저장 </Save>
-              <Submit onClick={checkCode}> 제출 </Submit>
+              <Interpret> 실행 </Interpret>
+              <Save> 저장 </Save>
+              <Submit> 제출 </Submit>
             </Buttons_>
           <CodeResult>
             <p>--- 코드 실행 결과 ---</p>
@@ -331,10 +352,14 @@ print_collected()
             {dialogs.map(div => div)}
             <div ref={chat}></div>
           </Chat>
+          {(step > 0) && <ChatType>
+          <button onClick={AddStepDialog}> 다음 답변보기 </button>
+          <button onClick={EndStepDialog}> 다른 질문하기 </button>
+        </ChatType>}
           <ChatType>
-            <Type style={divValue === "개념"?borderStyle:{}} onClick={()=>getDivValue("개념")}> #개념 </Type>
-            <Type style={divValue === "코드"?borderStyle:{}} onClick={()=>getDivValue("코드")}> #코드 </Type>
-            <Type style={divValue === "오류"?borderStyle:{}} onClick={()=>getDivValue("오류")}> #오류 </Type>
+            <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
+            <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
+            <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
           </ChatType>
           <ChatInput>
             <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
@@ -595,6 +620,17 @@ const Chat = styled.div`
 
   &::-webkit-scrollbar {
     display : none;
+  }
+
+  #user {
+    background : #FFFFFF;
+    border-radius : 1.5rem 1.5rem 0rem 1.5rem;
+  }
+
+  #chat {
+    color : #FFFFFF;
+    background : rgba(0, 139, 255, 0.75);
+    border-radius : 1.5rem 1.5rem 1.5rem 0rem;
   }
 `
 
