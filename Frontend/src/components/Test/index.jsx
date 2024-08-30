@@ -369,7 +369,7 @@ const updateInitComplete = async (levelType) => {
         <ContentSection width={width}>
           <QuestionArea>
             <Question>
-            {data.length > 0 ? <div>  {data[order].text} </div> : <div> Loading... </div>}
+            {data.length > 0 ? <div> {data[order].text} </div> : <div> Loading... </div>}
             </Question>
           </QuestionArea>
           <AnswerArea>

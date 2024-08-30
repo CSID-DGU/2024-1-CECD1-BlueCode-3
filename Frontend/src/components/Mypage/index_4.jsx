@@ -146,6 +146,8 @@ function Study_theory() {
         setEmail(res.data.email);
         setBirthday(setFormat(res.data.birth));
         setName(res.data.username);
+        setPoint(res.data.exp);
+
         const rdate = res.data.registerDateTime;
         setSignInDate(rdate.substr(0, 4) + "년 " + rdate.substr(5, 2) + "월 " + rdate.substr(8, 2) + "일");
       }

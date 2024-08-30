@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axiosInstance from '../../axiosInstance';
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import getUserInfo from '../../getUserInfo';
 
 
 function Study_theory() {
@@ -70,12 +71,23 @@ function Study_theory() {
     }
 
     
-    getUserInfo(); // 데이터를 불러오는 함수 호출
+    getUserInfo()
+      .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setTestValid(data.initTest);
+        setPoint(data.exp);
+      })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });
+
     getChapters(); // 챕터 데이터를 불러오는 함수
-    getMissionInfo();
+    getMissionInfo(); // 미션 데이터를 불러오는 함수
   }, []);
 
 // 서버에서 사용자 정보를 가져오는 함수
+/*
 const getUserInfo = async () => {
   try {
    const userid = localStorage.getItem('userid');
@@ -83,18 +95,19 @@ const getUserInfo = async () => {
      'userId' : userid
    };
    const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo', UserIdDto);
-   setTestValid(res.data.initTest);
-   setPoint(res.data.exp);
+   setTestValid(res.data.initTest);   // 이거 빼고
+   setPoint(res.data.exp);            // 이거 빼고
+   
   }
   catch (err){
    console.error(err); 
   }
  };
-
+*/
   useEffect(()=>{
-    getUserInfo();
+    //getUserInfo();
     if (testValid) {
-      console.log(testValid);
+      //console.log(testValid);
     }
   }, [testValid]);
 
@@ -160,29 +173,29 @@ const getUserInfo = async () => {
                 <Term> 일간 </Term>
                 <SubMissionContent>
                   {missionDaily.map(item => (
-                    <SubMission key={item.id}> {item.text} </SubMission>
+                    <SubMission key={item.id}> {item.text} {item.currentCount} / {item.missionCount} </SubMission>
                   ))}
                 </SubMissionContent>
               </MissionContent>
-              <PointBtn style={{backgroundColor : "#00E5BA"}}> 포인트 획득 </PointBtn>
             </Mission>
             <Mission style={{backgroundColor : "#00CFEE"}}>
               <MissionContent>
                 <Term> 주간 </Term>
                 <SubMissionContent>
                   {missionWeekly.map(item => (
-                    <SubMission key={item.id}> {item.text} </SubMission>
+                    <SubMission key={item.id}> {item.text} {item.currentCount} / {item.missionCount} </SubMission>
                   ))}
                 </SubMissionContent>
               </MissionContent>
-              <PointBtn style={{backgroundColor : "#00CFEE"}}> 포인트 획득 </PointBtn>
             </Mission>
             <Mission style={{backgroundColor : "#00B2FF"}}>
               <MissionContent>
                 <Term> 업적 </Term>
                 <SubMissionContent>
                   {challenge.map(item => (
-                    <SubMission key={item.id}> {item.text} </SubMission>
+                   item.missionStatus === "COMPLETED" && (
+                  <SubMission key={item.id} style={{color:"black"}}> {item.text} </SubMission>
+                    )
                   ))}
                 </SubMissionContent>
               </MissionContent>

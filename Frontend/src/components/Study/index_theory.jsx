@@ -288,11 +288,11 @@ function Study_theory() {
           {dialogs.map(div => div)}
           <div ref={chat}></div>
         </Chat>
-        {<ChatType>
+        {step > 0 && <ChatType>
           <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
           <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
         </ChatType>}
-        {step === 1 && <ChatType>
+        {!step && <ChatType>
             <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
             <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
             <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>

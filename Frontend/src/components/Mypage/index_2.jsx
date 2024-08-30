@@ -2,10 +2,10 @@ import PASS from '../../pass.png';
 import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
 import styled from 'styled-components';
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useChapterData from '../../useChapterData';
+import getUserInfo from '../../getUserInfo';
 
 function Study_theory() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -28,6 +28,19 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
+
+  useEffect(() => {
+    getUserInfo()
+      .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setPoint(data.exp);
+      })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
 
   const color = { color : "#008BFF", fontWeight : "bold" };
   const passColor = { color : "#0053B7" };

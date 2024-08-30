@@ -14,13 +14,13 @@ const useChapterData = () => {
   
     useEffect(() => {
       if (chapter.length > 0) {
-        // console.log(chapter);
+        //console.log(chapter);
       }
     }, [chapter]);
 
     useEffect(() => {
       if (chaptersid.length > 0) {
-        console.log(chaptersid);
+        //console.log(chaptersid);
       }
     }, [chaptersid]);
 
@@ -45,7 +45,7 @@ const useChapterData = () => {
   
     useEffect(() => {
       if (subChapterId.length > 0) {
-        console.log(subChapterId);
+        //console.log(subChapterId);
       }
     }, [subChapterId]);
 
@@ -89,7 +89,7 @@ const useChapterData = () => {
   
           const res = await axiosInstance.post('/curriculum/curriculum/chapters', datacalldto);
           const chaptersData = res.data.list;
-          console.log(chaptersData);
+          //console.log(chaptersData);
           
           if (!chaptersData)
             return;
