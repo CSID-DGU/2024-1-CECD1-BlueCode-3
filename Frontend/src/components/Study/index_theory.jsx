@@ -143,12 +143,14 @@ function Study_theory() {
   const getChatResponse =  async (dialog, divValue) =>{
     const userid = localStorage.getItem('userid');
     console.log("질문 본문 "+dialog+" 질문 타입 "+divValue);
+
     const QuestionCallDto = {
       'userId': userid,
       'curriculumId': subChapId,
       "text": dialog,
       "type": divValue
     };
+
     try {
       const res = await axiosInstance.post('/chat/chat/response', QuestionCallDto);
       console.log(res);
@@ -286,15 +288,15 @@ function Study_theory() {
           {dialogs.map(div => div)}
           <div ref={chat}></div>
         </Chat>
-        {(step > 0) && <ChatType>
-          <button onClick={AddStepDialog}> 다음 답변보기 </button>
-          <button onClick={EndStepDialog}> 다른 질문하기 </button>
+        {<ChatType>
+          <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
+          <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
         </ChatType>}
-        <ChatType>
+        {step === 1 && <ChatType>
             <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
             <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
             <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
-        </ChatType>
+        </ChatType>}
           <ChatInput>
             <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
             <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>
@@ -489,6 +491,17 @@ const Dialog = styled.div`
   word-break : break-word;
   overflow-wrap : break-word;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
+`
+
+const StepChat = styled.div`
+  position : relative;
+  top : 3rem;
+  height : 3rem;
+  display : flex;
+  align-item : center;
+  justify-content : center;
+  border-top : 0.25rem solid #008BFF;
+  border-bottom : 0.25rem solid #008BFF;
 `
 
 const ChatType = styled.div`

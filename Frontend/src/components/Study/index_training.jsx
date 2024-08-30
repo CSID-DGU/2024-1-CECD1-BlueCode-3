@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
 import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
+import BCODE from '../../logo_w.png';
+import styled from 'styled-components';
+import axiosInstance from '../../axiosInstance';
 import { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate ,redirect } from 'react-router-dom';
-import axiosInstance from '../../axiosInstance';
 
 
 
@@ -339,28 +339,28 @@ useEffect(()=>{
               <Save> 저장 </Save>
               <Submit> 제출 </Submit>
             </Buttons_>
-          <CodeResult>
-            <p>--- 코드 실행 결과 ---</p>
-            <ResultPre>
-              <Result width={contentWidth}> {result} </Result>
-            </ResultPre>
-          </CodeResult> 
-        </Train>
-      </ContentSection>
-      {gptValue && (<ChatbotSection>
+            <CodeResult>
+              <p>--- 코드 실행 결과 ---</p>
+              <ResultPre>
+                <Result width={contentWidth}> {result} </Result>
+              </ResultPre>
+            </CodeResult> 
+          </Train>
+        </ContentSection>
+        {gptValue && (<ChatbotSection>
           <Chat height={height}>
             {dialogs.map(div => div)}
             <div ref={chat}></div>
           </Chat>
           {(step > 0) && <ChatType>
-          <button onClick={AddStepDialog}> 다음 답변보기 </button>
-          <button onClick={EndStepDialog}> 다른 질문하기 </button>
-        </ChatType>}
-          <ChatType>
+            <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
+            <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
+          </ChatType>}
+          {!step && <ChatType>
             <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
             <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
             <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
-          </ChatType>
+          </ChatType>}
           <ChatInput>
             <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
             <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>          

@@ -9,24 +9,6 @@ import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
 
 
-const extractAndReplaceInputs = (str, replacements) => {
-  // 정규 표현식으로 모든 input() 내의 문자열을 추출
-  const regex = /input\(([^)]*)\)/g;
-  const extractedContents = [];
-  
-  // 모든 매치를 찾고 대체
-  let replaceIndex = 0;
-  const replacedStr = str.replace(regex, (fullMatch, group1) => {
-    extractedContents.push(group1);
-    const replacement = replacements[replaceIndex] || fullMatch; // 대체 문자열이 없으면 원본 유지
-    replaceIndex++;
-    return replacement;
-  });
-
-  return { extracted: extractedContents, replaced: replacedStr };
-};
-
-
 
 function Study_training() {
   const [answer, setAnswer] = useState('');
@@ -34,91 +16,6 @@ function Study_training() {
   const [pyodide, setPyodide] = useState(null);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
-
-  const [savedCode, setSavedCode] = useState("");
-  const [output, setOutput] = useState({ extracted: [], replaced: '' });
-  const [replacements, setReplacements] = useState([]);
-
-  const replaceCode = () => {
-    // 모든 input() 부분에 대해 대체 문자열을 입력받음
-    const newReplacements = [];
-    const regex = /input\(([^)]*)\)/g;
-    let match;
-    while ((match = regex.exec(savedCode)) !== null) {
-      const replacement = prompt(`Replace ${match[0]} with:`);
-      newReplacements.push("'" + replacement + "'");
-    }
-    setReplacements(newReplacements);
-
-    const result = extractAndReplaceInputs(savedCode, newReplacements);
-    setOutput(result);
-  };
-
-  
-const codeSended =
-`
-import sys
-import json
-
-class PrintCollector:
-    def __init__(self):
-        self.output = []
-
-    def write(self, text):
-        self.output.append(text)
-
-    def flush(self):
-        pass
-
-collector = PrintCollector()
-sys.stdout = collector
-sys.stderr = collector
-
-def print_collected():
-    return ''.join(collector.output)
-
-${code}
-
-print_collected()
-`;
-/*
-  useEffect(() => {
-    const loadPyodide = async () => {
-      const pyodide = await window.loadPyodide();
-      setPyodide(pyodide);
-    };
-    loadPyodide();
-  }, []);
-*/
-  const runPythonCode = async () => {
-    if (pyodide) {
-      try {
-        const res = await pyodide.runPython(codeSended);
-        setResult(res);
-        setSavedCode(codeSended);
-      } catch (err) {
-        setResult(err.message);
-      }
-    }
-  };
-
-  const checkCode = async () => {
-    if (pyodide) {
-      try {
-        const res = await pyodide.runPython(output.replaced);
-
-        if(Number(res) === 5 || res === "5") {
-          alert("정답입니다.");
-        }
-        else {
-          alert("오답입니다.");
-        }
-      } catch (err) {
-        setResult(err.message);
-      }
-    }
-  };
-
 
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
