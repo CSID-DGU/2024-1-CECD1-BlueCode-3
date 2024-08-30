@@ -1,900 +1,265 @@
-2024-08-20T10:20:07.023+09:00  INFO 58812 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 58812 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
-2024-08-20T10:20:07.032+09:00  INFO 58812 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
-2024-08-20T10:20:07.098+09:00  INFO 58812 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2024-08-20T10:20:07.098+09:00  INFO 58812 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2024-08-20T10:20:07.872+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-08-20T10:20:07.873+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-08-20T10:20:07.893+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-08-20T10:20:08.081+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-08-20T10:20:08.084+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-08-20T10:20:08.276+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 185 ms. Found 10 JPA repository interfaces.
-2024-08-20T10:20:08.286+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-08-20T10:20:08.286+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-08-20T10:20:08.295+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.296+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.296+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.296+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizCaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.296+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.297+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.297+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.297+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.298+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.298+09:00  INFO 58812 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2024-08-20T10:20:08.298+09:00  INFO 58812 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
-2024-08-20T10:20:08.928+09:00  INFO 58812 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-08-20T10:20:08.940+09:00  INFO 58812 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-08-20T10:20:08.941+09:00  INFO 58812 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
-2024-08-20T10:20:09.005+09:00  INFO 58812 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-08-20T10:20:09.005+09:00  INFO 58812 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1905 ms
-2024-08-20T10:20:09.029+09:00  INFO 58812 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-08-20T10:20:09.270+09:00  INFO 58812 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@33064dfe
-2024-08-20T10:20:09.272+09:00  INFO 58812 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-08-20T10:20:09.279+09:00  INFO 58812 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
-2024-08-20T10:20:09.379+09:00  INFO 58812 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-08-20T10:20:09.449+09:00  INFO 58812 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2024-08-20T10:20:09.485+09:00  INFO 58812 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-08-20T10:20:09.741+09:00  INFO 58812 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-08-20T10:20:09.817+09:00  WARN 58812 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-08-20T10:20:10.642+09:00  INFO 58812 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-08-20T10:20:12.169+09:00  INFO 58812 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-08-20T10:20:12.433+09:00  INFO 58812 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-08-20T10:20:13.013+09:00  INFO 58812 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
-2024-08-20T10:20:14.309+09:00  WARN 58812 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-08-20T10:20:14.421+09:00 DEBUG 58812 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 41 mappings in 'requestMappingHandlerMapping'
-2024-08-20T10:20:14.486+09:00 DEBUG 58812 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2024-08-20T10:20:14.509+09:00  INFO 58812 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3a148b9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@39ea8314, org.springframework.security.web.context.SecurityContextHolderFilter@5e6cbc8f, org.springframework.security.web.header.HeaderWriterFilter@3db96a0f, org.springframework.web.filter.CorsFilter@1d113f25, org.springframework.security.web.authentication.logout.LogoutFilter@31768777, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3aabd973, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@13e4ac61, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2ab61fa0, org.springframework.security.web.access.ExceptionTranslationFilter@43160f8f, org.springframework.security.web.access.intercept.AuthorizationFilter@2be23273]
-2024-08-20T10:20:14.573+09:00 DEBUG 58812 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 2 RequestBodyAdvice, 1 ResponseBodyAdvice
-2024-08-20T10:20:14.602+09:00 DEBUG 58812 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2024-08-20T10:20:14.707+09:00  INFO 58812 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2024-08-20T10:20:14.727+09:00  INFO 58812 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
-2024-08-20T10:20:14.735+09:00  INFO 58812 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 8.163 seconds (process running for 8.984)
-2024-08-20T10:20:14.737+09:00  INFO 58812 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
-2024-08-20T10:20:25.559+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-08-20T10:20:25.559+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-08-20T10:20:25.559+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
-2024-08-20T10:20:25.559+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
-2024-08-20T10:20:25.559+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
-2024-08-20T10:20:25.560+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7c052e16
-2024-08-20T10:20:25.560+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@33101f24
-2024-08-20T10:20:25.560+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2024-08-20T10:20:25.560+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-08-20T10:20:25.579+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /test/create/init
-2024-08-20T10:20:25.587+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /test/create/init
-2024-08-20T10:20:25.588+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/test/create/init", parameters={}
-2024-08-20T10:20:25.590+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createInitTest(DataCallDto)
-2024-08-20T10:20:25.665+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=7)]
-2024-08-20T10:20:25.677+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.b.chatbot.controller.TestController    : call createInitTest in TestController: DataCallDto(userId=1, curriculumId=7)
-2024-08-20T10:20:25.677+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : createInitTest with userId: 1, curriculumId: 7
-2024-08-20T10:20:25.685+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: HARD
-2024-08-20T10:20:25.689+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 함수, type: CODE, level: HARD, count: 1
-2024-08-20T10:20:25.693+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@2da7c839]
-2024-08-20T10:20:25.694+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 65
-2024-08-20T10:20:25.694+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: NORMAL
-2024-08-20T10:20:25.696+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 함수, type: WORD, level: NORMAL, count: 1
-2024-08-20T10:20:25.697+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@238bb035]
-2024-08-20T10:20:25.697+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 47
-2024-08-20T10:20:25.698+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: EASY
-2024-08-20T10:20:25.709+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : rootChapName: python
-2024-08-20T10:20:25.709+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : chapName: 함수
-2024-08-20T10:20:25.720+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.ApiService    : rules: 1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변
-2024-08-20T10:20:25.763+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
-2024-08-20T10:20:25.771+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-08-20T10:20:25.778+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : Writing [{messages=[{content=python에서 함수 챕터의 'def, 매개변수와 반환값, 위치 인자와 키워드 인자, 가변 인자, 재귀 함수, 람다 함수, len(), sum(), min(), max(), sorted(), zip(), range(), enumerate(), abs(), round(), map(), filter(), reduce()'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
-
-, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 주관식 문제로 quizLevel은 'EASY', quizType은 'WORD'으로 설정
-2. 문제 전체 내용은 'text'에 한 번에 표기할 것
-3. 2-3줄의 이론으로 '()' 괄호 안에 들어갈 단어를 맞추는 형식의 문제를 낼 것
-4. 정답은 마지막에 'ans'에 넣을 것
-5. 정답은 하나의 단어로 이루어지도록 할 것
-6. 정답의 글자 수는 'wordCount'에 표기할 것
-7. 그 외의 값은 모두 null로 표기
-
-
-- JSON 형식의 문제 템플릿: {
-  "text": "문제 내용",
-  "level": "QuizLevel",
-  "quizType": "QuizType",
-  "q1": "보기1 내용",
-  "q2": "보기2 내용",
-  "q3": "보기3 내용",
-  "q4": "보기4 내용",
-  "examples": [
-    {
-      "input": "입력 예제 내용 1",
-      "output": "출력 예제 내용 1"
-    },
-    {
-      "input": "입력 예제 내용 2",
-      "output": "출력 예제 내용 2"
-    },
-    {
-      "input": "입력 예제 내용 3(존재할 경우 사용)",
-      "output": "출력 예제 내용 3(존재할 경우 사용)"
-    }
-    // 추가 입력/출력 예제 가능
-  ],
-  "ans": "정답 내용",
-  "wordCount": 정답 글자 수
-}
-
-- 참고할 수 있는 문제 형태 예시: {
-"text": "다음 괄호 안에 들어갈 알맞은 답을 적으세요.\n\n- 파이썬에서 변수의 자료형을 확인하기 위해 사용하는 함수는 (    )이다. 이 함수는 변수나 값을 입력받아 그 자료형을 반환한다.",
-"level": "EASY",
-"quizType": "WORD",
-"q1": null,
-"q2": null,
-"q3": null,
-"q4": null,
-"input": null,
-"output": null,
-"ans": "type",
-"wordCount": 4
-}
-, role=user}, {content=1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변, role=system}], model=gpt-4o, max_tokens=1500}] as "application/json"
-2024-08-20T10:20:28.840+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : Response 200 OK
-2024-08-20T10:20:28.842+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
-2024-08-20T10:20:28.848+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : GPT Response: {
-  "text": "다음 괄호 안에 들어갈 알맞은 답을 적으세요.\n\n- 파이썬에서 리스트나 튜플 등 순회 가능한 객체를 반복문 없이 병렬적으로 결합할 때 사용하는 함수는 (    )이다.",
-  "level": "EASY",
-  "quizType": "WORD",
-  "q1": null,
-  "q2": null,
-  "q3": null,
-  "q4": null,
-  "examples": [
-    {
-      "input": null,
-      "output": null
-    },
-    {
-      "input": null,
-      "output": null
-    }
-  ],
-  "ans": "zip",
-  "wordCount": 3
-}
-2024-08-20T10:20:28.852+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 71
-2024-08-20T10:20:28.852+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: HARD
-2024-08-20T10:20:28.853+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 함수, type: CODE, level: HARD, count: 1
-2024-08-20T10:20:28.854+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@2da7c839]
-2024-08-20T10:20:28.855+09:00  WARN 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 중복된 QuizId 발생: 65 - 문제 재생성 시도
-2024-08-20T10:20:28.856+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : rootChapName: python
-2024-08-20T10:20:28.856+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : chapName: 함수
-2024-08-20T10:20:28.857+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.ApiService    : rules: 1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변
-2024-08-20T10:20:28.858+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
-2024-08-20T10:20:28.858+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-08-20T10:20:28.858+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : Writing [{messages=[{content=python에서 함수 챕터의 'def, 매개변수와 반환값, 위치 인자와 키워드 인자, 가변 인자, 재귀 함수, 람다 함수, len(), sum(), min(), max(), sorted(), zip(), range(), enumerate(), abs(), round(), map(), filter(), reduce()'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
-
-, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정
-2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용 설명, 출력 내용 설명, 예제 입력(2개 이상), 예제 출력(2개 이상)으로 구성할 것
-3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것
-4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것
-5. 'text' 안에 출력한 예제 입력과 예제 출력과는 다른 내용으로 'examples'에 리스트 형태로 각각 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것(서로 대응하는 입력과 출력을 묶어서 리스트 형태로 구현)
-6. 그 외의 값은 모두 null로 표기
-7. 단, 'wordCount'는 0으로 표기
-8. 또한 랜덤과 관련된 문제는 출제 금지
-9. 그리고 파일 입출력 관련된 문제도 출제 금지
-
-
-- JSON 형식의 문제 템플릿: {
-  "text": "문제 내용",
-  "level": "QuizLevel",
-  "quizType": "QuizType",
-  "q1": "보기1 내용",
-  "q2": "보기2 내용",
-  "q3": "보기3 내용",
-  "q4": "보기4 내용",
-  "examples": [
-    {
-      "input": "입력 예제 내용 1",
-      "output": "출력 예제 내용 1"
-    },
-    {
-      "input": "입력 예제 내용 2",
-      "output": "출력 예제 내용 2"
-    },
-    {
-      "input": "입력 예제 내용 3(존재할 경우 사용)",
-      "output": "출력 예제 내용 3(존재할 경우 사용)"
-    }
-    // 추가 입력/출력 예제 가능
-  ],
-  "ans": "정답 내용",
-  "wordCount": 정답 글자 수
-}
-
-- 참고할 수 있는 문제 형태 예시: {
-"text": "점수에 따른 학점 계산기\n\n사용자가 입력한 점수에 따라 학점을 출력하는 프로그램을 작성하세요. 점수는 0에서 100 사이의 정수로 입력됩니다. 다음 규칙에 따라 학점을 출력하세요.\n\n1. 90점 이상: A\n2. 80점 이상 90점 미만: B\n3. 70점 이상 80점 미만: C\n4. 60점 이상 70점 미만: D\n5. 60점 미만: F\n6. 또한, 점수가 0 미만이거나 100을 초과하면 \"잘못된 점수입니다.\"를 출력\n\n입력 예제 1:\n```\n점수를 입력하세요: 85\n```\n\n출력 예제 1:\n```\nB\n```\n\n입력 예제 2:\n```\n점수를 입력하세요: 105\n```\n\n출력 예제 2:\n```\n잘못된 점수입니다.\n```",
-"level": "HARD",
-"quizType": "CODE",
-"q1": null,
-"q2": null,
-"q3": null,
-"q4": null,
-"examples": [
-    {
-      "input": "```\n점수를 입력하세요: 59\n```,
-      "output": "```\nF\n```
-    },
-    {
-      "input": "```\n점수를 입력하세요: -10\n```,
-      "output": "```\n잘못된 점수입니다.\n```
-    }
-  ],
-"ans": null,
-"wordCount": 0
-}
-, role=user}, {content=1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변, role=system}], model=gpt-4o, max_tokens=1500}] as "application/json"
-2024-08-20T10:20:36.047+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : Response 200 OK
-2024-08-20T10:20:36.048+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
-2024-08-20T10:20:36.049+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.QuizService   : GPT Response: {
-  "text": "특정 규칙을 만족하는 숫자 합계 계산기\n\n사용자가 입력한 리스트와 특정 규칙에 따라 합계를 계산하는 프로그램을 작성하세요. 리스트에는 정수들이 포함되어 있고, 정수의 개수는 가변적일 수 있습니다. 특정 규칙은 다음과 같습니다.\n\n1. 인덱스가 홀수인 위치에 있는 정수만 합산합니다.\n2. 인덱스가 짝수인 위치에 있는 정수를 전부 2배로 만든 후, 이들을 모두 합산합니다.\n3. 두 합계를 더한 값을 반환합니다.\n4. 빈 리스트가 입력될 경우, 0을 반환합니다.\n\n입력 내용 설명:\n- 정수들의 리스트를 입력으로 받습니다.\n\n출력 내용 설명:\n- 특정 규칙에 따른 계산 결과를 출력합니다.\n\n예제 입력 1:\n```\n[1, 2, 3, 4, 5]\n```\n\n예제 출력 1:\n```\n24\n```\n\n예제 입력 2:\n```\n[7, 1, 2, 8, 4]\n```\n\n예제 출력 2:\n```\n26\n```",
-  "level": "HARD",
-  "quizType": "CODE",
-  "q1": null,
-  "q2": null,
-  "q3": null,
-  "q4": null,
-  "examples": [
-    {
-      "input": "```\n[3, 5, 7, 9, 11]\n```",
-      "output": "```\n56\n```"
-    },
-    {
-      "input": "```\n[]\n```",
-      "output": "```\n0\n```"
-    }
-  ],
-  "ans": null,
-  "wordCount": 0
-}
-2024-08-20T10:20:36.073+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 72
-2024-08-20T10:20:36.088+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-1] c.b.chatbot.controller.TestController    : createInitTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=9, quizId=65, text=문자열 암호화/복호화 함수 만들기
-
-사용자로부터 문자열과 암호화 키를 입력받아, 각 문자를 키만큼 오른쪽으로 이동시켜 암호화하고, 다시 복호화하는 프로그램을 작성하세요.
-
-1. 암호화: 각 문자의 아스키 코드 값에 키 값을 더하고, 255를 초과하면 255를 뺀 나머지 값으로 변환합니다.
-2. 복호화: 암호화된 문자의 아스키 코드 값에서 키 값을 빼고, 0 미만이면 255를 더한 값으로 변환합니다.
-3. 영문 대소문자와 공백만 처리합니다.
-
-입력:
-- 문자열: 암호화할 문자열
-- 암호화 키: 정수 (1 이상)
-
-출력:
-- 암호화된 문자열
-- 복호화된 문자열
-
-입력 예제 1:
-```
-암호화할 문자열을 입력하세요: Hello, World!
-암호화 키를 입력하세요: 3
-```
-
-출력 예제 1:
-```
-암호화된 문자열: Khoor, Zruog!
-복호화된 문자열: Hello, World!
-```
-
-힌트:
-- ord() 함수를 사용하여 문자를 아스키 코드 값으로 변환합니다.
-- chr() 함수를 사용하여 아스키 코드 값을 문자로 변환합니다.
-- for 문을 사용하여 문자열의 각 문자를 순회하며 암호화/복호화합니다., level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0), TestResponseElementDto(testId=10, quizId=47, text=```
-def recursive_sum(n):
-    if n == 1:
-        return 1
-    return n + recursive_sum(n - 1)
-
-result = recursive_sum(5)
-print(result)
-```
-
-위 파이썬 코드의 실행 결과를 적으시오., level=NORMAL, quizType=WORD, q1=null, q2=null, q3=null, q4=null, wordCount=2), TestResponseElementDto(testId=11, quizId=71, text=다음 괄호 안에 들어갈 알맞은 답을 적으세요.
-
-- 파이썬에서 리스트나 튜플 등 순회 가능한 객체를 반복문 없이 병렬적으로 결합할 때 사용하는 함수는 (    )이다., level=EASY, quizType=WORD, q1=null, q2=null, q3=null, q4=null, wordCount=3), TestResponseElementDto(testId=12, quizId=72, text=특정 규칙을 만족하는 숫자 합계 계산기
-
-사용자가 입력한 리스트와 특정 규칙에 따라 합계를 계산하는 프로그램을 작성하세요. 리스트에는 정수들이 포함되어 있고, 정수의 개수는 가변적일 수 있습니다. 특정 규칙은 다음과 같습니다.
-
-1. 인덱스가 홀수인 위치에 있는 정수만 합산합니다.
-2. 인덱스가 짝수인 위치에 있는 정수를 전부 2배로 만든 후, 이들을 모두 합산합니다.
-3. 두 합계를 더한 값을 반환합니다.
-4. 빈 리스트가 입력될 경우, 0을 반환합니다.
-
-입력 내용 설명:
-- 정수들의 리스트를 입력으로 받습니다.
-
-출력 내용 설명:
-- 특정 규칙에 따른 계산 결과를 출력합니다.
-
-예제 입력 1:
-```
-[1, 2, 3, 4, 5]
-```
-
-예제 출력 1:
-```
-24
-```
-
-예제 입력 2:
-```
-[7, 1, 2, 8, 4]
-```
-
-예제 출력 2:
-```
-26
-```, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0)])
-2024-08-20T10:20:36.098+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2024-08-20T10:20:36.099+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=9, quizId=65, text=문자열 암호화/복호화 함수 만들기<EOL><EOL>사용자로부터 문 (truncated)...]
-2024-08-20T10:20:36.106+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2024-08-20T10:20:36.106+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
-2024-08-20T10:22:44.497+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /test/create/init
-2024-08-20T10:22:44.498+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /test/create/init
-2024-08-20T10:22:44.498+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/test/create/init", parameters={}
-2024-08-20T10:22:44.498+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createInitTest(DataCallDto)
-2024-08-20T10:22:44.498+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=5)]
-2024-08-20T10:22:44.498+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.controller.TestController    : call createInitTest in TestController: DataCallDto(userId=1, curriculumId=5)
-2024-08-20T10:22:44.498+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : createInitTest with userId: 1, curriculumId: 5
-2024-08-20T10:22:44.502+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: HARD
-2024-08-20T10:22:44.503+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 조건문, type: CODE, level: HARD, count: 1
-2024-08-20T10:22:44.504+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@75ad365c]
-2024-08-20T10:22:44.504+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 61
-2024-08-20T10:22:44.504+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: NORMAL
-2024-08-20T10:22:44.507+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : rootChapName: python
-2024-08-20T10:22:44.507+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : chapName: 조건문
-2024-08-20T10:22:44.510+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.ApiService    : rules: 1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변
-2024-08-20T10:22:44.510+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
-2024-08-20T10:22:44.510+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-08-20T10:22:44.510+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : Writing [{messages=[{content=python에서 조건문 챕터의 'if, elif, else, 조건문 중첩'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
-
-, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 주관식 문제로 quizLevel은 'NORMAL', quizType은 'WORD'으로 설정
-2. 간단한 실습 예제 코드를 보여주고 실행 결과를 맞추도록 할 것
-3. 문제 전체 내용은 'text'에 예시 코드와 문제 내용을 한 번에 표기할 것
-4. 정답은 마지막에 'ans'에 넣을 것
-5. 정답은 하나의 단어로 이루어지도록 할 것
-6. 정답의 글자 수는 'wordCount'에 표기할 것
-7. 그 외의 값은 모두 null로 표기
-
-
-- JSON 형식의 문제 템플릿: {
-  "text": "문제 내용",
-  "level": "QuizLevel",
-  "quizType": "QuizType",
-  "q1": "보기1 내용",
-  "q2": "보기2 내용",
-  "q3": "보기3 내용",
-  "q4": "보기4 내용",
-  "examples": [
-    {
-      "input": "입력 예제 내용 1",
-      "output": "출력 예제 내용 1"
-    },
-    {
-      "input": "입력 예제 내용 2",
-      "output": "출력 예제 내용 2"
-    },
-    {
-      "input": "입력 예제 내용 3(존재할 경우 사용)",
-      "output": "출력 예제 내용 3(존재할 경우 사용)"
-    }
-    // 추가 입력/출력 예제 가능
-  ],
-  "ans": "정답 내용",
-  "wordCount": 정답 글자 수
-}
-
-- 참고할 수 있는 문제 형태 예시: {
-"text": "```\nx = 7\ny = 3\nresult = x // y + x % y\nprint(result)\n```\n\n위 파이썬 코드의 실행 결과를 적으시오.",
-"level": "NORMAL",
-"quizType": "WORD",
-"q1": null,
-"q2": null,
-"q3": null,
-"q4": null,
-"input": null,
-"output": null,
-"ans": "7",
-"wordCount": 1
-}
-, role=user}, {content=1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변, role=system}], model=gpt-4o, max_tokens=1500}] as "application/json"
-2024-08-20T10:22:47.173+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : Response 200 OK
-2024-08-20T10:22:47.173+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
-2024-08-20T10:22:47.174+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : GPT Response: {
-  "text": "```\nx = 8\ny = 3\nif x > 10:\n    if y < 5:\n        result = 'A'\n    else:\n        result = 'B'\nelif x > 5:\n    if y == 3:\n        result = 'C'\n    else:\n        result = 'D'\nelse:\n    result = 'E'\nprint(result)\n```\n\n위 파이썬 코드의 실행 결과를 적으시오.",
-  "level": "NORMAL",
-  "quizType": "WORD",
-  "q1": null,
-  "q2": null,
-  "q3": null,
-  "q4": null,
-  "examples": [],
-  "ans": "C",
-  "wordCount": 1
-}
-2024-08-20T10:22:47.179+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 73
-2024-08-20T10:22:47.179+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: EASY
-2024-08-20T10:22:47.181+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : rootChapName: python
-2024-08-20T10:22:47.182+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : chapName: 조건문
-2024-08-20T10:22:47.183+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.ApiService    : rules: 1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변
-2024-08-20T10:22:47.183+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
-2024-08-20T10:22:47.183+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-08-20T10:22:47.183+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : Writing [{messages=[{content=python에서 조건문 챕터의 'if, elif, else, 조건문 중첩'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
-
-, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 주관식 문제로 quizLevel은 'EASY', quizType은 'WORD'으로 설정
-2. 문제 전체 내용은 'text'에 한 번에 표기할 것
-3. 2-3줄의 이론으로 '()' 괄호 안에 들어갈 단어를 맞추는 형식의 문제를 낼 것
-4. 정답은 마지막에 'ans'에 넣을 것
-5. 정답은 하나의 단어로 이루어지도록 할 것
-6. 정답의 글자 수는 'wordCount'에 표기할 것
-7. 그 외의 값은 모두 null로 표기
-
-
-- JSON 형식의 문제 템플릿: {
-  "text": "문제 내용",
-  "level": "QuizLevel",
-  "quizType": "QuizType",
-  "q1": "보기1 내용",
-  "q2": "보기2 내용",
-  "q3": "보기3 내용",
-  "q4": "보기4 내용",
-  "examples": [
-    {
-      "input": "입력 예제 내용 1",
-      "output": "출력 예제 내용 1"
-    },
-    {
-      "input": "입력 예제 내용 2",
-      "output": "출력 예제 내용 2"
-    },
-    {
-      "input": "입력 예제 내용 3(존재할 경우 사용)",
-      "output": "출력 예제 내용 3(존재할 경우 사용)"
-    }
-    // 추가 입력/출력 예제 가능
-  ],
-  "ans": "정답 내용",
-  "wordCount": 정답 글자 수
-}
-
-- 참고할 수 있는 문제 형태 예시: {
-"text": "다음 괄호 안에 들어갈 알맞은 답을 적으세요.\n\n- 파이썬에서 변수의 자료형을 확인하기 위해 사용하는 함수는 (    )이다. 이 함수는 변수나 값을 입력받아 그 자료형을 반환한다.",
-"level": "EASY",
-"quizType": "WORD",
-"q1": null,
-"q2": null,
-"q3": null,
-"q4": null,
-"input": null,
-"output": null,
-"ans": "type",
-"wordCount": 4
-}
-, role=user}, {content=1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변, role=system}], model=gpt-4o, max_tokens=1500}] as "application/json"
-2024-08-20T10:22:52.089+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : Response 200 OK
-2024-08-20T10:22:52.089+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
-2024-08-20T10:22:52.089+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : GPT Response: {
-  "text": "다음 괄호 안에 들어갈 알맞은 답을 적으세요.\n\n- 파이썬에서 여러 조건을 검사할 때, 첫 번째 조건이 거짓일 경우 다음 조건을 검사하려면 (    )를 사용한다.",
-  "level": "EASY",
-  "quizType": "WORD",
-  "q1": null,
-  "q2": null,
-  "q3": null,
-  "q4": null,
-  "examples": null,
-  "ans": "elif",
-  "wordCount": 4
-}
-2024-08-20T10:22:52.094+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 74
-2024-08-20T10:22:52.094+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: HARD
-2024-08-20T10:22:52.095+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 조건문, type: CODE, level: HARD, count: 1
-2024-08-20T10:22:52.097+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@76c39cb]
-2024-08-20T10:22:52.097+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 62
-2024-08-20T10:22:52.109+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-5] c.b.chatbot.controller.TestController    : createInitTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=13, quizId=61, text=점수에 따른 학점 계산기
-
-사용자가 입력한 점수에 따라 학점을 출력하는 프로그램을 작성하세요. 점수는 0에서 100 사이의 정수로 입력됩니다. 다음 규칙에 따라 학점을 출력하세요.
-
-1. 90점 이상: A
-2. 80점 이상 90점 미만: B
-3. 70점 이상 80점 미만: C
-4. 60점 이상 70점 미만: D
-5. 60점 미만: F
-6. 또한, 점수가 0 미만이거나 100을 초과하면 "잘못된 점수입니다."를 출력
-
-입력 예제 1:
-```
-점수를 입력하세요: 85
-```
-
-출력 예제 1:
-```
-B
-```
-
-입력 예제 2:
-```
-점수를 입력하세요: 105
-```
-
-출력 예제 2:
-```
-잘못된 점수입니다.
-```, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0), TestResponseElementDto(testId=14, quizId=73, text=```
-x = 8
-y = 3
-if x > 10:
-    if y < 5:
-        result = 'A'
-    else:
-        result = 'B'
-elif x > 5:
-    if y == 3:
-        result = 'C'
-    else:
-        result = 'D'
-else:
-    result = 'E'
-print(result)
-```
-
-위 파이썬 코드의 실행 결과를 적으시오., level=NORMAL, quizType=WORD, q1=null, q2=null, q3=null, q4=null, wordCount=1), TestResponseElementDto(testId=15, quizId=74, text=다음 괄호 안에 들어갈 알맞은 답을 적으세요.
-
-- 파이썬에서 여러 조건을 검사할 때, 첫 번째 조건이 거짓일 경우 다음 조건을 검사하려면 (    )를 사용한다., level=EASY, quizType=WORD, q1=null, q2=null, q3=null, q4=null, wordCount=4), TestResponseElementDto(testId=16, quizId=62, text=세 수 중 가장 큰 수 찾기
-
-사용자로부터 세 개의 정수를 입력받아, 이 중 가장 큰 수를 출력하는 프로그램을 작성하세요.
-
-입력 예제 1:
-```
-입력된 세 정수: 10 20 15
-```
-
-출력 예제 1:
-```
-가장 큰 수: 20
-```, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0)])
-2024-08-20T10:22:52.109+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2024-08-20T10:22:52.109+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=13, quizId=61, text=점수에 따른 학점 계산기<EOL><EOL>사용자가 입력한 점수에 (truncated)...]
-2024-08-20T10:22:52.110+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2024-08-20T10:22:52.110+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
-2024-08-20T10:25:11.900+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /test/create/init
-2024-08-20T10:25:11.901+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /test/create/init
-2024-08-20T10:25:11.901+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/test/create/init", parameters={}
-2024-08-20T10:25:11.901+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bluecode.chatbot.controller.TestController#createInitTest(DataCallDto)
-2024-08-20T10:25:11.901+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [DataCallDto(userId=1, curriculumId=6)]
-2024-08-20T10:25:11.902+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.b.chatbot.controller.TestController    : call createInitTest in TestController: DataCallDto(userId=1, curriculumId=6)
-2024-08-20T10:25:11.902+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : createInitTest with userId: 1, curriculumId: 6
-2024-08-20T10:25:11.905+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: HARD
-2024-08-20T10:25:11.908+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : rootChapName: python
-2024-08-20T10:25:11.908+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : chapName: 반복문
-2024-08-20T10:25:11.911+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.ApiService    : rules: 1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변
-2024-08-20T10:25:11.911+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
-2024-08-20T10:25:11.911+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-08-20T10:25:11.911+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Writing [{messages=[{content=python에서 반복문 챕터의 'for, while, break, continue, else, 반복문 중첩, 리스트 컴프리헨션'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
-
-, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정
-2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용 설명, 출력 내용 설명, 예제 입력(2개 이상), 예제 출력(2개 이상)으로 구성할 것
-3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것
-4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것
-5. 'text' 안에 출력한 예제 입력과 예제 출력과는 다른 내용으로 'examples'에 리스트 형태로 각각 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것(서로 대응하는 입력과 출력을 묶어서 리스트 형태로 구현)
-6. 그 외의 값은 모두 null로 표기
-7. 단, 'wordCount'는 0으로 표기
-8. 또한 랜덤과 관련된 문제는 출제 금지
-9. 그리고 파일 입출력 관련된 문제도 출제 금지
-
-
-- JSON 형식의 문제 템플릿: {
-  "text": "문제 내용",
-  "level": "QuizLevel",
-  "quizType": "QuizType",
-  "q1": "보기1 내용",
-  "q2": "보기2 내용",
-  "q3": "보기3 내용",
-  "q4": "보기4 내용",
-  "examples": [
-    {
-      "input": "입력 예제 내용 1",
-      "output": "출력 예제 내용 1"
-    },
-    {
-      "input": "입력 예제 내용 2",
-      "output": "출력 예제 내용 2"
-    },
-    {
-      "input": "입력 예제 내용 3(존재할 경우 사용)",
-      "output": "출력 예제 내용 3(존재할 경우 사용)"
-    }
-    // 추가 입력/출력 예제 가능
-  ],
-  "ans": "정답 내용",
-  "wordCount": 정답 글자 수
-}
-
-- 참고할 수 있는 문제 형태 예시: {
-"text": "점수에 따른 학점 계산기\n\n사용자가 입력한 점수에 따라 학점을 출력하는 프로그램을 작성하세요. 점수는 0에서 100 사이의 정수로 입력됩니다. 다음 규칙에 따라 학점을 출력하세요.\n\n1. 90점 이상: A\n2. 80점 이상 90점 미만: B\n3. 70점 이상 80점 미만: C\n4. 60점 이상 70점 미만: D\n5. 60점 미만: F\n6. 또한, 점수가 0 미만이거나 100을 초과하면 \"잘못된 점수입니다.\"를 출력\n\n입력 예제 1:\n```\n점수를 입력하세요: 85\n```\n\n출력 예제 1:\n```\nB\n```\n\n입력 예제 2:\n```\n점수를 입력하세요: 105\n```\n\n출력 예제 2:\n```\n잘못된 점수입니다.\n```",
-"level": "HARD",
-"quizType": "CODE",
-"q1": null,
-"q2": null,
-"q3": null,
-"q4": null,
-"examples": [
-    {
-      "input": "```\n점수를 입력하세요: 59\n```,
-      "output": "```\nF\n```
-    },
-    {
-      "input": "```\n점수를 입력하세요: -10\n```,
-      "output": "```\n잘못된 점수입니다.\n```
-    }
-  ],
-"ans": null,
-"wordCount": 0
-}
-, role=user}, {content=1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변, role=system}], model=gpt-4o, max_tokens=1500}] as "application/json"
-2024-08-20T10:25:19.543+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
-2024-08-20T10:25:19.544+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
-2024-08-20T10:25:19.545+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : GPT Response: 
-{
-  "text": "리스트 내의 소수 찾기 프로그램\n\n0 이상 100 이하의 정수를 포함하는 리스트가 주어질 때, 주어진 리스트에서 소수(prime number)를 모두 찾아 새로운 리스트로 반환하는 프로그램을 작성하세요. 또한, 다음과 같은 추가 규칙을 적용하세요.\n\n1. 반복문을 사용하여 리스트를 순회합니다.\n2. 소수를 찾는 과정에서 'for', 'while', 'break', 'continue', 'else' 등의 키워드를 활용합니다.\n3. 리스트 컴프리헨션을 사용하여 최종 결과를 반환합니다.\n\n입력 내용 설명:\n첫 번째 줄에 정수 리스트가 주어집니다.\n\n출력 내용 설명:\n소수만으로 이루어진 새로운 리스트를 출력합니다.\n\n예제 입력 1:\n```\n[2, 3, 4, 5, 10, 11]\n```\n\n예제 출력 1:\n```\n[2, 3, 5, 11]\n```\n\n예제 입력 2:\n```\n[8, 9, 10, 13, 17]\n```\n\n예제 출력 2:\n```\n[13, 17]\n```",
-  "level": "HARD",
-  "quizType": "CODE",
-  "q1": null,
-  "q2": null,
-  "q3": null,
-  "q4": null,
-  "examples": [
-    {
-      "input": "```\n[1, 4, 6, 7, 9]\n```",
-      "output": "```\n[7]\n```"
-    },
-    {
-      "input": "```\n[19, 22, 23, 24, 29]\n```",
-      "output": "```\n[19, 23, 29]\n```"
-    }
-  ],
-  "ans": null,
-  "wordCount": 0
-}
-
-2024-08-20T10:25:19.563+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 75
-2024-08-20T10:25:19.563+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: NORMAL
-2024-08-20T10:25:19.564+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 반복문, type: NUM, level: NORMAL, count: 1
-2024-08-20T10:25:19.565+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@16e32d33]
-2024-08-20T10:25:19.565+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 16
-2024-08-20T10:25:19.565+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: EASY
-2024-08-20T10:25:19.567+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : rootChapName: python
-2024-08-20T10:25:19.568+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : chapName: 반복문
-2024-08-20T10:25:19.569+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.ApiService    : rules: 1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변
-2024-08-20T10:25:19.570+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : HTTP POST https://api.openai.com/v1/chat/completions
-2024-08-20T10:25:19.570+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Accept=[text/plain, application/json, application/*+json, */*]
-2024-08-20T10:25:19.570+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Writing [{messages=[{content=python에서 반복문 챕터의 'for, while, break, continue, else, 반복문 중첩, 리스트 컴프리헨션'에 관한 문제 1개를 다음 내용을 참고하여 생성하시오.
-
-, role=user}, {content=- 문제 구성 법칙은 다음 설명을 참고: 1. 객관식 문제로 quizLevel은 'EASY', quizType은 'NUM'으로 설정
-2. 문제 전체 내용은 'text'에 표기할 것
-3. 문제 보기는 각각 'q1', 'q2', 'q3', 'q4'에 넣을 것
-4. 2-3줄의 이론과 관련한 내용으로 문제를 낼 것
-5. 보기 번호가 아닌 정답 내용을 마지막에 'ans'에 넣을 것
-6. 그 외의 값은 모두 null로 표기
-7. 단, 'wordCount'는 0으로 표기
-
-
-- JSON 형식의 문제 템플릿: {
-  "text": "문제 내용",
-  "level": "QuizLevel",
-  "quizType": "QuizType",
-  "q1": "보기1 내용",
-  "q2": "보기2 내용",
-  "q3": "보기3 내용",
-  "q4": "보기4 내용",
-  "examples": [
-    {
-      "input": "입력 예제 내용 1",
-      "output": "출력 예제 내용 1"
-    },
-    {
-      "input": "입력 예제 내용 2",
-      "output": "출력 예제 내용 2"
-    },
-    {
-      "input": "입력 예제 내용 3(존재할 경우 사용)",
-      "output": "출력 예제 내용 3(존재할 경우 사용)"
-    }
-    // 추가 입력/출력 예제 가능
-  ],
-  "ans": "정답 내용",
-  "wordCount": 정답 글자 수
-}
-
-- 참고할 수 있는 문제 형태 예시: {
-"text": "다음 설명에 해당하는 자료형은 무엇일까요?\n\n- 순서가 보장되고, 중복되는 값을 허용하며, 요소를 추가, 삭제, 수정할 수 있는 자료형입니다.",
-"level": "EASY",
-"quizType": "NUM",
-"q1": "튜플",
-"q2": "리스트",
-"q3": "딕셔너리",
-"q4": "집합",
-"input": null,
-"output": null,
-"ans": "리스트",
-"wordCount": 0
-}
-, role=user}, {content=1. python 교육 전문교사 역할
-2. python 외 다른 언어 답변 금지
-3. python 코딩 학습 외 질문에 답변 금지
-4. python 관련 질문에 반드시 답변
-5. 응답은 반드시 한국어로 답변, role=system}], model=gpt-4o, max_tokens=1500}] as "application/json"
-2024-08-20T10:25:24.014+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Response 200 OK
-2024-08-20T10:25:24.015+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.client.RestTemplate              : Reading to [java.lang.String] as "application/json"
-2024-08-20T10:25:24.015+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : GPT Response: {
-  "text": "다음 코드가 출력하는 최종 값은 무엇일까요?\n\nresult = []\nfor i in range(3):\n    for j in range(3):\n        if i == j:\n            continue\n        result.append((i, j))\n프린트할 때 result의 값은:",
-  "level": "EASY",
-  "quizType": "NUM",
-  "q1": "[(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]",
-  "q2": "[(0, 0), (1, 1), (2, 2)]",
-  "q3": "[(1, 0), (2, 0), (2, 1)]",
-  "q4": "[(0, 1), (1, 0), (0, 2)]",
-  "examples": [
-    {
-      "input": null,
-      "output": null
-    },
-    {
-      "input": null,
-      "output": null
-    }
-  ],
-  "ans": "[(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]",
-  "wordCount": 0
-}
-2024-08-20T10:25:24.018+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 76
-2024-08-20T10:25:24.018+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : 현재 QuizLevel: HARD
-2024-08-20T10:25:24.019+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : getRandomQuizzesByType curriculum: 반복문, type: CODE, level: HARD, count: 1
-2024-08-20T10:25:24.022+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.QuizService   : Selected quizzes: [com.bluecode.chatbot.domain.Quiz@5b1d720e]
-2024-08-20T10:25:24.022+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.bluecode.chatbot.service.TestService   : 선택된 QuizId: 64
-2024-08-20T10:25:24.035+09:00  INFO 58812 --- [chatbot] [http-nio-8080-exec-8] c.b.chatbot.controller.TestController    : createInitTest passed: TestResponseDto(tests=[TestResponseElementDto(testId=17, quizId=75, text=리스트 내의 소수 찾기 프로그램
-
-0 이상 100 이하의 정수를 포함하는 리스트가 주어질 때, 주어진 리스트에서 소수(prime number)를 모두 찾아 새로운 리스트로 반환하는 프로그램을 작성하세요. 또한, 다음과 같은 추가 규칙을 적용하세요.
-
-1. 반복문을 사용하여 리스트를 순회합니다.
-2. 소수를 찾는 과정에서 'for', 'while', 'break', 'continue', 'else' 등의 키워드를 활용합니다.
-3. 리스트 컴프리헨션을 사용하여 최종 결과를 반환합니다.
-
-입력 내용 설명:
-첫 번째 줄에 정수 리스트가 주어집니다.
-
-출력 내용 설명:
-소수만으로 이루어진 새로운 리스트를 출력합니다.
-
-예제 입력 1:
-```
-[2, 3, 4, 5, 10, 11]
-```
-
-예제 출력 1:
-```
-[2, 3, 5, 11]
-```
-
-예제 입력 2:
-```
-[8, 9, 10, 13, 17]
-```
-
-예제 출력 2:
-```
-[13, 17]
-```, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0), TestResponseElementDto(testId=18, quizId=16, text=```
-count = 0
-while count < 3:
-    print("Count is:", count)
-    count += 1
-else:
-    print("Loop ended.")
-```
-
-위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요., level=NORMAL, quizType=NUM, q1=Count is: 0
-Count is: 1
-Count is: 2, q2=Count is: 0
-Count is: 1
-Count is: 2
-Loop ended., q3=Loop ended.
-Count is: 0
-Count is: 1
-Count is: 2, q4=Count is: 1
-Count is: 2
-Loop ended., wordCount=0), TestResponseElementDto(testId=19, quizId=76, text=다음 코드가 출력하는 최종 값은 무엇일까요?
-
-result = []
-for i in range(3):
-    for j in range(3):
-        if i == j:
-            continue
-        result.append((i, j))
-프린트할 때 result의 값은:, level=EASY, quizType=NUM, q1=[(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)], q2=[(0, 0), (1, 1), (2, 2)], q3=[(1, 0), (2, 0), (2, 1)], q4=[(0, 1), (1, 0), (0, 2)], wordCount=0), TestResponseElementDto(testId=20, quizId=64, text=특정 숫자 제거하기
-
-정수 리스트와 제거할 숫자를 입력받아, 입력받은 숫자를 리스트에서 모두 제거하고 남은 숫자를 오름차순으로 정렬하여 출력하는 프로그램을 작성하세요.
-
-입력:
-- 첫 번째 줄에 정수 리스트의 요소 개수 N이 주어진다.
-두 번째 줄에 N개의 정수가 공백으로 구분되어 주어진다.
-세 번째 줄에 제거할 숫자 X가 주어진다.
-
-출력:
-- 입력받은 숫자를 제거하고 정렬된 결과를 한 줄에 공백으로 구분하여 출력한다.
-
-예제 입력 1:
-```
-5
-10 20 30 40 50
-30
-```
-
-예제 출력 1:
-```
-10 20 40 50
-```
-
-예제 입력 2:
-```
-4
-1 2 3 4
-5
-```
-
-예제 출력 2:
-```
-1 2 3 4
-```, level=HARD, quizType=CODE, q1=null, q2=null, q3=null, q4=null, wordCount=0)])
-2024-08-20T10:25:24.036+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2024-08-20T10:25:24.036+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [TestResponseDto(tests=[TestResponseElementDto(testId=17, quizId=75, text=리스트 내의 소수 찾기 프로그램<EOL><EOL>0 이상 100 (truncated)...]
-2024-08-20T10:25:24.037+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2024-08-20T10:25:24.037+09:00 DEBUG 58812 --- [chatbot] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
-2024-08-20T10:29:03.872+09:00  INFO 58812 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-08-20T10:29:03.874+09:00  INFO 58812 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-08-20T10:29:03.878+09:00  INFO 58812 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-08-30T09:32:08.617+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 36304 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-08-30T09:32:08.624+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-08-30T09:32:08.683+09:00  INFO 36304 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-30T09:32:08.684+09:00  INFO 36304 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-30T09:32:09.379+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:32:09.380+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-30T09:32:09.405+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-08-30T09:32:09.609+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:32:09.610+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-30T09:32:09.811+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 197 ms. Found 10 JPA repository interfaces.
+2024-08-30T09:32:09.822+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:32:09.822+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-30T09:32:09.835+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.835+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.835+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.836+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizCaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.836+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.836+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.837+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.837+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.837+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.837+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:32:09.837+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2024-08-30T09:32:10.467+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-08-30T09:32:10.478+09:00  INFO 36304 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-30T09:32:10.478+09:00  INFO 36304 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-30T09:32:10.541+09:00  INFO 36304 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-30T09:32:10.542+09:00  INFO 36304 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1857 ms
+2024-08-30T09:32:10.568+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-08-30T09:32:10.874+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c422275
+2024-08-30T09:32:10.878+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-08-30T09:32:10.885+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-08-30T09:32:10.989+09:00  INFO 36304 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-30T09:32:11.050+09:00  INFO 36304 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-30T09:32:11.086+09:00  INFO 36304 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-30T09:32:11.307+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-30T09:32:11.377+09:00  WARN 36304 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-30T09:32:12.188+09:00  INFO 36304 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-30T09:32:13.558+09:00  INFO 36304 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-30T09:32:13.826+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-30T09:32:14.489+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
+2024-08-30T09:32:14.705+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 파이썬 환경
+2024-08-30T09:32:14.705+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 변수와 자료형
+2024-08-30T09:32:14.705+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 문자열 처리
+2024-08-30T09:32:14.705+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 조건문
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 반복문
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 함수
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 자료구조
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 파일 처리
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 예외 처리
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 클래스와 객체
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 모듈과 패키지
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 변수와 자료형
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 문자열 처리
+2024-08-30T09:32:14.706+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 조건문
+2024-08-30T09:32:15.995+09:00  WARN 36304 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-30T09:32:16.121+09:00 DEBUG 36304 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 43 mappings in 'requestMappingHandlerMapping'
+2024-08-30T09:32:16.200+09:00 DEBUG 36304 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-30T09:32:16.229+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6954b995, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5f62c46b, org.springframework.security.web.context.SecurityContextHolderFilter@3c8d1825, org.springframework.security.web.header.HeaderWriterFilter@41e25436, org.springframework.web.filter.CorsFilter@37d160ae, org.springframework.security.web.authentication.logout.LogoutFilter@13fb9b19, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6810fb82, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@79635458, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@36f8b238, org.springframework.security.web.access.ExceptionTranslationFilter@22385acc, org.springframework.security.web.access.intercept.AuthorizationFilter@1c8550a4]
+2024-08-30T09:32:16.279+09:00 DEBUG 36304 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 2 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-30T09:32:16.307+09:00 DEBUG 36304 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-30T09:32:16.437+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-30T09:32:16.474+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-08-30T09:32:16.484+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 8.247 seconds (process running for 8.993)
+2024-08-30T09:32:16.488+09:00  INFO 36304 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-08-30T09:33:43.548+09:00  INFO 36304 --- [chatbot] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 3 deletions, 0 modifications)
+2024-08-30T09:33:43.709+09:00  INFO 36304 --- [chatbot] [Thread-6] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-30T09:33:43.712+09:00  INFO 36304 --- [chatbot] [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-08-30T09:33:43.721+09:00  INFO 36304 --- [chatbot] [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-08-30T09:33:43.834+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 36304 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-08-30T09:33:43.834+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-08-30T09:33:44.257+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:33:44.257+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-30T09:33:44.261+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-08-30T09:33:44.335+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:33:44.335+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-30T09:33:44.390+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 10 JPA repository interfaces.
+2024-08-30T09:33:44.393+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:33:44.394+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-30T09:33:44.399+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.399+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.400+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.400+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizCaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.400+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.400+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.400+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.400+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.400+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.401+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:44.401+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-08-30T09:33:44.598+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-08-30T09:33:44.599+09:00  INFO 36304 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-30T09:33:44.599+09:00  INFO 36304 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-30T09:33:44.632+09:00  INFO 36304 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-30T09:33:44.632+09:00  INFO 36304 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 794 ms
+2024-08-30T09:33:44.642+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-08-30T09:33:44.657+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3fddaf2
+2024-08-30T09:33:44.657+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-08-30T09:33:44.657+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-08-30T09:33:44.683+09:00  INFO 36304 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-30T09:33:44.687+09:00  INFO 36304 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-30T09:33:44.696+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-30T09:33:44.699+09:00  WARN 36304 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-30T09:33:44.870+09:00  INFO 36304 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-30T09:33:46.018+09:00  INFO 36304 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-30T09:33:46.235+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 파이썬 환경
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 변수와 자료형
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 문자열 처리
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 조건문
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 반복문
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 함수
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 자료구조
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 파일 처리
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 예외 처리
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 클래스와 객체
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 모듈과 패키지
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 변수와 자료형
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 문자열 처리
+2024-08-30T09:33:46.286+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 조건문
+2024-08-30T09:33:46.972+09:00  WARN 36304 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-30T09:33:46.990+09:00 DEBUG 36304 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 37 mappings in 'requestMappingHandlerMapping'
+2024-08-30T09:33:47.008+09:00 DEBUG 36304 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-30T09:33:47.014+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@236db2ab, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7a032753, org.springframework.security.web.context.SecurityContextHolderFilter@7bbc228f, org.springframework.security.web.header.HeaderWriterFilter@75ceeb2e, org.springframework.web.filter.CorsFilter@6d4bc833, org.springframework.security.web.authentication.logout.LogoutFilter@4c42beb3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4dc114a0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@54655091, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7dd8695f, org.springframework.security.web.access.ExceptionTranslationFilter@6cfea869, org.springframework.security.web.access.intercept.AuthorizationFilter@77fceffa]
+2024-08-30T09:33:47.030+09:00 DEBUG 36304 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 2 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-30T09:33:47.032+09:00 DEBUG 36304 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-30T09:33:47.071+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-30T09:33:47.090+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-08-30T09:33:47.096+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 3.302 seconds (process running for 99.606)
+2024-08-30T09:33:47.098+09:00  INFO 36304 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-08-30T09:33:47.099+09:00  INFO 36304 --- [chatbot] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-08-30T09:33:48.548+09:00  INFO 36304 --- [chatbot] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (3 additions, 0 deletions, 0 modifications)
+2024-08-30T09:33:48.673+09:00  INFO 36304 --- [chatbot] [Thread-8] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-30T09:33:48.673+09:00  INFO 36304 --- [chatbot] [Thread-8] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-08-30T09:33:48.677+09:00  INFO 36304 --- [chatbot] [Thread-8] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-08-30T09:33:48.742+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 36304 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-08-30T09:33:48.742+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-08-30T09:33:48.954+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:33:48.955+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-30T09:33:48.956+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2024-08-30T09:33:48.984+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:33:48.985+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-30T09:33:49.023+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 10 JPA repository interfaces.
+2024-08-30T09:33:49.026+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:33:49.026+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-30T09:33:49.030+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.031+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.031+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.031+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizCaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.031+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.031+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.031+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.032+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.032+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.032+09:00  INFO 36304 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:33:49.032+09:00  INFO 36304 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2024-08-30T09:33:49.107+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-08-30T09:33:49.107+09:00  INFO 36304 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-30T09:33:49.108+09:00  INFO 36304 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-30T09:33:49.132+09:00  INFO 36304 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-30T09:33:49.132+09:00  INFO 36304 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 388 ms
+2024-08-30T09:33:49.140+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2024-08-30T09:33:49.149+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@77c2f4ed
+2024-08-30T09:33:49.149+09:00  INFO 36304 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2024-08-30T09:33:49.149+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-08-30T09:33:49.167+09:00  INFO 36304 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-30T09:33:49.170+09:00  INFO 36304 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-30T09:33:49.175+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-30T09:33:49.177+09:00  WARN 36304 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-30T09:33:49.261+09:00  INFO 36304 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-30T09:33:50.116+09:00  INFO 36304 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-30T09:33:50.311+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 파이썬 환경
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 변수와 자료형
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 문자열 처리
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 조건문
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 반복문
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 함수
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 자료구조
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 파일 처리
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 예외 처리
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 클래스와 객체
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 모듈과 패키지
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 변수와 자료형
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 문자열 처리
+2024-08-30T09:33:50.368+09:00  INFO 36304 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 조건문
+2024-08-30T09:33:51.043+09:00  WARN 36304 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-30T09:33:51.063+09:00 DEBUG 36304 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 43 mappings in 'requestMappingHandlerMapping'
+2024-08-30T09:33:51.084+09:00 DEBUG 36304 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-30T09:33:51.089+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@560853aa, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3d3acaae, org.springframework.security.web.context.SecurityContextHolderFilter@69b1a08, org.springframework.security.web.header.HeaderWriterFilter@ac53444, org.springframework.web.filter.CorsFilter@6a62719, org.springframework.security.web.authentication.logout.LogoutFilter@26c9b20f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3a0947ac, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5b98d465, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@165d8c18, org.springframework.security.web.access.ExceptionTranslationFilter@59d704ec, org.springframework.security.web.access.intercept.AuthorizationFilter@4b2b6815]
+2024-08-30T09:33:51.098+09:00 DEBUG 36304 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 2 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-30T09:33:51.100+09:00 DEBUG 36304 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-30T09:33:51.121+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-30T09:33:51.133+09:00  INFO 36304 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-08-30T09:33:51.136+09:00  INFO 36304 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 2.414 seconds (process running for 103.645)
+2024-08-30T09:33:51.137+09:00  INFO 36304 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
+2024-08-30T09:33:51.137+09:00  INFO 36304 --- [chatbot] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-08-30T09:40:23.886+09:00  INFO 36304 --- [chatbot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-30T09:40:23.887+09:00  INFO 36304 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2024-08-30T09:40:23.890+09:00  INFO 36304 --- [chatbot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2024-08-30T09:40:27.945+09:00  INFO 25648 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Starting ChatbotApplication using Java 17.0.9 with PID 25648 (C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend\build\classes\java\main started by ewoo2 in C:\Users\ewoo2\OneDrive\문서\GitHub\공개SW프로젝트-Win\2024-1-CECD1-BlueCode-3\Backend)
+2024-08-30T09:40:27.947+09:00  INFO 25648 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-08-30T09:40:27.984+09:00  INFO 25648 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-30T09:40:27.985+09:00  INFO 25648 --- [chatbot] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-30T09:40:28.479+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:40:28.479+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-30T09:40:28.494+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-08-30T09:40:28.655+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:40:28.656+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-30T09:40:28.804+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 144 ms. Found 10 JPA repository interfaces.
+2024-08-30T09:40:28.814+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-30T09:40:28.814+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-30T09:40:28.820+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.ChatRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.821+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.CurriculumRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.821+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.MissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.821+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizCaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.821+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.QuizRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.822+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.822+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.StudyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.822+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.TestRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.822+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserMissionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.822+09:00  INFO 25648 --- [chatbot] [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bluecode.chatbot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-08-30T09:40:28.822+09:00  INFO 25648 --- [chatbot] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2024-08-30T09:40:29.371+09:00  INFO 25648 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-08-30T09:40:29.380+09:00  INFO 25648 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-30T09:40:29.380+09:00  INFO 25648 --- [chatbot] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-30T09:40:29.448+09:00  INFO 25648 --- [chatbot] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-30T09:40:29.449+09:00  INFO 25648 --- [chatbot] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1463 ms
+2024-08-30T09:40:29.479+09:00  INFO 25648 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-08-30T09:40:29.777+09:00  INFO 25648 --- [chatbot] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7761f9f8
+2024-08-30T09:40:29.779+09:00  INFO 25648 --- [chatbot] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-08-30T09:40:29.791+09:00  INFO 25648 --- [chatbot] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/bluecode?serverTimezone=Asia/Seoul'
+2024-08-30T09:40:29.948+09:00  INFO 25648 --- [chatbot] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-30T09:40:30.037+09:00  INFO 25648 --- [chatbot] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-30T09:40:30.083+09:00  INFO 25648 --- [chatbot] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-30T09:40:30.347+09:00  INFO 25648 --- [chatbot] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-30T09:40:30.428+09:00  WARN 25648 --- [chatbot] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-08-30T09:40:31.249+09:00  INFO 25648 --- [chatbot] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-30T09:40:32.426+09:00  INFO 25648 --- [chatbot] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-30T09:40:32.612+09:00  INFO 25648 --- [chatbot] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-08-30T09:40:33.088+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : Users have been initialized
+2024-08-30T09:40:33.268+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 파이썬 환경
+2024-08-30T09:40:33.268+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 변수와 자료형
+2024-08-30T09:40:33.268+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 문자열 처리
+2024-08-30T09:40:33.268+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 조건문
+2024-08-30T09:40:33.268+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 반복문
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 함수
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 자료구조
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 파일 처리
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 예외 처리
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 클래스와 객체
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : curriculums: 모듈과 패키지
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 변수와 자료형
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 문자열 처리
+2024-08-30T09:40:33.269+09:00  INFO 25648 --- [chatbot] [restartedMain] c.b.chatbot.config.InitDb$InitService    : chap: 조건문
+2024-08-30T09:40:34.213+09:00  WARN 25648 --- [chatbot] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-30T09:40:34.300+09:00 DEBUG 25648 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 43 mappings in 'requestMappingHandlerMapping'
+2024-08-30T09:40:34.370+09:00 DEBUG 25648 --- [chatbot] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-08-30T09:40:34.397+09:00  INFO 25648 --- [chatbot] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@589e9f5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@393f4d37, org.springframework.security.web.context.SecurityContextHolderFilter@5023c596, org.springframework.security.web.header.HeaderWriterFilter@7cb5014d, org.springframework.web.filter.CorsFilter@3dde3adc, org.springframework.security.web.authentication.logout.LogoutFilter@14b27bf7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@28b613a9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1124ea3b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6aeeeee3, org.springframework.security.web.access.ExceptionTranslationFilter@23b7ad02, org.springframework.security.web.access.intercept.AuthorizationFilter@7ab8c65d]
+2024-08-30T09:40:34.447+09:00 DEBUG 25648 --- [chatbot] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 2 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-08-30T09:40:34.479+09:00 DEBUG 25648 --- [chatbot] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-08-30T09:40:34.584+09:00  INFO 25648 --- [chatbot] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-30T09:40:34.605+09:00  INFO 25648 --- [chatbot] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-08-30T09:40:34.616+09:00  INFO 25648 --- [chatbot] [restartedMain] c.bluecode.chatbot.ChatbotApplication    : Started ChatbotApplication in 7.056 seconds (process running for 7.711)
+2024-08-30T09:40:34.619+09:00  INFO 25648 --- [chatbot] [restartedMain] com.bluecode.chatbot.ApiKeyLogger        : Current API Key: sk-************************************************
