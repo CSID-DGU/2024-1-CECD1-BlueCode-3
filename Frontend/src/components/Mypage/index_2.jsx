@@ -93,6 +93,11 @@ function Study_theory() {
     navigate(`/study/comprehension/${chapId}`);
   } 
 
+  const getStyle = (index, subIndex) => {
+    return currentChapter[index] && currentChapter[index][subIndex] 
+      ? color
+      : nullColor
+  }
 
   return (
     <TestSection>
@@ -128,25 +133,25 @@ function Study_theory() {
               <SubLectureInfo>
               {subChapter[index].map((subItem, subIndex) => (
                 <SubLecture>
-                  <SubLectureTitle key={subIndex} style={currentChapter[index]&&currentChapter[index][subIndex]?color:nullColor}> {subItem} </SubLectureTitle>  
+                  <SubLectureTitle key={subIndex} style={getStyle(index, subIndex)}> {subItem} </SubLectureTitle>  
                   {(chapterLevel[index] === 'EASY' || chapterPass[index]) && (
                   <LectureData>
                     <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'DEF')}> 이론 </Data>
                     <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'CODE')}> 실습 </Data>
                     <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </Data>
                   </LectureData>
-              )}
-                {(!chapterPass[index] && chapterLevel[index] === 'NORMAL') && (
-                  <LectureData style={{display : "flex", marginLeft : "20px"}}>
+                  )}
+                  {(!chapterPass[index] && chapterLevel[index] === 'NORMAL') && (
+                  <LectureData>
                     <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'CODE')}> 실습 </Data>
                     <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </Data>
                   </LectureData>
-                )}
-                {(!chapterPass[index] && chapterLevel[index] === 'HARD') && (
-                  <LectureData style={{display : "flex", marginLeft : "20px"}}>
+                  )}
+                  {(!chapterPass[index] && chapterLevel[index] === 'HARD') && (
+                  <LectureData>
                     <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </Data>
                   </LectureData>
-                )}
+                  )}
                 </SubLecture>
               ))}
               </SubLectureInfo>
@@ -311,6 +316,11 @@ const LectureData = styled.div`
 
 const Data = styled.div`
   color : grey;
+  cursor : pointer;
   font-weight : bold;
   margin : 0rem 0.25rem;
+
+  &:hover {
+    color : #008BFF;
+  }
 `

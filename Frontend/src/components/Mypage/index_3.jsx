@@ -213,19 +213,6 @@ function Study_theory() {
      }
   }
 
-/*
-<QuestionTitle>
-  <QuestionDate> - 오늘 </QuestionDate>
-  <QuestionList>
-    <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-    <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-    <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-  </QuestionList>
-</QuestionTitle> */
-
-
-
-//{Number(curr) + 1}장
 
 
   return (
@@ -260,45 +247,44 @@ function Study_theory() {
             <OrderType style={tag?color:{}} onClick={selectTag}> ㅇ 태그별 </OrderType>
           </Order>
           <QuestionRecord height={height}> 
-            {date && 
-            <div>
-            {Object.keys(groupedDataByDate).map(date => (
+            {date && <QuestionInfo>
+              {Object.keys(groupedDataByDate).map(date => (
               <div key={date}>
-                <h2> {date} </h2>
-                <ul>
+                <QuestionTitle> {date.substr(5, 2) + '월 ' + date.substr(8, 2) + '일'} </QuestionTitle>
+                <QuestionList>
                   {groupedDataByDate[date].map((item, index) => (
-                    <li key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</li>
+                    <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
                   ))}
-                </ul>
+                </QuestionList>
               </div>
-            ))}
-          </div>}
-            {curriculum && <div>
-            {Object.keys(groupedDataByChapter).map(curr => (
+              ))}
+            </QuestionInfo>}
+            {curriculum && <QuestionInfo>
+              {Object.keys(groupedDataByChapter).map(curr => (
               <div key={curr}>
-                <h2> {curr} </h2>
-                <ul>
+                <QuestionTitle> {curr} </QuestionTitle>
+                <QuestionList>
                   {groupedDataByChapter[curr].map((item, index) => (
-                    <li key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</li>
+                    <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
                   ))}
-                </ul>
+                </QuestionList>
               </div>
-            ))}
-          </div>}
-            {tag && <div>
+              ))}
+            </QuestionInfo>}
+            {tag && <QuestionInfo>
             {Object.keys(groupedDataByTag).map(tag => (
               <div key={tag}>
-                <h2> {tag} </h2>
-                <ul>
+                <QuestionTitle> {tag} </QuestionTitle>
+                <QuestionList>
                   {groupedDataByTag[tag].map((item, index) => (
-                    <li key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</li>
+                    <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
                   ))}
-                </ul>
+                </QuestionList>
               </div>
-            ))}
-          </div>}
+              ))}
+            </QuestionInfo>}
             <QuestionContent height={height}>
-              {selectedDialog === null ? "":<Dialog_client> <p> {selectedDialog.question} </p> </Dialog_client> } 
+              {selectedDialog === null ? "":<Dialog_client> <p> {selectedDialog.question} </p> </Dialog_client>} 
               {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (<Dialog_server> <p> 
                               <div key={ansIndex}>{ans}</div> </p> </Dialog_server>
                             ))}
@@ -413,6 +399,7 @@ const Order = styled.div`
 
 const OrderType = styled.div`
   margin : 0;
+  cursor : pointer;
   font-weight : bold;
   font-size : 1.05rem;
   margin-right : 2.5rem;
@@ -425,9 +412,9 @@ const QuestionRecord = styled.div`
   height : ${(props) => `${(props.height - 265) / 16}rem`};
 `
 
-const QuestionTitle = styled.div`
-  width : 40rem;
-  padding : 0.75rem 1.25rem 1.25rem;
+const QuestionInfo = styled.div`
+  width : 32.5rem;
+  padding : 0.75rem 3.75rem 1.25rem 1.25rem;
   overflow : scroll;
   height : 30.375rem;
 
@@ -436,17 +423,22 @@ const QuestionTitle = styled.div`
   }
 `
 
-const QuestionDate = styled.div`
+const QuestionTitle = styled.h3`
   font-weight : bold;
   margin : 0.5rem 0rem;
  `
 
  const QuestionList = styled.div`
-  margin : 0.5rem 0rem 1.5rem 0.75rem;
+  margin : 0.5rem 0rem 1.5rem 1rem;
  `
 
  const QuestionListSub = styled.div`
-  padding : 0.05rem;
+  color : grey;
+  padding : 0.125rem;
+
+  &:hover {
+    font-weight : bold;
+  }
  `
 
 const QuestionContent = styled.div`

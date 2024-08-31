@@ -1,11 +1,12 @@
-import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
 import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
+import BCODE from '../../logo_w.png';
+import Markdown from '../../Markdown';
+import styled from 'styled-components';
+import axiosInstance from '../../axiosInstance';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../axiosInstance';
 
 
 function Study_theory() {
@@ -62,14 +63,14 @@ function Study_theory() {
   const AddDialog = async () => {
     if(dialog) {
       if(!divValue) {
-        setDialogs((pre) => [...pre, <Dialog id="chat"> 태그를 선택해주세요 </Dialog>]);
+        setDialogs((pre) => [...pre, <Dialog_server> <p> 태그를 선택해주세요 </p> </Dialog_server>]);
       }
       else {
-        setDialogs((pre) => [...pre, <Dialog id="user"> {dialog} </Dialog>]);
+        setDialogs((pre) => [...pre, <Dialog_client> <p> {dialog} </p> </Dialog_client>]);
         try {
           const res = await getChatResponse(dialog, divValue);
           
-          setDialogs((pre) => [...pre, <Dialog id="chat"> {res.answerList[0]} </Dialog>]);
+          setDialogs((pre) => [...pre, <Dialog_server> <p> {res.answerList[0]} </p> </Dialog_server>]);
           if (divValue === "CODE" || divValue === "ERRORS") {
             console.log("1로바꿈")
             setStep(1);
@@ -84,7 +85,7 @@ function Study_theory() {
 
   
   const AddStepDialog = async () => {
-    setDialogs((pre) => [...pre, <Dialog id="chat"> {stepDialogs.answerList[step]} </Dialog>]);
+    setDialogs((pre) => [...pre, <Dialog_server> <p> {stepDialogs.answerList[step]} </p> </Dialog_server>]);
 
     // 백에 next 처리 요청
     postNextResponse(stepDialogs.chatId);
@@ -124,13 +125,13 @@ function Study_theory() {
         // console.log(res[i].question);
         
         const question = res[i].question
-        dialogsToAdd.push(<Dialog id="user"> {question} </Dialog>);
+        dialogsToAdd.push(<Dialog_client> <p> {question} </p> </Dialog_client>);
 
         //console.log(res[i].answer);
         const answer = res[i].answer;
         //console.log(answer.length);
         for (var j = 0; j < answer.length; j++) {
-          dialogsToAdd.push(<Dialog id="chat"> {answer[j]} </Dialog>);
+          dialogsToAdd.push(<Dialog_server> <p> {answer[j]} </p> </Dialog_server>);
         }
       }
       setDialogs((pre) => [...pre, ...dialogsToAdd]);
@@ -237,6 +238,10 @@ function Study_theory() {
     }
   }
 
+
+  const markdown = `
+  
+  `;
  
   return (
     <TestSection>
@@ -276,7 +281,9 @@ function Study_theory() {
         </Dynamic>
       </NavSection>
       <ContentSection width={contentWidth}>
-        <Instruction height={height}> {theory} </Instruction>
+        <Instruction height={height}>
+           <Markdown>{theory}</Markdown> 
+        </Instruction>
         <Buttons>
           <Before> <img src={Left}></img> </Before>
           <After onClick={goToTraining}> <img src={Right}></img> </After>
@@ -288,7 +295,7 @@ function Study_theory() {
           {dialogs.map(div => div)}
           <div ref={chat}></div>
         </Chat>
-        {step > 0 && <ChatType>
+        {(step > 0) && <ChatType>
           <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
           <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
         </ChatType>}
@@ -398,8 +405,13 @@ const ContentSection = styled.div`
 const Instruction = styled.div`
   overflow : scroll;
   margin : 1rem 1rem 0.5rem;
-  background : rgba(0, 0, 0, 0.25);
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);;
+  padding : 0rem 1rem;
   height : ${(props) => `${(props.height - 200) / 16}rem`};
+  
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `
 
 const Buttons = styled.div`
@@ -464,44 +476,42 @@ const Chat = styled.div`
   margin : 1rem;
   display : flex;
   overflow : scroll;
-  align-items : flex-end;
   flex-direction : column;
   height : ${(props) => `${(props.height - 277.5) / 16}rem`};
 
   &::-webkit-scrollbar {
     display : none;
   }
+`
 
-  #user {
+const Dialog_client = styled.div`
+  display : flex;
+  justify-content : flex-end;
+
+  p {
+    margin : 0.5rem 0;
+    width : fit-content;
     background : #FFFFFF;
+    padding : 0.75rem 1rem;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
     border-radius : 1.5rem 1.5rem 0rem 1.5rem;
   }
+`
 
-  #chat {
+const Dialog_server = styled.div`
+  p {
     color : #FFFFFF;
+    margin : 0.5rem 0;
+    width : fit-content;
+    padding : 0.75rem 1rem;
+    word-break : break-word;
+    overflow-wrap : break-word;
     background : rgba(0, 139, 255, 0.75);
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
     border-radius : 1.5rem 1.5rem 1.5rem 0rem;
   }
-`
-
-const Dialog = styled.div`
-  margin : 0.5rem 0;
-  width : fit-content;
-  padding : 0.75rem 1rem;
-  word-break : break-word;
-  overflow-wrap : break-word;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-`
-
-const StepChat = styled.div`
-  position : relative;
-  top : 3rem;
-  height : 3rem;
-  display : flex;
-  align-item : center;
-  justify-content : center;
-  border-top : 0.25rem solid #008BFF;
-  border-bottom : 0.25rem solid #008BFF;
 `
 
 const ChatType = styled.div`

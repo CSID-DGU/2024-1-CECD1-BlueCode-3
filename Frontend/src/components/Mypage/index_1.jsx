@@ -139,7 +139,7 @@ const getUserInfo = async () => {
             <NavLink style={textDeco} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
             <NavLink style={textDeco} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
             <NavLink style={textDeco} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
-            </Dynamic>
+          </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
           <ProgressName> ㅇ 교육 과정 진행 상황 </ProgressName>
@@ -171,35 +171,34 @@ const getUserInfo = async () => {
             <Mission style={{backgroundColor : "#00E5BA"}}>
               <MissionContent>
                 <Term> 일간 </Term>
-                <SubMissionContent>
                   {missionDaily.map(item => (
-                    <SubMission key={item.id}> {item.text} {item.currentCount} / {item.missionCount} </SubMission>
+                    <SubMissionContent>
+                    <SubMission key={item.id}> {item.text}  </SubMission>
+                    <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
+                  </SubMissionContent>
                   ))}
-                </SubMissionContent>
               </MissionContent>
             </Mission>
             <Mission style={{backgroundColor : "#00CFEE"}}>
               <MissionContent>
                 <Term> 주간 </Term>
-                <SubMissionContent>
                   {missionWeekly.map(item => (
-                    <SubMission key={item.id}> {item.text} {item.currentCount} / {item.missionCount} </SubMission>
+                  <SubMissionContent>
+                    <SubMission key={item.id}> {item.text}  </SubMission>
+                    <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
+                  </SubMissionContent>
                   ))}
-                </SubMissionContent>
               </MissionContent>
             </Mission>
             <Mission style={{backgroundColor : "#00B2FF"}}>
               <MissionContent>
                 <Term> 업적 </Term>
-                <SubMissionContent>
-                  {challenge.map(item => (
-                   item.missionStatus === "COMPLETED" && (
-                  <SubMission key={item.id} style={{color:"black"}}> {item.text} </SubMission>
-                    )
-                  ))}
-                </SubMissionContent>
+                  {challenge.map(item => (item.missionStatus === "COMPLETED" && (
+                  <SubMissionContent>
+                    <SubMission key={item.id} style={{color:"black"}}> {item.text} </SubMission>
+                  </SubMissionContent>
+                  )))}
               </MissionContent>
-              <PointBtn style={{backgroundColor : "#00B2FF"}}> 업적 보기 </PointBtn>
             </Mission>
           </CurrentProgress>
         </ContentSection>
@@ -313,6 +312,7 @@ const ProgressName = styled.p`
 `
 
 const CurrentProgress = styled.div`
+  width : 72.5rem;
   display : flex;
   margin : 1rem auto 0rem;
 `
@@ -367,10 +367,10 @@ const SubLecture = styled.p`
 
 const Mission = styled.div`
   width : 18rem;
-  padding : 1rem;
   display : flex;
-  height : 9.75rem;
+  height : 12.5rem;
   margin : 1rem auto 0rem;
+  padding : 0rem 1rem 1rem;
   border-radius : 1.25rem 0rem 1.25rem 0rem;
 `
 
@@ -380,25 +380,29 @@ const MissionContent = styled.div`
   width : 12.5rem;
   align-items : left;
   font-weight : bold;
-  justify-content : center;
+  flex-direction : column;
 `
 
 const Term = styled.p`
-  margin : 0;
   font-size : 1.25rem;
+  margin-bottom : 1rem;
 `
 
 const SubMissionContent = styled.div`
+  display : flex;
+  width : 22.5rem;
+  margin : 0.125rem 0rem;
 
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `
 
 const SubMission = styled.div`
-
+  width : 15rem;
 `
 
-const PointBtn = styled.button`
-  border : none;
-  color : #FFFFFF;
-  width : 5.375rem;
-  font-weight : bold;
+const SubMissionCount = styled.div`
+  width : 2.75rem;
+  text-align : right;
 `

@@ -2,10 +2,11 @@ import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
 import BCODE from '../../logo_w.png';
+import Markdown from '../../Markdown';
 import styled from 'styled-components';
 import axiosInstance from '../../axiosInstance';
-import { useRef, useState, useEffect } from 'react';
-import { NavLink, useParams, useNavigate ,redirect } from 'react-router-dom';
+import React, { useRef, useState, useEffect } from 'react';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 
 
 
@@ -67,14 +68,14 @@ function Study_training() {
   const AddDialog = async () => {
     if(dialog) {
       if(!divValue) {
-        setDialogs((pre) => [...pre, <Dialog id="chat"> 태그를 선택해주세요 </Dialog>]);
+        setDialogs((pre) => [...pre, <Dialog_server> <p> 태그를 선택해주세요 </p> </Dialog_server>]);
       }
       else {
-        setDialogs((pre) => [...pre, <Dialog id="user"> {dialog} </Dialog>]);
+        setDialogs((pre) => [...pre, <Dialog_client> <p> {dialog} </p> </Dialog_client>]);
         try {
           const res = await getChatResponse(dialog, divValue);
           
-          setDialogs((pre) => [...pre, <Dialog id="chat"> {res.answerList[0]} </Dialog>]);
+          setDialogs((pre) => [...pre, <Dialog_server> <p> {res.answerList[0]} </p> </Dialog_server>]);
           if (divValue === "CODE" || divValue === "ERRORS") {
             console.log("1로바꿈")
             setStep(1);
@@ -89,7 +90,7 @@ function Study_training() {
 
 
   const AddStepDialog = async () => {
-    setDialogs((pre) => [...pre, <Dialog id="chat"> {stepDialogs.answerList[step]} </Dialog>]);
+    setDialogs((pre) => [...pre, <Dialog_server> <p> {stepDialogs.answerList[step]} </p> </Dialog_server>]);
 
     // 백에 next 처리 요청
     postNextResponse(stepDialogs.chatId);
@@ -130,13 +131,13 @@ const getSubChapterChatHistory =  async () =>{
       // console.log(res[i].question);
       
       const question = res[i].question
-      dialogsToAdd.push(<Dialog id="user"> {question} </Dialog>);
+      dialogsToAdd.push(<Dialog_client> <p> {question} </p> </Dialog_client>);
 
       //console.log(res[i].answer);
       const answer = res[i].answer;
       //console.log(answer.length);
       for (var j = 0; j < answer.length; j++) {
-        dialogsToAdd.push(<Dialog id="chat"> {answer[j]} </Dialog>);
+        dialogsToAdd.push(<Dialog_server> <p> {answer[j]} </p> </Dialog_server>);
       }
     }
     setDialogs((pre) => [...pre, ...dialogsToAdd]);
@@ -214,7 +215,6 @@ useEffect(()=>{
   }, []);
 
   const navigate = useNavigate();
-  const redirect = useNavigate();
   const goToNext = () => {
     
     // quiz 에서 다음 누르면 해당 서브챕터 pass 요청
@@ -244,10 +244,9 @@ useEffect(()=>{
       navigate(-1);
     }
   }
-  const [training, setTraining] = useState();
+  const [training, setTraining] = useState('');
 
-  useEffect(()=>{
-  }, [training]);
+  //useEffect(()=>{}, [training]);
 
   // DEF 이론 , CODE 예시 코드, QUIZ 코드를 이용한 예시 문제
   const getStudyText = async (subChapterid, textType) => {
@@ -279,13 +278,14 @@ useEffect(()=>{
         'userId': userId,
         'curriculumId': subChapterid
       };
-      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass',CurriculumPassCallDto);
+      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass', CurriculumPassCallDto);
       console.log(res);
     }
     catch (err){
       console.error(err); 
     }
   }
+
 
 
   return (
@@ -325,26 +325,18 @@ useEffect(()=>{
             <Nav> 제 15장 </Nav>
           </Dynamic>
         </NavSection>
-        <ContentSection width={contentWidth}>
-          <Instruction> {training} </Instruction>
-          <Buttons>
-            <Before onClick={goBack}> <img src={Left}></img> </Before>
-            <After onClick={goToNext}> <img src={Right}></img> </After>
-            <GPT onClick={ShowGpt}> GPT </GPT>
-          </Buttons>
+        <ContentSection width={width}>
+          <Instruction height={height}>
+            <Markdown>{training}</Markdown>
+          </Instruction>
           <Train height={height} width={contentWidth}>
             <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
             <Buttons_>
+              <GPT onClick={ShowGpt}> GPT </GPT>
               <Interpret> 실행 </Interpret>
-              <Save> 저장 </Save>
-              <Submit> 제출 </Submit>
+              <After onClick={goToNext}> <img src={Right}></img> </After>
+              <Before onClick={goBack}> <img src={Left}></img> </Before>
             </Buttons_>
-            <CodeResult>
-              <p>--- 코드 실행 결과 ---</p>
-              <ResultPre>
-                <Result width={contentWidth}> {result} </Result>
-              </ResultPre>
-            </CodeResult> 
           </Train>
         </ContentSection>
         {gptValue && (<ChatbotSection>
@@ -454,28 +446,31 @@ const Dynamic = styled.div`
 
 const ContentSection = styled.div`
   margin : 2rem;
+  display : flex;
   border-radius : 1rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
   width : ${(props) => `${(props.width - 304) / 16}rem`};
 `
 
 const Instruction = styled.div`
-  height : 3.75rem;
-  margin : 1rem 1rem 0.5rem;
-  background : rgba(0, 0, 0, 0.25);
+  width : 25rem;
   overflow : scroll;
-`
+  padding : 0rem 1rem;
+  margin : 1rem 1rem 0.5rem;
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);
+  height : ${(props) => `${(props.height - 170) / 16}rem`};
+  
+  &::-webkit-scrollbar {
+    display : none;
+  }
 
-const Buttons = styled.div`
-  float : right;
-  padding : 0 1rem;
-  margin-bottom : 0.5rem;
 `
 
 const Before = styled.button`
   width : 2rem;
   border : none;
   height : 2rem;
+  float : right;
   color : #008BFF;
   margin : 0 0.25rem;
   font-weight : bold;
@@ -493,6 +488,7 @@ const After = styled.button`
   width : 2rem;
   border : none;
   height : 2rem;
+  float : right;
   color : #008BFF;
   margin : 0 0.25rem;
   font-weight : bold;
@@ -510,6 +506,7 @@ const GPT = styled.button`
   width : 4rem;
   border : none;
   height : 2rem;
+  float : right;
   color : #FFFFFF;
   font-size : 1rem;
   font-weight : bold;
@@ -519,8 +516,12 @@ const GPT = styled.button`
 `
 
 const Train = styled.div`
-  margin : 3.25rem 1rem 1rem;
-  height : ${(props) => `${(props.height - 278) / 16}rem`};
+  display : flex;
+  margin-top : 1rem;
+  flex-direction : column;
+  background : grey;
+  width : ${(props) => `${(props.width - 792) / 16}rem`};
+  height : ${(props) => `${(props.height - 170) / 16}rem`};
 `
 
 const CodeArea = styled.textarea`
@@ -528,12 +529,11 @@ const CodeArea = styled.textarea`
   padding : 1rem;
   font-size : 1rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 370) / 16}rem`};
-  height : ${(props) => `${(props.height - 464) / 16}rem`};
+  width : ${(props) => `${(props.width - 826) / 16}rem`};
+  height : ${(props) => `${(props.height - 440) / 16}rem`};
 `
 
 const Buttons_ = styled.div`
-  float : right;
   margin : 0.425rem 0.025rem;
 `
 
@@ -541,10 +541,12 @@ const Interpret = styled.button`
   width : 4rem;
   border : none;
   height : 2rem;
+  float : right;
   color : #008BFF;
   font-weight : bold;
   font-size : 0.875rem;
   background : #FFFFFF;
+  margin-left : 0.5rem;
   border-radius : 1rem;
   border : 0.125rem solid #008BFF;
 `
@@ -614,35 +616,42 @@ const Chat = styled.div`
   margin : 1rem;
   display : flex;
   overflow : scroll;
-  align-items : flex-end;
   flex-direction : column;
   height : ${(props) => `${(props.height - 277.5) / 16}rem`};
 
   &::-webkit-scrollbar {
     display : none;
   }
+`
 
-  #user {
+const Dialog_client = styled.div`
+  display : flex;
+  justify-content : flex-end;
+
+  p {
+    margin : 0.5rem 0;
+    width : fit-content;
     background : #FFFFFF;
+    padding : 0.75rem 1rem;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
     border-radius : 1.5rem 1.5rem 0rem 1.5rem;
-  }
-
-  #chat {
-    color : #FFFFFF;
-    background : rgba(0, 139, 255, 0.75);
-    border-radius : 1.5rem 1.5rem 1.5rem 0rem;
   }
 `
 
-const Dialog = styled.p`
-  margin : 0.5rem 0;
-  width : fit-content;
-  background : #FFFFFF;
-  padding : 0.75rem 1rem;
-  word-break : break-word;
-  overflow-wrap : break-word;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  border-radius : 1.5rem 1.5rem 0rem 1.5rem;
+const Dialog_server = styled.div`
+  p {
+    color : #FFFFFF;
+    margin : 0.5rem 0;
+    width : fit-content;
+    padding : 0.75rem 1rem;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    background : rgba(0, 139, 255, 0.75);
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
+    border-radius : 1.5rem 1.5rem 1.5rem 0rem;
+  }
 `
 
 const ChatType = styled.div`
