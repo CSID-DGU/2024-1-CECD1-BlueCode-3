@@ -137,6 +137,8 @@ function Study_training() {
   
   const navigate = useNavigate();
   const submitAnswer = async () => {
+    var response;
+
     if (answer) {
       const userid = localStorage.getItem('userid');
       const TestAnswerCallDto = {
@@ -148,7 +150,7 @@ function Study_training() {
       
       try {
         // 문제 타입 객관식
-        /*
+        
         if (qtype === "NUM") {
           response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
           // console.log("객관식 정답 요청 " + response.data.passed);
@@ -161,10 +163,10 @@ function Study_training() {
           response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
           // console.log("서술식 정답 요청 " + response.data.passed);
         }
-          */
-        const prompt = window.prompt("입력");
+        
+        
    
-        if(prompt === '1') {
+        if(response.data.passed === true) {
           if (order === 0) {
             //입문자 문제 맞출 경우
             alert("입문자 문제를 맞추셨습니다.");
@@ -297,19 +299,19 @@ function Study_training() {
           {type !== '서술식' && (<ChangingSection>
             {qtype === 'NUM' && (<SelectionArea width={contentWidth}>
               <Selection>
-                <input type="radio" id="first" value="1" checked={answer==="1"} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <input type="radio" id="first" value={res[order].q1} checked={answer===res[order].q1} onChange={(e)=>setAnswer(e.target.value)}></input>
                 <Label for="first"> {res ? <div> {res[order].q1} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="second" value="2" checked={answer==="2"} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <input type="radio" id="second" value={res[order].q2} checked={answer===res[order].q2} onChange={(e)=>setAnswer(e.target.value)}></input>
                 <Label for="second"> {res ? <div> {res[order].q2} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="third" value="3" checked={answer==="3"} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <input type="radio" id="third" value={res[order].q3} checked={answer===res[order].q3} onChange={(e)=>setAnswer(e.target.value)}></input>
                 <Label for="third"> {res ? <div> {res[order].q3} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="fourth" value="4" checked={answer==="4"} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <input type="radio" id="fourth" value={res[order].q4} checked={answer===res[order].q4} onChange={(e)=>setAnswer(e.target.value)}></input>
                 <Label for="fourth"> {res ? <div> {res[order].q4} </div> : <div> Loading... </div>} </Label>
               </Selection>
             </SelectionArea>)}

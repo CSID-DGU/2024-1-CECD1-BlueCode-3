@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { SHA256 } from 'crypto-js';
 import axios from 'axios';
 import axiosInstance from '../../axiosInstance'
+import getChapterPass from '../../getChapterPass';
+import getUserInfo from '../../getUserInfo';
 
 
 function Study_theory() {
@@ -28,6 +30,33 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
+  const [processPass, setProcessPass] = useState(0);
+
+  useEffect(() => {
+    getUserInfo()
+      .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setPoint(data.exp);
+      })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });
+
+      getChapterPass()
+      .then(data => {
+          // 데이터 가져오기 성공 시 상태 업데이트
+          setProcess(data.length);
+          setProcessPass(data.filter(element => element === true).length);
+      })
+        .catch(error => {
+          // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });  
+  }, []);
+
+
+
   const color = {color : "#008BFF"};
   const textDeco = { textDecoration : "none" };
   
@@ -185,7 +214,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {process} % </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"0%":Math.round(processPass / process * 100) + "%"}</p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>

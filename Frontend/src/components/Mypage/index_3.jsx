@@ -1,11 +1,12 @@
 import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
 import styled from 'styled-components';
-import React, { useState ,useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import getUserInfo from '../../getUserInfo';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
-import getUserInfo from '../../getUserInfo';
+import getChapterPass from '../../getChapterPass';
+import React, { useState, useEffect } from 'react';
 
 
 function Study_theory() {
@@ -29,6 +30,9 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
 
+  const [process, setProcess] = useState(0);
+  const [processPass, setProcessPass] = useState(0);
+
   useEffect(() => {
     getUserInfo()
       .then(data => {
@@ -39,10 +43,20 @@ function Study_theory() {
         // 데이터 가져오기 실패 시 에러 처리
         console.error('Error fetching data:', error);
       });
+
+      getChapterPass()
+      .then(data => {
+          // 데이터 가져오기 성공 시 상태 업데이트
+          setProcess(data.length);
+          setProcessPass(data.filter(element => element === true).length);
+      })
+        .catch(error => {
+          // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });  
   }, []);
 
 
-  const [process, setProcess] = useState(0);
   const color = {color : "#008BFF"};
   const textDeco = { textDecoration : "none" };
 
@@ -86,6 +100,7 @@ function Study_theory() {
   const [groupedDataByTag, setGroupedByTag] = useState({});
 
   useEffect(() => {
+    /*
     const fetchDataByDate = async () => {
       try {
         const data = await getChatHistoryByRoot();
@@ -104,10 +119,13 @@ function Study_theory() {
         console.error(err);
       } 
     };
-
+  */
+    
+   /*
     const fetchDataByTag= async () => {
       try {
         const data = await getChatHistoryByRoot();
+        console.log(data);
         const groupedByTag = data.list.reduce((acc, item) => {
           let tag = "";
           if (item.questionType === "DEF"){
@@ -130,6 +148,58 @@ function Study_theory() {
         console.error(err);
       } 
     };
+*/
+
+
+    const fetchDataByDate = async () => {
+      const data = await getChatHistoryByRoot();
+      if(data){
+        const groupedByDate = data.list.reduce((acc, item) => {
+        const date = item.chatDate.split('T')[0]; // 날짜만 추출
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+        acc[date].push(item);
+        return acc;
+        }, {});
+        setGroupedDataByDate(groupedByDate);
+      }
+      else{
+        setGroupedDataByDate({});
+       
+      }
+      
+    };
+
+    const fetchDataByTag= async () => {
+      
+        const data = await getChatHistoryByRoot();
+        if(data){
+       
+        const groupedByTag = data.list.reduce((acc, item) => {
+          let tag = "";
+          if (item.questionType === "DEF"){
+             tag = "이론";
+          } else if (item.questionType === "CODE") {
+             tag = "코드";
+          } else if(item.questionType === "ERRORS"){
+             tag = "오류";        
+          }
+
+          if (!acc[tag]) {
+            acc[tag] = [];
+          }
+          acc[tag].push(item);
+          return acc;
+        }, {});
+
+        setGroupedByTag(groupedByTag);
+        }
+        else{
+          setGroupedByTag({});
+        }
+        
+    };
 
 
     fetchDataByDate();
@@ -142,12 +212,14 @@ function Study_theory() {
     // console.log("챕터레벨" + chapterLevel);
     for (var i = 0; i < chapterLevel.length; i++) {
       groupedByChapter[(i + 1) + "장 " + chapter[i]] = [];
-
+     
       if (chapterLevel[i]) {
         try {
           const data = await getChatHistoryByChapter(chaptersid[i]);
+          
           if(data)
             groupedByChapter[(i + 1) + "장 " + chapter[i]]= data.list;
+            
         }
         catch (err){
           console.log(err);
@@ -230,7 +302,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {process} % </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"0%":Math.round(processPass / process * 100) + "%"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
@@ -245,49 +317,67 @@ function Study_theory() {
             <OrderType style={date?color:{}} onClick={selectDate}> ㅇ 날짜별 </OrderType>
             <OrderType style={curriculum?color:{}} onClick={selectCurriculum}> ㅇ 과정별 </OrderType>
             <OrderType style={tag?color:{}} onClick={selectTag}> ㅇ 태그별 </OrderType>
-          </Order>
+          </Order> 
           <QuestionRecord height={height}> 
             {date && <QuestionInfo>
-              {Object.keys(groupedDataByDate).map(date => (
-              <div key={date}>
-                <QuestionTitle> {date.substr(5, 2) + '월 ' + date.substr(8, 2) + '일'} </QuestionTitle>
-                <QuestionList>
-                  {groupedDataByDate[date].map((item, index) => (
-                    <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
-                  ))}
-                </QuestionList>
-              </div>
-              ))}
-            </QuestionInfo>}
+              {JSON.stringify(groupedDataByDate) === '{}'?
+              (<QuestionList>
+                  <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
+                </QuestionList>)
+              :
+              (<>{Object.keys(groupedDataByDate).map(date => (
+                <div key={date}>
+                  <QuestionTitle> {date.substr(5, 2) + '월 ' + date.substr(8, 2) + '일'} </QuestionTitle>
+                  <QuestionList>
+                    {groupedDataByDate[date].map((item, index) => (
+                      <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
+                    ))}
+                  </QuestionList>
+                </div>
+                ))}</>)}
+              </QuestionInfo>}
             {curriculum && <QuestionInfo>
               {Object.keys(groupedDataByChapter).map(curr => (
               <div key={curr}>
                 <QuestionTitle> {curr} </QuestionTitle>
-                <QuestionList>
+                {groupedDataByChapter[curr].length > 0 ?
+                (<QuestionList>
                   {groupedDataByChapter[curr].map((item, index) => (
                     <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
                   ))}
-                </QuestionList>
+                </QuestionList>)
+                :
+                <QuestionList>
+                  <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
+                </QuestionList>}
               </div>
               ))}
             </QuestionInfo>}
             {tag && <QuestionInfo>
-            {Object.keys(groupedDataByTag).map(tag => (
-              <div key={tag}>
-                <QuestionTitle> {tag} </QuestionTitle>
-                <QuestionList>
-                  {groupedDataByTag[tag].map((item, index) => (
-                    <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
-                  ))}
-                </QuestionList>
-              </div>
-              ))}
+              {JSON.stringify(groupedDataByTag) === '{}'?
+              (<QuestionList>
+                  <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
+                </QuestionList>)
+              :
+              (<>{Object.keys(groupedDataByTag).map(tag => (
+                <div key={tag}>
+                  <QuestionTitle> {tag} </QuestionTitle>
+                  <QuestionList>
+                    {groupedDataByTag[tag].map((item, index) => (
+                      <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
+                    ))}
+                  </QuestionList>
+                </div>
+                ))}</>)}
             </QuestionInfo>}
             <QuestionContent height={height}>
               {selectedDialog === null ? "":<Dialog_client> <p> {selectedDialog.question} </p> </Dialog_client>} 
-              {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (<Dialog_server> <p> 
-                              <div key={ansIndex}>{ans}</div> </p> </Dialog_server>
-                            ))}
+              {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (<Dialog_server> 
+                <p> 
+                  <div key={ansIndex}>{ans}</div>
+                </p> 
+              </Dialog_server>
+              ))}
             </QuestionContent>
           </QuestionRecord>
         </ContentSection>

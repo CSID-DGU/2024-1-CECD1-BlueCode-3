@@ -5,6 +5,7 @@ import axiosInstance from '../../axiosInstance';
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import getUserInfo from '../../getUserInfo';
+import getChapterPass from '../../getChapterPass';
 
 
 function Study_theory() {
@@ -28,7 +29,7 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
-  const [current, setCurrent] = useState(5);
+  const [processPass, setProcessPass] = useState(0);
   const color = {color : "#008BFF"};
   const textDeco = { textDecoration : "none" };
 
@@ -38,7 +39,23 @@ function Study_theory() {
   const [missionWeekly, setMissionWeekly] = useState([]);
   const [challenge, setChallenge] = useState([]);
 
+  
+
+
   useEffect(() => {
+
+    getChapterPass()
+    .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setProcess(data.length);
+        setProcessPass(data.filter(element => element === true).length);
+    })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+      console.error('Error fetching data:', error);
+    });
+
+    
     const getMissionInfo = async () => {
       try {
        const userid = localStorage.getItem('userid');
@@ -70,40 +87,23 @@ function Study_theory() {
       }
     }
 
-    
+    // 현재 포인트 불러오기
     getUserInfo()
-      .then(data => {
+    .then(data => {
         // 데이터 가져오기 성공 시 상태 업데이트
-        setTestValid(data.initTest);
-        setPoint(data.exp);
-      })
-      .catch(error => {
-        // 데이터 가져오기 실패 시 에러 처리
-        console.error('Error fetching data:', error);
-      });
+      setTestValid(data.initTest);
+      setPoint(data.exp);
+    })
+    .catch(error => {
+      // 데이터 가져오기 실패 시 에러 처리
+      console.error('Error fetching data:', error);
+    });
 
     getChapters(); // 챕터 데이터를 불러오는 함수
     getMissionInfo(); // 미션 데이터를 불러오는 함수
   }, []);
 
-// 서버에서 사용자 정보를 가져오는 함수
-/*
-const getUserInfo = async () => {
-  try {
-   const userid = localStorage.getItem('userid');
-   const UserIdDto = {
-     'userId' : userid
-   };
-   const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo', UserIdDto);
-   setTestValid(res.data.initTest);   // 이거 빼고
-   setPoint(res.data.exp);            // 이거 빼고
-   
-  }
-  catch (err){
-   console.error(err); 
-  }
- };
-*/
+
   useEffect(()=>{
     //getUserInfo();
     if (testValid) {
@@ -116,13 +116,15 @@ const getUserInfo = async () => {
     navigate('/test');
   }
 
+
+
   return (
     <TestSection>
       <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+          <Logo>
+            <img src={BCODE} alt="Logo"></img>
+          </Logo>
+        </SectionBar>
       <Content>
         <NavSection height={height}>
           <Static>
@@ -131,7 +133,7 @@ const getUserInfo = async () => {
             <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {current / 10 * 100} % </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"0%":Math.round(processPass / process * 100) + "%"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
@@ -147,11 +149,11 @@ const getUserInfo = async () => {
             <ProgressImg>
               <svg viewBox="0 0 200 200">
                 <Circle></Circle>
-                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * current / 10} ${2 * Math.PI * 75 * (10 - current) / 10}`}
+                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * processPass / process} ${2 * Math.PI * 75 * (process - processPass) / process}`}
                            transform={`rotate(-90, 100, 100)`}>
                 </CircleCur>
               </svg>
-              <Percentage> {current / 10 * 100}% </Percentage>
+              <Percentage> {isNaN(Math.round(processPass / process * 100))?"":Math.round(processPass / process * 100) + "%"} </Percentage>
             </ProgressImg>
             {!testValid && <Progress>
               <Lecture> - 초기 테스트 미응시 </Lecture>
@@ -214,7 +216,6 @@ export default Study_theory;
 const TestSection = styled.div`
   height : 100vh;
 `
-
 const SectionBar = styled.div`
   width : 100vw;
   display : flex;

@@ -102,7 +102,6 @@ function Study_training() {
     }
   }
 
-
   const EndStepDialog = () => {
     setStep(0);
   }
@@ -221,7 +220,14 @@ useEffect(()=>{
     if(text==='QUIZ'){
       const userConfirm = window.confirm("해당 서브 챕터 학습을 마치시겠습니까?");
       if (userConfirm) {
+     
         postSubchapterPass(subChapId);
+        
+        //이해도 테스트를 보지않는 챕터는 바로 pass요청
+        const isChapterTestable = isLastSubChapterAndParentNotTestable(subChapId);
+        if(isChapterTestable[0]){
+          postChapterPass(isChapterTestable[1],"EASY");
+        }
         navigate('/mypage/lecture');
       }
     }
@@ -233,6 +239,24 @@ useEffect(()=>{
       }
     }
   }
+
+  // 해당 서브챕터가 (챕터의 마지막서브챕터이고 챕터의 testable이 false이면) true와 해당 챕터커리id반환
+  function isLastSubChapterAndParentNotTestable(curriculumId) {
+    const chaptersData = JSON.parse(localStorage.getItem("chapters"));
+    for (const chapter of chaptersData) {
+      if (chapter.subChapters) {
+        const subChapters = chapter.subChapters;
+        const lastSubChapter = subChapters[subChapters.length - 1];
+
+        if (lastSubChapter.curriculumId === Number(curriculumId) && chapter.testable === false) {
+          return [true, chapter.curriculumId];
+        }
+      }
+    }
+    return false;
+  }
+
+
 
   const goBack = ()=> {
     //이전페이지로 이동
@@ -285,7 +309,23 @@ useEffect(()=>{
       console.error(err); 
     }
   }
+  const postChapterPass =  async (chapterid, level) =>{
+    const userid = localStorage.getItem('userid');
 
+    const CurriculumPassCallDto = {
+      'userId': userid,
+      'curriculumId': chapterid,
+      'levelType': level
+    };
+
+    try {
+      //chapter 이해도 테스트 통과 완료 처리 요청
+      const response = await axiosInstance.post('/curriculum/curriculum/chapter/pass', CurriculumPassCallDto);
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
 
   return (

@@ -1,9 +1,10 @@
+import BCODE from '../../logo_w.png';
+import LOADING from '../../loading.png';
+import Markdown from '../../Markdown';
 import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
-import React, { useEffect, useState } from 'react';
-import axiosInstance from '../../axiosInstance';
-import ReactMarkdown from "react-markdown";
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
+import React, { useEffect, useState } from 'react';
 
 //import rehypeHighlight from "rehype-highlight";
 //import "highlight.js/styles/a11y-dark.css";
@@ -121,7 +122,7 @@ function Study_theory() {
 
 const getChapterQuiz =  async () =>{
   const userid = localStorage.getItem('userid');
-  if(curriculumIds[currentcurriculumId]!=null){
+  if(curriculumIds[currentcurriculumId] != null){
     console.log("불러올려고 하는 curri id "+ curriculumIds[currentcurriculumId]);
 
     const DataCallDto = {
@@ -131,6 +132,7 @@ const getChapterQuiz =  async () =>{
 
     try {
       //초기 테스트용 4 문제 호출 api
+      setData([]);
       const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
       setData(response.data.tests); //4 문제를 Data에 저장
       console.log(response);
@@ -141,12 +143,6 @@ const getChapterQuiz =  async () =>{
     console.log("불러올려고 하는 인덱스 " + currentcurriculumId + " 는 범위를 벗어남")
   }
 }
-
-
-
-
-
-
 
 const navigate = useNavigate();
 const submitAnswer = async () => {
@@ -159,41 +155,24 @@ const submitAnswer = async () => {
       'quizId': data[order].quizId,
       'answer': answer
     };
-    
+    console.log(answer);
     try {
       // 문제 타입 객관식
-      /*
       if (qtype === "NUM") {
-        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
-        // console.log("객관식 정답 요청 " + response.data.passed);
+        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto)
+        console.log("객관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "WORD") {
         response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
-        // console.log("주관식 정답 요청 " + response.data.passed);
+        console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
-        // console.log("서술식 정답 요청 " + response.data.passed);
+        //response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
+        //console.log("서술식 정답 요청 " + response.data.passed);
       }
-        */
-      const prompt = window.prompt("입력");
-      //입력 예시 -> '1'이면 문제맞춤, '0'이면 틀림
-      /* 첫번째 중급자 문제를 맞출 경우 -> (해당 챕터 중급자) , 다음 챕터 진입 */
-      /* 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 맞출 경우
-                                   -> 두번째 중급자 문제 제시, 맞출 경우
-                                   -> (해당 챕터 중급자) , 다음 챕터 진입 */
-      /* 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 맞출 경우
-                                   -> 두번째 중급자 문제 제시, 틀릴 경우 선택지 제시
-                                   -> 테스트 계속 선택 시 (해당 챕터 중급자), 다음 챕터 진입 
-                                   -> 테스트 중지 선택 시 (해당 챕터 초급자) */
-      /* 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 맞출 경우
-                                   -> 두번째 중급자 문제 제시, 틀릴 경우 선택지 제시
-                                   -> 테스트 중지 선택 시 (해당 챕터 초급자) */
-      /* 첫번째 중급자 문제를 틀리고 -> 초급자 문제를 틀리고
-                                   -> 입문자 문제를 맞추거나 틀릴 경우 (해당 챕터 입문자) */
-      // response.data.passed <- 나중에 사용
-
-      if(prompt === '1') {
+      
+    
+      if(response.data.passed === true) {
         if (order === 0) {
           alert("중급자 문제를 맞추셨습니다.");
           alert("다음 챕터의 문제로 넘어갑니다.");
@@ -260,9 +239,81 @@ const submitAnswer = async () => {
           setOrder(0);
         }
       }
-
+      
         } catch (err) {
       console.log(err);
+    }
+  }
+}
+
+
+
+const initTestLogic = (passed) => {
+  if(passed === '1') {
+    if (order === 0) {
+      alert("중급자 문제를 맞추셨습니다.");
+      alert("다음 챕터의 문제로 넘어갑니다.");
+      setOrder(0);
+      setQnumber(qnumber + 1);
+      updateInitPass("HARD"); 
+      setcurrentcurriculumId(currentcurriculumId + 1); // curriculuid인덱스 1 증가
+      getChapterQuiz();
+    }
+    else if (order === 1) {
+      alert("초급자 문제를 맞추셨습니다.");
+      alert("두번째 중급자 문제를 제시합니다.");
+      setOrder(3);
+    }
+    else if (order === 2) {
+      alert("입문자 문제를 맞추셨습니다.");
+      alert("학습 시작 챕터가 설정되었습니다.");
+      setOrder(0);
+      updateInitComplete("EASY");
+      navigate('/mypage/todo');
+    }
+    else if (order === 3) {
+      alert("두번째 중급자 문제를 맞추셨습니다.");
+      alert("다음 챕터의 문제로 넘어갑니다.");
+      setOrder(0);
+      setQnumber(qnumber + 1);
+      updateInitPass("HARD");
+      setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
+      getChapterQuiz();
+    }
+  }
+  else {
+    if (order === 0) {
+      alert("첫 번째 중급자 문제를 틀리셨습니다.");
+      alert("초급자 문제로 넘어갑니다.");
+      setOrder(1);
+    }
+    else if (order === 1) {
+      alert("초급자 문제를 틀리셨습니다.");
+      alert("입문자 문제로 넘어갑니다.");
+      setOrder(2);
+    }
+    else if (order === 2) {
+      alert("입문자 문제를 틀리셨습니다.");
+      alert("학습 시작 챕터가 설정되었습니다.");
+      setOrder(0);
+      updateInitComplete("EASY");
+      navigate('/mypage/todo');
+    }
+    else if (order === 3) {
+      alert("두 번째 중급자 문제를 틀리셨습니다.");
+      const userConfirm = window.confirm("다음 챕터의 문제로 넘어가시겠습니까?");
+      if (userConfirm) {
+        alert("다음 챕터의 문제로 넘어갑니다.");
+        setQnumber(qnumber + 1);
+        updateInitPass("HARD");
+        setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
+        getChapterQuiz();
+      } else {
+        alert("시작 챕터가 설정되었습니다.");
+        updateInitComplete("NORMAL");
+        navigate('/mypage/todo');
+      }
+      setOrder(0);
     }
   }
 }
@@ -300,35 +351,31 @@ const updateInitComplete = async (levelType) => {
   }
 }
 
+const [qnumber, setQnumber] = useState(1);
+const [qlevel, setQlevel] = useState();
+// 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
+const [qtype, setQtype] = useState('');
+const [type, setType] = useState('');
+// 객관식 : NUM , 단답형 : WORD , 코드 작성형 : CODE
+useEffect(()=>{
+  if(data[order]){
+    setQtype(data[order].quizType);
+  }
 
+  if (order === 0 || order === 3) {
+    setQlevel("중급자");
+  } else if (order === 1) {
+    setQlevel("초급자");
+  } else {
+    setQlevel("입문자");
+  }
 
-
-  const [qnumber, setQnumber] = useState(1);
-  const [qlevel, setQlevel] = useState();
-  // 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
-  const [qtype, setQtype] = useState('');
-  const [type, setType] = useState('');
-  // 객관식 : NUM , 단답형 : WORD , 코드 작성형 : CODE
-  useEffect(()=>{
-
-    if(data[order]){
-      setQtype(data[order].quizType);
-    }
-
-    if (order === 0 || order === 3) {
-      setQlevel("중급자");
-    } else if (order === 1) {
-      setQlevel("초급자");
-    } else {
-      setQlevel("입문자");
-    }
-
-    if(qtype === "NUM")
-      setType('객관식');
-    else if(qtype === "WORD")
-      setType('주관식');
-    else if(qtype === "CODE")
-      setType('서술식');
+  if(qtype === "NUM")
+    setType('객관식');
+  else if(qtype === "WORD")
+    setType('주관식');
+  else if(qtype === "CODE")
+    setType('서술식');
   })
 
 //{data.length > 0 ? <div> <ReactMarkdown  rehypePlugins={[rehypeHighlight]}> {data[order].text} </ReactMarkdown> </div> : <div> Loading... </div>}
@@ -366,30 +413,31 @@ const updateInitComplete = async (levelType) => {
             </ProgressImg>
           </Dynamic>
         </NavSection>
-        <ContentSection width={width}>
+        {data.length > 0 ?
+        <ContentSection width={contentWidth}>
           <QuestionArea>
             <Question>
-            {data.length > 0 ? <div> {data[order].text} </div> : <div> Loading... </div>}
+              <Markdown>{data[order].text}</Markdown>
             </Question>
           </QuestionArea>
           <AnswerArea>
             <Answer> {type} 답안 </Answer>
             {qtype === "NUM" && (<SelectionArea>
               <Selection>
-                <input type="radio" id="first" value="1" checked={answer==="1"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="first"> {data.length > 0 ? <div>{data[order].q1}</div> : <div>Loading...</div>} </Label>
+                <input type="radio" id="first" value={data[order].q1} checked={answer===data[order].q1} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <Label for="first"> <Markdown>{data[order].q1}</Markdown> </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="second" value="2" checked={answer==="2"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="second"> {data.length > 0 ? <div>{data[order].q2}</div> : <div>Loading...</div>} </Label>
+                <input type="radio" id="second" value={data[order].q2} checked={answer===data[order].q2} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <Label for="second"> <Markdown>{data[order].q2}</Markdown> </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="third" value="3" checked={answer==="3"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="third"> {data.length > 0 ? <div>{data[order].q3}</div> : <div>Loading...</div>} </Label>
+                <input type="radio" id="third" value={data[order].q3} checked={answer===data[order].q3} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <Label for="third"> <Markdown>{data[order].q3}</Markdown> </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="fourth" value="4" checked={answer==="4"} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="fourth"> {data.length > 0 ? <div>{data[order].q4}</div> : <div>Loading...</div>} </Label>
+                <input type="radio" id="fourth" value={data[order].q4} checked={answer===data[order].q4} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <Label for="fourth"> <Markdown>{data[order].q4}</Markdown> </Label>
               </Selection>
             </SelectionArea>)}
             {qtype === "WORD" && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
@@ -399,6 +447,9 @@ const updateInitComplete = async (levelType) => {
             </Submit>
           </AnswerArea>
         </ContentSection>
+        :<ContentSection>
+          <img src={LOADING} alt="loading"></img>
+        </ContentSection>}
       </Content>
     </TestSection>
   );
@@ -520,7 +571,14 @@ const ContentSection = styled.div`
   border-radius : 1rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
   width : ${(props) => `${(props.width - 370) / 16}rem`};
+
+  img {
+    width : 15rem;
+    height : 5rem;
+    margin : 0 auto;
+  }
 `
+
 
 const QuestionArea = styled.div`
   height : 5rem;

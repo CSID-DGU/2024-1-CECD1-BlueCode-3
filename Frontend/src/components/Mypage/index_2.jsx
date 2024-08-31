@@ -6,6 +6,8 @@ import React, { useState, useEffect} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import useChapterData from '../../useChapterData';
 import getUserInfo from '../../getUserInfo';
+import getChapterPass from '../../getChapterPass';
+
 
 function Study_theory() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -28,6 +30,7 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
+  const [processPass, setProcessPass] = useState(0);
 
   useEffect(() => {
     getUserInfo()
@@ -39,6 +42,18 @@ function Study_theory() {
         // 데이터 가져오기 실패 시 에러 처리
         console.error('Error fetching data:', error);
       });
+
+    getChapterPass()
+      .then(data => {
+          // 데이터 가져오기 성공 시 상태 업데이트
+          setProcess(data.length);
+          setProcessPass(data.filter(element => element === true).length);
+      })
+        .catch(error => {
+          // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });  
+
   }, []);
 
 
@@ -98,6 +113,7 @@ function Study_theory() {
       ? color
       : nullColor
   }
+  
 
   return (
     <TestSection>
@@ -114,7 +130,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {process} % </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"0%":Math.round(processPass / process * 100) + "%"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
@@ -155,8 +171,8 @@ function Study_theory() {
                 </SubLecture>
               ))}
               </SubLectureInfo>
-              {(!chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
-                <div onClick={() => goToCompre(chaptersid[index])}> 이해도 테스트 </div>
+              {(JSON.parse(localStorage.getItem('chapters'))[index].testable && !chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
+                <SubLectureTitle onClick={() => goToCompre(chaptersid[index])}> 이해도 테스트 </SubLectureTitle>
               )}
             </Lecture>
           ))}
