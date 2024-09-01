@@ -1,29 +1,15 @@
-import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
 import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
+import BCODE from '../../logo_w.png';
+import Markdown from '../../Markdown';
+import styled from 'styled-components';
+import LOADING from '../../loading.png';
+import SectionBarJsx from '../../SectionBar';
+import axiosInstance from '../../axiosInstance';
+import useChapterData from '../../useChapterData';
 import { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../axiosInstance';
-
-
-const extractAndReplaceInputs = (str, replacements) => {
-  // 정규 표현식으로 모든 input() 내의 문자열을 추출
-  const regex = /input\(([^)]*)\)/g;
-  const extractedContents = [];
-  
-  // 모든 매치를 찾고 대체
-  let replaceIndex = 0;
-  const replacedStr = str.replace(regex, (fullMatch, group1) => {
-    extractedContents.push(group1);
-    const replacement = replacements[replaceIndex] || fullMatch; // 대체 문자열이 없으면 원본 유지
-    replaceIndex++;
-    return replacement;
-  });
-
-  return { extracted: extractedContents, replaced: replacedStr };
-};
 
 
 
@@ -33,91 +19,6 @@ function Study_training() {
   const [pyodide, setPyodide] = useState(null);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
-
-  const [savedCode, setSavedCode] = useState("");
-  const [output, setOutput] = useState({ extracted: [], replaced: '' });
-  const [replacements, setReplacements] = useState([]);
-
-  const replaceCode = () => {
-    // 모든 input() 부분에 대해 대체 문자열을 입력받음
-    const newReplacements = [];
-    const regex = /input\(([^)]*)\)/g;
-    let match;
-    while ((match = regex.exec(savedCode)) !== null) {
-      const replacement = prompt(`Replace ${match[0]} with:`);
-      newReplacements.push("'" + replacement + "'");
-    }
-    setReplacements(newReplacements);
-
-    const result = extractAndReplaceInputs(savedCode, newReplacements);
-    setOutput(result);
-  };
-
-  
-const codeSended =
-`
-import sys
-import json
-
-class PrintCollector:
-    def __init__(self):
-        self.output = []
-
-    def write(self, text):
-        self.output.append(text)
-
-    def flush(self):
-        pass
-
-collector = PrintCollector()
-sys.stdout = collector
-sys.stderr = collector
-
-def print_collected():
-    return ''.join(collector.output)
-
-${code}
-
-print_collected()
-`;
-/*
-  useEffect(() => {
-    const loadPyodide = async () => {
-      const pyodide = await window.loadPyodide();
-      setPyodide(pyodide);
-    };
-    loadPyodide();
-  }, []);
-*/
-  const runPythonCode = async () => {
-    if (pyodide) {
-      try {
-        const res = await pyodide.runPython(codeSended);
-        setResult(res);
-        setSavedCode(codeSended);
-      } catch (err) {
-        setResult(err.message);
-      }
-    }
-  };
-
-  const checkCode = async () => {
-    if (pyodide) {
-      try {
-        const res = await pyodide.runPython(output.replaced);
-
-        if(Number(res) === 5 || res === "5") {
-          alert("정답입니다.");
-        }
-        else {
-          alert("오답입니다.");
-        }
-      } catch (err) {
-        setResult(err.message);
-      }
-    }
-  };
-
 
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
@@ -219,8 +120,9 @@ print_collected()
     if (res) {
       console.log(res);
     }
-  }, [res])
+  }, [res]);
 
+  const { chapter, chaptersid, chapterLevel, chapterPass, subChapter, subChapterId, currentChapter } = useChapterData();
   const [type, setType] = useState('');
   const [qtype, setQtype] = useState('');
   useEffect(()=>{
@@ -238,6 +140,8 @@ print_collected()
   
   const navigate = useNavigate();
   const submitAnswer = async () => {
+    var response;
+
     if (answer) {
       const userid = localStorage.getItem('userid');
       const TestAnswerCallDto = {
@@ -249,7 +153,7 @@ print_collected()
       
       try {
         // 문제 타입 객관식
-        /*
+        
         if (qtype === "NUM") {
           response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
           // console.log("객관식 정답 요청 " + response.data.passed);
@@ -262,10 +166,10 @@ print_collected()
           response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
           // console.log("서술식 정답 요청 " + response.data.passed);
         }
-          */
-        const prompt = window.prompt("입력");
+        
+        
    
-        if(prompt === '1') {
+        if(response.data.passed === true) {
           if (order === 0) {
             //입문자 문제 맞출 경우
             alert("입문자 문제를 맞추셨습니다.");
@@ -278,8 +182,12 @@ print_collected()
           else if (order === 2) {
             //중급자 문제 맞출 경우
             alert("중급자 문제를 맞추셨습니다.");
-            alert("해당 챕터의 이해도 테스트.");
-            postChapterPass(chapId,"HARD");
+    
+            // 사용자의 level: easy / normal / hard(다음챕터레벨설정용) 입력을 받음 (수정필요)
+            const prompt = window.prompt("EASY / NORMAL / HARD 중 택 1");
+            postChapterPass(chapId, prompt);
+
+            
             navigate('/mypage/todo');
           }
         }
@@ -294,12 +202,32 @@ print_collected()
             alert("초급자 문제를 틀리셨습니다.");
             alert("입문자 난이도로 다음 챕터가 설정되었습니다.");
             postChapterPass(chapId, "EASY");
-            navigate('/mypage/todo');
+
+            // 해당 챕터 재학습 선지 제시, 재학습 원할시 해당 챕터를 재학습 아닐경우 마이페이지로
+            //subChapterId , chaptersid
+            const confirm = window.confirm("해당 챕터를 재학습하시겠습니까?");
+            if (confirm) {
+              alert('confirm 실행됨');
+              for (var i = 0; i < chaptersid.length; i++) {
+                
+                if (chapId === chaptersid[i].toString()) {
+                  alert('id찾음');
+
+                  navigate(`/study/theory/${subChapterId[i][0]}/DEF`);
+                }
+              }
+            } else {
+              navigate('/mypage/todo');
+            }
           }
           else if (order === 2) {
             alert("중급자 문제를 틀리셨습니다.");
-            alert("초급자 난이도로 다음 챕터가 설정되었습니다.");
-            postChapterPass(chapId, "NORMAL");
+            // 사용자의 level: easy / normal / hard(다음챕터레벨설정용) 입력을 받음 (수정필요)
+            const prompt = window.prompt("EASY / NORMAL 중 택 1")
+            postChapterPass(chapId, prompt);
+
+
+
             navigate('/mypage/todo');
           }
         }
@@ -332,11 +260,7 @@ print_collected()
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -368,25 +292,26 @@ print_collected()
           </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
-          <InstructionSection status={type}>  
-            <Instruction> {res ? <div> {res[order].text} </div> : <div> Loading... </div>} </Instruction>
+          {res?
+          <><InstructionSection status={type}>  
+            <Instruction> <Markdown>{res[order].text}</Markdown> </Instruction>
           </InstructionSection>
           {type !== '서술식' && (<ChangingSection>
             {qtype === 'NUM' && (<SelectionArea width={contentWidth}>
               <Selection>
-                <input type="radio" id="first" value="1" checked={answer==="1"} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <input type="radio" id="first" value={res[order].q1} checked={answer===res[order].q1} onChange={(e)=>setAnswer(e.target.value)}></input>
                 <Label for="first"> {res ? <div> {res[order].q1} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="second" value="2" checked={answer==="2"} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <input type="radio" id="second" value={res[order].q2} checked={answer===res[order].q2} onChange={(e)=>setAnswer(e.target.value)}></input>
                 <Label for="second"> {res ? <div> {res[order].q2} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="third" value="3" checked={answer==="3"} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <input type="radio" id="third" value={res[order].q3} checked={answer===res[order].q3} onChange={(e)=>setAnswer(e.target.value)}></input>
                 <Label for="third"> {res ? <div> {res[order].q3} </div> : <div> Loading... </div>} </Label>
               </Selection>
               <Selection>
-                <input type="radio" id="fourth" value="4" checked={answer==="4"} onChange={(e)=>setAnswer(e.target.value)}></input>
+                <input type="radio" id="fourth" value={res[order].q4} checked={answer===res[order].q4} onChange={(e)=>setAnswer(e.target.value)}></input>
                 <Label for="fourth"> {res ? <div> {res[order].q4} </div> : <div> Loading... </div>} </Label>
               </Selection>
             </SelectionArea>)}
@@ -402,7 +327,7 @@ print_collected()
                   <Buttons_>
                     <Interpret> 실행 </Interpret>
                     <Save> 저장 </Save>
-                    <Submit> 제출 </Submit>
+                    <Submit onClick={submitAnswer}> 제출 </Submit>
                   </Buttons_>
                 </CodeResult>
                 <ResultPre>
@@ -410,7 +335,11 @@ print_collected()
                 </ResultPre>
               </CodeResultSection>
             </Train>
-          </TrainSection>}
+          </TrainSection>}</>
+          :
+          <InstructionLoading>
+            <img src={LOADING} alt="loading"></img>
+          </InstructionLoading>}
         </ContentSection>
       </Content>
     </TestSection>
@@ -423,20 +352,6 @@ export default Study_training;
 
 const TestSection = styled.div`
   height : 100vh;
-`
-
-const SectionBar = styled.div`
-  width : 100vw;
-  display : flex;
-  background : #008BFF;
-`
-
-const Logo = styled.div`
-  img {
-    height : 2rem;
-    width : 7.82rem;
-    margin : 1rem 4rem;
-  }
 `
 
 const Content = styled.div`
@@ -507,7 +422,6 @@ const ContentSection = styled.div`
 `
 
 const InstructionSection = styled.div`
-
   ${({status}) => {
     switch (status) {
       case '객관식':
@@ -563,26 +477,27 @@ const Label = styled.label`
 const WritingArea = styled.textarea`
   resize : none;
   padding : 1rem;
-  font-size : 1.25rem;
-  width : ${(props) => `${(props.width - 840) / 16}rem`};
-  height : 1.5rem;
+  height : 1.375rem;
   margin-top : 1rem;
+  font-size : 1.125rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  width : ${(props) => `${(props.width - 840) / 16}rem`};
 `
 
 const Submit_ = styled.button`
   width : 4rem;
   height : 2rem;
   color : #008BFF;
-  margin : 1rem auto 0rem;
   font-weight : bold;
   font-size : 0.875rem;
   background : #FFFFFF;
   border-radius : 1rem;
+  margin : 1rem auto 0rem;
   border : 0.125rem solid #008BFF;
 `
 
 const Instruction = styled.div`
+  padding : 1rem;
   height : 34.25rem;
   margin : 1rem 1rem 0.5rem;
   background : rgba(0, 0, 0, 0.25);
@@ -817,5 +732,17 @@ const InputButton = styled.button`
   img {
     margin : auto 0;
     width : 0.625rem;
+  }
+`
+
+const InstructionLoading = styled.div`
+  display : flex;
+  margin : 0 auto;
+  align-items : center;
+  justify-content : center;
+
+  img {
+    width : 12.5rem;
+    height : 5rem;
   }
 `

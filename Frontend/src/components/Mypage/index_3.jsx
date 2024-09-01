@@ -1,7 +1,14 @@
+import BCODE from '../../logo_w.png';
+import { remove } from '../../remove';
+import Markdown from '../../Markdown';
 import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
-import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import getUserInfo from '../../getUserInfo';
+import SectionBarJsx from '../../SectionBar';
+import axiosInstance from '../../axiosInstance';
+import useChapterData from '../../useChapterData';
+import getChapterPass from '../../getChapterPass';
+import React, { useState, useEffect } from 'react';
 
 
 function Study_theory() {
@@ -24,8 +31,36 @@ function Study_theory() {
   const [contentWidth, setContentWidth] = useState(width);
 
   const [point, setPoint] = useState(0);
+
   const [process, setProcess] = useState(0);
+  const [processPass, setProcessPass] = useState(0);
+
+  useEffect(() => {
+    getUserInfo()
+      .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setPoint(data.exp);
+      })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });
+
+      getChapterPass()
+      .then(data => {
+          // 데이터 가져오기 성공 시 상태 업데이트
+          setProcess(data.length);
+          setProcessPass(data.filter(element => element === true).length);
+      })
+        .catch(error => {
+          // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });  
+  }, []);
+
+
   const color = {color : "#008BFF"};
+  const textDeco = { textDecoration : "none" };
 
   const [date, setDate] = useState(true);
   const [curriculum, setCurriculum] = useState(false);
@@ -35,43 +70,243 @@ function Study_theory() {
     setDate(true);
     setCurriculum(false);
     setTag(false);
+    setselectedDialog(null);
   }
 
   const selectCurriculum = () => {
     setDate(false);
     setCurriculum(true);
     setTag(false);
+    setselectedDialog(null);
+    fetchDataByChapter();
   }
 
   const selectTag = () => {
     setDate(false);
     setCurriculum(false);
     setTag(true);
+    setselectedDialog(null);
   }
+
+  const { chapter, chaptersid, chapterLevel, chapterPass, subChapter, subChapterId, currentChapter } = useChapterData();
+
+  // chapter , chaptersid , chapterLevel 챕터레벨에서 null이 아닌 인덱스들 확인해서 c
+
+  const [selectedDialog, setselectedDialog] = useState(null);
+  const setQNA = (item) =>{
+    setselectedDialog(item);
+  };
+  
+  const [groupedDataByDate, setGroupedDataByDate] = useState({});
+  const [groupedDataByChapter, setGroupedDataByChapter] = useState({});
+  const [groupedDataByTag, setGroupedByTag] = useState({});
+
+  useEffect(() => {
+    /*
+    const fetchDataByDate = async () => {
+      try {
+        const data = await getChatHistoryByRoot();
+        const groupedByDate = data.list.reduce((acc, item) => {
+          const date = item.chatDate.split('T')[0]; // 날짜만 추출
+          if (!acc[date]) {
+            acc[date] = [];
+          }
+          acc[date].push(item);
+          return acc;
+        }, {});
+
+        setGroupedDataByDate(groupedByDate);
+    
+      } catch (err) {
+        console.error(err);
+      } 
+    };
+  */
+    
+   /*
+    const fetchDataByTag= async () => {
+      try {
+        const data = await getChatHistoryByRoot();
+        console.log(data);
+        const groupedByTag = data.list.reduce((acc, item) => {
+          let tag = "";
+          if (item.questionType === "DEF"){
+             tag = "이론";
+          } else if (item.questionType === "CODE") {
+             tag = "코드";
+          } else if(item.questionType === "ERRORS"){
+             tag = "오류";        
+          }
+
+          if (!acc[tag]) {
+            acc[tag] = [];
+          }
+          acc[tag].push(item);
+          return acc;
+        }, {});
+
+        setGroupedByTag(groupedByTag);
+      } catch (err) {
+        console.error(err);
+      } 
+    };
+*/
+
+
+    const fetchDataByDate = async () => {
+      const data = await getChatHistoryByRoot();
+      if(data){
+        const groupedByDate = data.list.reduce((acc, item) => {
+        const date = item.chatDate.split('T')[0]; // 날짜만 추출
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+        acc[date].push(item);
+        return acc;
+        }, {});
+        setGroupedDataByDate(groupedByDate);
+      }
+      else{
+        setGroupedDataByDate({});
+       
+      }
+      
+    };
+
+    const fetchDataByTag= async () => {
+      
+        const data = await getChatHistoryByRoot();
+        if(data){
+       
+        const groupedByTag = data.list.reduce((acc, item) => {
+          let tag = "";
+          if (item.questionType === "DEF"){
+             tag = "이론";
+          } else if (item.questionType === "CODE") {
+             tag = "코드";
+          } else if(item.questionType === "ERRORS"){
+             tag = "오류";        
+          }
+
+          if (!acc[tag]) {
+            acc[tag] = [];
+          }
+          acc[tag].push(item);
+          return acc;
+        }, {});
+
+        setGroupedByTag(groupedByTag);
+        }
+        else{
+          setGroupedByTag({});
+        }
+        
+    };
+
+    fetchDataByDate();
+    fetchDataByTag();
+  }, []);
+
+  const fetchDataByChapter = async () => {
+    
+    let groupedByChapter = {};
+    // console.log("챕터레벨" + chapterLevel);
+    for (var i = 0; i < chapterLevel.length; i++) {
+      groupedByChapter[(i + 1) + "장 " + chapter[i]] = [];
+     
+      if (chapterLevel[i]) {
+        try {
+          const data = await getChatHistoryByChapter(chaptersid[i]);
+          
+          if(data)
+            groupedByChapter[(i + 1) + "장 " + chapter[i]]= data.list;
+            
+        }
+        catch (err){
+          console.log(err);
+        }
+      } 
+    }
+    
+    setGroupedDataByChapter(groupedByChapter);
+  };
+
+  const getChatHistoryByRoot = async () => {
+    try {
+      const userid = localStorage.getItem('userid');
+      const rootid = localStorage.getItem('rootid');
+
+      const QuestionCallDto = {
+        'userId' : userid,
+        'curriculumId':rootid
+      };
+      
+      const res = await axiosInstance.post('/chat/chat/historyByRoot', QuestionCallDto);
+      //console.log(res);
+      return res.data;
+     }
+     catch (err){
+      console.error(err); 
+     }
+  }
+
+  const getChatHistoryByChapter = async (chapterId) => {
+    try {
+      const userid = localStorage.getItem('userid');
+
+      const QuestionCallDto = {
+        'userId' : userid,
+        'curriculumId':chapterId
+      };
+      
+      const res = await axiosInstance.post('/chat/chat/historyByChapter', QuestionCallDto);
+      console.log(res);
+      return res.data;
+     }
+     catch (err){
+      console.error(err); 
+     }
+  }
+
+  const getChatHistoryByTag = async (chapterId) => {
+    try {
+      const userid = localStorage.getItem('userid');
+
+      const QuestionCallDto = {
+        'userId' : userid,
+        'curriculumId':chapterId
+      };
+      
+      const res = await axiosInstance.post('/chat/chat/historyByChapter', QuestionCallDto);
+      console.log(res);
+      return res.data;
+     }
+     catch (err){
+      console.error(err); 
+     }
+  }
+
+
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
+            <NavLink style={textDeco} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {process} % </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav> ㅇ 내 할일 관련 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/question"><Nav style={color}> ㅇ 내 질문 정보 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/todo"><Nav> ㅇ 내 할일 관련 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/question"><Nav style={color}> ㅇ 내 질문 정보 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
           </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
@@ -79,95 +314,65 @@ function Study_theory() {
             <OrderType style={date?color:{}} onClick={selectDate}> ㅇ 날짜별 </OrderType>
             <OrderType style={curriculum?color:{}} onClick={selectCurriculum}> ㅇ 과정별 </OrderType>
             <OrderType style={tag?color:{}} onClick={selectTag}> ㅇ 태그별 </OrderType>
-          </Order>
-          <QuestionRecord height={height}>
-            {date && <QuestionTitle>
-              <QuestionDate> - 오늘 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 어제 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 8월 8일 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 8월 7일 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 8월 6일 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-            </QuestionTitle>}
-            {curriculum && <QuestionTitle>
-              <QuestionDate> - 제1장 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 제2장 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 제3장 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 제4장 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 제5장 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-            </QuestionTitle>}
-            {tag && <QuestionTitle>
-              <QuestionDate> - 개념 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 코드 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-              <QuestionDate> - 오류 </QuestionDate>
-              <QuestionList>
-                <QuestionListSub> &gt; 질문 1 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 2 </QuestionListSub>
-                <QuestionListSub> &gt; 질문 3 </QuestionListSub>
-              </QuestionList>
-            </QuestionTitle>}
+          </Order> 
+          <QuestionRecord height={height}> 
+            {date && <QuestionInfo>
+              {JSON.stringify(groupedDataByDate) === '{}'?
+              (<QuestionList>
+                  <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
+                </QuestionList>)
+              :
+              (<>{Object.keys(groupedDataByDate).map(date => (
+                <div key={date}>
+                  <QuestionTitle> {date.substr(5, 2) + '월 ' + date.substr(8, 2) + '일'} </QuestionTitle>
+                  <QuestionList>
+                    {groupedDataByDate[date].map((item, index) => (
+                      <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
+                    ))}
+                  </QuestionList>
+                </div>
+                ))}</>)}
+              </QuestionInfo>}
+            {curriculum && <QuestionInfo>
+              {Object.keys(groupedDataByChapter).map(curr => (
+              <div key={curr}>
+                <QuestionTitle> {curr} </QuestionTitle>
+                {groupedDataByChapter[curr].length > 0?
+                (<QuestionList>
+                  {groupedDataByChapter[curr].map((item, index) => (
+                    <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
+                  ))}
+                </QuestionList>)
+                :
+                <QuestionList>
+                  <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
+                </QuestionList>}
+              </div>
+              ))}
+            </QuestionInfo>}
+            {tag && <QuestionInfo>
+              {JSON.stringify(groupedDataByTag) === '{}'?
+              (<QuestionList>
+                <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
+              </QuestionList>)
+              :
+              (<>{Object.keys(groupedDataByTag).map(tag => (
+                <div key={tag}>
+                  <QuestionTitle> {tag} </QuestionTitle>
+                  <QuestionList>
+                    {groupedDataByTag[tag].map((item, index) => (
+                      <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
+                    ))}
+                  </QuestionList>
+                </div>
+                ))}</>)}
+            </QuestionInfo>}
             <QuestionContent height={height}>
-              <Dialog_client> <p> 구체적인 질문 </p> </Dialog_client>
-              <Dialog_server> <p>구체적인 답변+구체적인 답변+구체적인 답변+구체적인 답변+구체적인 답변 </p> </Dialog_server>
+              {selectedDialog === null ? "":<Dialog_client> <div> {selectedDialog.question} </div> </Dialog_client>} 
+              {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (<Dialog_server> 
+                  <div key={ansIndex}><Markdown>{ans}</Markdown></div>
+              </Dialog_server>
+              ))}
             </QuestionContent>
           </QuestionRecord>
         </ContentSection>
@@ -279,6 +484,7 @@ const Order = styled.div`
 
 const OrderType = styled.div`
   margin : 0;
+  cursor : pointer;
   font-weight : bold;
   font-size : 1.05rem;
   margin-right : 2.5rem;
@@ -291,9 +497,9 @@ const QuestionRecord = styled.div`
   height : ${(props) => `${(props.height - 265) / 16}rem`};
 `
 
-const QuestionTitle = styled.div`
-  width : 40rem;
-  padding : 0.75rem 1.25rem 1.25rem;
+const QuestionInfo = styled.div`
+  width : 32.5rem;
+  padding : 0.75rem 3.75rem 1.25rem 1.25rem;
   overflow : scroll;
   height : 30.375rem;
 
@@ -302,17 +508,22 @@ const QuestionTitle = styled.div`
   }
 `
 
-const QuestionDate = styled.div`
+const QuestionTitle = styled.h3`
   font-weight : bold;
   margin : 0.5rem 0rem;
  `
 
  const QuestionList = styled.div`
-  margin : 0.5rem 0rem 1.5rem 0.75rem;
+  margin : 0.5rem 0rem 1.5rem 1rem;
  `
 
  const QuestionListSub = styled.div`
-  padding : 0.05rem;
+  color : grey;
+  padding : 0.125rem;
+
+  &:hover {
+    font-weight : bold;
+  }
  `
 
 const QuestionContent = styled.div`
@@ -335,11 +546,11 @@ const Dialog_client = styled.div`
   display : flex;
   justify-content : flex-end;
 
-  p {
+  div {
     margin : 0.5rem 0;
+    padding : 0.75rem;
     width : fit-content;
     background : #FFFFFF;
-    padding : 0.75rem 1rem;
     word-break : break-word;
     overflow-wrap : break-word;
     border : 0.05rem solid rgba(0, 0, 0, 0.5);
@@ -348,11 +559,11 @@ const Dialog_client = styled.div`
 `
 
 const Dialog_server = styled.div`
-  p {
+  div {
     color : #FFFFFF;
     margin : 0.5rem 0;
+    padding : 0.75rem;
     width : fit-content;
-    padding : 0.75rem 1rem;
     word-break : break-word;
     overflow-wrap : break-word;
     background : rgba(0, 139, 255, 0.75);

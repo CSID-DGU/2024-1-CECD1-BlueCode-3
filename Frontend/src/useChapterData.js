@@ -14,13 +14,13 @@ const useChapterData = () => {
   
     useEffect(() => {
       if (chapter.length > 0) {
-        // console.log(chapter);
+        //console.log(chapter);
       }
     }, [chapter]);
 
     useEffect(() => {
       if (chaptersid.length > 0) {
-        console.log(chaptersid);
+        //console.log(chaptersid);
       }
     }, [chaptersid]);
 
@@ -33,13 +33,13 @@ const useChapterData = () => {
     
     useEffect(() => {
       if (chapterPass.length > 0) {
-        console.log(chapterPass);
+        //console.log(chapterPass);
       }
     }, [chapterPass]);
     
     useEffect(() => {
       if (subChapter.length > 0) {
-        // console.log(subChapter);
+        //console.log(subChapter);
       }
     }, [subChapter]);
   
@@ -61,7 +61,7 @@ const useChapterData = () => {
         // console.log(chaptersData);
         if (!chaptersData)
             return;
-  
+  //
         const chapters = chaptersData.map(chapter => chapter.text);
         const chaptersid = chaptersData.map(chapter => chapter.curriculumId);
         setChapter(chapters);
@@ -89,7 +89,7 @@ const useChapterData = () => {
   
           const res = await axiosInstance.post('/curriculum/curriculum/chapters', datacalldto);
           const chaptersData = res.data.list;
-          console.log(chaptersData);
+          //console.log(chaptersData);
           
           if (!chaptersData)
             return;

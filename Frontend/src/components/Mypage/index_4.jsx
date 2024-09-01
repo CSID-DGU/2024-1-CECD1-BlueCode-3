@@ -1,10 +1,13 @@
-import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { SHA256 } from 'crypto-js';
 import axios from 'axios';
-import axiosInstance from '../../axiosInstance'
+import { SHA256 } from 'crypto-js';
+import BCODE from '../../logo_w.png';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import getUserInfo from '../../getUserInfo';
+import SectionBarJsx from '../../SectionBar';
+import axiosInstance from '../../axiosInstance';
+import getChapterPass from '../../getChapterPass';
+import React, { useState, useEffect } from 'react';
 
 
 function Study_theory() {
@@ -28,7 +31,35 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
+  const [processPass, setProcessPass] = useState(0);
+
+  useEffect(() => {
+    getUserInfo()
+      .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setPoint(data.exp);
+      })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });
+
+      getChapterPass()
+      .then(data => {
+          // 데이터 가져오기 성공 시 상태 업데이트
+          setProcess(data.length);
+          setProcessPass(data.filter(element => element === true).length);
+      })
+        .catch(error => {
+          // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });  
+  }, []);
+
+
+
   const color = {color : "#008BFF"};
+  const textDeco = { textDecoration : "none" };
   
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwdRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^~*])[A-Za-z\d!@#$%^~*]{9,16}$/;
@@ -145,6 +176,8 @@ function Study_theory() {
         setEmail(res.data.email);
         setBirthday(setFormat(res.data.birth));
         setName(res.data.username);
+        setPoint(res.data.exp);
+
         const rdate = res.data.registerDateTime;
         setSignInDate(rdate.substr(0, 4) + "년 " + rdate.substr(5, 2) + "월 " + rdate.substr(8, 2) + "일");
       }
@@ -169,54 +202,50 @@ function Study_theory() {
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
+            <NavLink style={textDeco} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={textDeco} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {process} % </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"}</p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav> ㅇ 내 할일 관련 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/info"><Nav style={color}> ㅇ 내 정보 수정 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/todo"><Nav> ㅇ 내 할일 관련 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/info"><Nav style={color}> ㅇ 내 정보 수정 </Nav></NavLink>
           </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
           <PrivateInfo>
             <SubInfo>
               <Element> ㅇ 아이디 </Element>
-              <SubElement> {id} </SubElement>
+              <SubElement> {id?id:"-"} </SubElement>
             </SubInfo>
             <SubInfo>
               <Element> ㅇ 이름 </Element>
-              <SubElement> {name} </SubElement>
+              <SubElement> {name?name:"-"} </SubElement>
             </SubInfo>
           </PrivateInfo>
           <PrivateInfo>
             <SubInfo>
               <Element> ㅇ 생년월일 </Element>
-              <SubElement> {birthday} </SubElement>
+              <SubElement> {birthday?birthday:"-"} </SubElement>
             </SubInfo>
             <SubInfo>
               <Element> ㅇ 회원가입 일자 </Element>
-              <SubElement> {signInDate} </SubElement>
+              <SubElement> {signInDate?signInDate:"-"} </SubElement>
             </SubInfo>
           </PrivateInfo>
           <ChangingInfo>
             <Email> ㅇ 이메일 </Email>
             <ChangingSection>
-              <InputArea  type="text" placeholder={email} value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} onBlur={newEmailBlur}></InputArea>
+              <InputArea  type="text" placeholder={email?email:"-"} value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} onBlur={newEmailBlur}></InputArea>
               <Button onClick={changeEmail}> 이메일 변경 </Button>
               <p id="info"> - 인증번호 발급을 위한 이메일 작성 </p>
               <p id="emailInfo" style={{color : "#008BFF", fontWeight : "bold"}}></p>

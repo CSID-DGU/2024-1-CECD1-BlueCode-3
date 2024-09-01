@@ -1,9 +1,13 @@
+import PASS from '../../pass.png';
+import BCODE from '../../logo_w.png';
+import { remove } from '../../remove';
 import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import getUserInfo from '../../getUserInfo';
+import SectionBarJsx from '../../SectionBar';
+import React, { useState, useEffect} from 'react';
 import useChapterData from '../../useChapterData';
+import getChapterPass from '../../getChapterPass';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function Study_theory() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -26,6 +30,31 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
+  const [processPass, setProcessPass] = useState(0);
+
+  useEffect(() => {
+    getChapterPass()
+    .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setProcess(data.length);
+        setProcessPass(data.filter(element => element === true).length);
+    })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+      console.error('Error fetching data:', error);
+    });
+
+    getUserInfo()
+      .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setPoint(data.exp);
+      })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
 
   const color = { color : "#008BFF", fontWeight : "bold" };
   const passColor = { color : "#0053B7" };
@@ -36,8 +65,6 @@ function Study_theory() {
 
   const chapterColor = (index) => {
     var chColor;
-    //console.log(chapterLevel);
-    //console.log(chapterPass);
 
     if(chapterLevel[index]=== null) {   
       chColor = {color : "grey"};
@@ -53,8 +80,6 @@ function Study_theory() {
     }
       return chColor;
   }
-  
-
 
 
   // 챕터가 passed -> 해당 챕터의 서브챕터들은 모든 선택지 선택 가능 --> 
@@ -78,28 +103,24 @@ function Study_theory() {
     //code,quiz이면index_trainig으로 페이지 이동
   } 
 
-
   const goToCompre = (chapId) => {
     navigate(`/study/comprehension/${chapId}`);
   } 
 
+  
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
             <NavLink style={textDeco} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
             <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
-            <NavLink style={textDeco} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
+            <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {process} % </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
@@ -109,41 +130,43 @@ function Study_theory() {
             <NavLink style={textDeco} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
           </Dynamic>
         </NavSection>
-        <ContentSection width={contentWidth}>
+        <ContentSection width={width}>
           <LectureInfo> ㅇ 이전 교육 복습 </LectureInfo>
+          <LectureContent height={height}>
           {chapter.map((chapterTitle, index) => (
-            <div key={index}>
-              <h2 style={chapterPass[index]?passColor:chapterColor(index)}>{chapterTitle} {chapterPass[index]&&("시험 패스 이미지")}</h2>
-              <div style={{ marginLeft: '20px' }}>
+            <Lecture key={index}>
+              <LectureTitle style={chapterPass[index]?passColor:chapterColor(index)}>{index + 1}. {chapterTitle} {chapterPass[index]&&<img src={PASS} alt="Logo"></img>}</LectureTitle>
+              <SubLectureInfo>
               {subChapter[index].map((subItem, subIndex) => (
-                <div style={{ display : "flex" }}>
-                <p key={subIndex} style={currentChapter[index]&&currentChapter[index][subIndex]?color:nullColor}> {subItem}</p>  
-                {(chapterLevel[index] === 'EASY' || chapterPass[index]) && (
-                  <div style={{display : "flex", marginLeft : "20px"}}>
-                    <p onClick={() => goToStudy(subChapterId[index][subIndex], 'DEF')}> 이론 </p>
-                    <p onClick={() => goToStudy(subChapterId[index][subIndex], 'CODE')}> 실습 </p>
-                    <p onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </p>
-                  </div>
-                )}
-                {(!chapterPass[index] && chapterLevel[index] === 'NORMAL') && (
-                  <div style={{display : "flex", marginLeft : "20px"}}>
-                    <p onClick={() => goToStudy(subChapterId[index][subIndex], 'CODE')}> 실습 </p>
-                    <p onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </p>
-                  </div>
-                )}
-                {(!chapterPass[index] && chapterLevel[index] === 'HARD') && (
-                  <div style={{display : "flex", marginLeft : "20px"}}>
-                    <p onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </p>
-                  </div>
-                )}
-                </div>
+                <SubLecture>
+                  <SubLectureTitle key={subIndex} style={currentChapter[index]&&currentChapter[index][subIndex]?color:nullColor}> {subItem} </SubLectureTitle>  
+                  {(chapterLevel[index] === 'EASY' || chapterPass[index]) && (
+                  <LectureData>
+                    <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'DEF')}> 이론 </Data>
+                    <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'CODE')}> 실습 </Data>
+                    <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </Data>
+                  </LectureData>
+                  )}
+                  {(!chapterPass[index] && chapterLevel[index] === 'NORMAL') && (
+                  <LectureData>
+                    <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'CODE')}> 실습 </Data>
+                    <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </Data>
+                  </LectureData>
+                  )}
+                  {(!chapterPass[index] && chapterLevel[index] === 'HARD') && (
+                  <LectureData>
+                    <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'QUIZ')}> 퀴즈 </Data>
+                  </LectureData>
+                  )}
+                </SubLecture>
               ))}
-              </div>
+              </SubLectureInfo>
               {(!chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
-                <p onClick={() => goToCompre(chaptersid[index])}> 이해도 테스트 </p>
+                <CompreTest onClick={() => goToCompre(chaptersid[index])}> 이해도 테스트 </CompreTest>
               )}
-            </div>
+            </Lecture>
           ))}
+          </LectureContent>
         </ContentSection>
       </Content>
     </TestSection>
@@ -151,6 +174,7 @@ function Study_theory() {
 }
 
 export default Study_theory;
+
 
 
 const TestSection = styled.div`
@@ -247,12 +271,76 @@ const ContentSection = styled.div`
 `
 
 const LectureInfo = styled.p`
-  margin : 0;
   font-weight : bold;
   font-size : 1.05rem;
+  margin : 0rem 0rem 1.5rem;
   color : rgba(0, 0, 0, 0.5);
 `
 
-const Chapter = styled.div`
-  margin : 1rem;
+const LectureContent = styled.div`
+  display : flex;
+  overflow :scroll;
+  flex-wrap : wrap;
+  padding : 0rem 0.75rem;
+  height : ${(props) => `${(props.height - 250) / 16}rem`};
+  
+  &::-webkit-scrollbar {
+    display : none;
+  }
+`
+
+const Lecture = styled.div`
+  width : 32.5rem;
+  padding : 0rem 0.75rem;
+  margin : 1rem 0rem;
+`
+
+const LectureTitle = styled.h3`
+  font-weight : bold;
+  margin : 0rem 0rem 0.75rem;
+
+  img {
+    width : 1rem;
+  }
+`
+
+const SubLectureInfo = styled.div`
+  margin-left : 1rem;
+`
+
+const CompreTest = styled.div`
+  color : grey;
+  cursor : pointer;
+  text-align : right;
+  font-weight : bold;
+  font-size : 1.125rem;
+  padding-right : 1.125rem;
+
+  &:hover {
+    color : black;
+  }
+`
+
+const SubLecture = styled.div`
+  display : flex;
+  margin-bottom : 0.25rem;
+`
+
+const SubLectureTitle = styled.div`
+  width : 23rem;
+`
+
+const LectureData = styled.div`
+  display : flex;
+`
+
+const Data = styled.div`
+  color : grey;
+  cursor : pointer;
+  font-weight : bold;
+  margin : 0rem 0.25rem;
+
+  &:hover {
+    color : #008BFF;
+  }
 `

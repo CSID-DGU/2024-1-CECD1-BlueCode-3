@@ -1,8 +1,12 @@
+import BCODE from '../../logo_w.png';
+import { remove } from '../../remove';
 import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
+import getUserInfo from '../../getUserInfo';
+import SectionBarJsx from '../../SectionBar';
+import axiosInstance from '../../axiosInstance';
+import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../axiosInstance';
 
 
 function Study_theory() {
@@ -26,8 +30,9 @@ function Study_theory() {
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
-  const [current, setCurrent] = useState(5);
+  const [processPass, setProcessPass] = useState(0);
   const color = {color : "#008BFF"};
+  const textDeco = { textDecoration : "none" };
 
   const [testValid, setTestValid] = useState(false);
 
@@ -35,7 +40,23 @@ function Study_theory() {
   const [missionWeekly, setMissionWeekly] = useState([]);
   const [challenge, setChallenge] = useState([]);
 
+  
+
+
   useEffect(() => {
+
+    getChapterPass()
+    .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setProcess(data.length);
+        setProcessPass(data.filter(element => element === true).length);
+    })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+      console.error('Error fetching data:', error);
+    });
+
+    
     const getMissionInfo = async () => {
       try {
        const userid = localStorage.getItem('userid');
@@ -67,32 +88,27 @@ function Study_theory() {
       }
     }
 
-    
-    getUserInfo(); // 데이터를 불러오는 함수 호출
+    // 현재 포인트 불러오기
+    getUserInfo()
+    .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+      setTestValid(data.initTest);
+      setPoint(data.exp);
+    })
+    .catch(error => {
+      // 데이터 가져오기 실패 시 에러 처리
+      console.error('Error fetching data:', error);
+    });
+
     getChapters(); // 챕터 데이터를 불러오는 함수
-    getMissionInfo();
+    getMissionInfo(); // 미션 데이터를 불러오는 함수
   }, []);
 
-// 서버에서 사용자 정보를 가져오는 함수
-const getUserInfo = async () => {
-  try {
-   const userid = localStorage.getItem('userid');
-   const UserIdDto = {
-     'userId' : userid
-   };
-   const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo', UserIdDto);
-   setTestValid(res.data.initTest);
-   setPoint(res.data.exp);
-  }
-  catch (err){
-   console.error(err); 
-  }
- };
 
   useEffect(()=>{
-    getUserInfo();
+    //getUserInfo();
     if (testValid) {
-      console.log(testValid);
+      //console.log(testValid);
     }
   }, [testValid]);
 
@@ -101,30 +117,28 @@ const getUserInfo = async () => {
     navigate('/test');
   }
 
+
+
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
+            <NavLink style={textDeco} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {current / 10 * 100} % </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav style={color}> ㅇ 내 할일 관련 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
-            </Dynamic>
+            <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 내 할일 관련 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
+          </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
           <ProgressName> ㅇ 교육 과정 진행 상황 </ProgressName>
@@ -132,11 +146,11 @@ const getUserInfo = async () => {
             <ProgressImg>
               <svg viewBox="0 0 200 200">
                 <Circle></Circle>
-                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * current / 10} ${2 * Math.PI * 75 * (10 - current) / 10}`}
+                <CircleCur strokeDasharray={processPass?`${2 * Math.PI * 75 * processPass / process} ${2 * Math.PI * 75 * (process - processPass) / process}`:"0 1"}
                            transform={`rotate(-90, 100, 100)`}>
                 </CircleCur>
               </svg>
-              <Percentage> {current / 10 * 100}% </Percentage>
+              <Percentage> {isNaN(Math.round(processPass / process * 100))?"":Math.round(processPass / process * 100) + "%"} </Percentage>
             </ProgressImg>
             {!testValid && <Progress>
               <Lecture> - 초기 테스트 미응시 </Lecture>
@@ -154,37 +168,34 @@ const getUserInfo = async () => {
           <ProgressName> ㅇ 미션/업적 진행 상황 </ProgressName>
           <CurrentProgress>
             <Mission style={{backgroundColor : "#00E5BA"}}>
+              <Term> 일간 </Term>
               <MissionContent>
-                <Term> 일간 </Term>
+                {missionDaily.map(item => (
                 <SubMissionContent>
-                  {missionDaily.map(item => (
-                    <SubMission key={item.id}> {item.text} </SubMission>
-                  ))}
+                  <SubMission key={item.id}> {item.text} </SubMission>
+                  <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
                 </SubMissionContent>
+                ))}
               </MissionContent>
-              <PointBtn style={{backgroundColor : "#00E5BA"}}> 포인트 획득 </PointBtn>
             </Mission>
             <Mission style={{backgroundColor : "#00CFEE"}}>
+              <Term> 주간 </Term>
               <MissionContent>
-                <Term> 주간 </Term>
+                {missionWeekly.map(item => (
                 <SubMissionContent>
-                  {missionWeekly.map(item => (
-                    <SubMission key={item.id}> {item.text} </SubMission>
-                  ))}
+                  <SubMission key={item.id}> {item.text}  </SubMission>
+                  <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
                 </SubMissionContent>
+                ))}
               </MissionContent>
-              <PointBtn style={{backgroundColor : "#00CFEE"}}> 포인트 획득 </PointBtn>
             </Mission>
             <Mission style={{backgroundColor : "#00B2FF"}}>
+              <Term> 업적 </Term>
               <MissionContent>
-                <Term> 업적 </Term>
-                <SubMissionContent>
-                  {challenge.map(item => (
-                    <SubMission key={item.id}> {item.text} </SubMission>
-                  ))}
-                </SubMissionContent>
+                {challenge.map(item => (item.missionStatus === "COMPLETED" && (
+                  <SubMission_ key={item.id} style={{color:"black"}}> {item.text} </SubMission_>
+                )))}
               </MissionContent>
-              <PointBtn style={{backgroundColor : "#00B2FF"}}> 업적 보기 </PointBtn>
             </Mission>
           </CurrentProgress>
         </ContentSection>
@@ -200,7 +211,6 @@ export default Study_theory;
 const TestSection = styled.div`
   height : 100vh;
 `
-
 const SectionBar = styled.div`
   width : 100vw;
   display : flex;
@@ -298,6 +308,7 @@ const ProgressName = styled.p`
 `
 
 const CurrentProgress = styled.div`
+  width : 72.5rem;
   display : flex;
   margin : 1rem auto 0rem;
 `
@@ -345,45 +356,57 @@ const Lecture = styled.p`
 `
 
 const SubLecture = styled.p`
+  cursor : pointer;
   font-weight : bold;
   margin : 0.25rem 1.75rem;
   color : rgba(0, 0, 0, 0.75);
 `
 
 const Mission = styled.div`
-  width : 18rem;
-  padding : 1rem;
+  width : 21.25rem;
   display : flex;
-  height : 9.75rem;
+  color : #FFFFFF;
+  height : 12.5rem;
+  font-weight : bold;
   margin : 1rem auto 0rem;
+  flex-direction : column;
+  padding : 0rem 1rem 1rem;
   border-radius : 1.25rem 0rem 1.25rem 0rem;
 `
 
-const MissionContent = styled.div`
-  display : flex;
-  color : #FFFFFF;
-  width : 12.5rem;
-  align-items : left;
-  font-weight : bold;
-  justify-content : center;
+const Term = styled.p`
+  font-size : 1.25rem;
+  margin-bottom : 1rem;
 `
 
-const Term = styled.p`
-  margin : 0;
-  font-size : 1.25rem;
+const MissionContent = styled.div`
+  height : 10rem;
+  display : flex;
+  width : 23.75rem;
+  overflow : scroll;
+  flex-direction : column;
+
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `
 
 const SubMissionContent = styled.div`
-
+  display : flex;
+  width : 21.25rem;
+  margin : 0.15rem 0rem;
 `
 
 const SubMission = styled.div`
-
+  width : 18.5rem;
 `
 
-const PointBtn = styled.button`
-  border : none;
-  color : #FFFFFF;
-  width : 5.375rem;
-  font-weight : bold;
+const SubMission_ = styled.div`
+  width : 21.25rem;
+  margin : 0.15rem 0rem;
+`
+
+const SubMissionCount = styled.div`
+  width : 2.75rem;
+  text-align : right;
 `

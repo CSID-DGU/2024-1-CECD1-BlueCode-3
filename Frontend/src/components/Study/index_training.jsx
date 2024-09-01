@@ -1,28 +1,14 @@
-import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
 import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
-import { useRef, useState, useEffect } from 'react';
-import { NavLink, useParams, useNavigate ,redirect } from 'react-router-dom';
+import BCODE from '../../logo_w.png';
+import Markdown from '../../Markdown';
+import styled from 'styled-components';
+import LOADING from '../../loading.png';
+import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
-
-const extractAndReplaceInputs = (str, replacements) => {
-  // 정규 표현식으로 모든 input() 내의 문자열을 추출
-  const regex = /input\(([^)]*)\)/g;
-  const extractedContents = [];
-  
-  // 모든 매치를 찾고 대체
-  let replaceIndex = 0;
-  const replacedStr = str.replace(regex, (fullMatch, group1) => {
-    extractedContents.push(group1);
-    const replacement = replacements[replaceIndex] || fullMatch; // 대체 문자열이 없으면 원본 유지
-    replaceIndex++;
-    return replacement;
-  });
-
-  return { extracted: extractedContents, replaced: replacedStr };
-};
+import React, { useRef, useState, useEffect } from 'react';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 
 
 
@@ -30,92 +16,7 @@ function Study_training() {
   const [pyodide, setPyodide] = useState(null);
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
-
-  const [savedCode, setSavedCode] = useState("");
-  const [output, setOutput] = useState({ extracted: [], replaced: '' });
-  const [replacements, setReplacements] = useState([]);
-
-  const replaceCode = () => {
-    // 모든 input() 부분에 대해 대체 문자열을 입력받음
-    const newReplacements = [];
-    const regex = /input\(([^)]*)\)/g;
-    let match;
-    while ((match = regex.exec(savedCode)) !== null) {
-      const replacement = prompt(`Replace ${match[0]} with:`);
-      newReplacements.push("'" + replacement + "'");
-    }
-    setReplacements(newReplacements);
-
-    const result = extractAndReplaceInputs(savedCode, newReplacements);
-    setOutput(result);
-  };
-
   
-const codeSended =
-`
-import sys
-import json
-
-class PrintCollector:
-    def __init__(self):
-        self.output = []
-
-    def write(self, text):
-        self.output.append(text)
-
-    def flush(self):
-        pass
-
-collector = PrintCollector()
-sys.stdout = collector
-sys.stderr = collector
-
-def print_collected():
-    return ''.join(collector.output)
-
-${code}
-
-print_collected()
-`;
-/*
-  useEffect(() => {
-    const loadPyodide = async () => {
-      const pyodide = await window.loadPyodide();
-      setPyodide(pyodide);
-    };
-    loadPyodide();
-  }, []);
-*/
-  const runPythonCode = async () => {
-    if (pyodide) {
-      try {
-        const res = await pyodide.runPython(codeSended);
-        setResult(res);
-        setSavedCode(codeSended);
-      } catch (err) {
-        setResult(err.message);
-      }
-    }
-  };
-
-  const checkCode = async () => {
-    if (pyodide) {
-      try {
-        const res = await pyodide.runPython(output.replaced);
-
-        if(Number(res) === 5 || res === "5") {
-          alert("정답입니다.");
-        }
-        else {
-          alert("오답입니다.");
-        }
-      } catch (err) {
-        setResult(err.message);
-      }
-    }
-  };
-
-
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
 
@@ -160,14 +61,137 @@ print_collected()
   }
 
   const [dialog, setDialog] = useState("");
-  const [dialogs, setDiv] = useState([]);
-  const AddDialog = () => {
+  const [dialogs, setDialogs] = useState([]);
+
+  const [step, setStep] = useState(0);
+  const [stepDialogs, setStepDialogs] = useState();
+
+  
+  const AddDialog = async () => {
     if(dialog) {
-      setDiv([...dialogs, <Dialog> {dialog} </Dialog>]);
-      setDialog("");
+      if(!divValue) {
+        setDialogs((pre) => [...pre, <Dialog_server> <div> 태그를 선택해주세요 </div> </Dialog_server>]);
+      }
+      else {
+        setDialogs((pre) => [...pre, <Dialog_client> <div> {dialog} </div> </Dialog_client>]);
+        try {
+          const res = await getChatResponse(dialog, divValue);
+          
+          setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{res.answerList[0]}</Markdown> </div> </Dialog_server>]);
+          if (divValue === "CODE" || divValue === "ERRORS") {
+            console.log("1로바꿈")
+            setStep(1);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+        setDialog("");
+      }
     }
   }
-  
+
+
+  const AddStepDialog = async () => {
+    setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{stepDialogs.answerList[step]}</Markdown> </div> </Dialog_server>]);
+
+    // 백에 next 처리 요청
+    postNextResponse(stepDialogs.chatId);
+    setStep(step + 1);
+    if(step === stepDialogs.answerList.length - 1)
+    {
+      setStepDialogs('');
+      setStep(0);
+    }
+  }
+
+
+  const EndStepDialog = () => {
+    setStep(0);
+  }
+
+  useEffect(()=>{
+    getSubChapterChatHistory();
+  }, []);
+
+//서브 챕터 단위 채팅 히스토리 로드
+const getSubChapterChatHistory =  async () =>{
+  const userid = localStorage.getItem('userid');
+
+  const QuestionCallDto = {
+    'userId': userid,
+    'curriculumId': subChapId
+  };
+  try {
+    const response = await axiosInstance.post('/chat/chat/historyBySubChapter', QuestionCallDto);
+    // console.log(response);
+
+    const dialogsToAdd = [];
+
+    const res = response.data.list;
+    // console.log(res);
+    for (var i = 0; i < res.length; i++) {
+      // console.log(res[i].question);
+      
+      const question = res[i].question
+      dialogsToAdd.push(<Dialog_client> <div> {question} </div> </Dialog_client>);
+
+      //console.log(res[i].answer);
+      const answer = res[i].answer;
+      //console.log(answer.length);
+      for (var j = 0; j < answer.length; j++) {
+        dialogsToAdd.push(<Dialog_server> <div> <Markdown>{answer[j]}</Markdown> </div> </Dialog_server>);
+      }
+    }
+    setDialogs((pre) => [...pre, ...dialogsToAdd]);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+ //챗봇 답변 요청 (질문 타입 : DEF, CODE, ERRORS )
+ const getChatResponse =  async (dialog, divValue) =>{
+  const userid = localStorage.getItem('userid');
+  console.log("질문 본문 "+dialog+" 질문 타입 "+divValue);
+  const QuestionCallDto = {
+    'userId': userid,
+    'curriculumId': subChapId,
+    "text": dialog,
+    "type": divValue
+  };
+  try {
+    const res = await axiosInstance.post('/chat/chat/response', QuestionCallDto);
+    console.log(res);
+    if(divValue!="DEF" )
+      console.log(res.data)
+      setStepDialogs(res.data);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+
+ //단계적 답변(code,error 타입 질문) 다음 답변 요청
+ const postNextResponse =  async (chatId) =>{
+
+  const NextLevelChatCallDto = {
+    'chatId': chatId
+  };
+  try {
+    const response = await axiosInstance.post('/chat/chat/next', NextLevelChatCallDto);
+    console.log(response);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+useEffect(()=>{
+  if (step){
+    console.log(step);
+  }
+}, [step]);
+
+
   const chat = useRef();
   const scrollToBottom = () => {
     chat.current?.scrollIntoView();
@@ -193,7 +217,6 @@ print_collected()
   }, []);
 
   const navigate = useNavigate();
-  const redirect = useNavigate();
   const goToNext = () => {
     
     // quiz 에서 다음 누르면 해당 서브챕터 pass 요청
@@ -223,10 +246,9 @@ print_collected()
       navigate(-1);
     }
   }
-  const [training, setTraining] = useState();
+  const [training, setTraining] = useState('');
 
-  useEffect(()=>{
-  }, [training]);
+  //useEffect(()=>{}, [training]);
 
   // DEF 이론 , CODE 예시 코드, QUIZ 코드를 이용한 예시 문제
   const getStudyText = async (subChapterid, textType) => {
@@ -258,7 +280,7 @@ print_collected()
         'userId': userId,
         'curriculumId': subChapterid
       };
-      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass',CurriculumPassCallDto);
+      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass', CurriculumPassCallDto);
       console.log(res);
     }
     catch (err){
@@ -267,13 +289,10 @@ print_collected()
   }
 
 
+
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -304,41 +323,42 @@ print_collected()
             <Nav> 제 15장 </Nav>
           </Dynamic>
         </NavSection>
-        <ContentSection width={contentWidth}>
-          <Instruction> {training} </Instruction>
-          <Buttons>
-            <Before onClick={goBack}> <img src={Left}></img> </Before>
-            <After onClick={goToNext}> <img src={Right}></img> </After>
-            <GPT onClick={ShowGpt}> GPT </GPT>
-          </Buttons>
+        <ContentSection width={width}>
+          {training?
+          <Instruction height={height}>
+            <Markdown>{training}</Markdown>
+          </Instruction>
+          :
+          <InstructionLoading height={height}>
+            <img src={LOADING} alt="loading"></img>
+          </InstructionLoading>}
           <Train height={height} width={contentWidth}>
             <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
             <Buttons_>
-              <Interpret onClick={runPythonCode}> 실행 </Interpret>
-              <Save onClick={replaceCode}> 저장 </Save>
-              <Submit onClick={checkCode}> 제출 </Submit>
+              <GPT onClick={ShowGpt}> GPT </GPT>
+              <Interpret> 실행 </Interpret>
+              <After onClick={goToNext}> <img src={Right}></img> </After>
+              <Before onClick={goBack}> <img src={Left}></img> </Before>
             </Buttons_>
-          <CodeResult>
-            <p>--- 코드 실행 결과 ---</p>
-            <ResultPre>
-              <Result width={contentWidth}> {result} </Result>
-            </ResultPre>
-          </CodeResult> 
-        </Train>
-      </ContentSection>
-      {gptValue && (<ChatbotSection>
-          <Chat height={height}>
-            {dialogs.map(div => div)}
-            <div ref={chat}></div>
-          </Chat>
-          <ChatType>
-            <Type style={divValue === "개념"?borderStyle:{}} onClick={()=>getDivValue("개념")}> #개념 </Type>
-            <Type style={divValue === "코드"?borderStyle:{}} onClick={()=>getDivValue("코드")}> #코드 </Type>
-            <Type style={divValue === "오류"?borderStyle:{}} onClick={()=>getDivValue("오류")}> #오류 </Type>
-          </ChatType>
+          </Train>
+        </ContentSection>
+        {gptValue && (<ChatbotSection>
+        <Chat height={height}>
+          {dialogs.map(div => div)}
+          <div ref={chat}></div>
+        </Chat>
+        {(step > 0) && <ChatType>
+          <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
+          <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
+        </ChatType>}
+        {!step && <ChatType>
+            <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
+            <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
+            <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
+        </ChatType>}
           <ChatInput>
             <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
-            <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>          
+            <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>
           </ChatInput>
         </ChatbotSection>)}
       </Content>
@@ -429,28 +449,46 @@ const Dynamic = styled.div`
 
 const ContentSection = styled.div`
   margin : 2rem;
+  display : flex;
   border-radius : 1rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
   width : ${(props) => `${(props.width - 304) / 16}rem`};
 `
 
 const Instruction = styled.div`
-  height : 3.75rem;
-  margin : 1rem 1rem 0.5rem;
-  background : rgba(0, 0, 0, 0.25);
+  width : 25rem;
   overflow : scroll;
+  padding : 0rem 1rem;
+  margin : 1rem 1rem 0.5rem;
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);
+  height : ${(props) => `${(props.height - 170) / 16}rem`};
+  
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `
 
-const Buttons = styled.div`
-  float : right;
-  padding : 0 1rem;
-  margin-bottom : 0.5rem;
+const InstructionLoading = styled.div`
+  width : 25rem;
+  display : flex;
+  padding : 0rem 1rem;
+  align-items : center;
+  justify-content : center;
+  margin : 1rem 1rem 0.5rem;
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);
+  height : ${(props) => `${(props.height - 170) / 16}rem`};
+  
+  img {
+    width : 12.5rem;
+    height : 5rem;
+  }
 `
 
 const Before = styled.button`
   width : 2rem;
   border : none;
   height : 2rem;
+  float : right;
   color : #008BFF;
   margin : 0 0.25rem;
   font-weight : bold;
@@ -468,6 +506,7 @@ const After = styled.button`
   width : 2rem;
   border : none;
   height : 2rem;
+  float : right;
   color : #008BFF;
   margin : 0 0.25rem;
   font-weight : bold;
@@ -485,6 +524,7 @@ const GPT = styled.button`
   width : 4rem;
   border : none;
   height : 2rem;
+  float : right;
   color : #FFFFFF;
   font-size : 1rem;
   font-weight : bold;
@@ -494,8 +534,12 @@ const GPT = styled.button`
 `
 
 const Train = styled.div`
-  margin : 3.25rem 1rem 1rem;
-  height : ${(props) => `${(props.height - 278) / 16}rem`};
+  display : flex;
+  margin-top : 1rem;
+  flex-direction : column;
+  background : grey;
+  width : ${(props) => `${(props.width - 792) / 16}rem`};
+  height : ${(props) => `${(props.height - 170) / 16}rem`};
 `
 
 const CodeArea = styled.textarea`
@@ -503,12 +547,11 @@ const CodeArea = styled.textarea`
   padding : 1rem;
   font-size : 1rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 370) / 16}rem`};
-  height : ${(props) => `${(props.height - 464) / 16}rem`};
+  width : ${(props) => `${(props.width - 826) / 16}rem`};
+  height : ${(props) => `${(props.height - 440) / 16}rem`};
 `
 
 const Buttons_ = styled.div`
-  float : right;
   margin : 0.425rem 0.025rem;
 `
 
@@ -516,10 +559,12 @@ const Interpret = styled.button`
   width : 4rem;
   border : none;
   height : 2rem;
+  float : right;
   color : #008BFF;
   font-weight : bold;
   font-size : 0.875rem;
   background : #FFFFFF;
+  margin-left : 0.5rem;
   border-radius : 1rem;
   border : 0.125rem solid #008BFF;
 `
@@ -589,7 +634,6 @@ const Chat = styled.div`
   margin : 1rem;
   display : flex;
   overflow : scroll;
-  align-items : flex-end;
   flex-direction : column;
   height : ${(props) => `${(props.height - 277.5) / 16}rem`};
 
@@ -598,15 +642,34 @@ const Chat = styled.div`
   }
 `
 
-const Dialog = styled.p`
-  margin : 0.5rem 0;
-  width : fit-content;
-  background : #FFFFFF;
-  padding : 0.75rem 1rem;
-  word-break : break-word;
-  overflow-wrap : break-word;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  border-radius : 1.5rem 1.5rem 0rem 1.5rem;
+const Dialog_client = styled.div`
+  display : flex;
+  justify-content : flex-end;
+
+  div {
+    margin : 0.5rem 0;
+    padding : 0.75rem;
+    width : fit-content;
+    background : #FFFFFF;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
+    border-radius : 1.5rem 1.5rem 0rem 1.5rem;
+  }
+`
+
+const Dialog_server = styled.div`
+  div {
+    color : #FFFFFF;
+    margin : 0.5rem 0;
+    padding : 0.75rem;
+    width : fit-content;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    background : rgba(0, 139, 255, 0.75);
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
+    border-radius : 1.5rem 1.5rem 1.5rem 0rem;
+  }
 `
 
 const ChatType = styled.div`
@@ -652,11 +715,11 @@ const InputButton = styled.button`
   color : #FFFFFF;
   height : 2.5rem;
   font-weight : bold;
-  margin : 0.375rem 0;
   font-size : 1.25rem;
   background : #008BFF;
   border-radius : 1.25rem;
   border : 0.125rem solid #FFFFFF;
+  margin : 0.375rem 0.625rem 0.375rem 0rem;
 
   img {
     margin : auto 0;

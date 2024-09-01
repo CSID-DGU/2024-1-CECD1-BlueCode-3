@@ -1,11 +1,14 @@
-import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
 import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
+import BCODE from '../../logo_w.png';
+import Markdown from '../../Markdown';
+import styled from 'styled-components';
+import LOADING from '../../loading.png';
+import SectionBarJsx from '../../SectionBar';
+import axiosInstance from '../../axiosInstance';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../axiosInstance';
 
 
 function Study_theory() {
@@ -53,49 +56,135 @@ function Study_theory() {
   }
 
 
-  const type_style = {background : 'rgba(0, 139, 255, 0.25)', borderRadius : '0.5rem'};
-  const [typeValue1, setTypeValue1] = useState(false);
-  const [typeValue2, setTypeValue2] = useState(false); 
-  const [typeValue3, setTypeValue3] = useState(false);
-  const [typeValue4, setTypeValue4] = useState(false);
-  const selectType = () => {
-    if(typeValue1) {
-      setTypeValue1(false);
-    }
-    else {
-      setTypeValue1(true);
-    }
-
-    if(typeValue2) {
-      setTypeValue2(false);
-    }
-    else {
-      setTypeValue2(true);
-    }
-
-    if(typeValue3) {
-      setTypeValue3(false);
-    }
-    else {
-      setTypeValue3(true);
-    }
-
-    if(typeValue4) {
-      setTypeValue4(false);
-    }
-    else {
-      setTypeValue4(true);
-    }
-  }
-
   const [dialog, setDialog] = useState("");
-  const [dialogs, setDiv] = useState([]);
-  const AddDialog = () => {
+  const [dialogs, setDialogs] = useState([]);
+  
+  const [step, setStep] = useState(0);
+  const [stepDialogs, setStepDialogs] = useState();
+
+  const AddDialog = async () => {
     if(dialog) {
-      setDiv([...dialogs, <Dialog> {dialog} </Dialog>]);
-      setDialog("");
+      if(!divValue) {
+        setDialogs((pre) => [...pre, <Dialog_server> <div> 태그를 선택해주세요 </div> </Dialog_server>]);
+      }
+      else {
+        setDialogs((pre) => [...pre, <Dialog_client> <div> {dialog} </div> </Dialog_client>]);
+        try {
+          const res = await getChatResponse(dialog, divValue);
+          
+          setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{res.answerList[0]}</Markdown> </div> </Dialog_server>]);
+          if (divValue === "CODE" || divValue === "ERRORS") {
+            console.log("1로바꿈")
+            setStep(1);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+        setDialog("");
+      }
     }
   }
+
+  
+  const AddStepDialog = async () => {
+    setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{stepDialogs.answerList[step]}</Markdown> </div> </Dialog_server>]);
+
+    // 백에 next 처리 요청
+    postNextResponse(stepDialogs.chatId);
+    setStep(step + 1);
+    if(step === stepDialogs.answerList.length - 1)
+    {
+      setStepDialogs('');
+      setStep(0);
+    }
+  }
+
+  const EndStepDialog = () => {
+    setStep(0);
+  }
+
+  useEffect(()=>{
+    getSubChapterChatHistory();
+  }, []);
+
+  //서브 챕터 단위 채팅 히스토리 로드
+  const getSubChapterChatHistory =  async () =>{
+    const userid = localStorage.getItem('userid');
+
+    const QuestionCallDto = {
+      'userId': userid,
+      'curriculumId': subChapId
+    };
+    try {
+      const response = await axiosInstance.post('/chat/chat/historyBySubChapter', QuestionCallDto);
+      // console.log(response);
+
+      const dialogsToAdd = [];
+
+      const res = response.data.list;
+      // console.log(res);
+      for (var i = 0; i < res.length; i++) {
+        // console.log(res[i].question);
+        
+        const question = res[i].question
+        dialogsToAdd.push(<Dialog_client> <div> {question} </div> </Dialog_client>);
+
+        //console.log(res[i].answer);
+        const answer = res[i].answer;
+        //console.log(answer.length);
+        for (var j = 0; j < answer.length; j++) {
+          dialogsToAdd.push(<Dialog_server> <div> <Markdown>{answer[j]}</Markdown> </div> </Dialog_server>);
+        }
+      }
+      setDialogs((pre) => [...pre, ...dialogsToAdd]);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  //챗봇 답변 요청 (질문 타입 : DEF, CODE, ERRORS )
+  const getChatResponse =  async (dialog, divValue) =>{
+    const userid = localStorage.getItem('userid');
+    console.log("질문 본문 "+dialog+" 질문 타입 "+divValue);
+
+    const QuestionCallDto = {
+      'userId': userid,
+      'curriculumId': subChapId,
+      "text": dialog,
+      "type": divValue
+    };
+
+    try {
+      const res = await axiosInstance.post('/chat/chat/response', QuestionCallDto);
+      console.log(res);
+      if(divValue!="DEF" )
+        console.log(res.data)
+        setStepDialogs(res.data);
+      return res.data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  //단계적 답변(code,error 타입 질문) 다음 답변 요청
+  const postNextResponse =  async (chatId) =>{
+    const NextLevelChatCallDto = {
+      'chatId': chatId
+    };
+    try {
+      const response = await axiosInstance.post('/chat/chat/next', NextLevelChatCallDto);
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  
+  useEffect(()=>{
+    if (step){
+      console.log(step);
+    }
+  }, [step]);
+
   
   const chat = useRef();
   const scrollToBottom = () => {
@@ -117,6 +206,7 @@ function Study_theory() {
   useEffect(()=>{
     getStudyText(subChapId, text);
   }, []);
+
 
   
   const [theory, setTheory] = useState('');
@@ -148,36 +238,10 @@ function Study_theory() {
       navigate(`/study/training/${subChapId}/CODE`);
     }
   }
-
-  /*
-  const postSubchapterPass = async (subChapterid) => {
-    try {
-      //파라미터에서 파싱하도록 수정
-      const userId = localStorage.getItem('userid');
-
-      const CurriculumPassCallDto = {
-        'userId': userId,
-        'curriculumId': subChapterid
-      };
-      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass',CurriculumPassCallDto);
-      console.log(res);
-    }
-    catch (err){
-      console.error(err); 
-    }
-  }
-    */
-
-  // 한서브챕터를 마이페이지-강의정보 : def<->code<->quiz  ->챕터패스처리  -> 마이페이지 - 강의정보
-  //  
-
+ 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -185,7 +249,7 @@ function Study_theory() {
             <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav> ㅇ 마이페이지 </Nav></NavLink>
             <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
-        <Dynamic>
+          <Dynamic>
           <Nav id="1" style={navValue ? style : styled} onClick={AddToNavContent}> 제 1장 </Nav>
           {navValue && (<NavContent>
             <NavItem> 목차 1 </NavItem>
@@ -209,7 +273,14 @@ function Study_theory() {
         </Dynamic>
       </NavSection>
       <ContentSection width={contentWidth}>
-        <Instruction height={height}> {theory} </Instruction>
+        {theory?
+        <Instruction height={height}>
+          <Markdown>{theory}</Markdown>
+        </Instruction>
+        :
+        <InstructionLoading height={height}>
+          <img src={LOADING} alt="loading"></img>
+        </InstructionLoading>}
         <Buttons>
           <Before> <img src={Left}></img> </Before>
           <After onClick={goToTraining}> <img src={Right}></img> </After>
@@ -221,11 +292,15 @@ function Study_theory() {
           {dialogs.map(div => div)}
           <div ref={chat}></div>
         </Chat>
-        <ChatType>
-            <Type style={divValue === "개념"?borderStyle:{}} onClick={()=>getDivValue("개념")}> #개념 </Type>
-            <Type style={divValue === "코드"?borderStyle:{}} onClick={()=>getDivValue("코드")}> #코드 </Type>
-            <Type style={divValue === "오류"?borderStyle:{}} onClick={()=>getDivValue("오류")}> #오류 </Type>
-        </ChatType>
+        {(step > 0) && <ChatType>
+          <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
+          <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
+        </ChatType>}
+        {!step && <ChatType>
+            <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
+            <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
+            <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
+        </ChatType>}
           <ChatInput>
             <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
             <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>
@@ -325,9 +400,30 @@ const ContentSection = styled.div`
 `
 
 const Instruction = styled.div`
+  overflow : scroll;
+  padding : 0rem 1rem;
   margin : 1rem 1rem 0.5rem;
-  background : rgba(0, 0, 0, 0.25);
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);
   height : ${(props) => `${(props.height - 200) / 16}rem`};
+  
+  &::-webkit-scrollbar {
+    display : none;
+  }
+`
+
+const InstructionLoading = styled.div`
+  display : flex;
+  padding : 0rem 1rem;
+  align-items : center;
+  justify-content : center;
+  margin : 1rem 1rem 0.5rem;
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);
+  height : ${(props) => `${(props.height - 200) / 16}rem`};
+
+  img {
+    width : 12.5rem;
+    height : 5rem;
+  }
 `
 
 const Buttons = styled.div`
@@ -392,7 +488,6 @@ const Chat = styled.div`
   margin : 1rem;
   display : flex;
   overflow : scroll;
-  align-items : flex-end;
   flex-direction : column;
   height : ${(props) => `${(props.height - 277.5) / 16}rem`};
 
@@ -401,15 +496,34 @@ const Chat = styled.div`
   }
 `
 
-const Dialog = styled.p`
-  margin : 0.5rem 0;
-  width : fit-content;
-  background : #FFFFFF;
-  padding : 0.75rem 1rem;
-  word-break : break-word;
-  overflow-wrap : break-word;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  border-radius : 1.5rem 1.5rem 0rem 1.5rem;
+const Dialog_client = styled.div`
+  display : flex;
+  justify-content : flex-end;
+
+  div {
+    margin : 0.5rem 0;
+    padding : 0.75rem;
+    width : fit-content;
+    background : #FFFFFF;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
+    border-radius : 1.5rem 1.5rem 0rem 1.5rem;
+  }
+`
+
+const Dialog_server = styled.div`
+  div {
+    color : #FFFFFF;
+    margin : 0.5rem 0;
+    padding : 0.75rem;
+    width : fit-content;
+    word-break : break-word;
+    overflow-wrap : break-word;
+    background : rgba(0, 139, 255, 0.75);
+    border : 0.05rem solid rgba(0, 0, 0, 0.5);
+    border-radius : 1.5rem 1.5rem 1.5rem 0rem;
+  }
 `
 
 const ChatType = styled.div`
