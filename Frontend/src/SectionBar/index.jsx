@@ -1,5 +1,5 @@
 import React from 'react';
-import BCODE from '../../logo_w.png';
+import BCODE from '../logo_w.png';
 import styled from 'styled-components';
 
 function SectionBarJsx() {

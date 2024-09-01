@@ -1,12 +1,13 @@
-import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { SHA256 } from 'crypto-js';
 import axios from 'axios';
-import axiosInstance from '../../axiosInstance'
-import getChapterPass from '../../getChapterPass';
+import { SHA256 } from 'crypto-js';
+import BCODE from '../../logo_w.png';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import getUserInfo from '../../getUserInfo';
+import SectionBarJsx from '../../SectionBar';
+import axiosInstance from '../../axiosInstance';
+import getChapterPass from '../../getChapterPass';
+import React, { useState, useEffect } from 'react';
 
 
 function Study_theory() {
@@ -201,11 +202,7 @@ function Study_theory() {
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -214,7 +211,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"0%":Math.round(processPass / process * 100) + "%"}</p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"}</p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
@@ -228,27 +225,27 @@ function Study_theory() {
           <PrivateInfo>
             <SubInfo>
               <Element> ㅇ 아이디 </Element>
-              <SubElement> {id} </SubElement>
+              <SubElement> {id?id:"-"} </SubElement>
             </SubInfo>
             <SubInfo>
               <Element> ㅇ 이름 </Element>
-              <SubElement> {name} </SubElement>
+              <SubElement> {name?name:"-"} </SubElement>
             </SubInfo>
           </PrivateInfo>
           <PrivateInfo>
             <SubInfo>
               <Element> ㅇ 생년월일 </Element>
-              <SubElement> {birthday} </SubElement>
+              <SubElement> {birthday?birthday:"-"} </SubElement>
             </SubInfo>
             <SubInfo>
               <Element> ㅇ 회원가입 일자 </Element>
-              <SubElement> {signInDate} </SubElement>
+              <SubElement> {signInDate?signInDate:"-"} </SubElement>
             </SubInfo>
           </PrivateInfo>
           <ChangingInfo>
             <Email> ㅇ 이메일 </Email>
             <ChangingSection>
-              <InputArea  type="text" placeholder={email} value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} onBlur={newEmailBlur}></InputArea>
+              <InputArea  type="text" placeholder={email?email:"-"} value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} onBlur={newEmailBlur}></InputArea>
               <Button onClick={changeEmail}> 이메일 변경 </Button>
               <p id="info"> - 인증번호 발급을 위한 이메일 작성 </p>
               <p id="emailInfo" style={{color : "#008BFF", fontWeight : "bold"}}></p>

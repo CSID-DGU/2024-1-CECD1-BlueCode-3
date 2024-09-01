@@ -1,11 +1,12 @@
 import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
 import styled from 'styled-components';
+import getUserInfo from '../../getUserInfo';
+import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
+import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import getUserInfo from '../../getUserInfo';
-import getChapterPass from '../../getChapterPass';
 
 
 function Study_theory() {
@@ -120,11 +121,7 @@ function Study_theory() {
 
   return (
     <TestSection>
-      <SectionBar>
-          <Logo>
-            <img src={BCODE} alt="Logo"></img>
-          </Logo>
-        </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -133,7 +130,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"0%":Math.round(processPass / process * 100) + "%"} </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
@@ -149,7 +146,7 @@ function Study_theory() {
             <ProgressImg>
               <svg viewBox="0 0 200 200">
                 <Circle></Circle>
-                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * processPass / process} ${2 * Math.PI * 75 * (process - processPass) / process}`}
+                <CircleCur strokeDasharray={processPass?`${2 * Math.PI * 75 * processPass / process} ${2 * Math.PI * 75 * (process - processPass) / process}`:"0 1"}
                            transform={`rotate(-90, 100, 100)`}>
                 </CircleCur>
               </svg>
@@ -171,35 +168,33 @@ function Study_theory() {
           <ProgressName> ㅇ 미션/업적 진행 상황 </ProgressName>
           <CurrentProgress>
             <Mission style={{backgroundColor : "#00E5BA"}}>
+              <Term> 일간 </Term>
               <MissionContent>
-                <Term> 일간 </Term>
-                  {missionDaily.map(item => (
-                    <SubMissionContent>
-                    <SubMission key={item.id}> {item.text}  </SubMission>
-                    <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
-                  </SubMissionContent>
-                  ))}
+                {missionDaily.map(item => (
+                <SubMissionContent>
+                  <SubMission key={item.id}> {item.text} </SubMission>
+                  <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
+                </SubMissionContent>
+                ))}
               </MissionContent>
             </Mission>
             <Mission style={{backgroundColor : "#00CFEE"}}>
+              <Term> 주간 </Term>
               <MissionContent>
-                <Term> 주간 </Term>
-                  {missionWeekly.map(item => (
-                  <SubMissionContent>
-                    <SubMission key={item.id}> {item.text}  </SubMission>
-                    <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
-                  </SubMissionContent>
-                  ))}
+                {missionWeekly.map(item => (
+                <SubMissionContent>
+                  <SubMission key={item.id}> {item.text}  </SubMission>
+                  <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
+                </SubMissionContent>
+                ))}
               </MissionContent>
             </Mission>
             <Mission style={{backgroundColor : "#00B2FF"}}>
+              <Term> 업적 </Term>
               <MissionContent>
-                <Term> 업적 </Term>
-                  {challenge.map(item => (item.missionStatus === "COMPLETED" && (
-                  <SubMissionContent>
-                    <SubMission key={item.id} style={{color:"black"}}> {item.text} </SubMission>
-                  </SubMissionContent>
-                  )))}
+                {challenge.map(item => (item.missionStatus === "COMPLETED" && (
+                  <SubMission_ key={item.id} style={{color:"black"}}> {item.text} </SubMission_>
+                )))}
               </MissionContent>
             </Mission>
           </CurrentProgress>
@@ -361,27 +356,22 @@ const Lecture = styled.p`
 `
 
 const SubLecture = styled.p`
+  cursor : pointer;
   font-weight : bold;
   margin : 0.25rem 1.75rem;
   color : rgba(0, 0, 0, 0.75);
 `
 
 const Mission = styled.div`
-  width : 18rem;
-  display : flex;
-  height : 12.5rem;
-  margin : 1rem auto 0rem;
-  padding : 0rem 1rem 1rem;
-  border-radius : 1.25rem 0rem 1.25rem 0rem;
-`
-
-const MissionContent = styled.div`
+  width : 21.25rem;
   display : flex;
   color : #FFFFFF;
-  width : 12.5rem;
-  align-items : left;
+  height : 12.5rem;
   font-weight : bold;
+  margin : 1rem auto 0rem;
   flex-direction : column;
+  padding : 0rem 1rem 1rem;
+  border-radius : 1.25rem 0rem 1.25rem 0rem;
 `
 
 const Term = styled.p`
@@ -389,18 +379,31 @@ const Term = styled.p`
   margin-bottom : 1rem;
 `
 
-const SubMissionContent = styled.div`
+const MissionContent = styled.div`
+  height : 10rem;
   display : flex;
-  width : 22.5rem;
-  margin : 0.125rem 0rem;
+  width : 23.75rem;
+  overflow : scroll;
+  flex-direction : column;
 
   &::-webkit-scrollbar {
     display : none;
   }
 `
 
+const SubMissionContent = styled.div`
+  display : flex;
+  width : 21.25rem;
+  margin : 0.15rem 0rem;
+`
+
 const SubMission = styled.div`
-  width : 15rem;
+  width : 18.5rem;
+`
+
+const SubMission_ = styled.div`
+  width : 21.25rem;
+  margin : 0.15rem 0rem;
 `
 
 const SubMissionCount = styled.div`

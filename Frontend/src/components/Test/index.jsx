@@ -1,7 +1,8 @@
 import BCODE from '../../logo_w.png';
-import LOADING from '../../loading.png';
 import Markdown from '../../Markdown';
 import styled from 'styled-components';
+import LOADING from '../../loading.png';
+import SectionBarJsx from '../../SectionBar';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import React, { useEffect, useState } from 'react';
@@ -381,13 +382,8 @@ useEffect(()=>{
 //{data.length > 0 ? <div> <ReactMarkdown  rehypePlugins={[rehypeHighlight]}> {data[order].text} </ReactMarkdown> </div> : <div> Loading... </div>}
 //{data.length >= 0 ? <div> <ReactMarkdown> {markdown} </ReactMarkdown> </div> : <div> Loading... </div>}
   return (
-    
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Dynamic>
@@ -414,11 +410,9 @@ useEffect(()=>{
           </Dynamic>
         </NavSection>
         {data.length > 0 ?
-        <ContentSection width={contentWidth}>
-          <QuestionArea>
-            <Question>
+        <ContentSection width={width}>
+          <QuestionArea height={height} width={width}>
               <Markdown>{data[order].text}</Markdown>
-            </Question>
           </QuestionArea>
           <AnswerArea>
             <Answer> {type} 답안 </Answer>
@@ -441,15 +435,15 @@ useEffect(()=>{
               </Selection>
             </SelectionArea>)}
             {qtype === "WORD" && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
-            {qtype === "CODE" && (<CodeArea onChange={(e)=>setAnswer(e.target.value)}></CodeArea>)}
+            {qtype === "CODE" && (<CodeArea height={height} width={width} onChange={(e)=>setAnswer(e.target.value)}></CodeArea>)}
             <Submit>
               <Button onClick={submitAnswer}> 제출 </Button>
             </Submit>
           </AnswerArea>
         </ContentSection>
-        :<ContentSection>
+        :<ContentSectionLoading width={width}>
           <img src={LOADING} alt="loading"></img>
-        </ContentSection>}
+        </ContentSectionLoading>}
       </Content>
     </TestSection>
   );
@@ -462,20 +456,6 @@ export default Study_theory;
 
 const TestSection = styled.div`
   height : 100vh;
-`
-
-const SectionBar = styled.div`
-  width : 100vw;
-  display : flex;
-  background : #008BFF;
-`
-
-const Logo = styled.div`
-  img {
-    height : 2rem;
-    width : 7.82rem;
-    margin : 1rem 4rem;
-  }
 `
 
 const Content = styled.div`
@@ -571,48 +551,47 @@ const ContentSection = styled.div`
   border-radius : 1rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
   width : ${(props) => `${(props.width - 370) / 16}rem`};
+`
+
+const ContentSectionLoading = styled.div`
+  margin : 2rem;
+  display : flex;
+  padding : 2rem;
+  align-items : center;
+  border-radius : 1rem;
+  justify-content : center;
+  border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  width : ${(props) => `${(props.width - 370) / 16}rem`};
 
   img {
-    width : 15rem;
+    width : 12.5rem;
     height : 5rem;
-    margin : 0 auto;
   }
 `
 
-
 const QuestionArea = styled.div`
-  height : 5rem;
-  width : 42.5rem;
-  padding : 1rem 1.25rem 0.25rem;
-`
+  font-size : 1rem;
+  overflow : scroll;
+  padding : 0rem 1rem;
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);
+  width : ${(props) => `${(props.width - 1000) / 16}rem`};
+  height : ${(props) => `${(props.height - 202) / 16}rem`};
 
-const Question = styled.div`
-  font-size : 1.125rem;
-  padding : 0.0625rem 0 0.5rem;
-  border-bottom : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 368) / 16}rem`};
-`
-
-const View = styled.div`
-  margin-top : 1.5rem;
-  height : 27.125rem;
-  padding : 1.25rem;
-  font-weight : bold;
-  font-size : 1.125rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `
 
 const AnswerArea = styled.div`
   width : 42.5rem;
-  padding : 1rem 1.25rem 0.25rem;
-  border-left : 0.05rem solid rgba(0, 0, 0, 0.5);
+  margin-left : 1.25rem;
 `
 
 const Answer = styled.div`
   font-size : 1.125rem;
   padding-bottom : 0.5rem;
   color : rgba(0, 0, 0, 0.5);
-  border-bottom : 0.05rem solid rgba(0, 0, 0, 0.375);
+  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.375);
 `
 
 const SelectionArea = styled.div`
@@ -659,11 +638,14 @@ const WritingArea = styled.textarea`
 const CodeArea = styled.textarea`
   resize : none;
   padding : 1rem;
-  font-size : 1.25rem;
   width : 31.5rem;
   height : 23.125rem;
-  margin-top : 1.5rem;
+  font-weight : bold;
+  font-size : 1.125rem;
+  margin-top : 1.25rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  width : ${(props) => `${(props.width - 900) / 16}rem`};
+  height : ${(props) => `${(props.height - 352) / 16}rem`};
 `
 
 const Submit = styled.div`
@@ -675,12 +657,13 @@ const Button = styled.button`
   border : none;
   width : 8.75rem;
   color : #FFFFFF;
+  cursor : pointer;
   font-size : 1rem;
   height : 2.625rem;
   font-weight : bold;
   background : #008BFF;
   border-radius : 0.5rem;
-  margin : 1.5rem auto 0;
+  margin : 1.25rem auto 0;
 `
 
 const Label = styled.label`

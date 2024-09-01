@@ -4,6 +4,8 @@ import Input from '../../input.png';
 import BCODE from '../../logo_w.png';
 import Markdown from '../../Markdown';
 import styled from 'styled-components';
+import LOADING from '../../loading.png';
+import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
@@ -68,14 +70,14 @@ function Study_training() {
   const AddDialog = async () => {
     if(dialog) {
       if(!divValue) {
-        setDialogs((pre) => [...pre, <Dialog_server> <p> 태그를 선택해주세요 </p> </Dialog_server>]);
+        setDialogs((pre) => [...pre, <Dialog_server> <div> 태그를 선택해주세요 </div> </Dialog_server>]);
       }
       else {
-        setDialogs((pre) => [...pre, <Dialog_client> <p> {dialog} </p> </Dialog_client>]);
+        setDialogs((pre) => [...pre, <Dialog_client> <div> {dialog} </div> </Dialog_client>]);
         try {
           const res = await getChatResponse(dialog, divValue);
           
-          setDialogs((pre) => [...pre, <Dialog_server> <p> {res.answerList[0]} </p> </Dialog_server>]);
+          setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{res.answerList[0]}</Markdown> </div> </Dialog_server>]);
           if (divValue === "CODE" || divValue === "ERRORS") {
             console.log("1로바꿈")
             setStep(1);
@@ -90,7 +92,7 @@ function Study_training() {
 
 
   const AddStepDialog = async () => {
-    setDialogs((pre) => [...pre, <Dialog_server> <p> {stepDialogs.answerList[step]} </p> </Dialog_server>]);
+    setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{stepDialogs.answerList[step]}</Markdown> </div> </Dialog_server>]);
 
     // 백에 next 처리 요청
     postNextResponse(stepDialogs.chatId);
@@ -101,6 +103,7 @@ function Study_training() {
       setStep(0);
     }
   }
+
 
   const EndStepDialog = () => {
     setStep(0);
@@ -130,13 +133,13 @@ const getSubChapterChatHistory =  async () =>{
       // console.log(res[i].question);
       
       const question = res[i].question
-      dialogsToAdd.push(<Dialog_client> <p> {question} </p> </Dialog_client>);
+      dialogsToAdd.push(<Dialog_client> <div> {question} </div> </Dialog_client>);
 
       //console.log(res[i].answer);
       const answer = res[i].answer;
       //console.log(answer.length);
       for (var j = 0; j < answer.length; j++) {
-        dialogsToAdd.push(<Dialog_server> <p> {answer[j]} </p> </Dialog_server>);
+        dialogsToAdd.push(<Dialog_server> <div> <Markdown>{answer[j]}</Markdown> </div> </Dialog_server>);
       }
     }
     setDialogs((pre) => [...pre, ...dialogsToAdd]);
@@ -220,14 +223,7 @@ useEffect(()=>{
     if(text==='QUIZ'){
       const userConfirm = window.confirm("해당 서브 챕터 학습을 마치시겠습니까?");
       if (userConfirm) {
-     
         postSubchapterPass(subChapId);
-        
-        //이해도 테스트를 보지않는 챕터는 바로 pass요청
-        const isChapterTestable = isLastSubChapterAndParentNotTestable(subChapId);
-        if(isChapterTestable[0]){
-          postChapterPass(isChapterTestable[1],"EASY");
-        }
         navigate('/mypage/lecture');
       }
     }
@@ -239,24 +235,6 @@ useEffect(()=>{
       }
     }
   }
-
-  // 해당 서브챕터가 (챕터의 마지막서브챕터이고 챕터의 testable이 false이면) true와 해당 챕터커리id반환
-  function isLastSubChapterAndParentNotTestable(curriculumId) {
-    const chaptersData = JSON.parse(localStorage.getItem("chapters"));
-    for (const chapter of chaptersData) {
-      if (chapter.subChapters) {
-        const subChapters = chapter.subChapters;
-        const lastSubChapter = subChapters[subChapters.length - 1];
-
-        if (lastSubChapter.curriculumId === Number(curriculumId) && chapter.testable === false) {
-          return [true, chapter.curriculumId];
-        }
-      }
-    }
-    return false;
-  }
-
-
 
   const goBack = ()=> {
     //이전페이지로 이동
@@ -309,32 +287,12 @@ useEffect(()=>{
       console.error(err); 
     }
   }
-  const postChapterPass =  async (chapterid, level) =>{
-    const userid = localStorage.getItem('userid');
 
-    const CurriculumPassCallDto = {
-      'userId': userid,
-      'curriculumId': chapterid,
-      'levelType': level
-    };
-
-    try {
-      //chapter 이해도 테스트 통과 완료 처리 요청
-      const response = await axiosInstance.post('/curriculum/curriculum/chapter/pass', CurriculumPassCallDto);
-      console.log(response);
-    } catch (err) {
-      console.error(err);
-    }
-  }
 
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -366,9 +324,14 @@ useEffect(()=>{
           </Dynamic>
         </NavSection>
         <ContentSection width={width}>
+          {training?
           <Instruction height={height}>
             <Markdown>{training}</Markdown>
           </Instruction>
+          :
+          <InstructionLoading height={height}>
+            <img src={LOADING} alt="loading"></img>
+          </InstructionLoading>}
           <Train height={height} width={contentWidth}>
             <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
             <Buttons_>
@@ -380,22 +343,22 @@ useEffect(()=>{
           </Train>
         </ContentSection>
         {gptValue && (<ChatbotSection>
-          <Chat height={height}>
-            {dialogs.map(div => div)}
-            <div ref={chat}></div>
-          </Chat>
-          {(step > 0) && <ChatType>
-            <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
-            <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
-          </ChatType>}
-          {!step && <ChatType>
+        <Chat height={height}>
+          {dialogs.map(div => div)}
+          <div ref={chat}></div>
+        </Chat>
+        {(step > 0) && <ChatType>
+          <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
+          <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
+        </ChatType>}
+        {!step && <ChatType>
             <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
             <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
             <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
-          </ChatType>}
+        </ChatType>}
           <ChatInput>
             <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
-            <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>          
+            <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>
           </ChatInput>
         </ChatbotSection>)}
       </Content>
@@ -503,7 +466,22 @@ const Instruction = styled.div`
   &::-webkit-scrollbar {
     display : none;
   }
+`
 
+const InstructionLoading = styled.div`
+  width : 25rem;
+  display : flex;
+  padding : 0rem 1rem;
+  align-items : center;
+  justify-content : center;
+  margin : 1rem 1rem 0.5rem;
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);
+  height : ${(props) => `${(props.height - 170) / 16}rem`};
+  
+  img {
+    width : 12.5rem;
+    height : 5rem;
+  }
 `
 
 const Before = styled.button`
@@ -668,11 +646,11 @@ const Dialog_client = styled.div`
   display : flex;
   justify-content : flex-end;
 
-  p {
+  div {
     margin : 0.5rem 0;
+    padding : 0.75rem;
     width : fit-content;
     background : #FFFFFF;
-    padding : 0.75rem 1rem;
     word-break : break-word;
     overflow-wrap : break-word;
     border : 0.05rem solid rgba(0, 0, 0, 0.5);
@@ -681,11 +659,11 @@ const Dialog_client = styled.div`
 `
 
 const Dialog_server = styled.div`
-  p {
+  div {
     color : #FFFFFF;
     margin : 0.5rem 0;
+    padding : 0.75rem;
     width : fit-content;
-    padding : 0.75rem 1rem;
     word-break : break-word;
     overflow-wrap : break-word;
     background : rgba(0, 139, 255, 0.75);
@@ -737,11 +715,11 @@ const InputButton = styled.button`
   color : #FFFFFF;
   height : 2.5rem;
   font-weight : bold;
-  margin : 0.375rem 0;
   font-size : 1.25rem;
   background : #008BFF;
   border-radius : 1.25rem;
   border : 0.125rem solid #FFFFFF;
+  margin : 0.375rem 0.625rem 0.375rem 0rem;
 
   img {
     margin : auto 0;

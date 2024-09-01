@@ -1,12 +1,15 @@
-import styled from 'styled-components';
-import BCODE from '../../logo_w.png'
 import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
-import { useRef, useState, useEffect } from 'react';
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import BCODE from '../../logo_w.png';
+import Markdown from '../../Markdown';
+import styled from 'styled-components';
+import LOADING from '../../loading.png';
+import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
+import { useRef, useState, useEffect } from 'react';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 
 
 
@@ -257,11 +260,7 @@ function Study_training() {
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -293,8 +292,9 @@ function Study_training() {
           </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>
-          <InstructionSection status={type}>  
-            <Instruction> {res ? <div> {res[order].text} </div> : <div> Loading... </div>} </Instruction>
+          {res?
+          <><InstructionSection status={type}>  
+            <Instruction> <Markdown>{res[order].text}</Markdown> </Instruction>
           </InstructionSection>
           {type !== '서술식' && (<ChangingSection>
             {qtype === 'NUM' && (<SelectionArea width={contentWidth}>
@@ -335,7 +335,11 @@ function Study_training() {
                 </ResultPre>
               </CodeResultSection>
             </Train>
-          </TrainSection>}
+          </TrainSection>}</>
+          :
+          <InstructionLoading>
+            <img src={LOADING} alt="loading"></img>
+          </InstructionLoading>}
         </ContentSection>
       </Content>
     </TestSection>
@@ -348,20 +352,6 @@ export default Study_training;
 
 const TestSection = styled.div`
   height : 100vh;
-`
-
-const SectionBar = styled.div`
-  width : 100vw;
-  display : flex;
-  background : #008BFF;
-`
-
-const Logo = styled.div`
-  img {
-    height : 2rem;
-    width : 7.82rem;
-    margin : 1rem 4rem;
-  }
 `
 
 const Content = styled.div`
@@ -432,7 +422,6 @@ const ContentSection = styled.div`
 `
 
 const InstructionSection = styled.div`
-
   ${({status}) => {
     switch (status) {
       case '객관식':
@@ -488,26 +477,27 @@ const Label = styled.label`
 const WritingArea = styled.textarea`
   resize : none;
   padding : 1rem;
-  font-size : 1.25rem;
-  width : ${(props) => `${(props.width - 840) / 16}rem`};
-  height : 1.5rem;
+  height : 1.375rem;
   margin-top : 1rem;
+  font-size : 1.125rem;
   border : 0.05rem solid rgba(0, 0, 0, 0.5);
+  width : ${(props) => `${(props.width - 840) / 16}rem`};
 `
 
 const Submit_ = styled.button`
   width : 4rem;
   height : 2rem;
   color : #008BFF;
-  margin : 1rem auto 0rem;
   font-weight : bold;
   font-size : 0.875rem;
   background : #FFFFFF;
   border-radius : 1rem;
+  margin : 1rem auto 0rem;
   border : 0.125rem solid #008BFF;
 `
 
 const Instruction = styled.div`
+  padding : 1rem;
   height : 34.25rem;
   margin : 1rem 1rem 0.5rem;
   background : rgba(0, 0, 0, 0.25);
@@ -742,5 +732,17 @@ const InputButton = styled.button`
   img {
     margin : auto 0;
     width : 0.625rem;
+  }
+`
+
+const InstructionLoading = styled.div`
+  display : flex;
+  margin : 0 auto;
+  align-items : center;
+  justify-content : center;
+
+  img {
+    width : 12.5rem;
+    height : 5rem;
   }
 `

@@ -1,8 +1,10 @@
 import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
+import Markdown from '../../Markdown';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import getUserInfo from '../../getUserInfo';
+import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
 import getChapterPass from '../../getChapterPass';
@@ -201,7 +203,6 @@ function Study_theory() {
         
     };
 
-
     fetchDataByDate();
     fetchDataByTag();
   }, []);
@@ -289,11 +290,7 @@ function Study_theory() {
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -302,7 +299,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"0%":Math.round(processPass / process * 100) + "%"} </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
@@ -340,7 +337,7 @@ function Study_theory() {
               {Object.keys(groupedDataByChapter).map(curr => (
               <div key={curr}>
                 <QuestionTitle> {curr} </QuestionTitle>
-                {groupedDataByChapter[curr].length > 0 ?
+                {groupedDataByChapter[curr].length > 0?
                 (<QuestionList>
                   {groupedDataByChapter[curr].map((item, index) => (
                     <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
@@ -356,8 +353,8 @@ function Study_theory() {
             {tag && <QuestionInfo>
               {JSON.stringify(groupedDataByTag) === '{}'?
               (<QuestionList>
-                  <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
-                </QuestionList>)
+                <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
+              </QuestionList>)
               :
               (<>{Object.keys(groupedDataByTag).map(tag => (
                 <div key={tag}>
@@ -371,11 +368,9 @@ function Study_theory() {
                 ))}</>)}
             </QuestionInfo>}
             <QuestionContent height={height}>
-              {selectedDialog === null ? "":<Dialog_client> <p> {selectedDialog.question} </p> </Dialog_client>} 
+              {selectedDialog === null ? "":<Dialog_client> <div> {selectedDialog.question} </div> </Dialog_client>} 
               {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (<Dialog_server> 
-                <p> 
-                  <div key={ansIndex}>{ans}</div>
-                </p> 
+                  <div key={ansIndex}><Markdown>{ans}</Markdown></div>
               </Dialog_server>
               ))}
             </QuestionContent>
@@ -551,11 +546,11 @@ const Dialog_client = styled.div`
   display : flex;
   justify-content : flex-end;
 
-  p {
+  div {
     margin : 0.5rem 0;
+    padding : 0.75rem;
     width : fit-content;
     background : #FFFFFF;
-    padding : 0.75rem 1rem;
     word-break : break-word;
     overflow-wrap : break-word;
     border : 0.05rem solid rgba(0, 0, 0, 0.5);
@@ -564,11 +559,11 @@ const Dialog_client = styled.div`
 `
 
 const Dialog_server = styled.div`
-  p {
+  div {
     color : #FFFFFF;
     margin : 0.5rem 0;
+    padding : 0.75rem;
     width : fit-content;
-    padding : 0.75rem 1rem;
     word-break : break-word;
     overflow-wrap : break-word;
     background : rgba(0, 139, 255, 0.75);

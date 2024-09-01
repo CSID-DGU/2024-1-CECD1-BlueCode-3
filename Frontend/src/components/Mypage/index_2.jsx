@@ -2,12 +2,12 @@ import PASS from '../../pass.png';
 import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
 import styled from 'styled-components';
-import React, { useState, useEffect} from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import useChapterData from '../../useChapterData';
 import getUserInfo from '../../getUserInfo';
+import SectionBarJsx from '../../SectionBar';
+import React, { useState, useEffect} from 'react';
+import useChapterData from '../../useChapterData';
 import getChapterPass from '../../getChapterPass';
-
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function Study_theory() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -33,6 +33,17 @@ function Study_theory() {
   const [processPass, setProcessPass] = useState(0);
 
   useEffect(() => {
+    getChapterPass()
+    .then(data => {
+        // 데이터 가져오기 성공 시 상태 업데이트
+        setProcess(data.length);
+        setProcessPass(data.filter(element => element === true).length);
+    })
+      .catch(error => {
+        // 데이터 가져오기 실패 시 에러 처리
+      console.error('Error fetching data:', error);
+    });
+
     getUserInfo()
       .then(data => {
         // 데이터 가져오기 성공 시 상태 업데이트
@@ -42,18 +53,6 @@ function Study_theory() {
         // 데이터 가져오기 실패 시 에러 처리
         console.error('Error fetching data:', error);
       });
-
-    getChapterPass()
-      .then(data => {
-          // 데이터 가져오기 성공 시 상태 업데이트
-          setProcess(data.length);
-          setProcessPass(data.filter(element => element === true).length);
-      })
-        .catch(error => {
-          // 데이터 가져오기 실패 시 에러 처리
-        console.error('Error fetching data:', error);
-      });  
-
   }, []);
 
 
@@ -108,20 +107,11 @@ function Study_theory() {
     navigate(`/study/comprehension/${chapId}`);
   } 
 
-  const getStyle = (index, subIndex) => {
-    return currentChapter[index] && currentChapter[index][subIndex] 
-      ? color
-      : nullColor
-  }
   
 
   return (
     <TestSection>
-      <SectionBar>
-        <Logo>
-          <img src={BCODE} alt="Logo"></img>
-        </Logo>
-      </SectionBar>
+      <SectionBarJsx />
       <Content>
         <NavSection height={height}>
           <Static>
@@ -130,7 +120,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"0%":Math.round(processPass / process * 100) + "%"} </p> </InfoNav>
+            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>
           <Dynamic>
@@ -149,7 +139,7 @@ function Study_theory() {
               <SubLectureInfo>
               {subChapter[index].map((subItem, subIndex) => (
                 <SubLecture>
-                  <SubLectureTitle key={subIndex} style={getStyle(index, subIndex)}> {subItem} </SubLectureTitle>  
+                  <SubLectureTitle key={subIndex} style={currentChapter[index]&&currentChapter[index][subIndex]?color:nullColor}> {subItem} </SubLectureTitle>  
                   {(chapterLevel[index] === 'EASY' || chapterPass[index]) && (
                   <LectureData>
                     <Data onClick={() => goToStudy(subChapterId[index][subIndex], 'DEF')}> 이론 </Data>
@@ -171,8 +161,8 @@ function Study_theory() {
                 </SubLecture>
               ))}
               </SubLectureInfo>
-              {(JSON.parse(localStorage.getItem('chapters'))[index].testable && !chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
-                <SubLectureTitle onClick={() => goToCompre(chaptersid[index])}> 이해도 테스트 </SubLectureTitle>
+              {(!chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
+                <CompreTest onClick={() => goToCompre(chaptersid[index])}> 이해도 테스트 </CompreTest>
               )}
             </Lecture>
           ))}
@@ -184,6 +174,7 @@ function Study_theory() {
 }
 
 export default Study_theory;
+
 
 
 const TestSection = styled.div`
@@ -317,9 +308,22 @@ const SubLectureInfo = styled.div`
   margin-left : 1rem;
 `
 
+const CompreTest = styled.div`
+  color : grey;
+  cursor : pointer;
+  text-align : right;
+  font-weight : bold;
+  font-size : 1.125rem;
+  padding-right : 1.125rem;
+
+  &:hover {
+    color : black;
+  }
+`
+
 const SubLecture = styled.div`
- display : flex;
- margin-bottom : 0.25rem;
+  display : flex;
+  margin-bottom : 0.25rem;
 `
 
 const SubLectureTitle = styled.div`
