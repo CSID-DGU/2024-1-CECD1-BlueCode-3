@@ -41,7 +41,7 @@ class CodeService:
                     strategy.cleanup()
                     return {'result': f'실행 오류 {stderr}'}
 
-                output = stdout.decode('euc-kr')
+                output = stdout
                 # 문자열에서 공백과 줄 바꿈 제거 후 비교
                 output_cleaned = output.strip().replace('\r\n', '\n').replace('\r', '\n')
                 expected_output_cleaned = expected_output.strip().replace('\r\n', '\n').replace('\r', '\n')
