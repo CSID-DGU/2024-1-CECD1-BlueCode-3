@@ -10,9 +10,18 @@ class PythonExecution(CodeExecution):
         self.filename = None
 
     def compile_code(self, source_code: str, unique_id: str) -> bool:
-        self.filename = f"python_files/code_python_{self.user_id}_{self.quiz_id}_{unique_id}.py"
+        # 파일 경로 생성
+        directory = "python_files"
+        self.filename = os.path.join(directory, f"code_python_{self.user_id}_{self.quiz_id}_{unique_id}.py")
+        
+        # 디렉터리가 존재하지 않으면 생성
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        
+        # 파일에 소스 코드 작성
         with open(self.filename, 'w') as f:
             f.write(source_code)
+        
         return True  # Python은 별도의 컴파일 필요 없음
 
     def run_code(self, inputs: str) -> tuple[str, str]:

@@ -26,6 +26,11 @@ class JavaExecution(CodeExecution):
 
     def cleanup(self):
         if self.java_dir and os.path.exists(self.java_dir):
+            # 디렉터리 내의 파일 삭제
             for file in os.listdir(self.java_dir):
-                os.remove(os.path.join(self.java_dir, file))
+                file_path = os.path.join(self.java_dir, file)
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            
+            # 디렉터리 삭제 (비어있을 경우)
             os.rmdir(self.java_dir)
