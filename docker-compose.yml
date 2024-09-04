@@ -6,10 +6,14 @@ services:
       context: ./Backend
     environment:
       - API_KEY=${GPT_API_KEY}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     ports:
       - "8080:8080"
     networks:
       - app-network
+    depends_on:
+      - redis
 
   code:
     build:
@@ -26,6 +30,13 @@ services:
       - "5000:5000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
     networks:
       - app-network
 
