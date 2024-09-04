@@ -14,13 +14,13 @@ class JavaExecution(CodeExecution):
         os.makedirs(self.java_dir, exist_ok=True)
         java_filename = f"{self.java_dir}/Main.java"
         with open(java_filename, 'w') as f:
-            f.write(source_code)
-        compile_process = subprocess.Popen(f"javac {java_filename}", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            f.write(source_code, encoding='utf-8')
+        compile_process = subprocess.Popen(f"javac {java_filename}", text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         _, compile_stderr = compile_process.communicate()
         return not compile_stderr  # 컴파일 에러가 없으면 True 반환
 
     def run_code(self, inputs: str) -> tuple[str, str]:
-        process = subprocess.Popen(f"java -cp {self.java_dir} Main", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        process = subprocess.Popen(f"java -cp {self.java_dir} Main", text=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
         return stdout.decode().strip(), stderr.decode().strip()
 

@@ -20,12 +20,12 @@ class PythonExecution(CodeExecution):
         
         # 파일에 소스 코드 작성
         with open(self.filename, 'w') as f:
-            f.write(source_code)
+            f.write(source_code, encoding='utf-8')
         
         return True  # Python은 별도의 컴파일 필요 없음
 
     def run_code(self, inputs: str) -> tuple[str, str]:
-        process = subprocess.Popen(f"python {self.filename}", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        process = subprocess.Popen(f"python {self.filename}", text=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
         return stdout.decode().strip(), stderr.decode().strip()
 
