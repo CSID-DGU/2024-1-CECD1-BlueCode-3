@@ -19,7 +19,7 @@ class PythonExecution(CodeExecution):
             os.makedirs(directory)
         
         # 파일에 소스 코드 작성
-        with open(self.filename, 'w') as f:
+        with open(self.filename, 'w', encoding='utf-8') as f:
             f.write(source_code)
         
         return True  # Python은 별도의 컴파일 필요 없음
@@ -27,7 +27,7 @@ class PythonExecution(CodeExecution):
     def run_code(self, inputs: str) -> tuple[str, str]:
         process = subprocess.Popen(f"python {self.filename}", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
-        return stdout.decode().strip(), stderr.decode().strip()
+        return stdout.strip(), stderr.strip()
 
     def cleanup(self):
         if self.filename and os.path.exists(self.filename):

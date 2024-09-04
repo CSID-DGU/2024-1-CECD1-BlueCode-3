@@ -41,10 +41,19 @@ class CodeService:
                     strategy.cleanup()
                     return {'result': f'실행 오류 {stderr}'}
 
-                output = stdout
-                if output.strip() != expected_output.strip():
-                    logger.warning(f'오답 도출 {self.user_id}, {self.quiz_id}, output = {output}, expected_output = {expected_output}')
-                    strategy.cleanup()
+                output = stdout.decode('euc-kr')
+                # 문자열에서 공백과 줄 바꿈 제거 후 비교
+                output_cleaned = output.strip().replace('\r\n', '\n').replace('\r', '\n')
+                expected_output_cleaned = expected_output.strip().replace('\r\n', '\n').replace('\r', '\n')
+
+                
+                if output_cleaned != expected_output_cleaned:
+                    logger.warning(f'오답 도출 {self.user_id}, {self.quiz_id}, output = {output_cleaned}, expected_output = {expected_output_cleaned}')
+                    # 문자별 차이점 확인
+                    for i, (o, e) in enumerate(zip(output_cleaned, expected_output_cleaned)):
+                        if o != e:
+                            logger.warning(f'차이점 발견 at index {i}: output_char="{o}", expected_char="{e}"')
+                            break
                     return {'result': '오답'}
 
             except subprocess.TimeoutExpired:
