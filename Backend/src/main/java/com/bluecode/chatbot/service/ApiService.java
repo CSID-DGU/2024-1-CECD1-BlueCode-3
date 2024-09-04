@@ -1,5 +1,6 @@
 package com.bluecode.chatbot.service;
 
+import com.bluecode.chatbot.config.Rules;
 import com.bluecode.chatbot.domain.Curriculums;
 import com.bluecode.chatbot.repository.CurriculumRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -78,13 +79,7 @@ public class ApiService {
     public String loadRules(Long curriculumId) {
         Curriculums curriculum = curriculumRepository.findById(curriculumId).orElseThrow(() -> new IllegalArgumentException("올바르지 않은 curriculum ID"));
         String rootCurriculumName = getRootCurriculumName(curriculum);
-
-        try {
-            ClassPathResource resource = new ClassPathResource("rules.txt");
-            String rules = new String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8);
-            return rules.replace("Plang", rootCurriculumName);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("응답 규칙 로드 실패", e);
-        }
+        String rules = Rules.text;
+        return rules.replace("Plang", rootCurriculumName);
     }
 }
