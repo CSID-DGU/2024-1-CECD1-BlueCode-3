@@ -9,7 +9,7 @@ import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
-
+import TerminalComponent from '../../TerminalComponent';
 
 
 function Study_training() {
@@ -341,6 +341,9 @@ useEffect(()=>{
               <Before onClick={goBack}> <img src={Left}></img> </Before>
             </Buttons_>
           </Train>
+          <div style={{ flex: 1, border: '1px solid #ccc', marginLeft: '20px' }}>
+          <TerminalComponent />
+          </div>
         </ContentSection>
         {gptValue && (<ChatbotSection>
         <Chat height={height}>
