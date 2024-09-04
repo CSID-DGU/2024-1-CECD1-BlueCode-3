@@ -20,14 +20,20 @@ class PythonExecution(CodeExecution):
         
         # 파일에 소스 코드 작성
         with open(self.filename, 'w', encoding='utf-8') as f:
-        with open(self.filename, 'w', encoding='utf-8') as f:
             f.write(source_code)
         
         return True  # Python은 별도의 컴파일 필요 없음
 
-    def run_code(self, inputs: str) -> tuple[str, str]:
+    def run_code(self, inputs):
+        # 입력이 문자열인 경우에만 인코딩 수행
+        if isinstance(inputs, str):
+            input_data = inputs.encode('utf-8')
+        elif isinstance(inputs, bytes):
+            input_data = inputs
+        else:
+            raise TypeError("Input must be a string or bytes")
         process = subprocess.Popen(f"python {self.filename}", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
+        stdout, stderr = process.communicate(input=input_data, timeout=5)
         return stdout.strip(), stderr.strip()
 
     def cleanup(self):
