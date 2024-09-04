@@ -13,6 +13,9 @@ services:
       - "8080:8080"
     networks:
       - app-network
+    links:
+      - code
+      - redis
     depends_on:
       - redis
 
