@@ -19,7 +19,7 @@ class PythonExecution(CodeExecution):
             os.makedirs(directory)
         
         # 파일에 소스 코드 작성
-        with open(self.filename, 'w') as f:
+        with open(self.filename, 'w', encoding='utf-8') as f:
             f.write(source_code, encoding='utf-8')
         
         return True  # Python은 별도의 컴파일 필요 없음
