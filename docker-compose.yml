@@ -6,6 +6,7 @@ services:
       context: ./Backend
     environment:
       - API_KEY=${GPT_API_KEY}
+      - EMAIL_PASSWORD=${GET_EMAIL_PASSWORD}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     ports:
