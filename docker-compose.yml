@@ -19,8 +19,8 @@ services:
   code:
     build:
       context: ./code
-    expose:
-      - "5000"
+    ports:
+      - "5001:5000"
     networks:
       - app-network
 
