@@ -15,7 +15,7 @@ services:
     build:
       context: ./code
     expose:
-      - "5000"  # 외부에 노출하지 않고 내부에서만 포트를 사용
+      - "5000"
     networks:
       - app-network
 
