@@ -30,8 +30,8 @@ class CodeService:
             return {'result': '컴파일 오류'}
 
         for index, quiz_case in enumerate(quiz_cases):
-            inputs = quiz_case.input
-            expected_output = quiz_case.output
+            inputs = str(quiz_case.input)
+            expected_output = str(quiz_case.output)
             logger.info(f'{self.user_id}, {self.quiz_id} 실행 시작 case {index + 1} with inputs={inputs}')
 
             try:
@@ -42,8 +42,8 @@ class CodeService:
                     return {'result': f'실행 오류 {stderr}'}
 
                 output = stdout
-                if output != expected_output:
-                    logger.warning(f'오답 도출 {self.user_id}, {self.quiz_id}')
+                if output.strip() != expected_output.strip():
+                    logger.warning(f'오답 도출 {self.user_id}, {self.quiz_id}, output = {output}, expected_output = {expected_output}')
                     strategy.cleanup()
                     return {'result': '오답'}
 
