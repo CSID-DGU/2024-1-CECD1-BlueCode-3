@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+    environment:
+      - API_KEY=${GPT_API_KEY}
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  code:
+    build:
+      context: ./code
+    expose:
+      - "5000"  # 외부에 노출하지 않고 내부에서만 포트를 사용
+    networks:
+      - app-network
+
+  terminal:
+    build:
+      context: ./terminal
+    ports:
+      - "5000:5000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
