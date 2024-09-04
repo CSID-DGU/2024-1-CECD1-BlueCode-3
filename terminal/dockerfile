@@ -1,45 +1,18 @@
-# Use an official Ubuntu as a parent image
-FROM ubuntu:20.04
-ENV DEBIAN_FRONTEND=noninteractive
+# Node.js 환경 설정
+FROM node:16
 
-# Set environment variables
-ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8 \
-    TERM=xterm-256color \
-    PYTHONUNBUFFERED=1
+# 작업 디렉토리 설정
+WORKDIR /app
 
-# Update the package repository and install essential packages
-RUN apt-get update && apt-get install -y \
-    sudo \
-    python3 \
-    python3-pip \
-    python3-venv \
-    curl \
-    vim \
-    less \
-    locales \
-    man \
-    htop \
-    tmux \
-    openjdk-11-jdk \
-    g++ \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+# package.json 및 package-lock.json 파일 복사
+COPY package*.json ./
 
-# Generate locales
-RUN locale-gen en_US.UTF-8
+# 의존성 설치
+RUN npm install
 
-# Create a non-root user with sudo privileges
-RUN useradd -ms /bin/bash bluecode && \
-    echo 'bluecode ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# 애플리케이션 소스 코드 복사
+COPY . .
 
-# Set the default working directory
-WORKDIR /home/bluecode
-
-# Set the non-root user as the default user
-USER bluecode
-
-# Set the shell to bash
-SHELL ["/bin/bash", "-c"]
-
-# Define the default command to start the shell
-CMD ["/bin/bash"]
+# 앱 실행
+EXPOSE 3000
+CMD ["node", "app.js"]
