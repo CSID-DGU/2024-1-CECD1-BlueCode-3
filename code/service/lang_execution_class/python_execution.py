@@ -26,8 +26,12 @@ class PythonExecution(CodeExecution):
 
     def run_code(self, inputs: str) -> tuple[str, str]:
         process = subprocess.Popen(f"python {self.filename}", text=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
-        return stdout.decode().strip(), stderr.decode().strip()
+        # inputs가 bytes 타입인지 확인 후 처리
+        if isinstance(inputs, bytes):
+            stdout, stderr = process.communicate(input=inputs, timeout=5)
+        else:
+            stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
+        return stdout.strip(), stderr.strip()
 
     def cleanup(self):
         if self.filename and os.path.exists(self.filename):

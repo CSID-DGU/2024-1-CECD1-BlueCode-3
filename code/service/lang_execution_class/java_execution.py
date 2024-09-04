@@ -20,9 +20,22 @@ class JavaExecution(CodeExecution):
         return not compile_stderr  # 컴파일 에러가 없으면 True 반환
 
     def run_code(self, inputs: str) -> tuple[str, str]:
-        process = subprocess.Popen(f"java -cp {self.java_dir} Main", text=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
-        return stdout.decode().strip(), stderr.decode().strip()
+        process = subprocess.Popen(
+            f"java -cp {self.java_dir} Main", 
+            text=True, 
+            stdin=subprocess.PIPE, 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.PIPE, 
+            shell=True
+        )
+
+        # inputs가 이미 bytes인지 확인 후 처리
+        if isinstance(inputs, bytes):
+            stdout, stderr = process.communicate(input=inputs, timeout=5)
+        else:
+            stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
+        
+        return stdout.strip(), stderr.strip()
 
     def cleanup(self):
         if self.java_dir and os.path.exists(self.java_dir):
