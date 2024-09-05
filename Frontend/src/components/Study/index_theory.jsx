@@ -3,12 +3,18 @@ import Right from '../../right.png';
 import Input from '../../input.png';
 import BCODE from '../../logo_w.png';
 import Markdown from '../../Markdown';
+import ConfirmJsx from '../../Window/index_confirm';
 import styled from 'styled-components';
 import LOADING from '../../loading.png';
 import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
+
+import "highlight.js/styles/a11y-dark.css";
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from "rehype-highlight";
+
 
 
 function Study_theory() {
@@ -47,6 +53,7 @@ function Study_theory() {
   }
 
   const style = {color : '#008BFF', background : 'rgba(0, 139, 255, 0.25)'};
+  const textDeco = { textDecoration : "none" };
   const styled = {};
   const AddToNavContent = () => {
     if (navValue)
@@ -72,7 +79,7 @@ function Study_theory() {
         try {
           const res = await getChatResponse(dialog, divValue);
           
-          setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{res.answerList[0]}</Markdown> </div> </Dialog_server>]);
+          setDialogs((pre) => [...pre, <Dialog_server> <div> <ReactMarkdown>{res.answerList[0]}</ReactMarkdown> </div> </Dialog_server>]);
           if (divValue === "CODE" || divValue === "ERRORS") {
             console.log("1로바꿈")
             setStep(1);
@@ -87,7 +94,7 @@ function Study_theory() {
 
   
   const AddStepDialog = async () => {
-    setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{stepDialogs.answerList[step]}</Markdown> </div> </Dialog_server>]);
+    setDialogs((pre) => [...pre, <Dialog_server> <div> <ReactMarkdown>{stepDialogs.answerList[step]}</ReactMarkdown> </div> </Dialog_server>]);
 
     // 백에 next 처리 요청
     postNextResponse(stepDialogs.chatId);
@@ -133,7 +140,7 @@ function Study_theory() {
         const answer = res[i].answer;
         //console.log(answer.length);
         for (var j = 0; j < answer.length; j++) {
-          dialogsToAdd.push(<Dialog_server> <div> <Markdown>{answer[j]}</Markdown> </div> </Dialog_server>);
+          dialogsToAdd.push(<Dialog_server> <div> <ReactMarkdown>{answer[j]}</ReactMarkdown> </div> </Dialog_server>);
         }
       }
       setDialogs((pre) => [...pre, ...dialogsToAdd]);
@@ -231,12 +238,22 @@ function Study_theory() {
     }
   }
 
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const navigate = useNavigate();
   const goToTraining = () => {
-    const userConfirm = window.confirm("예제 코드 학습으로 넘어가시겠습니까?");
+    /*const userConfirm = window.confirm("예제 코드 학습으로 넘어가시겠습니까?");
     if (userConfirm) {
       navigate(`/study/training/${subChapId}/CODE`);
+    }*/
+
+    setIsConfirmOpen(true);
+  }
+
+  const handleConfirm = (confirm) => {
+    if (confirm) {
+      navigate(`/study/training/${subChapId}/CODE`);
     }
+    setIsConfirmOpen(false);
   }
  
   return (
@@ -245,9 +262,9 @@ function Study_theory() {
       <Content>
         <NavSection height={height}>
           <Static>
-            <NavLink style={{ textDecoration : "none" }} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/mypage/todo"><Nav> ㅇ 마이페이지 </Nav></NavLink>
-            <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
+            <NavLink style={textDeco} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
+            <NavLink style={textDeco} to="/mypage/todo"><Nav> ㅇ 마이페이지 </Nav></NavLink>
+            <NavLink style={textDeco} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Dynamic>
           <Nav id="1" style={navValue ? style : styled} onClick={AddToNavContent}> 제 1장 </Nav>
@@ -275,12 +292,17 @@ function Study_theory() {
       <ContentSection width={contentWidth}>
         {theory?
         <Instruction height={height}>
-          <Markdown>{theory}</Markdown>
+          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{theory}</ReactMarkdown>
         </Instruction>
         :
         <InstructionLoading height={height}>
           <img src={LOADING} alt="loading"></img>
         </InstructionLoading>}
+        {isConfirmOpen &&
+        <ConfirmJsx message="예제 코드 학습으로 넘어가시겠습니까?"
+                    onConfirm={()=>handleConfirm(true)}
+                    onCancel={()=>handleConfirm(false)}>
+        </ConfirmJsx>}
         <Buttons>
           <Before> <img src={Left}></img> </Before>
           <After onClick={goToTraining}> <img src={Right}></img> </After>
@@ -317,20 +339,6 @@ export default Study_theory;
 
 const TestSection = styled.div`
   height : 100vh;
-`
-
-const SectionBar = styled.div`
-  width : 100vw;
-  display : flex;
-  background : #008BFF;
-`
-
-const Logo = styled.div`
-  img {
-    height : 2rem;
-    width : 7.82rem;
-    margin : 1rem 4rem;
-  }
 `
 
 const Content = styled.div`

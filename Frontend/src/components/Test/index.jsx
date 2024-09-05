@@ -7,8 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import React, { useEffect, useState } from 'react';
 
-//import rehypeHighlight from "rehype-highlight";
-//import "highlight.js/styles/a11y-dark.css";
+import "highlight.js/styles/a11y-dark.css";
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from "rehype-highlight";
+
+
 
 function Study_theory() {
   const [answer, setAnswer] = useState('');
@@ -379,8 +382,8 @@ useEffect(()=>{
     setType('서술식');
   })
 
-//{data.length > 0 ? <div> <ReactMarkdown  rehypePlugins={[rehypeHighlight]}> {data[order].text} </ReactMarkdown> </div> : <div> Loading... </div>}
-//{data.length >= 0 ? <div> <ReactMarkdown> {markdown} </ReactMarkdown> </div> : <div> Loading... </div>}
+
+
   return (
     <TestSection>
       <SectionBarJsx />
@@ -412,26 +415,26 @@ useEffect(()=>{
         {data.length > 0 ?
         <ContentSection width={width}>
           <QuestionArea height={height} width={width}>
-              <Markdown>{data[order].text}</Markdown>
+              <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{data[order].text}</ReactMarkdown>
           </QuestionArea>
           <AnswerArea>
             <Answer> {type} 답안 </Answer>
             {qtype === "NUM" && (<SelectionArea>
               <Selection>
                 <input type="radio" id="first" value={data[order].q1} checked={answer===data[order].q1} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="first"> <Markdown>{data[order].q1}</Markdown> </Label>
+                <Label for="first"> <ReactMarkdown>{data[order].q1}</ReactMarkdown> </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="second" value={data[order].q2} checked={answer===data[order].q2} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="second"> <Markdown>{data[order].q2}</Markdown> </Label>
+                <Label for="second"> <ReactMarkdown>{data[order].q2}</ReactMarkdown> </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="third" value={data[order].q3} checked={answer===data[order].q3} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="third"> <Markdown>{data[order].q3}</Markdown> </Label>
+                <Label for="third"> <ReactMarkdown>{data[order].q3}</ReactMarkdown> </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="fourth" value={data[order].q4} checked={answer===data[order].q4} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="fourth"> <Markdown>{data[order].q4}</Markdown> </Label>
+                <Label for="fourth"> <ReactMarkdown>{data[order].q4}</ReactMarkdown> </Label>
               </Selection>
             </SelectionArea>)}
             {qtype === "WORD" && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}

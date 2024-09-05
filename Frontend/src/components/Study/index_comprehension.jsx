@@ -9,7 +9,14 @@ import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
 import { useRef, useState, useEffect } from 'react';
+import AlertJsx from '../../Window/index_alert';
+import ConfirmJsx from '../../Window/index_confirm';
+import OptionJsx from '../../Window/index_confirm';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
+
+import "highlight.js/styles/a11y-dark.css";
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from "rehype-highlight";
 
 
 
@@ -138,6 +145,12 @@ function Study_training() {
       setType('서술식');
   })
   
+
+  
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isOptionOpen, setIsOptionOpen] = useState(false);
+  const [dataPassed, setDataPassed] = useState(false);
   const navigate = useNavigate();
   const submitAnswer = async () => {
     var response;
@@ -167,9 +180,9 @@ function Study_training() {
           // console.log("서술식 정답 요청 " + response.data.passed);
         }
         
-        
-   
         if(response.data.passed === true) {
+          setIsAlertOpen(true);
+          setDataPassed(true);
           if (order === 0) {
             //입문자 문제 맞출 경우
             alert("입문자 문제를 맞추셨습니다.");
@@ -181,22 +194,24 @@ function Study_training() {
           }
           else if (order === 2) {
             //중급자 문제 맞출 경우
-            alert("중급자 문제를 맞추셨습니다.");
+            /*alert("중급자 문제를 맞추셨습니다.");
     
             // 사용자의 level: easy / normal / hard(다음챕터레벨설정용) 입력을 받음 (수정필요)
             const prompt = window.prompt("EASY / NORMAL / HARD 중 택 1");
             postChapterPass(chapId, prompt);
 
             
-            navigate('/mypage/todo');
+            navigate('/mypage/lecture');*/
           }
         }
         else {
+          setIsAlertOpen(true);
+          setDataPassed(false);
           if (order === 0) {
             //입문자 문제 틀렸을 경우
             alert("입문자 문제를 틀리셨습니다.");
             alert("전반적인 학습을 다시 하세요.");
-            navigate('/mypage/todo');
+            navigate('/mypage/lecture');
           }
           else if (order === 1) {
             alert("초급자 문제를 틀리셨습니다.");
@@ -205,30 +220,16 @@ function Study_training() {
 
             // 해당 챕터 재학습 선지 제시, 재학습 원할시 해당 챕터를 재학습 아닐경우 마이페이지로
             //subChapterId , chaptersid
-            const confirm = window.confirm("해당 챕터를 재학습하시겠습니까?");
-            if (confirm) {
-              alert('confirm 실행됨');
-              for (var i = 0; i < chaptersid.length; i++) {
-                
-                if (chapId === chaptersid[i].toString()) {
-                  alert('id찾음');
-
-                  navigate(`/study/theory/${subChapterId[i][0]}/DEF`);
-                }
-              }
-            } else {
-              navigate('/mypage/todo');
-            }
+            setIsConfirmOpen(true);
           }
           else if (order === 2) {
-            alert("중급자 문제를 틀리셨습니다.");
+            setIsOptionOpen(true);
+            /*alert("중급자 문제를 틀리셨습니다.");
             // 사용자의 level: easy / normal / hard(다음챕터레벨설정용) 입력을 받음 (수정필요)
             const prompt = window.prompt("EASY / NORMAL 중 택 1")
             postChapterPass(chapId, prompt);
 
-
-
-            navigate('/mypage/todo');
+            navigate('/mypage/lecture');*/
           }
         }
   
@@ -236,6 +237,30 @@ function Study_training() {
         console.log(err);
       }
     }
+  }
+
+  const handleAlert = () => {
+
+  }
+
+  const handleConfirm = (confirm) => {
+    if (confirm) {
+      for (var i = 0; i < chaptersid.length; i++) {
+        if (chapId === chaptersid[i].toString()) {
+          navigate(`/study/theory/${subChapterId[i][0]}/DEF`);
+        }
+      }
+    } else {
+      navigate('/mypage/lecture');
+    }
+
+    setIsConfirmOpen(false);
+  }
+
+  const handleOption = (option) => {
+    postChapterPass(chapId, option);
+    navigate('/mypage/lecture');
+    setIsOptionOpen(false);
   }
 
 
@@ -294,25 +319,25 @@ function Study_training() {
         <ContentSection width={contentWidth}>
           {res?
           <><InstructionSection status={type}>  
-            <Instruction> <Markdown>{res[order].text}</Markdown> </Instruction>
+            <Instruction> <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{res[order].text}</ReactMarkdown> </Instruction>
           </InstructionSection>
           {type !== '서술식' && (<ChangingSection>
             {qtype === 'NUM' && (<SelectionArea width={contentWidth}>
               <Selection>
                 <input type="radio" id="first" value={res[order].q1} checked={answer===res[order].q1} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="first"> {res ? <div> {res[order].q1} </div> : <div> Loading... </div>} </Label>
+                <Label for="first"> {res[order].q1} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="second" value={res[order].q2} checked={answer===res[order].q2} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="second"> {res ? <div> {res[order].q2} </div> : <div> Loading... </div>} </Label>
+                <Label for="second"> {res[order].q2} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="third" value={res[order].q3} checked={answer===res[order].q3} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="third"> {res ? <div> {res[order].q3} </div> : <div> Loading... </div>} </Label>
+                <Label for="third"> {res[order].q3} </Label>
               </Selection>
               <Selection>
                 <input type="radio" id="fourth" value={res[order].q4} checked={answer===res[order].q4} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="fourth"> {res ? <div> {res[order].q4} </div> : <div> Loading... </div>} </Label>
+                <Label for="fourth"> {res[order].q4} </Label>
               </Selection>
             </SelectionArea>)}
             {qtype === 'WORD' && (<WritingArea width={contentWidth} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
@@ -340,6 +365,17 @@ function Study_training() {
           <InstructionLoading>
             <img src={LOADING} alt="loading"></img>
           </InstructionLoading>}
+          {isConfirmOpen &&
+          <ConfirmJsx message="해당 챕터를 재학습하시겠습니까?"
+                    onConfirm={()=>handleConfirm(true)}
+                    onCancel={()=>handleConfirm(false)}>
+          </ConfirmJsx>}
+          {isOptionOpen && 
+          <OptionJsx message={dataPassed?"중급자 문제를 맞추셨습니다.":"중급자 문제를 틀리셨습니다."}
+                     onOption1={()=>handleOption('EASY')}
+                     onOption2={()=>handleOption('NORMAL')}
+                     onOption3={dataPassed?()=>handleOption('HARD'):null}>
+          </OptionJsx>}
         </ContentSection>
       </Content>
     </TestSection>
@@ -440,14 +476,15 @@ const ChangingSection = styled.div`
 `
 
 const SelectionArea = styled.div`
+  display : flex;
+  flex-direction : column;
   width : ${(props) => `${(props.width - 840) / 16}rem`};
 `
 
 const Selection = styled.div`
   display : flex;
-  width : 7.5rem;
-  margin : 1rem;
-  font-size : 1.125rem;
+  width : 41.875rem;
+  margin : 1rem 1rem 1rem 0rem;
 
   input[type='radio'] {
     -moz-appearance : none;
@@ -470,7 +507,7 @@ const Selection = styled.div`
 `
 
 const Label = styled.label`
-  margin-top : 0.125rem;
+  margin-top : 0.2rem;
   padding-left : 0.375rem;
 `
 
@@ -500,7 +537,7 @@ const Instruction = styled.div`
   padding : 1rem;
   height : 34.25rem;
   margin : 1rem 1rem 0.5rem;
-  background : rgba(0, 0, 0, 0.25);
+  border : 0.125rem solid rgba(0, 139, 255, 0.75);
 `
 
 const Buttons = styled.div`

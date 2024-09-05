@@ -10,6 +10,11 @@ import useChapterData from '../../useChapterData';
 import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';
 
+import "highlight.js/styles/a11y-light.css";
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from "rehype-highlight";
+
+
 
 function Study_theory() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -370,7 +375,7 @@ function Study_theory() {
             <QuestionContent height={height}>
               {selectedDialog === null ? "":<Dialog_client> <div> {selectedDialog.question} </div> </Dialog_client>} 
               {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (<Dialog_server> 
-                  <div key={ansIndex}><Markdown>{ans}</Markdown></div>
+                  <div key={ansIndex}><ReactMarkdown>{ans}</ReactMarkdown></div>
               </Dialog_server>
               ))}
             </QuestionContent>
@@ -528,7 +533,7 @@ const QuestionTitle = styled.h3`
 
 const QuestionContent = styled.div`
   display : flex;
-  width : 37.5rem;
+  width : 75rem;
   padding : 1.25rem;
   overflow : scroll;
   align-item : right;

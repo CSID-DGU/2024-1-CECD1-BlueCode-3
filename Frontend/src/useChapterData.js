@@ -99,11 +99,18 @@ const useChapterData = () => {
           setChapterLevel(chapterLevels);
           setChapterPass(chapterPassed);
 
-
+          
           chaptersData.forEach((chapter) => {
             const currentChapters = chapter.subChapters.map(subChapter => subChapter.passed);
             setCurrentChapter(prev => [...prev, currentChapters]);
           });
+          
+          // 아래는 gpt의 조언에 따른 코드이다. 즉 currentChapter를 설정하는 코드인데...
+          // 결국에는 currentChapter를 두 번 실행하는 꼴이다. 그런데 왜 작동하는지...
+          const updatedCurrentChapters = chaptersData.map(chapter => 
+            chapter.subChapters.map(subChapter => subChapter.passed)
+          );
+          setCurrentChapter(updatedCurrentChapters);
         
         } catch (err) {
           console.error(err);
