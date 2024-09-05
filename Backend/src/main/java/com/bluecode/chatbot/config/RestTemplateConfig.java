@@ -37,6 +37,8 @@ public class RestTemplateConfig {
                         .setSocketTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
                         .setConnectTimeout(CONN_TIMEOUT, TimeUnit.MILLISECONDS)
                         .build())
+                .setMaxConnTotal(100)  // 전체 연결 수
+                .setMaxConnPerRoute(20) // 각 호스트별 최대 연결 수
                 .build();
     }
 }
