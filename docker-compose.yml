@@ -22,7 +22,7 @@ services:
     build:
       context: ./code
     ports:
-      - "7000:5000"
+      - "7000:7000"
     networks:
       - app-network
 

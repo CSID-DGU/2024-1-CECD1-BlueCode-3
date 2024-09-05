@@ -12,5 +12,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 애플리케이션 소스 코드 복사
 COPY . .
 
-# Flask 애플리케이션 실행
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+# Expose port 7000
+EXPOSE 7000
+
+# Run the Flask application on port 7000
+CMD ["flask", "run", "--host=0.0.0.0", "--port=7000"]
