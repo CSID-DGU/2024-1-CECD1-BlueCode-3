@@ -7,9 +7,16 @@ import styled from 'styled-components';
 import LOADING from '../../loading.png';
 import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
+import ConfirmJsx from '../../Window/index_confirm';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
-import TerminalComponent from '../../TerminalComponent';
+import TerminalComponent from '../../Terminal/index.jsx';
+import "highlight.js/styles/a11y-dark.css";
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from "rehype-highlight";
+
+import Editor from '@monaco-editor/react';
+
 
 
 function Study_training() {
@@ -77,7 +84,7 @@ function Study_training() {
         try {
           const res = await getChatResponse(dialog, divValue);
           
-          setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{res.answerList[0]}</Markdown> </div> </Dialog_server>]);
+          setDialogs((pre) => [...pre, <Dialog_server> <div> <ReactMarkdown>{res.answerList[0]}</ReactMarkdown> </div> </Dialog_server>]);
           if (divValue === "CODE" || divValue === "ERRORS") {
             console.log("1로바꿈")
             setStep(1);
@@ -92,7 +99,7 @@ function Study_training() {
 
 
   const AddStepDialog = async () => {
-    setDialogs((pre) => [...pre, <Dialog_server> <div> <Markdown>{stepDialogs.answerList[step]}</Markdown> </div> </Dialog_server>]);
+    setDialogs((pre) => [...pre, <Dialog_server> <div> <ReactMarkdown>{stepDialogs.answerList[step]}</ReactMarkdown> </div> </Dialog_server>]);
 
     // 백에 next 처리 요청
     postNextResponse(stepDialogs.chatId);
@@ -139,7 +146,7 @@ const getSubChapterChatHistory =  async () =>{
       const answer = res[i].answer;
       //console.log(answer.length);
       for (var j = 0; j < answer.length; j++) {
-        dialogsToAdd.push(<Dialog_server> <div> <Markdown>{answer[j]}</Markdown> </div> </Dialog_server>);
+        dialogsToAdd.push(<Dialog_server> <div> <ReactMarkdown>{answer[j]}</ReactMarkdown> </div> </Dialog_server>);
       }
     }
     setDialogs((pre) => [...pre, ...dialogsToAdd]);
@@ -216,24 +223,32 @@ useEffect(()=>{
     console.log(text);
   }, []);
 
+  
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const goToNext = () => {
-    
     // quiz 에서 다음 누르면 해당 서브챕터 pass 요청
-    if(text==='QUIZ'){
-      const userConfirm = window.confirm("해당 서브 챕터 학습을 마치시겠습니까?");
-      if (userConfirm) {
+    setIsConfirmOpen(true);
+    
+  }
+
+  const handleConfirm = (confirm) => {
+    if(text === 'QUIZ') {
+      //setMessage("해당 서브 챕터 학습을 마치시겠습니까?");
+      if (confirm) {
         postSubchapterPass(subChapId);
         navigate('/mypage/lecture');
       }
     }
-    else if (text === 'CODE'){  // code 에서 다음 누르면 quiz 학습으로
-      const userConfirm = window.confirm("심화 코드 학습으로 넘어가시겠습니까?");
-      if (userConfirm) {
+    else if (text === 'CODE') {  // code 에서 다음 누르면 quiz 학습으로
+      //setMessage("심화 코드 학습으로 넘어가시겠습니까?");
+      if (confirm) {
         window.location.replace(`/study/training/${subChapId}/QUIZ`);
         //navigate(`/study/training/${subChapId}/QUIZ`, {replace : true});
       }
     }
+    setIsConfirmOpen(false);
   }
 
   const goBack = ()=> {
@@ -289,7 +304,7 @@ useEffect(()=>{
   }
 
 
-
+  // <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
   return (
     <TestSection>
       <SectionBarJsx />
@@ -326,14 +341,14 @@ useEffect(()=>{
         <ContentSection width={width}>
           {training?
           <Instruction height={height}>
-            <Markdown>{training}</Markdown>
+            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{training}</ReactMarkdown>
           </Instruction>
           :
           <InstructionLoading height={height}>
             <img src={LOADING} alt="loading"></img>
           </InstructionLoading>}
           <Train height={height} width={contentWidth}>
-            <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
+          <TerminalComponent />
             <Buttons_>
               <GPT onClick={ShowGpt}> GPT </GPT>
               <Interpret> 실행 </Interpret>
@@ -341,9 +356,11 @@ useEffect(()=>{
               <Before onClick={goBack}> <img src={Left}></img> </Before>
             </Buttons_>
           </Train>
-          <div style={{ flex: 1, border: '1px solid #ccc', marginLeft: '20px' }}>
-          <TerminalComponent />
-          </div>
+          {isConfirmOpen &&
+          <ConfirmJsx message={text === "CODE"?"심화 코드 학습으로 넘어가시겠습니까?":"해당 서브 챕터 학습을 마치시겠습니까?"}
+                    onConfirm={()=>handleConfirm(true)}
+                    onCancel={()=>handleConfirm(false)}>
+          </ConfirmJsx>}
         </ContentSection>
         {gptValue && (<ChatbotSection>
         <Chat height={height}>

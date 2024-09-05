@@ -1,7 +1,7 @@
 import "xterm/css/xterm.css";
 import { Terminal } from "xterm";
 import styled from 'styled-components';
-import { languages } from "./languages";
+import { languages } from "../languages";
 import Editor from '@monaco-editor/react';
 import { FitAddon } from "xterm-addon-fit";
 import React, { useEffect, useRef, useState } from "react";

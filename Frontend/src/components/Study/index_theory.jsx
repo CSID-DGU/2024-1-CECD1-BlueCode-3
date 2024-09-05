@@ -14,7 +14,7 @@ import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import "highlight.js/styles/a11y-dark.css";
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from "rehype-highlight";
-
+import NavSectionJsx from '../../NavSection/index.jsx';
 
 
 function Study_theory() {
@@ -267,26 +267,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Dynamic>
-          <Nav id="1" style={navValue ? style : styled} onClick={AddToNavContent}> 제 1장 </Nav>
-          {navValue && (<NavContent>
-            <NavItem> 목차 1 </NavItem>
-            <NavItem> 목차 2 </NavItem> 
-            <NavItem> 목차 3 </NavItem>
-          </NavContent>)}
-          <Nav> 제 2장 </Nav>
-          <Nav> 제 3장 </Nav>
-          <Nav> 제 4장 </Nav>
-          <Nav> 제 5장 </Nav>
-          <Nav> 제 6장 </Nav>
-          <Nav> 제 7장 </Nav>
-          <Nav> 제 8장 </Nav>
-          <Nav> 제 9장 </Nav>
-          <Nav> 제 10장 </Nav>
-          <Nav> 제 11장 </Nav>
-          <Nav> 제 12장 </Nav>
-          <Nav> 제 13장 </Nav>
-          <Nav> 제 14장 </Nav>
-          <Nav> 제 15장 </Nav>
+          <NavSectionJsx />
         </Dynamic>
       </NavSection>
       <ContentSection width={contentWidth}>

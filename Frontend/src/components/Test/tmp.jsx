@@ -168,7 +168,7 @@ const getCurriculumInfoWithAuth = async () => {
       }
     };
 
-    getCurriculumIdData();
+    //getCurriculumIdData();
   }, []);
 
   const getChapterQuiz =  async () =>{
@@ -252,7 +252,7 @@ const getCurriculumInfoWithAuth = async () => {
       <button onClick={getCurriculumInfoWithAuth}>Auth get curriculum Info</button>
       <button onClick={getChapterQuiz}>get quiz</button>
       <button onClick={tmpfunc}>tmp func</button>
-
+      
     </div>
   );
 }
