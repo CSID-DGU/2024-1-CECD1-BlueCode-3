@@ -23,7 +23,7 @@ services:
     build:
       context: ./code
     ports:
-      - "5001:5000"
+      - "7000:7000"
     networks:
       - app-network
 
@@ -46,3 +46,4 @@ services:
 
 networks:
   app-network:
+    driver: bridge
