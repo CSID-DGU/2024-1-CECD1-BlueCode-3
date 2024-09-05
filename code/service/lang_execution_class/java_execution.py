@@ -35,7 +35,7 @@ class JavaExecution(CodeExecution):
         else:
             stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
         
-        return stdout.strip(), stderr.strip()
+        return stdout.decode('utf-8').strip(), stderr.decode('utf-8').strip()
 
     def cleanup(self):
         if self.java_dir and os.path.exists(self.java_dir):

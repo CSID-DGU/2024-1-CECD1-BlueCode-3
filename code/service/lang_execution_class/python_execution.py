@@ -34,7 +34,7 @@ class PythonExecution(CodeExecution):
             raise TypeError("Input must be a string or bytes")
         process = subprocess.Popen(f"python {self.filename}", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         stdout, stderr = process.communicate(input=input_data, timeout=5)
-        return stdout.strip(), stderr.strip()
+        return stdout.decode('utf-8').strip(), stderr.decode('utf-8').strip()
 
     def cleanup(self):
         if self.filename and os.path.exists(self.filename):
