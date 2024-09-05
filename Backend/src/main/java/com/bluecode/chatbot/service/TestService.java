@@ -12,6 +12,7 @@ import org.hibernate.query.sqm.ParsingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,7 +34,6 @@ public class TestService {
     private final QuizRepository quizRepository;
     private final TestRepository testRepository;
     private final UserRepository userRepository;
-    private final RestTemplate restTemplate;
 
     private final Random random = new Random();
 
@@ -419,6 +419,10 @@ public class TestService {
         HttpEntity<CodeRequestDto> requestEntity = new HttpEntity<>(codeRequestDto, headers);
 
         // API 호출
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setConnectTimeout(10000); // 연결 시간 10초 제한
+        RestTemplate restTemplate = new RestTemplate(factory);
+
         ResponseEntity<CodeResponseDto> responseEntity = restTemplate.exchange(
                 postUrl,
                 HttpMethod.POST,
