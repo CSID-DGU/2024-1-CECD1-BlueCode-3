@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class RestTemplateConfig {
 
-    static final int READ_TIMEOUT = 5000;
-    static final int CONN_TIMEOUT = 5000;
+    static final int READ_TIMEOUT = 20000;
+    static final int CONN_TIMEOUT = 20000;
 
     @Bean
     public RestTemplate restTemplate() {
