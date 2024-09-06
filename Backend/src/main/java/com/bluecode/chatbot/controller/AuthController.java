@@ -2,16 +2,19 @@ package com.bluecode.chatbot.controller;
 
 import com.bluecode.chatbot.config.jwt.CookieUtil;
 import com.bluecode.chatbot.config.jwt.TokenProvider;
+import com.bluecode.chatbot.domain.MissionConst;
 import com.bluecode.chatbot.domain.RefreshToken;
+import com.bluecode.chatbot.domain.ServiceType;
 import com.bluecode.chatbot.domain.Users;
 import com.bluecode.chatbot.dto.LoginCallDto;
 import com.bluecode.chatbot.dto.LoginResponseDto;
-import com.bluecode.chatbot.repository.RefreshTokenRepository;
 import com.bluecode.chatbot.repository.UserRepository;
 import com.bluecode.chatbot.service.RefreshTokenService;
+import com.bluecode.chatbot.service.UserActionEvent;
 import com.bluecode.chatbot.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,6 +38,10 @@ public class AuthController {
     private final UserRepository userRepository;
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
+
+    // 미션 처리를 위한 클래스
+    private final ApplicationEventPublisher eventPublisher;
+
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofHours(2);
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(7);
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
@@ -54,6 +61,9 @@ public class AuthController {
 
             //연속 로그인 업데이트
             userService.updateLoginStreak(user);
+
+            // 미션 처리 로직
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.USER, MissionConst.USER_LOGIN));
 
             String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
             Optional<RefreshToken> refreshToken = refreshTokenService.createOrGetRefreshToken(user);

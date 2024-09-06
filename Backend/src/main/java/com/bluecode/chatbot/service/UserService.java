@@ -1,5 +1,7 @@
 package com.bluecode.chatbot.service;
 
+import com.bluecode.chatbot.domain.MissionConst;
+import com.bluecode.chatbot.domain.ServiceType;
 import com.bluecode.chatbot.domain.Users;
 import com.bluecode.chatbot.dto.UpdateEmailCallDto;
 import com.bluecode.chatbot.dto.UpdatePasswordCallDto;
@@ -9,6 +11,7 @@ import com.bluecode.chatbot.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +27,10 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    // 미션 처리를 위한 클래스
+    private final ApplicationEventPublisher eventPublisher;
+
     // 유저 테이블 id 기반 user 검색
     public Users findById(Long userId){
         return userRepository.findByUserId(userId)
@@ -125,6 +132,10 @@ public class UserService implements UserDetailsService {
         if(lastLoginDate.isEqual(today.minusDays(1))){
             //하루 단위로 차이가 나면 = 하루마다 접속 시
             user.setStreakCount(user.getStreakCount()+1);
+
+            // 연속 로그인 미션 처리
+            eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.USER, MissionConst.createConstByUserStreakDay(user.getStreakCount())));
+
         } else if(!lastLoginDate.isEqual(today)){
             // 하루 이상 차이나면 1로 초기화
             user.setStreakCount(1);
