@@ -1,10 +1,10 @@
 package com.bluecode.chatbot.service;
 
+import com.bluecode.chatbot.config.Rules;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -100,11 +98,6 @@ public class ChatbotService {
     }
 
     private String loadRules() {
-        try {
-            ClassPathResource resource = new ClassPathResource("rules.txt");
-            return new String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load rules", e);
-        }
+        return Rules.text;
     }
 }

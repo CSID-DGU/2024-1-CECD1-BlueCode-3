@@ -13,19 +13,37 @@ class JavaExecution(CodeExecution):
         self.java_dir = f"java_files/java_files_{unique_id}"
         os.makedirs(self.java_dir, exist_ok=True)
         java_filename = f"{self.java_dir}/Main.java"
-        with open(java_filename, 'w') as f:
+        with open(java_filename, 'w', encoding='utf-8') as f:
             f.write(source_code)
-        compile_process = subprocess.Popen(f"javac {java_filename}", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        compile_process = subprocess.Popen(f"javac {java_filename}", text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         _, compile_stderr = compile_process.communicate()
         return not compile_stderr  # 컴파일 에러가 없으면 True 반환
 
     def run_code(self, inputs: str) -> tuple[str, str]:
-        process = subprocess.Popen(f"java -cp {self.java_dir} Main", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
-        return stdout.decode().strip(), stderr.decode().strip()
+        process = subprocess.Popen(
+            f"java -cp {self.java_dir} Main", 
+            text=True, 
+            stdin=subprocess.PIPE, 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.PIPE, 
+            shell=True
+        )
+
+        # inputs가 이미 bytes인지 확인 후 처리
+        if isinstance(inputs, bytes):
+            stdout, stderr = process.communicate(input=inputs, timeout=5)
+        else:
+            stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
+        
+        return stdout.decode('utf-8').strip(), stderr.decode('utf-8').strip()
 
     def cleanup(self):
         if self.java_dir and os.path.exists(self.java_dir):
+            # 디렉터리 내의 파일 삭제
             for file in os.listdir(self.java_dir):
-                os.remove(os.path.join(self.java_dir, file))
+                file_path = os.path.join(self.java_dir, file)
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            
+            # 디렉터리 삭제 (비어있을 경우)
             os.rmdir(self.java_dir)

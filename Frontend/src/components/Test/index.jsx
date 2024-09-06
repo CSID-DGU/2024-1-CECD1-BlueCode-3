@@ -168,8 +168,8 @@ const submitAnswer = async () => {
         console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        //response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
-        //console.log("서술식 정답 요청 " + response.data.passed);
+        response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
+        console.log("서술식 정답 요청 " + response.data.passed);
       }
       
     

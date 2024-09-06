@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+    env_file:
+    - .env
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    links:
+      - code
+      - redis
+    depends_on:
+      code:
+        condition: service_healthy
+      redis:
+        condition: service_started
+  code:
+    build:
+      context: ./code
+    ports:
+      - "7000:7000"
+    networks:
+      - app-network
+
+  terminal:
+    build:
+      context: ./terminal
+    ports:
+      - "5000:5000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    command: redis-server --requirepass 1234
+
+networks:
+  app-network:
+    driver: bridge
