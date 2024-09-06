@@ -19,7 +19,14 @@ class JavaExecution(CodeExecution):
         _, compile_stderr = compile_process.communicate()
         return not compile_stderr  # 컴파일 에러가 없으면 True 반환
 
-    def run_code(self, inputs: str) -> tuple[str, str]:
+    def run_code(self, inputs) -> tuple[str, str]:
+        if isinstance(inputs, str):
+            input_data = inputs.encode('utf-8')
+        elif isinstance(inputs, bytes):
+            input_data = inputs
+        else:
+            raise TypeError("Input must be a string or bytes")
+        
         process = subprocess.Popen(
             f"java -cp {self.java_dir} Main", 
             text=True, 
@@ -29,12 +36,7 @@ class JavaExecution(CodeExecution):
             shell=True
         )
 
-        # inputs가 이미 bytes인지 확인 후 처리
-        if isinstance(inputs, bytes):
-            stdout, stderr = process.communicate(input=inputs, timeout=5)
-        else:
-            stdout, stderr = process.communicate(input=inputs.encode('utf-8'), timeout=5)
-        
+        stdout, stderr = process.communicate(input=input_data, timeout=5)
         return stdout.decode('utf-8').strip(), stderr.decode('utf-8').strip()
 
     def cleanup(self):
