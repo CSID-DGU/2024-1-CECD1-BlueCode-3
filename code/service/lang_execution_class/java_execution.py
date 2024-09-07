@@ -11,21 +11,31 @@ class JavaExecution(CodeExecution):
 
     def compile_code(self, source_code: str, unique_id: str) -> bool:
         self.java_dir = f"java_files/java_files_{unique_id}"
+        # 디렉터리가 존재하지 않으면 생성
         os.makedirs(self.java_dir, exist_ok=True)
         java_filename = f"{self.java_dir}/Main.java"
+        
+        # 파일에 소스 코드 작성
         with open(java_filename, 'w', encoding='utf-8') as f:
             f.write(source_code)
-        compile_process = subprocess.Popen(f"javac {java_filename}", text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        
+        compile_process = subprocess.Popen(
+            f"javac {java_filename}", 
+            text=True, 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.PIPE, 
+            shell=True
+        )
         _, compile_stderr = compile_process.communicate()
         return not compile_stderr  # 컴파일 에러가 없으면 True 반환
 
-    def run_code(self, inputs) -> tuple[str, str]:
-        if isinstance(inputs, str):
-            input_data = inputs.encode('utf-8')
-        elif isinstance(inputs, bytes):
-            input_data = inputs
-        else:
-            raise TypeError("Input must be a string or bytes")
+    def run_code(self, inputs):
+        # if isinstance(inputs, str):
+        #     input_data = inputs.encode('utf-8')
+        # elif isinstance(inputs, bytes):
+        #     input_data = inputs
+        # else:
+        #     raise TypeError("Input must be a string or bytes")
         
         process = subprocess.Popen(
             f"java -cp {self.java_dir} Main", 
@@ -36,8 +46,8 @@ class JavaExecution(CodeExecution):
             shell=True
         )
 
-        stdout, stderr = process.communicate(input=input_data, timeout=5)
-        return stdout.decode('utf-8').strip(), stderr.decode('utf-8').strip()
+        stdout, stderr = process.communicate(input=inputs, timeout=5)
+        return stdout.strip(), stderr.strip()
 
     def cleanup(self):
         if self.java_dir and os.path.exists(self.java_dir):
