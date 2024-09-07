@@ -4,8 +4,7 @@ services:
   backend:
     build:
       context: ./Backend
-    env_file:
-    - .env
+    env_file: .env
     ports:
       - "8080:8080"
     networks:
@@ -14,10 +13,9 @@ services:
       - code
       - redis
     depends_on:
-      code:
-        condition: service_healthy
-      redis:
-        condition: service_started
+      - code
+      - redis
+  
   code:
     build:
       context: ./code
@@ -25,12 +23,6 @@ services:
       - "7000:7000"
     networks:
       - app-network
-    healthcheck:
-    test: ["CMD", "curl", "-f", "http://localhost:7000/health"]
-    interval: 30s
-    retries: 3
-    start_period: 30s
-    timeout: 10s
 
   terminal:
     build:
@@ -48,12 +40,6 @@ services:
     networks:
       - app-network
     command: redis-server --requirepass 1234
-    healthcheck:
-      test: ["CMD", "redis-cli", "-a", "1234", "PING"]
-      interval: 30s
-      retries: 3
-      start_period: 30s
-      timeout: 10s
 
 networks:
   app-network:
