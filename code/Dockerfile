@@ -3,6 +3,12 @@ FROM python:3.9-slim
 # 작업 디렉토리 설정
 WORKDIR /app
 
+# Install Java
+RUN apt-get update && apt-get install -y default-jdk
+
+# Install C++
+RUN apt-get update && apt-get install -y g++
+
 # requirements.txt를 컨테이너에 복사
 COPY requirements.txt .
 

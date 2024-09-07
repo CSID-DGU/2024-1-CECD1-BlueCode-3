@@ -26,7 +26,7 @@ class CodeService:
 
         unique_id = str(uuid.uuid4())
         if not strategy.compile_code(code, unique_id):
-            logger.error('컴파일 오류, language: {language}')
+            logger.error(f'컴파일 오류, language: {language}')
             return {'result': '컴파일 오류'}
 
         for index, quiz_case in enumerate(quiz_cases):
