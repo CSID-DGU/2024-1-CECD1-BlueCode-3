@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Missions {
 
     // table id
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mission_id")
     private Long missionId;
 
