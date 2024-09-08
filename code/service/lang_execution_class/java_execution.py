@@ -30,13 +30,6 @@ class JavaExecution(CodeExecution):
         return not compile_stderr  # 컴파일 에러가 없으면 True 반환
 
     def run_code(self, inputs):
-        # if isinstance(inputs, str):
-        #     input_data = inputs.encode('utf-8')
-        # elif isinstance(inputs, bytes):
-        #     input_data = inputs
-        # else:
-        #     raise TypeError("Input must be a string or bytes")
-        
         process = subprocess.Popen(
             f"java -cp {self.java_dir} Main", 
             text=True, 
