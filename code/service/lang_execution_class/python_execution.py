@@ -25,13 +25,6 @@ class PythonExecution(CodeExecution):
         return True  # Python은 별도의 컴파일 필요 없음
 
     def run_code(self, inputs):
-        # # 입력이 문자열인 경우에만 인코딩 수행
-        # if isinstance(inputs, str):
-        #     input_data = inputs.encode('utf-8')
-        # elif isinstance(inputs, bytes):
-        #     input_data = inputs
-        # else:
-        #     raise TypeError("Input must be a string or bytes")
         process = subprocess.Popen(
             f"python {self.filename}", 
             text=True,

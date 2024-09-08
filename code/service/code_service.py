@@ -30,7 +30,7 @@ class CodeService:
             return {'result': '컴파일 오류'}
 
         for index, quiz_case in enumerate(quiz_cases):
-            inputs = str(quiz_case.input)
+            inputs = str(quiz_case.input).strip()
             expected_output = str(quiz_case.output).strip()
             logger.info(f'{self.user_id}, {self.quiz_id} 실행 시작 case {index + 1} with inputs={inputs}')
 
