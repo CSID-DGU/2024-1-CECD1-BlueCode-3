@@ -1,0 +1,20 @@
+{
+    "name": "terminal",
+    "version": "1.0.0",
+    "description": "code_execution_terminal_server",
+    "main": "app.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+      "web_terminal"
+    ],
+    "author": "jhan0121",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.19.2",
+      "node-pty": "^1.0.0",
+      "serve-index": "^1.9.1",
+      "ws": "^8.18.0"
+    }
+  }
