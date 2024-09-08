@@ -148,6 +148,32 @@ const getChapterQuiz =  async () =>{
   }
 }
 
+//다음챕터 문제 가져오기
+const getChapterQuiz2 =  async () =>{
+  const userid = localStorage.getItem('userid');
+  if(curriculumIds[currentcurriculumId] != null){
+    console.log("불러올려고 하는 curri id "+ curriculumIds[currentcurriculumId+1]);
+
+    const DataCallDto = {
+      'userId': userid,
+      'curriculumId': curriculumIds[currentcurriculumId+1]
+    };
+
+    try {
+      //초기 테스트용 4 문제 호출 api
+      setData([]);
+      const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
+      setData(response.data.tests); //4 문제를 Data에 저장
+      setcurrentcurriculumId(prev => prev + 1);
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }else{
+    console.log("불러올려고 하는 인덱스 " + currentcurriculumId + " 는 범위를 벗어남")
+  }
+}
+
 const navigate = useNavigate();
 const submitAnswer = async () => {
   var response;
@@ -182,7 +208,9 @@ const submitAnswer = async () => {
           alert("다음 챕터의 문제로 넘어갑니다.");
           setOrder(0);
           setQnumber(qnumber + 1);
-          handleProcess();
+          //handleProcess();
+          updateInitPass("HARD");
+          getChapterQuiz2();
         }
         else if (order === 1) {
           alert("초급자 문제를 맞추셨습니다.");
@@ -193,15 +221,20 @@ const submitAnswer = async () => {
           alert("입문자 문제를 맞추셨습니다.");
           alert("학습 시작 챕터가 설정되었습니다.");
           setOrder(0);
-          updateInitComplete("EASY");
-          navigate('/mypage/todo');
+          updateInitComplete("EASY").then(
+            ()=>{
+            navigate('/mypage/todo');
+            }
+          );
         }
         else if (order === 3) {
           alert("두번째 중급자 문제를 맞추셨습니다.");
           alert("다음 챕터의 문제로 넘어갑니다.");
           setOrder(0);
           setQnumber(qnumber + 1);
-          handleProcess();
+          //handleProcess();
+          updateInitPass("HARD");
+          getChapterQuiz2();
 
         }
       }
@@ -220,8 +253,11 @@ const submitAnswer = async () => {
           alert("입문자 문제를 틀리셨습니다.");
           alert("학습 시작 챕터가 설정되었습니다.");
           setOrder(0);
-          updateInitComplete("EASY");
-          navigate('/mypage/todo');
+          updateInitComplete("EASY").then(
+            ()=>{
+            navigate('/mypage/todo');
+            }
+          );
         }
         else if (order === 3) {
           alert("두 번째 중급자 문제를 틀리셨습니다.");
@@ -229,12 +265,17 @@ const submitAnswer = async () => {
           if (userConfirm) {
             alert("다음 챕터의 문제로 넘어갑니다.");
             setQnumber(qnumber + 1);
-            handleProcess();
+            //handleProcess();
+          updateInitPass("HARD");
+          getChapterQuiz2();
 
           } else {
             alert("시작 챕터가 설정되었습니다.");
-            updateInitComplete("NORMAL");
-            navigate('/mypage/todo');
+            updateInitComplete("NORMAL").then(
+              ()=>{
+              navigate('/mypage/todo');
+              }
+            );
           }
           setOrder(0);
         }
