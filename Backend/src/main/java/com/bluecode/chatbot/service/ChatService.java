@@ -200,75 +200,37 @@ public class ChatService {
 
     // 단계적 답변을 위해 응답을 분할
     public List<String> splitResponse(String response) {
-//        return List.of(response.split("(?m)^\\$"));
         return List.of(response.split("\\$")); // '$' 기호를 기준으로 분할
     }
 
     // 특정 서브챕터에 대한 채팅 기록 조회
     public List<Chats> getChatsBySubChapter(Long userId, Long subChapterId) {
-        List<Chats> result = chatRepository.findAllByUserIdAndSubChapterIdOrderByChatDate(userId, subChapterId);
-
-        if (result.isEmpty()) {
-            throw new IllegalStateException("getChatsBySubChapter 결과 없음");
-        }
-
-        return result;
+        return chatRepository.findAllByUserIdAndSubChapterIdOrderByChatDate(userId, subChapterId);
     }
 
     // 특정 챕터에 대한 채팅 기록 조회
     public List<Chats> getChatsByChapter(Long userId, Long chapterId) {
-        List<Chats> result = chatRepository.findAllByUserIdAndParentIdOrderBySubChapterNumAndChatDate(userId, chapterId);
-
-        if (result.isEmpty()) {
-            throw new IllegalStateException("getChatsByChapter 결과 없음");
-        }
-
-        return result;
+        return chatRepository.findAllByUserIdAndParentIdOrderBySubChapterNumAndChatDate(userId, chapterId);
     }
 
     // 특정 루트에 대한 채팅 기록 조회
     public List<Chats> getChatsByRoot(Long userId, Long rootId) {
-        List<Chats> result = chatRepository.findAllByUserIdAndRootIdOrderByChapterNumAndSubChapterNumAndChatDate(userId, rootId);
-
-        if (result.isEmpty()) {
-            throw new IllegalStateException("getChatsByRoot 결과 없음");
-        }
-
-        return result;
+        return chatRepository.findAllByUserIdAndRootIdOrderByChapterNumAndSubChapterNumAndChatDate(userId, rootId);
     }
 
 
     // 특정 서브 챕터와 질문 유형에 대한 채팅 기록 조회
     public List<Chats> getChatsBySubChapterAndQuestionType(Long userId, Long subChapterId, QuestionType questionType) {
-
-        List<Chats> result = chatRepository.findAllByUserIdAndSubChapterIdAndQuestionTypeOrderByChatDate(userId, subChapterId, questionType);
-
-        if (result.isEmpty()) {
-            throw new IllegalStateException("getChatsBySubChapterAndQuestionType 결과 없음");
-        }
-
-        return result;
+        return chatRepository.findAllByUserIdAndSubChapterIdAndQuestionTypeOrderByChatDate(userId, subChapterId, questionType);
     }
 
     // 특정 챕터와 질문 유형에 대한 채팅 기록 조회
     public List<Chats> getChatsByChapterAndQuestionType(Long userId, Long curriculumId, QuestionType questionType) {
-        List<Chats> result = chatRepository.findAllByUserIdAndParentIdAAndQuestionTypeOrderBySubChapterNumAndChatDate(userId, curriculumId, questionType);
-
-        if (result.isEmpty()) {
-            throw new IllegalStateException("getChatsByChapterAndQuestionType 결과 없음");
-        }
-
-        return result;
+        return chatRepository.findAllByUserIdAndParentIdAAndQuestionTypeOrderBySubChapterNumAndChatDate(userId, curriculumId, questionType);
     }
 
     // 특정 루트와 질문 유형에 대한 채팅 기록 조회
     public List<Chats> getChatsByRootAndQuestionType(Long userId, Long rootId, QuestionType questionType) {
-        List<Chats> result = chatRepository.findAllByUserIdAndRootIdAAndQuestionTypeOrderByChapterNumAndSubChapterNumAndChatDate(userId, rootId, questionType);
-
-        if (result.isEmpty()) {
-            throw new IllegalStateException("getChatsByRootAndQuestionType 결과 없음");
-        }
-
-        return result;
+        return chatRepository.findAllByUserIdAndRootIdAAndQuestionTypeOrderByChapterNumAndSubChapterNumAndChatDate(userId, rootId, questionType);
     }
 }

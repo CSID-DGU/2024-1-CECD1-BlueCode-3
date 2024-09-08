@@ -1,0 +1,22 @@
+# Node.js 환경 설정
+FROM node:16
+
+# Docker 클라이언트 설치
+RUN apt-get update && \
+    apt-get install -y docker.io
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# package.json 및 package-lock.json 파일 복사
+COPY package*.json ./
+
+# 의존성 설치
+RUN npm install
+
+# 애플리케이션 소스 코드 복사
+COPY . .
+
+# 앱 실행
+EXPOSE 3000
+CMD ["node", "app.js"]
