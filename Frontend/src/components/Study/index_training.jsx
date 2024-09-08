@@ -235,8 +235,12 @@ useEffect(()=>{
   const handleConfirm = (confirm) => {
     if(text === 'QUIZ') {
       if (confirm) {
-        postSubchapterPass(subChapId);
-        navigate('/mypage/lecture');
+        postSubchapterPass(subChapId).then(
+          () => {
+            navigate('/mypage/lecture'); 
+          }
+        );
+        // navigate('/mypage/lecture');
       }
     }
     else if (text === 'CODE') {  // code 에서 다음 누르면 quiz 학습으로
@@ -250,7 +254,7 @@ useEffect(()=>{
 
   const goBack = ()=> {
     //이전페이지로 이동
-    // quiz 에서 다음 누르면 해당 서브챕터 pass 요청
+    
     if(text==='QUIZ'){
       window.location.replace(`/study/training/${subChapId}/CODE`);
     }

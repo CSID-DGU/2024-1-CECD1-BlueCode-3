@@ -182,9 +182,7 @@ const submitAnswer = async () => {
           alert("다음 챕터의 문제로 넘어갑니다.");
           setOrder(0);
           setQnumber(qnumber + 1);
-          updateInitPass("HARD"); 
-          setcurrentcurriculumId(currentcurriculumId + 1); // curriculuid인덱스 1 증가
-          getChapterQuiz();
+          handleProcess();
         }
         else if (order === 1) {
           alert("초급자 문제를 맞추셨습니다.");
@@ -203,9 +201,8 @@ const submitAnswer = async () => {
           alert("다음 챕터의 문제로 넘어갑니다.");
           setOrder(0);
           setQnumber(qnumber + 1);
-          updateInitPass("HARD");
-          setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
-          getChapterQuiz();
+          handleProcess();
+
         }
       }
       else {
@@ -232,9 +229,8 @@ const submitAnswer = async () => {
           if (userConfirm) {
             alert("다음 챕터의 문제로 넘어갑니다.");
             setQnumber(qnumber + 1);
-            updateInitPass("HARD");
-            setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
-            getChapterQuiz();
+            handleProcess();
+
           } else {
             alert("시작 챕터가 설정되었습니다.");
             updateInitComplete("NORMAL");
@@ -251,76 +247,23 @@ const submitAnswer = async () => {
 }
 
 
+const handleProcess = async () => {
+  try {
+    // 첫 번째로 updateInitPass 실행
+    await updateInitPass("HARD");
 
-const initTestLogic = (passed) => {
-  if(passed === '1') {
-    if (order === 0) {
-      alert("중급자 문제를 맞추셨습니다.");
-      alert("다음 챕터의 문제로 넘어갑니다.");
-      setOrder(0);
-      setQnumber(qnumber + 1);
-      updateInitPass("HARD"); 
-      setcurrentcurriculumId(currentcurriculumId + 1); // curriculuid인덱스 1 증가
-      getChapterQuiz();
-    }
-    else if (order === 1) {
-      alert("초급자 문제를 맞추셨습니다.");
-      alert("두번째 중급자 문제를 제시합니다.");
-      setOrder(3);
-    }
-    else if (order === 2) {
-      alert("입문자 문제를 맞추셨습니다.");
-      alert("학습 시작 챕터가 설정되었습니다.");
-      setOrder(0);
-      updateInitComplete("EASY");
-      navigate('/mypage/todo');
-    }
-    else if (order === 3) {
-      alert("두번째 중급자 문제를 맞추셨습니다.");
-      alert("다음 챕터의 문제로 넘어갑니다.");
-      setOrder(0);
-      setQnumber(qnumber + 1);
-      updateInitPass("HARD");
-      setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
-      getChapterQuiz();
-    }
+    // 두 번째로 currentcurriculumId를 증가
+    await setcurrentcurriculumId(prev => prev + 1);  // 상태 변경은 바로 처리되지 않기 때문에 nextId를 변수로 저장해둠
+
+    // 세 번째로 getChapterQuiz 실행
+    await getChapterQuiz();
+
+  } catch (err) {
+    console.error("Error during process: ", err);
   }
-  else {
-    if (order === 0) {
-      alert("첫 번째 중급자 문제를 틀리셨습니다.");
-      alert("초급자 문제로 넘어갑니다.");
-      setOrder(1);
-    }
-    else if (order === 1) {
-      alert("초급자 문제를 틀리셨습니다.");
-      alert("입문자 문제로 넘어갑니다.");
-      setOrder(2);
-    }
-    else if (order === 2) {
-      alert("입문자 문제를 틀리셨습니다.");
-      alert("학습 시작 챕터가 설정되었습니다.");
-      setOrder(0);
-      updateInitComplete("EASY");
-      navigate('/mypage/todo');
-    }
-    else if (order === 3) {
-      alert("두 번째 중급자 문제를 틀리셨습니다.");
-      const userConfirm = window.confirm("다음 챕터의 문제로 넘어가시겠습니까?");
-      if (userConfirm) {
-        alert("다음 챕터의 문제로 넘어갑니다.");
-        setQnumber(qnumber + 1);
-        updateInitPass("HARD");
-        setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
-        getChapterQuiz();
-      } else {
-        alert("시작 챕터가 설정되었습니다.");
-        updateInitComplete("NORMAL");
-        navigate('/mypage/todo');
-      }
-      setOrder(0);
-    }
-  }
-}
+};
+
+
 
 // chapter 초기 테스트 내 챕터 통과 완료 처리 요청
 const updateInitPass = async (levelType) => {

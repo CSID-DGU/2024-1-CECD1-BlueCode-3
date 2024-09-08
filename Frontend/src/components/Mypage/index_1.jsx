@@ -40,8 +40,6 @@ function Study_theory() {
   const [missionWeekly, setMissionWeekly] = useState([]);
   const [challenge, setChallenge] = useState([]);
 
-  
-
 
   useEffect(() => {
 
@@ -92,6 +90,7 @@ function Study_theory() {
     getUserInfo()
     .then(data => {
         // 데이터 가져오기 성공 시 상태 업데이트
+      console.log(data);
       setTestValid(data.initTest);
       setPoint(data.exp);
     })
@@ -105,12 +104,7 @@ function Study_theory() {
   }, []);
 
 
-  useEffect(()=>{
-    //getUserInfo();
-    if (testValid) {
-      //console.log(testValid);
-    }
-  }, [testValid]);
+
 
   const navigate = useNavigate();
   const enterExam = () => {
