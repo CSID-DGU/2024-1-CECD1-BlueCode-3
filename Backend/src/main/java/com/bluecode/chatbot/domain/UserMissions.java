@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class UserMissions {
 
     // table id
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_mission_id")
     private Long userMissionId;
 

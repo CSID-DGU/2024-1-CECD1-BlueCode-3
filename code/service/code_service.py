@@ -26,12 +26,12 @@ class CodeService:
 
         unique_id = str(uuid.uuid4())
         if not strategy.compile_code(code, unique_id):
-            logger.error('컴파일 오류, language: {language}')
+            logger.error(f'컴파일 오류, language: {language}')
             return {'result': '컴파일 오류'}
 
         for index, quiz_case in enumerate(quiz_cases):
-            inputs = quiz_case.input
-            expected_output = quiz_case.output
+            inputs = str(quiz_case.input).strip()
+            expected_output = str(quiz_case.output).strip()
             logger.info(f'{self.user_id}, {self.quiz_id} 실행 시작 case {index + 1} with inputs={inputs}')
 
             try:
@@ -42,9 +42,18 @@ class CodeService:
                     return {'result': f'실행 오류 {stderr}'}
 
                 output = stdout
-                if output != expected_output:
-                    logger.warning(f'오답 도출 {self.user_id}, {self.quiz_id}')
-                    strategy.cleanup()
+                # 문자열에서 공백과 줄 바꿈 제거 후 비교
+                output_cleaned = output.strip().replace('\r\n', '\n').replace('\r', '\n')
+                expected_output_cleaned = expected_output.strip().replace('\r\n', '\n').replace('\r', '\n')
+
+                
+                if output_cleaned != expected_output_cleaned:
+                    logger.warning(f'오답 도출 {self.user_id}, {self.quiz_id}, output = {output_cleaned}, expected_output = {expected_output_cleaned}')
+                    # 문자별 차이점 확인
+                    for i, (o, e) in enumerate(zip(output_cleaned, expected_output_cleaned)):
+                        if o != e:
+                            logger.warning(f'차이점 발견 at index {i}: output_char="{o}", expected_char="{e}"')
+                            break
                     return {'result': '오답'}
 
             except subprocess.TimeoutExpired:

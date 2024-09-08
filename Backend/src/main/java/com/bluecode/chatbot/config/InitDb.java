@@ -136,7 +136,7 @@ public class InitDb {
             sub.add(Curriculums.createCurriculum(chap2, root, null, null, "chr(), ord()", false, 2, 10, 1, true, false, LangType.PYTHON));
             sub.add(Curriculums.createCurriculum(chap2, root, null, null, "산술 연산자 - '+', '-', '*', '/', '//', '%', '**'", false, 2, 11, 1, true, false, LangType.PYTHON));
             sub.add(Curriculums.createCurriculum(chap2, root, null, null, "비교 연산자 - '==', '!=', '>', '<', '>=', '<='", false, 2, 12, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "논리 연산자 - 'and', 'or', 'not'", false, 2, 2, 13, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "논리 연산자 - 'and', 'or', 'not'", false, 2, 13, 1, true, false, LangType.PYTHON));
 
             sub.add(Curriculums.createCurriculum(chap3, root, null, null, "인덱싱 및 슬라이싱", false, 3, 1, 1, true, false, LangType.PYTHON));
             sub.add(Curriculums.createCurriculum(chap3, root, null, null, "upper(), lower()", false, 3, 2, 1, true, false, LangType.PYTHON));
