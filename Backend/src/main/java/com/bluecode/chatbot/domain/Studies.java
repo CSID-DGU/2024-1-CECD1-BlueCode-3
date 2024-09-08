@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class Studies {
 
     // table id
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "study_id")
     private Long studyId;
 
