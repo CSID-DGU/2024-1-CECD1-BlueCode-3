@@ -3,6 +3,7 @@ import Right from '../../right.png';
 import Input from '../../input.png';
 import BCODE from '../../logo_w.png';
 import Markdown from '../../Markdown';
+import NavJsx from '../../Nav';
 import styled from 'styled-components';
 import LOADING from '../../loading.png';
 import SectionBarJsx from '../../SectionBar';
@@ -181,14 +182,15 @@ function Study_training() {
         }
         
         if(response.data.passed === true) {
-          setIsAlertOpen(true);
           setDataPassed(true);
           if (order === 0) {
             //입문자 문제 맞출 경우
+            setIsAlertOpen(true);
             alert("입문자 문제를 맞추셨습니다.");
             setOrder(1);
           }
           else if (order === 1) {
+            setIsAlertOpen(true);
             alert("초급자 문제를 맞추셨습니다.");
             setOrder(2);
           }
@@ -205,15 +207,16 @@ function Study_training() {
           }
         }
         else {
-          setIsAlertOpen(true);
           setDataPassed(false);
           if (order === 0) {
             //입문자 문제 틀렸을 경우
+            setIsAlertOpen(true);
             alert("입문자 문제를 틀리셨습니다.");
             alert("전반적인 학습을 다시 하세요.");
             navigate('/mypage/lecture');
           }
           else if (order === 1) {
+            setIsAlertOpen(true);
             alert("초급자 문제를 틀리셨습니다.");
             alert("입문자 난이도로 다음 챕터가 설정되었습니다.");
             postChapterPass(chapId, "EASY");
@@ -240,7 +243,7 @@ function Study_training() {
   }
 
   const handleAlert = () => {
-
+    setIsAlertOpen(false);
   }
 
   const handleConfirm = (confirm) => {
@@ -294,26 +297,7 @@ function Study_training() {
             <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Dynamic>
-            <Nav id="1" style={navValue ? nav_style : styled} onClick={AddToNavContent}> 제 1장 </Nav>
-            {navValue && (<NavContent>
-              <NavItem> 목차 1 </NavItem>
-              <NavItem> 목차 2 </NavItem> 
-              <NavItem> 목차 3 </NavItem>
-            </NavContent>)}
-            <Nav> 제 2장 </Nav>
-            <Nav> 제 3장 </Nav>
-            <Nav> 제 4장 </Nav>
-            <Nav> 제 5장 </Nav>
-            <Nav> 제 6장 </Nav>
-            <Nav> 제 7장 </Nav>
-            <Nav> 제 8장 </Nav>
-            <Nav> 제 9장 </Nav>
-            <Nav> 제 10장 </Nav>
-            <Nav> 제 11장 </Nav>
-            <Nav> 제 12장 </Nav>
-            <Nav> 제 13장 </Nav>
-            <Nav> 제 14장 </Nav>
-            <Nav> 제 15장 </Nav>
+            <NavJsx />
           </Dynamic>
         </NavSection>
         <ContentSection width={contentWidth}>

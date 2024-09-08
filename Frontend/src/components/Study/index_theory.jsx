@@ -3,18 +3,19 @@ import Right from '../../right.png';
 import Input from '../../input.png';
 import BCODE from '../../logo_w.png';
 import Markdown from '../../Markdown';
-import ConfirmJsx from '../../Window/index_confirm';
+import NavJsx from '../../Nav';
 import styled from 'styled-components';
 import LOADING from '../../loading.png';
 import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
+import ConfirmJsx from '../../Window/index_confirm';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 
 import "highlight.js/styles/a11y-dark.css";
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from "rehype-highlight";
-import NavSectionJsx from '../../NavSection/index.jsx';
+
 
 
 function Study_theory() {
@@ -267,9 +268,9 @@ function Study_theory() {
             <NavLink style={textDeco} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Dynamic>
-          <NavSectionJsx />
-        </Dynamic>
-      </NavSection>
+            <NavJsx />
+          </Dynamic>
+        </NavSection>
       <ContentSection width={contentWidth}>
         {theory?
         <Instruction height={height}>

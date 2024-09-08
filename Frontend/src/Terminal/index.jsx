@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 
 
-const TerminalComponent = () => {
+const TerminalJsx = () => {
   const terminalRef = useRef(null);
   const [term, setTerm] = useState(null);
   const [ws, setWs] = useState(null);
@@ -195,17 +195,42 @@ const TerminalComponent = () => {
   return (
     <div>
       <div style={{ marginBottom: "10px" }}>
-      <Editor height="200px"
+        <Editor height="200px"
               theme="tomorrow"
               defaultLanguage="python"
-              value={text} onChange={(value)=>setText(value)}></Editor>
-        <br />
-        <button onClick={() => connect()}>connect</button>
-        <button onClick={() => executeCheck()}>Execute</button>
+              value={text} onChange={(value)=>setText(value)}>
+        </Editor>
+        <Buttons>
+          <Button onClick={() => connect()}> 연결 </Button>
+          <Button onClick={() => executeCheck()}> 실행 </Button>
+        </Buttons>
       </div>
-      <div id="terminal" style={{ height: "200px", width: "100%" }} />
+      <TerminalSection id="terminal" />
     </div>
   );
 };
 
-export default TerminalComponent;
+export default TerminalJsx;
+
+
+
+const Buttons = styled.div`
+  display : flex;
+  justify-content : right;
+`
+
+const Button = styled.button`
+  width : 4rem;
+  height : 2rem;
+  color : #008BFF;
+  margin : 0.25rem;
+  font-weight : bold;
+  font-size : 0.875rem;
+  background : #FFFFFF;
+  border-radius : 1rem;
+  border : 0.125rem solid #008BFF;
+`
+
+const TerminalSection = styled.div`
+  height : 100rem;
+`

@@ -225,7 +225,6 @@ function Study_theory() {
           
           if(data)
             groupedByChapter[(i + 1) + "장 " + chapter[i]]= data.list;
-            
         }
         catch (err){
           console.log(err);

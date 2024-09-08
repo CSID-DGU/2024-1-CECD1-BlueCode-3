@@ -1,16 +1,16 @@
+import NavJsx from '../../Nav';
 import Left from '../../left.png';
 import Right from '../../right.png';
 import Input from '../../input.png';
-import BCODE from '../../logo_w.png';
-import Markdown from '../../Markdown';
 import styled from 'styled-components';
 import LOADING from '../../loading.png';
+import TerminalJsx from '../../Terminal';
 import SectionBarJsx from '../../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import ConfirmJsx from '../../Window/index_confirm';
 import React, { useRef, useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
-import TerminalComponent from '../../Terminal/index.jsx';
+
 import "highlight.js/styles/a11y-dark.css";
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from "rehype-highlight";
@@ -225,7 +225,6 @@ useEffect(()=>{
 
   
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const goToNext = () => {
     // quiz 에서 다음 누르면 해당 서브챕터 pass 요청
@@ -235,14 +234,12 @@ useEffect(()=>{
 
   const handleConfirm = (confirm) => {
     if(text === 'QUIZ') {
-      //setMessage("해당 서브 챕터 학습을 마치시겠습니까?");
       if (confirm) {
         postSubchapterPass(subChapId);
         navigate('/mypage/lecture');
       }
     }
     else if (text === 'CODE') {  // code 에서 다음 누르면 quiz 학습으로
-      //setMessage("심화 코드 학습으로 넘어가시겠습니까?");
       if (confirm) {
         window.location.replace(`/study/training/${subChapId}/QUIZ`);
         //navigate(`/study/training/${subChapId}/QUIZ`, {replace : true});
@@ -316,26 +313,7 @@ useEffect(()=>{
             <NavLink style={{ textDecoration : "none" }} to="/"><Nav> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
           <Dynamic>
-            <Nav id="1" style={navValue ? nav_style : styled} onClick={AddToNavContent}> 제 1장 </Nav>
-            {navValue && (<NavContent>
-              <NavItem> 목차 1 </NavItem>
-              <NavItem> 목차 2 </NavItem> 
-              <NavItem> 목차 3 </NavItem>
-            </NavContent>)}
-            <Nav> 제 2장 </Nav>
-            <Nav> 제 3장 </Nav>
-            <Nav> 제 4장 </Nav>
-            <Nav> 제 5장 </Nav>
-            <Nav> 제 6장 </Nav>
-            <Nav> 제 7장 </Nav>
-            <Nav> 제 8장 </Nav>
-            <Nav> 제 9장 </Nav>
-            <Nav> 제 10장 </Nav>
-            <Nav> 제 11장 </Nav>
-            <Nav> 제 12장 </Nav>
-            <Nav> 제 13장 </Nav>
-            <Nav> 제 14장 </Nav>
-            <Nav> 제 15장 </Nav>
+            <NavJsx />
           </Dynamic>
         </NavSection>
         <ContentSection width={width}>
@@ -348,7 +326,7 @@ useEffect(()=>{
             <img src={LOADING} alt="loading"></img>
           </InstructionLoading>}
           <Train height={height} width={contentWidth}>
-          <TerminalComponent />
+            <TerminalJsx />
             <Buttons_>
               <GPT onClick={ShowGpt}> GPT </GPT>
               <Interpret> 실행 </Interpret>
