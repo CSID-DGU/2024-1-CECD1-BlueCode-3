@@ -14,7 +14,7 @@ import java.util.List;
 public class Curriculums implements Comparable<Curriculums> {
 
     // table id
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "curriculum_id")
     private Long curriculumId;
 
