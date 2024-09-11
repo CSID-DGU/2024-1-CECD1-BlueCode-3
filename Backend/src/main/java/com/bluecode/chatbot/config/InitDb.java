@@ -26,7 +26,7 @@ import static com.bluecode.chatbot.domain.Users.createUser;
  * 테스트용 데이터를 DB에 저장하는 class 입니다.
  */
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class InitDb {
 
