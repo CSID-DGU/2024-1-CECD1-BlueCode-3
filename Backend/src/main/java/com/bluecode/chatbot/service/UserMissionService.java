@@ -217,7 +217,7 @@ public class UserMissionService {
         // 진행중인 (일일 / 주간)미션 검색
         List<UserMissions> userMissions = userMissionRepository.findByMissionTypeAndMissionStatus(missionType, MissionStatus.PROGRESS);
         for (UserMissions userMission : userMissions) {
-            if (LocalDate.now().isAfter(userMission.getEndDate())) {
+            if (!LocalDate.now().isBefore(userMission.getEndDate())) {
                 userMission.setMissionStatus(MissionStatus.FAILED); // 완료하지 못한 미션 실패 처리 진행
                 userMission.setClearDateTime(null);
                 userMissionRepository.save(userMission);
