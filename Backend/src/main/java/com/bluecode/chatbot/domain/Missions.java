@@ -34,6 +34,9 @@ public class Missions {
     // 미션 달성 목표 횟수
     private int missionCount;
 
+    // 미션 제목
+    private String title;
+
     public static Missions createMission(
             int exp,
             MissionType missionType,
