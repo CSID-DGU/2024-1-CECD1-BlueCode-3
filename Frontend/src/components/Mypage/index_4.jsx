@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { SHA256 } from 'crypto-js';
-import BCODE from '../../logo_w.png';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import getUserInfo from '../../getUserInfo';
-import SectionBarJsx from '../../SectionBar';
+import SectionBarJsx from '../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';

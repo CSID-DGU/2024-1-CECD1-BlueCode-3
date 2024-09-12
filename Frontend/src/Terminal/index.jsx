@@ -1,4 +1,4 @@
-import "xterm/css/xterm.css";
+import "./xterm.css";
 import { Terminal } from "xterm";
 import styled from 'styled-components';
 import { languages } from "../languages";
@@ -193,12 +193,12 @@ const TerminalJsx = () => {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: "10px" }}>
-        <Editor height="200px"
-              theme="tomorrow"
-              defaultLanguage="python"
-              value={text} onChange={(value)=>setText(value)}>
+    <div style={{height : "100%"}}>
+      <div>
+        <Editor height="16.25rem"
+                theme="tomorrow"
+                defaultLanguage="python"
+                value={text} onChange={(value)=>setText(value)}>
         </Editor>
         <Buttons>
           <Button onClick={() => connect()}> 연결 </Button>
@@ -223,6 +223,7 @@ const Button = styled.button`
   width : 4rem;
   height : 2rem;
   color : #008BFF;
+  cursor : pointer;
   margin : 0.25rem;
   font-weight : bold;
   font-size : 0.875rem;
@@ -232,5 +233,10 @@ const Button = styled.button`
 `
 
 const TerminalSection = styled.div`
-  height : 100rem;
+  display : flex;
+  overflow : scroll;
+  
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `

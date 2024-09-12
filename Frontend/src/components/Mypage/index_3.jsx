@@ -1,10 +1,8 @@
-import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
-import Markdown from '../../Markdown';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import getUserInfo from '../../getUserInfo';
-import SectionBarJsx from '../../SectionBar';
+import SectionBarJsx from '../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
 import getChapterPass from '../../getChapterPass';

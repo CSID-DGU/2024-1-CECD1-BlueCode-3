@@ -3,7 +3,7 @@ import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
 import styled from 'styled-components';
 import getUserInfo from '../../getUserInfo';
-import SectionBarJsx from '../../SectionBar';
+import SectionBarJsx from '../SectionBar';
 import React, { useState, useEffect} from 'react';
 import useChapterData from '../../useChapterData';
 import getChapterPass from '../../getChapterPass';
@@ -28,8 +28,6 @@ function Study_theory() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  const [contentWidth, setContentWidth] = useState(width);
 
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
