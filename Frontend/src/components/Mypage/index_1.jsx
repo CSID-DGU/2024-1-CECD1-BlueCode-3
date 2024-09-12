@@ -2,11 +2,18 @@ import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
 import styled from 'styled-components';
 import getUserInfo from '../../getUserInfo';
-import SectionBarJsx from '../../SectionBar';
+import SectionBarJsx from '../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import P1200 from '../../1200p.png';
+import P2400 from '../../2400p.png';
+import P3600 from '../../3600p.png';
+import P4800 from '../../4800p.png';
+import P6000 from '../../6000p.png';
+import P7200 from '../../7200p.png';
+
 
 
 function Study_theory() {
@@ -39,8 +46,6 @@ function Study_theory() {
   const [missionDaily, setMissionDaily] = useState([]);
   const [missionWeekly, setMissionWeekly] = useState([]);
   const [challenge, setChallenge] = useState([]);
-
-  
 
 
   useEffect(() => {
@@ -92,6 +97,7 @@ function Study_theory() {
     getUserInfo()
     .then(data => {
         // 데이터 가져오기 성공 시 상태 업데이트
+      console.log(data);
       setTestValid(data.initTest);
       setPoint(data.exp);
     })
@@ -104,20 +110,28 @@ function Study_theory() {
     getMissionInfo(); // 미션 데이터를 불러오는 함수
   }, []);
 
-
-  useEffect(()=>{
-    //getUserInfo();
-    if (testValid) {
-      //console.log(testValid);
-    }
-  }, [testValid]);
-
   const navigate = useNavigate();
   const enterExam = () => {
     navigate('/test');
   }
 
-
+  const getBorder = () => {
+    if (point > 7200) {
+      return P7200;
+    } else if (point > 6000) {
+      return P6000;
+    } else if (point > 4800) {
+      return P4800;
+    } else if (point > 3600) {
+      return P3600;
+    } else if (point > 2400) {
+      return P2400;
+    } else if (point > 1200) {
+      return P1200;
+    } else {
+      return P1200;
+    }
+  }
 
   return (
     <TestSection>
@@ -129,7 +143,7 @@ function Study_theory() {
             <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
             <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
           </Static>
-          <Info>
+          <Info style={{backgroundImage : `url(${()=>getBorder()}`}}>
             <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
             <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
           </Info>

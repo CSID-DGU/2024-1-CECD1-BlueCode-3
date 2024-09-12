@@ -62,9 +62,6 @@ function Study_theory() {
   }
 
 
-
-
-
   return (
     <TestSection>
       <SectionBar>

@@ -1,14 +1,16 @@
-import BCODE from '../../logo_w.png';
-import Markdown from '../../Markdown';
 import styled from 'styled-components';
 import LOADING from '../../loading.png';
-import SectionBarJsx from '../../SectionBar';
+import Editor from '@monaco-editor/react';
+import SectionBarJsx from '../SectionBar';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import React, { useEffect, useState } from 'react';
 
-//import rehypeHighlight from "rehype-highlight";
-//import "highlight.js/styles/a11y-dark.css";
+import "highlight.js/styles/a11y-dark.css";
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from "rehype-highlight";
+
+
 
 function Study_theory() {
   const [answer, setAnswer] = useState('');
@@ -31,11 +33,7 @@ function Study_theory() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  const [contentWidth, setContentWidth] = useState(width);
-
   
-  const [current, setCurrent] = useState(1);
   const [time, setTime] = useState(300);
   const [min, setMin] = useState('');
   const [sec, setSec] = useState('');
@@ -145,6 +143,32 @@ const getChapterQuiz =  async () =>{
   }
 }
 
+//다음챕터 문제 가져오기
+const getChapterQuiz2 =  async () =>{
+  const userid = localStorage.getItem('userid');
+  if(curriculumIds[currentcurriculumId] != null){
+    console.log("불러올려고 하는 curri id "+ curriculumIds[currentcurriculumId+1]);
+
+    const DataCallDto = {
+      'userId': userid,
+      'curriculumId': curriculumIds[currentcurriculumId+1]
+    };
+
+    try {
+      //초기 테스트용 4 문제 호출 api
+      setData([]);
+      const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
+      setData(response.data.tests); //4 문제를 Data에 저장
+      setcurrentcurriculumId(prev => prev + 1);
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }else{
+    console.log("불러올려고 하는 인덱스 " + currentcurriculumId + " 는 범위를 벗어남")
+  }
+}
+
 const navigate = useNavigate();
 const submitAnswer = async () => {
   var response;
@@ -156,6 +180,7 @@ const submitAnswer = async () => {
       'quizId': data[order].quizId,
       'answer': answer
     };
+
     console.log(answer);
     try {
       // 문제 타입 객관식
@@ -168,8 +193,8 @@ const submitAnswer = async () => {
         console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        //response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
-        //console.log("서술식 정답 요청 " + response.data.passed);
+        response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
+        console.log("서술식 정답 요청 " + response.data.passed);
       }
       
     
@@ -179,9 +204,9 @@ const submitAnswer = async () => {
           alert("다음 챕터의 문제로 넘어갑니다.");
           setOrder(0);
           setQnumber(qnumber + 1);
-          updateInitPass("HARD"); 
-          setcurrentcurriculumId(currentcurriculumId + 1); // curriculuid인덱스 1 증가
-          getChapterQuiz();
+          //handleProcess();
+          updateInitPass("HARD");
+          getChapterQuiz2();
         }
         else if (order === 1) {
           alert("초급자 문제를 맞추셨습니다.");
@@ -192,17 +217,21 @@ const submitAnswer = async () => {
           alert("입문자 문제를 맞추셨습니다.");
           alert("학습 시작 챕터가 설정되었습니다.");
           setOrder(0);
-          updateInitComplete("EASY");
-          navigate('/mypage/todo');
+          updateInitComplete("EASY").then(
+            ()=>{
+            navigate('/mypage/todo');
+            }
+          );
         }
         else if (order === 3) {
           alert("두번째 중급자 문제를 맞추셨습니다.");
           alert("다음 챕터의 문제로 넘어갑니다.");
           setOrder(0);
           setQnumber(qnumber + 1);
+          //handleProcess();
           updateInitPass("HARD");
-          setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
-          getChapterQuiz();
+          getChapterQuiz2();
+
         }
       }
       else {
@@ -220,8 +249,11 @@ const submitAnswer = async () => {
           alert("입문자 문제를 틀리셨습니다.");
           alert("학습 시작 챕터가 설정되었습니다.");
           setOrder(0);
-          updateInitComplete("EASY");
-          navigate('/mypage/todo');
+          updateInitComplete("EASY").then(
+            ()=>{
+            navigate('/mypage/todo');
+            }
+          );
         }
         else if (order === 3) {
           alert("두 번째 중급자 문제를 틀리셨습니다.");
@@ -229,13 +261,17 @@ const submitAnswer = async () => {
           if (userConfirm) {
             alert("다음 챕터의 문제로 넘어갑니다.");
             setQnumber(qnumber + 1);
-            updateInitPass("HARD");
-            setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
-            getChapterQuiz();
+            //handleProcess();
+          updateInitPass("HARD");
+          getChapterQuiz2();
+
           } else {
             alert("시작 챕터가 설정되었습니다.");
-            updateInitComplete("NORMAL");
-            navigate('/mypage/todo');
+            updateInitComplete("NORMAL").then(
+              ()=>{
+              navigate('/mypage/todo');
+              }
+            );
           }
           setOrder(0);
         }
@@ -248,76 +284,23 @@ const submitAnswer = async () => {
 }
 
 
+const handleProcess = async () => {
+  try {
+    // 첫 번째로 updateInitPass 실행
+    await updateInitPass("HARD");
 
-const initTestLogic = (passed) => {
-  if(passed === '1') {
-    if (order === 0) {
-      alert("중급자 문제를 맞추셨습니다.");
-      alert("다음 챕터의 문제로 넘어갑니다.");
-      setOrder(0);
-      setQnumber(qnumber + 1);
-      updateInitPass("HARD"); 
-      setcurrentcurriculumId(currentcurriculumId + 1); // curriculuid인덱스 1 증가
-      getChapterQuiz();
-    }
-    else if (order === 1) {
-      alert("초급자 문제를 맞추셨습니다.");
-      alert("두번째 중급자 문제를 제시합니다.");
-      setOrder(3);
-    }
-    else if (order === 2) {
-      alert("입문자 문제를 맞추셨습니다.");
-      alert("학습 시작 챕터가 설정되었습니다.");
-      setOrder(0);
-      updateInitComplete("EASY");
-      navigate('/mypage/todo');
-    }
-    else if (order === 3) {
-      alert("두번째 중급자 문제를 맞추셨습니다.");
-      alert("다음 챕터의 문제로 넘어갑니다.");
-      setOrder(0);
-      setQnumber(qnumber + 1);
-      updateInitPass("HARD");
-      setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
-      getChapterQuiz();
-    }
+    // 두 번째로 currentcurriculumId를 증가
+    await setcurrentcurriculumId(prev => prev + 1);  // 상태 변경은 바로 처리되지 않기 때문에 nextId를 변수로 저장해둠
+
+    // 세 번째로 getChapterQuiz 실행
+    await getChapterQuiz();
+
+  } catch (err) {
+    console.error("Error during process: ", err);
   }
-  else {
-    if (order === 0) {
-      alert("첫 번째 중급자 문제를 틀리셨습니다.");
-      alert("초급자 문제로 넘어갑니다.");
-      setOrder(1);
-    }
-    else if (order === 1) {
-      alert("초급자 문제를 틀리셨습니다.");
-      alert("입문자 문제로 넘어갑니다.");
-      setOrder(2);
-    }
-    else if (order === 2) {
-      alert("입문자 문제를 틀리셨습니다.");
-      alert("학습 시작 챕터가 설정되었습니다.");
-      setOrder(0);
-      updateInitComplete("EASY");
-      navigate('/mypage/todo');
-    }
-    else if (order === 3) {
-      alert("두 번째 중급자 문제를 틀리셨습니다.");
-      const userConfirm = window.confirm("다음 챕터의 문제로 넘어가시겠습니까?");
-      if (userConfirm) {
-        alert("다음 챕터의 문제로 넘어갑니다.");
-        setQnumber(qnumber + 1);
-        updateInitPass("HARD");
-        setcurrentcurriculumId(currentcurriculumId + 1);  // curriculuid인덱스 1 증가
-        getChapterQuiz();
-      } else {
-        alert("시작 챕터가 설정되었습니다.");
-        updateInitComplete("NORMAL");
-        navigate('/mypage/todo');
-      }
-      setOrder(0);
-    }
-  }
-}
+};
+
+
 
 // chapter 초기 테스트 내 챕터 통과 완료 처리 요청
 const updateInitPass = async (levelType) => {
@@ -379,71 +362,58 @@ useEffect(()=>{
     setType('서술식');
   })
 
-//{data.length > 0 ? <div> <ReactMarkdown  rehypePlugins={[rehypeHighlight]}> {data[order].text} </ReactMarkdown> </div> : <div> Loading... </div>}
-//{data.length >= 0 ? <div> <ReactMarkdown> {markdown} </ReactMarkdown> </div> : <div> Loading... </div>}
+
+
   return (
     <TestSection>
       <SectionBarJsx />
       <Content>
-        <NavSection height={height}>
-          <Dynamic>
-            <Nav> {qnumber}번 {qlevel} 문제 </Nav>
-            <ProgressImg>
-              <svg viewBox="0 0 200 200">
-                <Circle></Circle>
-                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * qnumber / 9} ${2 * Math.PI * 75 * (9 - qnumber) / 9}`}
-                           transform={`rotate(-90, 100, 100)`}>
-                </CircleCur>
-              </svg>
-              <QuestionLeft> 진행도 </QuestionLeft>
-            </ProgressImg>
-            <ProgressImg>
-              <svg viewBox="0 0 200 200">
-                <Circle></Circle>
-                <CircleCur strokeDasharray={`${2 * Math.PI * 75 * time / 300} ${2 * Math.PI * 75 * (300 - time) / 300}`}
-                           transform={`rotate(-90, 100, 100)`}>
-                </CircleCur>
-              </svg>
-              <TimeLeft> 남은 시간 </TimeLeft>
-              <Time> {min} : {sec}</Time>
-            </ProgressImg>
-          </Dynamic>
-        </NavSection>
-        {data.length > 0 ?
-        <ContentSection width={width}>
-          <QuestionArea height={height} width={width}>
-              <Markdown>{data[order].text}</Markdown>
-          </QuestionArea>
-          <AnswerArea>
-            <Answer> {type} 답안 </Answer>
-            {qtype === "NUM" && (<SelectionArea>
-              <Selection>
-                <input type="radio" id="first" value={data[order].q1} checked={answer===data[order].q1} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="first"> <Markdown>{data[order].q1}</Markdown> </Label>
-              </Selection>
-              <Selection>
-                <input type="radio" id="second" value={data[order].q2} checked={answer===data[order].q2} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="second"> <Markdown>{data[order].q2}</Markdown> </Label>
-              </Selection>
-              <Selection>
-                <input type="radio" id="third" value={data[order].q3} checked={answer===data[order].q3} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="third"> <Markdown>{data[order].q3}</Markdown> </Label>
-              </Selection>
-              <Selection>
-                <input type="radio" id="fourth" value={data[order].q4} checked={answer===data[order].q4} onChange={(e)=>setAnswer(e.target.value)}></input>
-                <Label for="fourth"> <Markdown>{data[order].q4}</Markdown> </Label>
-              </Selection>
-            </SelectionArea>)}
-            {qtype === "WORD" && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
-            {qtype === "CODE" && (<CodeArea height={height} width={width} onChange={(e)=>setAnswer(e.target.value)}></CodeArea>)}
-            <Submit>
-              <Button onClick={submitAnswer}> 제출 </Button>
-            </Submit>
-          </AnswerArea>
+        <ContentSection>
+          {data.length > 0 ?<>
+            <Instruction height={height}>
+              <Info>
+                <Time> {`제한 시간 05 : 00 / 남은 시간 ${min} : ${sec}`} </Time>
+              </Info>
+              <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{data[order].text}</ReactMarkdown>
+              <br />
+              {<>
+                {qtype === 'NUM' && (<SelectionArea>
+                <Selection>
+                  <input type="radio" id="first" value={data[order].q1} checked={answer===data[order].q1} onChange={(e)=>setAnswer(e.target.value)}></input>
+                  <Label for="first"> {data[order].q1} </Label>
+                </Selection>
+                <Selection>
+                  <input type="radio" id="second" value={data[order].q2} checked={answer===data[order].q2} onChange={(e)=>setAnswer(e.target.value)}></input>
+                  <Label for="second"> {data[order].q2} </Label>
+                </Selection>
+                <Selection>
+                  <input type="radio" id="third" value={data[order].q3} checked={answer===data[order].q3} onChange={(e)=>setAnswer(e.target.value)}></input>
+                  <Label for="third"> {data[order].q3} </Label>
+                  </Selection>
+                <Selection>
+                  <input type="radio" id="fourth" value={data[order].q4} checked={answer===data[order].q4} onChange={(e)=>setAnswer(e.target.value)}></input>
+                  <Label for="fourth"> {data[order].q4} </Label>
+                </Selection>
+              </SelectionArea>)}
+              {qtype === 'WORD' && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
+              {(qtype === 'NUM' || qtype === 'WORD') && <Submit onClick={submitAnswer}> 제출 </Submit>}
+            </>}
+          </Instruction>  
+          <Train height={height}>
+            {qtype === 'CODE' &&
+            <><Editor height="100%"
+                    theme="tomorrow"
+                    defaultLanguage="python"
+                    value={answer} onChange={(value)=>setAnswer(value)}>
+            </Editor>
+            <Submit onClick={submitAnswer}> 제출 </Submit></>
+          }
+          </Train></>
+          :
+          <InstructionLoading>
+            <img src={LOADING} alt="loading"></img>
+          </InstructionLoading>}
         </ContentSection>
-        :<ContentSectionLoading width={width}>
-          <img src={LOADING} alt="loading"></img>
-        </ContentSectionLoading>}
       </Content>
     </TestSection>
   );
@@ -458,162 +428,83 @@ const TestSection = styled.div`
   height : 100vh;
 `
 
+const MenuButton = styled.button`
+  border : none;
+  top : 0.825rem;
+  left : 0.75rem;
+  width : 2.5rem;
+  color : #FFFFFF;
+  cursor : pointer;
+  position : fixed;
+  font-size : 2rem;
+  border-radius : 1.25rem;
+  background-color : #008BFF;
+`
+
 const Content = styled.div`
+  height : 100%;
   display : flex;
-`
-
-const NavSection = styled.div`
-  display : flex;
-  min-width : 15rem;
-  flex-direction : column;
-  border-right : 0.125rem solid rgba(0, 0, 0, 0.125);
-  height : ${(props) => `${(props.height - 68) / 16}rem`};
-`
-
-const Nav = styled.div`
-  display : flex;
-  color : #008BFF;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : center;
-  flex-direction : column;
-  justify-content : center;
-  background : rgba(0, 139, 255, 0.25);
-`
-
-const Dynamic = styled.div`
-  overflow : scroll;
-  padding : 0.625rem;
-
-  &::-webkit-scrollbar {
-    display : none;
-  }
-`
-
-const ProgressImg = styled.div`
-  width : 12.5rem;
-  height : 12.5rem;
-  padding : 0.5rem;
-`
-
-const Circle = styled.circle`
-  r : 75;
-  cx : 100;
-  cy : 100;
-  fill : none;
-  stroke-width : 37.5;
-  stroke : rgba(0, 0, 0, 0.125);
-`
-
-const CircleCur = styled.circle`
-  r : 75;
-  cx : 100;
-  cy : 100;
-  fill : none;
-  stroke : #008BFF;
-  stroke-width : 37.5; 
-`
-
-const QuestionLeft = styled.div`
-  top : -7.25rem;
-  left : 4.875rem;
-  width : 3.25rem;
-  color : rgba(0, 0, 0, 0.625);
-  font-weight : bold;
-  position : relative;
-  font-size : 1rem;
-`
-
-const TimeLeft = styled.div`
-  top : -7.75rem;
-  left : 4.125rem;
-  width : 4.5rem;
-  color : rgba(0, 0, 0, 0.625);
-  font-weight : bold;
-  position : relative;
-  font-size : 1rem;
-`
-
-const Time = styled.div`
-  top : -7.75rem;
-  left : 4.75rem;
-  width : 4.5rem;
-  color : rgba(0, 0, 0, 0.625);
-  font-weight : bold;
-  position : relative;
-  font-size : 1rem;
 `
 
 const ContentSection = styled.div`
-  margin : 2rem;
-  display : flex;
-  padding : 2rem;
-  border-radius : 1rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 370) / 16}rem`};
+  width : 100%;
+  display: flex;
 `
 
-const ContentSectionLoading = styled.div`
-  margin : 2rem;
+const Info = styled.div`
+  width : 100%;
   display : flex;
-  padding : 2rem;
+  color : #008BFF;
   align-items : center;
-  border-radius : 1rem;
-  justify-content : center;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 370) / 16}rem`};
-
-  img {
-    width : 12.5rem;
-    height : 5rem;
-  }
+  justify-content : right;
 `
 
-const QuestionArea = styled.div`
-  font-size : 1rem;
-  overflow : scroll;
-  padding : 0rem 1rem;
-  border : 0.125rem solid rgba(0, 139, 255, 0.75);
-  width : ${(props) => `${(props.width - 1000) / 16}rem`};
-  height : ${(props) => `${(props.height - 202) / 16}rem`};
+const Time = styled.div`
+  display : flex;
+  color : #008BFF;
+  font-weight : bold;
+  flex-direction : column;
+`
 
+const Instruction = styled.div`
+  display : flex;
+  width : 47.25%;
+  overflow : scroll;
+  padding : 1rem 1rem;
+  background : #FFFFFF;
+  margin-bottom : 0.5rem;
+  flex-direction : column;
+  margin : 1rem 0.5rem 1rem 0rem;
+  border : 0.125rem solid #008BFF;
+  border-left-style : none;
+  border-radius : 0rem 1rem 1rem 0rem;
+  max-height : ${(props) => `${(props.height - 136) / 16}rem`};
+  
   &::-webkit-scrollbar {
     display : none;
   }
 `
 
-const AnswerArea = styled.div`
-  width : 42.5rem;
-  margin-left : 1.25rem;
-`
-
-const Answer = styled.div`
-  font-size : 1.125rem;
-  padding-bottom : 0.5rem;
-  color : rgba(0, 0, 0, 0.5);
-  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.375);
-`
-
 const SelectionArea = styled.div`
+  width : 100%;
   display : flex;
-  margin : 1.5rem auto 1rem;
+  flex-direction : column;
 `
 
 const Selection = styled.div`
+  width : 100%;
   display : flex;
-  width : 7.5rem;
-  margin : 0 auto;
-  font-size : 1.125rem;
+  margin : 0.625rem 0rem 0rem;
 
   input[type='radio'] {
     -moz-appearance : none;
     -webkit-appearance : none;
 
     outline : none;
-    width : 1.5rem;
     height : 1.5rem;
     cursor : pointer;
     appearance : none;
+    min-width : 1.5rem;
     border-radius : 1rem;
     border : 0.25rem solid rgba(0, 0, 0, 0.25);
   }
@@ -625,35 +516,22 @@ const Selection = styled.div`
   }
 `
 
-const WritingArea = styled.textarea`
-  resize : none;
-  padding : 1rem;
-  font-size : 1.25rem;
-  width : 31.5rem;
-  height : 1.5rem;
-  margin-top : 1.5rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
+const Label = styled.label`
+  margin-top : 0.2rem;
+  padding-left : 0.375rem;
 `
 
-const CodeArea = styled.textarea`
+const WritingArea = styled.input`
+  width : 100%;
   resize : none;
-  padding : 1rem;
-  width : 31.5rem;
-  height : 23.125rem;
-  font-weight : bold;
-  font-size : 1.125rem;
-  margin-top : 1.25rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 900) / 16}rem`};
-  height : ${(props) => `${(props.height - 352) / 16}rem`};
-`
-
-const Submit = styled.div`
-  display : flex;
+  height : 1.375rem;
   text-align : center;
+  font-size : 1.125rem;
+  padding : 0.5rem 0rem;
+  border : 0.05rem solid rgba(0, 0, 0, 0.5);
 `
 
-const Button = styled.button`
+const Submit = styled.button`
   border : none;
   width : 8.75rem;
   color : #FFFFFF;
@@ -663,10 +541,36 @@ const Button = styled.button`
   font-weight : bold;
   background : #008BFF;
   border-radius : 0.5rem;
-  margin : 1.25rem auto 0;
+  margin : 1.25rem auto 0rem;
 `
 
-const Label = styled.label`
-  margin-top : 0.125rem;
-  padding-left : 0.375rem;
+const Train = styled.div`
+  display : flex;
+  width : 47.25%;
+  overflow : scroll;
+  padding : 1rem 1rem;
+  background : #FFFFFF;
+  margin-bottom : 0.5rem;
+  flex-direction : column;
+  margin : 1rem 0rem 1rem 0.5rem;
+  border : 0.125rem solid #008BFF;
+  border-right-style : none;
+  border-radius : 1rem 0rem 0rem 1rem;
+  max-height : ${(props) => `${(props.height - 136) / 16}rem`};
+  
+  &::-webkit-scrollbar {
+    display : none;
+  }
+`
+
+const InstructionLoading = styled.div`
+  display : flex;
+  margin : 0 auto;
+  align-items : center;
+  justify-content : center;
+
+  img {
+    width : 12.5rem;
+    height : 5rem;
+  }
 `
