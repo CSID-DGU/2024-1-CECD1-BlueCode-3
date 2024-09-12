@@ -1,6 +1,6 @@
+import remarkGfm from 'remark-gfm';
 import React, { useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 const Markdown = React.memo(({ linkStopPropagation, ...props }) => {
     const handleLinkClick = useCallback(event => {

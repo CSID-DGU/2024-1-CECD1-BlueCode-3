@@ -1,14 +1,17 @@
-import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
-import Markdown from '../../Markdown';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import getUserInfo from '../../getUserInfo';
-import SectionBarJsx from '../../SectionBar';
+import SectionBarJsx from '../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
 import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';
+
+import "highlight.js/styles/a11y-light.css";
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from "rehype-highlight";
+
 
 
 function Study_theory() {
@@ -220,7 +223,6 @@ function Study_theory() {
           
           if(data)
             groupedByChapter[(i + 1) + "장 " + chapter[i]]= data.list;
-            
         }
         catch (err){
           console.log(err);
@@ -370,7 +372,7 @@ function Study_theory() {
             <QuestionContent height={height}>
               {selectedDialog === null ? "":<Dialog_client> <div> {selectedDialog.question} </div> </Dialog_client>} 
               {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (<Dialog_server> 
-                  <div key={ansIndex}><Markdown>{ans}</Markdown></div>
+                  <div key={ansIndex}><ReactMarkdown>{ans}</ReactMarkdown></div>
               </Dialog_server>
               ))}
             </QuestionContent>
@@ -528,7 +530,7 @@ const QuestionTitle = styled.h3`
 
 const QuestionContent = styled.div`
   display : flex;
-  width : 37.5rem;
+  width : 75rem;
   padding : 1.25rem;
   overflow : scroll;
   align-item : right;

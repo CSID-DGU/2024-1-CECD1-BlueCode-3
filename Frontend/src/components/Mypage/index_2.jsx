@@ -3,11 +3,14 @@ import BCODE from '../../logo_w.png';
 import { remove } from '../../remove';
 import styled from 'styled-components';
 import getUserInfo from '../../getUserInfo';
-import SectionBarJsx from '../../SectionBar';
+import SectionBarJsx from '../SectionBar';
 import React, { useState, useEffect} from 'react';
 import useChapterData from '../../useChapterData';
 import getChapterPass from '../../getChapterPass';
+import getChapterTestable from '../../getChapterTestable';
+
 import { NavLink, useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
 
 function Study_theory() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -26,12 +29,13 @@ function Study_theory() {
     };
   }, []);
 
-  const [contentWidth, setContentWidth] = useState(width);
-
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
   const [processPass, setProcessPass] = useState(0);
 
+  const [chapterTestable, setChaptherTestable] = useState([]);
+
+  
   useEffect(() => {
     getChapterPass()
     .then(data => {
@@ -53,6 +57,18 @@ function Study_theory() {
         // 데이터 가져오기 실패 시 에러 처리
         console.error('Error fetching data:', error);
       });
+
+
+      getChapterTestable()
+      .then(data => {
+          // 데이터 가져오기 성공 시 상태 업데이트'
+          setChaptherTestable(data);
+      })
+        .catch(error => {
+          // 데이터 가져오기 실패 시 에러 처리
+        console.error('Error fetching data:', error);
+      });
+
   }, []);
 
 
@@ -62,6 +78,10 @@ function Study_theory() {
   const textDeco = { textDecoration : "none" };
 
   const { chapter, chaptersid, chapterLevel, chapterPass, subChapter, subChapterId, currentChapter } = useChapterData();
+
+  useEffect(()=>{
+    //console.log("7개 중에 데이터가 바뀜");
+  }, [chapter, chaptersid, chapterLevel, chapterPass, subChapter, subChapterId, currentChapter]);
 
   const chapterColor = (index) => {
     var chColor;
@@ -107,7 +127,26 @@ function Study_theory() {
     navigate(`/study/comprehension/${chapId}`);
   } 
 
+  const postChapterPass =  async (chapterid, level) =>{
+    const userid = localStorage.getItem('userid');
+
+    const CurriculumPassCallDto = {
+      'userId': userid,
+      'curriculumId': chapterid,
+      'levelType': level
+    };
+
+    try {
+      //chapter 이해도 테스트 통과 완료 처리 요청
+      const response = await axiosInstance.post('/curriculum/curriculum/chapter/pass', CurriculumPassCallDto);
+      window.location.replace('/mypage/lecture');
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }
   
+
 
   return (
     <TestSection>
@@ -161,7 +200,10 @@ function Study_theory() {
                 </SubLecture>
               ))}
               </SubLectureInfo>
-              {(!chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
+              {(!chapterTestable[index] && !chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
+                <CompreTest onClick={()=> postChapterPass(chaptersid[index],"EASY")}> 다음 챕터 학습하기 </CompreTest>
+              )}
+              {(chapterTestable[index] && !chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
                 <CompreTest onClick={() => goToCompre(chaptersid[index])}> 이해도 테스트 </CompreTest>
               )}
             </Lecture>
