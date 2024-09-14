@@ -87,6 +87,7 @@ public class UserMissionService {
         // dto mapping
         for (UserMissions um : daily) {
             UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setTitle(um.getMission().getTitle());
             element.setText(um.getMission().getText());
             element.setMissionCount(um.getMission().getMissionCount());
             element.setCurrentCount(um.getCurrentCount());
@@ -98,6 +99,7 @@ public class UserMissionService {
         // dto mapping
         for (UserMissions um : weekly) {
             UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setTitle(um.getMission().getTitle());
             element.setText(um.getMission().getText());
             element.setMissionCount(um.getMission().getMissionCount());
             element.setCurrentCount(um.getCurrentCount());
@@ -109,6 +111,7 @@ public class UserMissionService {
         // dto mapping
         for (UserMissions um : challenge) {
             UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setTitle(um.getMission().getTitle());
             element.setText(um.getMission().getText());
             element.setMissionCount(um.getMission().getMissionCount());
             element.setCurrentCount(um.getCurrentCount());
@@ -217,7 +220,7 @@ public class UserMissionService {
         // 진행중인 (일일 / 주간)미션 검색
         List<UserMissions> userMissions = userMissionRepository.findByMissionTypeAndMissionStatus(missionType, MissionStatus.PROGRESS);
         for (UserMissions userMission : userMissions) {
-            if (LocalDate.now().isAfter(userMission.getEndDate())) {
+            if (!LocalDate.now().isBefore(userMission.getEndDate())) {
                 userMission.setMissionStatus(MissionStatus.FAILED); // 완료하지 못한 미션 실패 처리 진행
                 userMission.setClearDateTime(null);
                 userMissionRepository.save(userMission);
