@@ -103,7 +103,7 @@ function Study_training() {
 
     try {
       //이해도 테스트용 3 문제 호출 api
-      const response = await axiosInstance.post('/test/test/create/normal', DataCallDto);
+      const response = await axiosInstance.post('/test/create/normal', DataCallDto);
       setRes(response.data.tests);
       console.log(response);
     } catch (err) {
@@ -155,15 +155,15 @@ function Study_training() {
         // 문제 타입 객관식
         
         if (qtype === "NUM") {
-          response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+          response = await axiosInstance.post('/test/submit/num', TestAnswerCallDto);
           // console.log("객관식 정답 요청 " + response.data.passed);
         }
         else if (qtype === "WORD") {
-          response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+          response = await axiosInstance.post('/test/submit/word', TestAnswerCallDto);
           // console.log("주관식 정답 요청 " + response.data.passed);
         }
         else if (qtype === "CODE") {
-          response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
+          response = await axiosInstance.post('/test/submit/code',TestAnswerCallDto);
           // console.log("서술식 정답 요청 " + response.data.passed);
         }
         
@@ -250,7 +250,7 @@ function Study_training() {
 
     try {
       //chapter 이해도 테스트 통과 완료 처리 요청
-      const response = await axiosInstance.post('/curriculum/curriculum/chapter/pass', CurriculumPassCallDto);
+      const response = await axiosInstance.post('/curriculum/chapter/pass', CurriculumPassCallDto);
       console.log(response);
     } catch (err) {
       console.error(err);
