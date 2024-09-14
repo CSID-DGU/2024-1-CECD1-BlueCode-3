@@ -89,7 +89,7 @@ function Study_theory() {
           'curriculumId' : rootid,
         };
   
-        const res = await axiosInstance.post('/curriculum/curriculum/create', datacalldto);
+        const res = await axiosInstance.post('/curriculum/create', datacalldto);
       }
       catch (err){
         console.error(err); 
@@ -134,7 +134,7 @@ const getChapterQuiz =  async () =>{
     try {
       //초기 테스트용 4 문제 호출 api
       setData([]);
-      const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
+      const response = await axiosInstance.post('/test/create/init', DataCallDto);
       setData(response.data.tests); //4 문제를 Data에 저장
       console.log(response);
     } catch (err) {
@@ -160,15 +160,15 @@ const submitAnswer = async () => {
     try {
       // 문제 타입 객관식
       if (qtype === "NUM") {
-        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto)
+        response = await axiosInstance.post('/test/submit/num', TestAnswerCallDto)
         console.log("객관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "WORD") {
-        response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/word', TestAnswerCallDto);
         console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        response = await axiosInstance.post('/test/test/submit/code',TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/code',TestAnswerCallDto);
         console.log("서술식 정답 요청 " + response.data.passed);
       }
       
@@ -329,7 +329,7 @@ const updateInitPass = async (levelType) => {
   };
   
   try {
-    const res = await axiosInstance.post('/curriculum/curriculum/init/pass', initChapterPassRequestDto);
+    const res = await axiosInstance.post('/curriculum/init/pass', initChapterPassRequestDto);
     console.log("curi id "+ curriculumIds[currentcurriculumId]+"에 레벨타입 "+ levelType+ "으로 패스 요청");
   } catch (err) {
     console.error(err);
@@ -345,7 +345,7 @@ const updateInitComplete = async (levelType) => {
   };
 
   try {
-    const res = await axiosInstance.post('/curriculum/curriculum/init/complete', initChapterPassRequestDto);
+    const res = await axiosInstance.post('/curriculum/init/complete', initChapterPassRequestDto);
     await axiosInstance.get(`/test/test/complete/init/${userId}`);
   } catch (err) {
     console.error(err);

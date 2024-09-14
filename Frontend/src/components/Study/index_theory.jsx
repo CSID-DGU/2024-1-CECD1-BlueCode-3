@@ -116,7 +116,7 @@ function Study_theory() {
       'curriculumId': subChapId
     };
     try {
-      const response = await axiosInstance.post('/chat/chat/historyBySubChapter', QuestionCallDto);
+      const response = await axiosInstance.post('/chat/historyBySubChapter', QuestionCallDto);
       // console.log(response);
 
       const dialogsToAdd = [];
@@ -155,7 +155,7 @@ function Study_theory() {
     };
 
     try {
-      const res = await axiosInstance.post('/chat/chat/response', QuestionCallDto);
+      const res = await axiosInstance.post('/chat/response', QuestionCallDto);
       console.log(res);
       if(divValue!="DEF" )
         console.log(res.data)
@@ -172,7 +172,7 @@ function Study_theory() {
       'chatId': chatId
     };
     try {
-      const response = await axiosInstance.post('/chat/chat/next', NextLevelChatCallDto);
+      const response = await axiosInstance.post('/chat/next', NextLevelChatCallDto);
       console.log(response);
     } catch (err) {
       console.error(err);
@@ -223,7 +223,7 @@ function Study_theory() {
         'textType': textType
       };
       
-      const res = await axiosInstance.post('/curriculum/curriculum/text', CurriculumTextCallDto);
+      const res = await axiosInstance.post('/curriculum/text', CurriculumTextCallDto);
       setTheory(res.data.text);
     }
     catch (err){
