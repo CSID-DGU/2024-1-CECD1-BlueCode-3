@@ -42,11 +42,13 @@ function Mainpage() {
   const [idDup, setIdDup] = useState(false);
   const [emailDup, setEmailDup] = useState(false);
 
+  const URI = 'http://3.37.159.243:8080'
+
   const idBlur = async () => {
     if (idRegex.test(id)) {
       try{
         setIdValid(true);
-        const res = await axios.get(`/user/user/exists/id/${id}`);
+        const res = await axios.get(process.env.REACT_APP_SPRING + `/user/exists/id/${id}`);
         if(res.data){
           setIdDup(true);
         }
@@ -80,7 +82,7 @@ function Mainpage() {
     if (emailRegex.test(email)) {
       try {
         setEmailValid(true);
-        const res = await axios.get(`/user/user/exists/email/${email}`);
+        const res = await axios.get(process.env.REACT_APP_SPRING + `/user/exists/email/${email}`);
         if(res.data) {
           setEmailDup(true);
         }
@@ -180,7 +182,7 @@ function Mainpage() {
       try {
 
         //url path 수정 필요
-        axios.get(`/user/user/email/send/${email}`);
+        axios.get(process.env.REACT_APP_SPRING + `/user/email/send/${email}`);
 
         document.getElementById("RequestName").innerText = "인 증 하 기";
         setRequestPinValue(true);
@@ -201,7 +203,7 @@ function Mainpage() {
           'birth' : ''
         };
         
-        await axios.post("/user/user/updatePassword", UserAddCallDto);
+        await axios.post(process.env.REACT_APP_SPRING + "/user/updatePassword", UserAddCallDto);
       }
       catch (err) {
         console.log(err);
@@ -220,7 +222,7 @@ function Mainpage() {
             'email' : email,
             'code' : pin
           };
-          const res = await axios.post("/user/user/email/verify", EmailVerifyDto);
+          const res = await axios.post(process.env.REACT_APP_SPRING + "/user/email/verify", EmailVerifyDto);
           
           if(res.data) {
             try {
@@ -232,7 +234,7 @@ function Mainpage() {
                 'birth' : ''
               };
               
-              const res = await axios.post("/user/user/findId", UserAddCallDto);
+              const res = await axios.post(process.env.REACT_APP_SPRING + "/user/user/findId", UserAddCallDto);
 
               setId(res.data);
 
@@ -265,7 +267,7 @@ function Mainpage() {
             'email' : email,
             'code' : pin
           };
-          const res = await axios.post("/user/user/email/verify", EmailVerifyDto);
+          const res = await axios.post(process.env.REACT_APP_SPRING + "/user/email/verify", EmailVerifyDto);
           
           if(res.data) {
             try {
@@ -298,7 +300,7 @@ function Mainpage() {
             'email' : email,
             'code' : pin
           };
-          const res = await axios.post("/user/user/email/verify", EmailVerifyDto);
+          const res = await axios.post(process.env.REACT_APP_SPRING + "/user/email/verify", EmailVerifyDto);
           
           if(res.data) {
             try {
@@ -311,14 +313,14 @@ function Mainpage() {
                 'birth' : birthday
               };
               
-              const res=await axios.post("/user/user/create", UserAddCallDto);
+              const res=await axios.post(process.env.REACT_APP_SPRING + "/user/create", UserAddCallDto);
               const userTableId=res.data;
               //초기 미션 할당
               try {
                 const UserMissionDataCallDto = {
                   'userId' : userTableId
                   };
-                await axios.post('/mission/mission/init', UserMissionDataCallDto);
+                await axios.post(process.env.REACT_APP_SPRING + '/mission/init', UserMissionDataCallDto);
               }
               catch(err){
                 console.log(err);
@@ -369,7 +371,7 @@ function Mainpage() {
         };
 
         //url path 수정 필요
-        const res = await axios.post("/api/api/auth/login", LoginCallDto);
+        const res = await axios.post(process.env.REACT_APP_SPRING + "/api/auth/login", LoginCallDto);
         const accessToken = res.data.accessToken;
         const userid = res.data.userid;
         

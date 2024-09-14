@@ -1,5 +1,6 @@
 import axiosInstance from './axiosInstance'
 
+const URL = "http://3.37.159.243:8080"
 
 const getChapterPass = async () => {
     try {
@@ -9,7 +10,7 @@ const getChapterPass = async () => {
             userId: userid,
             curriculumId: rootid,
           };
-          const res = await axiosInstance.post('/curriculum/curriculum/chapters', datacalldto)
+          const res = await axiosInstance.post('/curriculum/chapters', datacalldto)
           const chaptersData = res.data.list;
           const chapterPassed = chaptersData.map(chapter => chapter.passed);
 

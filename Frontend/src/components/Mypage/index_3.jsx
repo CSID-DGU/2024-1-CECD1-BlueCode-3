@@ -241,7 +241,7 @@ function Study_theory() {
         'curriculumId':rootid
       };
       
-      const res = await axiosInstance.post('/chat/chat/historyByRoot', QuestionCallDto);
+      const res = await axiosInstance.post('/chat/historyByRoot', QuestionCallDto);
       //console.log(res);
       return res.data;
      }
@@ -259,7 +259,7 @@ function Study_theory() {
         'curriculumId':chapterId
       };
       
-      const res = await axiosInstance.post('/chat/chat/historyByChapter', QuestionCallDto);
+      const res = await axiosInstance.post('/chat/historyByChapter', QuestionCallDto);
       console.log(res);
       return res.data;
      }
@@ -277,7 +277,7 @@ function Study_theory() {
         'curriculumId':chapterId
       };
       
-      const res = await axiosInstance.post('/chat/chat/historyByChapter', QuestionCallDto);
+      const res = await axiosInstance.post('/chat/historyByChapter', QuestionCallDto);
       console.log(res);
       return res.data;
      }

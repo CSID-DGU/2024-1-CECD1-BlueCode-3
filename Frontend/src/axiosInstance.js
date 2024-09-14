@@ -1,6 +1,8 @@
 import axios from 'axios';
 import cookie from 'react-cookies';
 
+const URL = "http://3.37.159.243:8080"
+
 // 액세스 토큰을 로컬 스토리지에서 가져오는 함수
 const getAccessToken = () => {
     return localStorage.getItem('accessToken');
@@ -18,7 +20,7 @@ const refreshAccessToken = async () => {
           'Content-Type': 'application/json'
         }
       };
-      const response = await axios.post('/api/api/token', refresh_token_json, config);
+      const response = await axios.post(URL + '/api/token', refresh_token_json, config);
       return response.data.accessToken;
     } catch (error) {
       throw new Error('Failed to refresh access token');
@@ -28,7 +30,7 @@ const refreshAccessToken = async () => {
 
 
 const axiosInstance = axios.create({
-    baseURL: '', // 백엔드 API 기본 URL 설정
+    baseURL: 'http://3.37.159.243:8080', // 백엔드 API 기본 URL 설정
 });
 
 

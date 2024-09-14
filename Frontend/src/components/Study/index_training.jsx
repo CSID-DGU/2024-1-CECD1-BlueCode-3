@@ -122,7 +122,7 @@ const getSubChapterChatHistory =  async () =>{
     'curriculumId': subChapId
   };
   try {
-    const response = await axiosInstance.post('/chat/chat/historyBySubChapter', QuestionCallDto);
+    const response = await axiosInstance.post('/chat/historyBySubChapter', QuestionCallDto);
     // console.log(response);
 
     const dialogsToAdd = [];
@@ -159,7 +159,7 @@ const getSubChapterChatHistory =  async () =>{
     "type": divValue
   };
   try {
-    const res = await axiosInstance.post('/chat/chat/response', QuestionCallDto);
+    const res = await axiosInstance.post('/chat/response', QuestionCallDto);
     console.log(res);
     if(divValue!="DEF" )
       console.log(res.data)
@@ -178,7 +178,7 @@ const getSubChapterChatHistory =  async () =>{
     'chatId': chatId
   };
   try {
-    const response = await axiosInstance.post('/chat/chat/next', NextLevelChatCallDto);
+    const response = await axiosInstance.post('/chat/next', NextLevelChatCallDto);
     console.log(response);
   } catch (err) {
     console.error(err);
@@ -262,7 +262,7 @@ useEffect(()=>{
         'textType': textType
       };
         
-      const res = await axiosInstance.post('/curriculum/curriculum/text', CurriculumTextCallDto);
+      const res = await axiosInstance.post('/curriculum/text', CurriculumTextCallDto);
       console.log("학습데이터호출");
       setTraining(res.data.text);
     }
@@ -280,7 +280,7 @@ useEffect(()=>{
         'userId': userId,
         'curriculumId': subChapterid
       };
-      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass', CurriculumPassCallDto);
+      const res = await axiosInstance.post('/curriculum/subChapter/pass', CurriculumPassCallDto);
       console.log(res);
     }
     catch (err){
