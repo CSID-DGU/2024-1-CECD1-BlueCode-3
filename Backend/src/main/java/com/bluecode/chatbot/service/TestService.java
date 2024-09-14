@@ -211,7 +211,8 @@ public class TestService {
 
             // GPT API 사용 확률은 1 / (현재 챕터의 QuizType, QuizLevel과 일치하는 데이터베이스에 저장된 문제의 개수)
             int quizCount = dbQuizzes.size();
-            double gptProbability = (quizCount > 0) ? 1.0 / quizCount : 1.0;
+//            double gptProbability = (quizCount > 0) ? 1.0 / quizCount : 1.0;
+            double gptProbability = 1.0;
             boolean useGPT = random.nextDouble() < gptProbability; // 데이터베이스 문제 개수에 따라 GPT API 생성 확률이 조정됨
 
             List<Quiz> newQuiz; // 현재 생성한 문제
