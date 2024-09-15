@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class UserMissionDataElementDto {
 
+    private String title;
     private String text;
     private Integer currentCount;
     private Integer missionCount;

@@ -32,6 +32,10 @@ public class MissionConst {
 
     public static final String USER_STREAK = "USER_STREAK";
 
+    public static String createConstByUserStreakDay(int day) {
+        return "USER_STREAK_" + day;
+    }
+
     // mission 관련
     public static final String MISSION_DAILY_COMPLETE = "MISSION_DAILY_COMPLETE";
 
