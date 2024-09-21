@@ -312,7 +312,7 @@ function Study_training() {
                   <Label for="fourth"> {res[order].q4} </Label>
                 </Selection>
               </SelectionArea>)}
-              {qtype === 'WORD' && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
+              {qtype === 'WORD' && (<WritingArea placeholder={"O".repeat(res[order].wordCount)} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
               {(qtype === 'NUM' || qtype === 'WORD') && <Submit onClick={submitAnswer}> 제출 </Submit>}
             </>}
           </Instruction>  
