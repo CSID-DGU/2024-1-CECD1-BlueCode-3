@@ -159,20 +159,22 @@ const submitAnswer = async () => {
     console.log(answer);
     try {
       // 문제 타입 객관식
+      const confirm = window.confirm("");
       if (qtype === "NUM") {
         response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto)
-        console.log("객관식 정답 요청 " + response.data.passed);
+        //console.log("객관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "WORD") {
         response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
-        console.log("주관식 정답 요청 " + response.data.passed);
+        //console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
         response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
-        console.log("서술식 정답 요청 " + response.data.passed);
+        //console.log("서술식 정답 요청 " + response.data.passed);
       }
       
-    
+  
+      
       if(response.data.passed === true) {
         if (order === 0) {
           alert("중급자 문제를 맞추셨습니다.");
@@ -251,47 +253,12 @@ const submitAnswer = async () => {
           setOrder(0);
         }
       }
-      
+      setAnswer('');
         } catch (err) {
       console.log(err);
     }
   //}
 }
-
-const [time, setTime] = useState(null);
-const [min, setMin] = useState('');
-const [sec, setSec] = useState('');
-
-useEffect(()=>{
-  if (data) {
-    setTime(300);
-    console.log(data);
-  }
-}, [data]);
-
-useEffect(() => {
-  if (time !== null && time >= -1) {
-    const tick = () => {
-      setTime(prev => prev - 1);
-      
-      const minute = time / 60;
-      setMin('0' + parseInt(minute).toString());
-
-      const second = time % 60;
-      setSec(second < 10 ? '0' + second : second.toString());
-    };
-
-    const timerId = setInterval(tick, 1000);
-
-    return () => clearInterval(timerId);
-  }
-}, [time]);
-
-useEffect(() => {
-  if (data && time === -1) {
-    submitAnswer();
-  }
-}, [time, data, order, qtype, answer]);
 
 
 const handleProcess = async () => {
@@ -372,7 +339,49 @@ useEffect(()=>{
     setType('서술식');
   })
 
+const [time, setTime] = useState(null);
+const [min, setMin] = useState('');
+const [sec, setSec] = useState('');
 
+useEffect(()=>{
+  if (data) {
+    setTime(300);
+    console.log(data);
+  }
+}, [data]);
+
+useEffect(() => {
+  if (time !== null && time >= -1) {
+    const tick = () => {
+      setTime(prev => prev - 1);
+      
+      const minute = time / 60;
+      setMin('0' + parseInt(minute).toString());
+
+      const second = time % 60;
+      setSec(second < 10 ? '0' + second : second.toString());
+    };
+
+    const timerId = setInterval(tick, 1000);
+
+    return () => clearInterval(timerId);
+  }
+}, [time]);
+
+useEffect(() => {
+  if (data && time === -1) {
+    submitAnswer();
+  }
+}, [time, data, order, qtype, answer]);
+
+const placeholderWord = () => {
+  var word = '1';
+  for (var i = 0; i < data[order].wordCount; i++) {
+    word += 'O';
+  }
+  console.log(word);
+  return word;
+}
 
   return (
     <TestSection>
@@ -405,7 +414,7 @@ useEffect(()=>{
                   <Label for="fourth"> {data[order].q4} </Label>
                 </Selection>
               </SelectionArea>)}
-              {qtype === 'WORD' && (<WritingArea value={answer} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
+              {qtype === 'WORD' && (<WritingArea value={answer} placeholder={"O".repeat(data[order].wordCount)} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
               {(qtype === 'NUM' || qtype === 'WORD') && <Submit onClick={submitAnswer}> 제출 </Submit>}
             </>}
           </Instruction>  

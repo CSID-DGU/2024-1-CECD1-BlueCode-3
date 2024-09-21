@@ -213,8 +213,8 @@ function Study_theory() {
               <Mission>
                 <Term> 업적 </Term>
                 <MissionContent>
-                {challenge.map(item => (item.missionStatus === "COMPLETED" && (
-                  <SubMission_ key={item.id} style={{color:"black"}}> {item.text} </SubMission_>
+                {challenge.map(item => ((
+                  <SubMission_ key={item.id} style={{color:"black"}}> {item.title} {item.text} {item.currentCount} / {item.missionCount} </SubMission_>
                 )))}
                 </MissionContent>
               </Mission>
@@ -238,7 +238,7 @@ function Study_theory() {
     </TestSection>
   );
 }
-
+/*item.missionStatus === "COMPLETED" && */
 export default Study_theory;
 
 
@@ -392,6 +392,7 @@ const Term = styled.p`
 const MissionContent = styled.div`
   display : flex;
   width : 100%;
+  height : 20rem;
   overflow : scroll;
   flex-direction : column;
 
