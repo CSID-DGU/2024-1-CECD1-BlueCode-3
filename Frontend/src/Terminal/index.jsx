@@ -193,10 +193,10 @@ const TerminalJsx = () => {
   };
 
   return (
-    <div style={{height : "100%"}}>
+    <div style={{height : "100%", backgroundColor : "#000000"}}>
       <div>
         <Editor height="16.25rem"
-                theme="tomorrow"
+                theme="vs-dark"
                 defaultLanguage="python"
                 value={text} onChange={(value)=>setText(value)}>
         </Editor>
@@ -222,14 +222,14 @@ const Buttons = styled.div`
 const Button = styled.button`
   width : 4rem;
   height : 2rem;
-  color : #008BFF;
+  color : #FFFFFF;
   cursor : pointer;
   margin : 0.25rem;
   font-weight : bold;
   font-size : 0.875rem;
-  background : #FFFFFF;
+  background : #000000;
   border-radius : 1rem;
-  border : 0.125rem solid #008BFF;
+  border : 0.125rem solid #FFFFFF;
 `
 
 const TerminalSection = styled.div`

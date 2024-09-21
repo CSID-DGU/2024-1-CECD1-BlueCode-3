@@ -1,31 +1,12 @@
 import axios from 'axios';
 import { SHA256 } from 'crypto-js';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import getUserInfo from '../../getUserInfo';
-import SectionBarJsx from '../SectionBar';
 import axiosInstance from '../../axiosInstance';
-import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';
-import MypageNavSectionJsx from '../MypageNavSection';
 
 
-function Study_theory() {
-  const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight);
 
-  const handleResize = () => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight);
-  };
-
-  useState(() => {
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+function PrivateInfoJsx() {
   
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwdRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^~*])[A-Za-z\d!@#$%^~*]{9,16}$/;
@@ -137,7 +118,7 @@ function Study_theory() {
           'userId' : userid
         };
 
-        const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo',UserIdDto);
+        const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo', UserIdDto);
         setId(res.data.id);
         setEmail(res.data.email);
         setBirthday(setFormat(res.data.birth));
@@ -161,99 +142,139 @@ function Study_theory() {
 
     return year + "년 " + month + "월 " + day + "일";
   }
-  
-  // <p> - 3개 이상 동일한 문자 / 숫자 제외, 연속적인 숫자나 생일은 제외 </p>
-  // <p> - 아이디 및 이메일 제외 </p>
 
-  return (
-    <TestSection>
-      <SectionBarJsx />
-      <Content>
-        <MypageNavSectionJsx height={height} l1={false} l2={false} l3={false} l4={true} />
-        <ContentSection width={width}>
-          <PrivateInfo>
-            <SubInfo>
-              <Element> ㅇ 아이디 </Element>
-              <SubElement> {id?id:"-"} </SubElement>
-            </SubInfo>
-            <SubInfo>
-              <Element> ㅇ 이름 </Element>
-              <SubElement> {name?name:"-"} </SubElement>
-            </SubInfo>
-          </PrivateInfo>
-          <PrivateInfo>
-            <SubInfo>
-              <Element> ㅇ 생년월일 </Element>
-              <SubElement> {birthday?birthday:"-"} </SubElement>
-            </SubInfo>
-            <SubInfo>
-              <Element> ㅇ 회원가입 일자 </Element>
-              <SubElement> {signInDate?signInDate:"-"} </SubElement>
-            </SubInfo>
-          </PrivateInfo>
+  const [menu, setMenu] = useState(false);
+  const showMenu = () => {
+    if (menu) {
+      setMenu(false);
+      setNewEmail('');
+      setNewPasswd('');
+      setNewPasswdCheck('');
+    } else {
+      setMenu(true);
+    }
+  }
+
+  const color = { color : "#008BFF", fontWeight : "bold" };
+
+  return (<>
+    {!menu?
+    <SectionBarMenu onClick={showMenu}> 내 정보 확인 </SectionBarMenu>
+    :
+    <NavSection>
+      <NavContent>
+        <SectionBar>
+          <p onClick={showMenu}> 내 정보 확인 </p>
+        </SectionBar>
+        <ContentSection>
+          <SubInfo>
+            <Element> ㅇ 아이디 </Element>
+            <SubElement> {id?id:"-"} </SubElement>
+          </SubInfo>
+          <SubInfo>
+            <Element> ㅇ 이름 </Element>
+            <SubElement> {name?name:"-"} </SubElement>
+          </SubInfo>
+          <SubInfo>
+            <Element> ㅇ 생년월일 </Element>
+            <SubElement> {birthday?birthday:"-"} </SubElement>
+          </SubInfo>
+          <SubInfo>
+            <Element> ㅇ 회원가입 일자 </Element>
+            <SubElement> {signInDate?signInDate:"-"} </SubElement>
+          </SubInfo>
           <ChangingInfo>
-            <Email> ㅇ 이메일 </Email>
+            <Element> ㅇ 이메일 </Element>
             <ChangingSection>
               <InputArea  type="text" placeholder={email?email:"-"} value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} onBlur={newEmailBlur}></InputArea>
               <Button onClick={changeEmail}> 이메일 변경 </Button>
               <p id="info"> - 인증번호 발급을 위한 이메일 작성 </p>
-              <p id="emailInfo" style={{color : "#008BFF", fontWeight : "bold"}}></p>
+              <p id="emailInfo" style={color}></p>
             </ChangingSection>
           </ChangingInfo>
           <ChangingInfo>
-            <Passwd> ㅇ 비밀번호 </Passwd>
+            <Element> ㅇ 비밀번호 </Element>
             <ChangingSection>
-              <InputArea type="password" placeholder="새 비밀번호" value={newPasswd} onChange={(e)=>setNewPasswd(e.target.value)} onBlur={newPasswdBlur}></InputArea>
-              <InputArea type="password" placeholder="새 비밀번호 확인" value={newPasswdCheck} onChange={(e)=>setNewPasswdCheck(e.target.value)} onBlur={passwdEqualBlur}></InputArea>
-              <Button onClick={changePasswd}> 비밀번호 변경 </Button>
+              <div style={{ display:"flex" }}>
+                <InputSection>
+                  <InputArea type="password" placeholder="새 비밀번호" value={newPasswd} onChange={(e)=>setNewPasswd(e.target.value)} onBlur={newPasswdBlur}></InputArea>
+                  <InputArea type="password" placeholder="새 비밀번호 확인" value={newPasswdCheck} onChange={(e)=>setNewPasswdCheck(e.target.value)} onBlur={passwdEqualBlur}></InputArea>
+                </InputSection>
+                <Button style={{ height:"5.725rem" }} onClick={changePasswd}> 비밀번호 변경 </Button>
+              </div>
               <p> - 9~16자의 영문, 숫자, 특수문자(!@#$%^~*) 조합 </p>
-              <p id="passwdInfo" style={{color : "#008BFF", fontWeight : "bold"}}></p>
+              <p id="passwdInfo" style={color}></p>
             </ChangingSection>
           </ChangingInfo>
         </ContentSection>
-      </Content>
-    </TestSection>
+      </NavContent>
+    </NavSection>}</>
   );
-}
+};
 
-export default Study_theory;
+export default PrivateInfoJsx;
 
 
 
-const TestSection = styled.div`
-  height : 100vh;
+const SectionBarMenu = styled.p`
+  top : 0;
+  right : 0;
+  color : #FFFFFF;
+  cursor : pointer;
+  position : fixed;
+  font-weight : bold;
+  margin : 1.75rem 2rem;
 `
 
-const Content = styled.div`
+const NavSection = styled.div`
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: fixed;
+  justify-content : end;
+  background-color: rgba(0, 0, 0, 0.25);
+`
+
+const NavContent = styled.div`
   display : flex;
+  flex-direction : column;
+  background-color: #FFFFFF;
+`
+
+const SectionBar = styled.div`
+  display : flex;
+  min-width : 30rem;
+  background : #008BFF;
+  justify-content : right;
+
+  p {
+    color : #FFFFFF;
+    cursor : pointer;
+    font-weight : bold;
+    margin : 1.75rem 2rem 1.125rem;
+  }
 `
 
 const ContentSection = styled.div`
-  margin : 2rem;
+  width : 100%;
+  height : 100%;
   display : flex;
-  padding : 2rem;
-  border-radius : 1rem;
-  align-items : center;
+  margin : 1rem 0rem;
+  padding : 1rem 0rem;
   flex-direction : column;
-  justify-content : center;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 370) / 16}rem`};
-`
-
-const PrivateInfo = styled.div`
-  width : 45rem;
-  display : flex;
-  margin : auto 0;
 `
 
 const SubInfo = styled.div`
   display : flex;
   flex-direction : column;
+  margin : 0rem 1.75rem 1.25rem;
 `
 
 const Element = styled.p`
-  margin : 0;
-  width : 22.5rem;
+  width : 100%;
+  margin : 0rem;
   font-weight : bold;
   font-size : 1.05rem;
   color : rgba(0, 0, 0, 0.5);
@@ -261,31 +282,15 @@ const Element = styled.p`
 
 const SubElement = styled.p`
   font-weight : bold;
+  margin : 0.25rem 1.5rem;
   color : rgba(0, 0, 0, 0.75);
-  margin : 0.75rem 1.375rem 0.25rem;
 `
 
 const ChangingInfo = styled.div`
-width : 45rem;
+width : 100%;
 display : flex;
-margin : auto 0;
 flex-direction : column;
-`
-
-const Email = styled.p`
-  margin : 0;
-  width : 45rem;
-  font-weight : bold;
-  font-size : 1.05rem;
-  color : rgba(0, 0, 0, 0.5);
-`
-
-const Passwd = styled.p`
-  margin : 0;
-  width : 45rem;
-  font-weight : bold;
-  font-size : 1.05rem;
-  color : rgba(0, 0, 0, 0.5);
+margin : 0rem 1.75rem 1.25rem;
 `
 
 const ChangingSection = styled.div`
@@ -297,11 +302,18 @@ const ChangingSection = styled.div`
   }
 `
 
+const InputSection = styled.div`
+  display : flex;
+  width : 16.12rem;
+  margin-right : 0.5rem;
+  flex-direction : column;
+`
+
 const InputArea = styled.input`
-  width : 13.5rem;
+  width : 14rem;
   height : 1rem;
-  padding : 0.75rem;
   font-size : 1rem;
+  padding : 0.75rem;
   font-weight : bold;
   border-radius : 0.5rem;
   margin : 0.25rem 0.5rem;
@@ -312,6 +324,7 @@ const Button = styled.button`
   border : none;
   width : 8.75rem;
   color : #FFFFFF;
+  cursor : pointer;
   font-size : 1rem;
   height : 2.625rem;
   font-weight : bold;

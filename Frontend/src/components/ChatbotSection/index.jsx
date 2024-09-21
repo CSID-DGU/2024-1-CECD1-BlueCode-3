@@ -27,7 +27,7 @@ function ChatbotSectionJsx({ height, subChapId }) {
           
           setDialogs((pre) => [...pre, <Dialog_server> <div> <ReactMarkdown>{res.answerList[0]}</ReactMarkdown> </div> </Dialog_server>]);
           if (divValue === "CODE" || divValue === "ERRORS") {
-            console.log("1로바꿈")
+            //console.log("1로바꿈")
             setStep(1);
           }
         } catch (err) {
@@ -152,27 +152,33 @@ function ChatbotSectionJsx({ height, subChapId }) {
     scrollToBottom();
   }, [dialogs]);
     
-    return (
-        <ChatbotSection>
-            <Chat height={height}>
-                {dialogs.map(div => div)}
-                <div ref={chat}></div>
-            </Chat>
-            {(step > 0) && <ChatType>
-                <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
-                <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
-            </ChatType>}
-            {!step && <ChatType>
-              <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
-              <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
-              <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
-            </ChatType>}
-            <ChatInput>
-              <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
-              <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>
-            </ChatInput>
-        </ChatbotSection>
-    );
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      AddDialog();
+    }
+  }
+    
+  return (
+    <ChatbotSection>
+      <Chat height={height}>
+        {dialogs.map(div => div)}
+        <div ref={chat}></div>
+      </Chat>
+      {(step > 0) && <ChatType>
+        <Type onClick={AddStepDialog}> 다음 답변보기 </Type>
+        <Type onClick={EndStepDialog}> 다른 질문하기 </Type>
+      </ChatType>}
+      {!step && <ChatType>
+        <Type style={divValue === "DEF"?borderStyle:{}} onClick={()=>getDivValue("DEF")}> #개념 </Type>
+        <Type style={divValue === "CODE"?borderStyle:{}} onClick={()=>getDivValue("CODE")}> #코드 </Type>
+        <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
+      </ChatType>}
+      <ChatInput>
+        <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)} onKeyDown={handleKeyDown}></InputArea>
+        <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>
+      </ChatInput>
+    </ChatbotSection>
+  );
 }
 
 export default ChatbotSectionJsx;

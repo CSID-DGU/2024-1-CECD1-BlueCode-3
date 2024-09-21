@@ -1,18 +1,12 @@
-import BCODE from '../../logo_w.png';
-import { remove } from '../../remove';
 import styled from 'styled-components';
-import getUserInfo from '../../getUserInfo';
 import SectionBarJsx from '../SectionBar';
+import getUserInfo from '../../getUserInfo';
+import PrivateInfoJsx from '../PrivateInfo';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import P1200 from '../../1200p.png';
-import P2400 from '../../2400p.png';
-import P3600 from '../../3600p.png';
-import P4800 from '../../4800p.png';
-import P6000 from '../../6000p.png';
-import P7200 from '../../7200p.png';
+import MypageNavSectionJsx from '../MypageNavSection';
 
 
 
@@ -33,13 +27,9 @@ function Study_theory() {
     };
   }, []);
 
-  const [contentWidth, setContentWidth] = useState(width);
-
   const [point, setPoint] = useState(0);
   const [process, setProcess] = useState(0);
   const [processPass, setProcessPass] = useState(0);
-  const color = {color : "#008BFF"};
-  const textDeco = { textDecoration : "none" };
 
   const [testValid, setTestValid] = useState(false);
 
@@ -71,6 +61,7 @@ function Study_theory() {
         };
 
         const res = await axiosInstance.post('/mission/mission/find', UserMissionDataCallDto);
+        console.log(res.data);
         
         setMissionDaily(res.data.listDaily);
         setMissionWeekly(res.data.listWeekly);
@@ -115,52 +106,13 @@ function Study_theory() {
     navigate('/test');
   }
 
-  const getBorder = () => {
-    if (point > 7200) {
-      return P7200;
-    } else if (point > 6000) {
-      return P6000;
-    } else if (point > 4800) {
-      return P4800;
-    } else if (point > 3600) {
-      return P3600;
-    } else if (point > 2400) {
-      return P2400;
-    } else if (point > 1200) {
-      return P1200;
-    } else {
-      return P1200;
-    }
-  }
-
-  return (
-    <TestSection>
-      <SectionBarJsx />
-      <Content>
-        <NavSection height={height}>
-          <Static>
-            <NavLink style={textDeco} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
-            <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
-          </Static>
-          <Info style={{backgroundImage : `url(${()=>getBorder()}`}}>
-            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
-            <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
-          </Info>
-          <Dynamic>
-            <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 내 할일 관련 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
-          </Dynamic>
-        </NavSection>
-        <ContentSection width={contentWidth}>
-          <ProgressName> ㅇ 교육 과정 진행 상황 </ProgressName>
+  /*
+  <ProgressName> 교육 과정 진행 상황 </ProgressName>
           <CurrentProgress>
             <ProgressImg>
               <svg viewBox="0 0 200 200">
                 <Circle></Circle>
-                <CircleCur strokeDasharray={processPass?`${2 * Math.PI * 75 * processPass / process} ${2 * Math.PI * 75 * (process - processPass) / process}`:"0 1"}
+                <CircleCur strokeDasharray={processPass?`${2 * Math.PI * 87.5 * processPass / process} ${2 * Math.PI * 87.5 * (process - processPass) / process}`:"0 1"}
                            transform={`rotate(-90, 100, 100)`}>
                 </CircleCur>
               </svg>
@@ -171,12 +123,6 @@ function Study_theory() {
               <SubLecture onClick={enterExam}> 초기 테스트 바로가기 </SubLecture>
             </Progress>}
             {testValid && <Progress>
-              <Lecture> - 이전 수강 강의 </Lecture>
-              <SubLecture> 구체적인 이전 수강 강의 </SubLecture>
-              <Lecture> - 현재 수강 강의 </Lecture>
-              <SubLecture> 구체적인 현재 수강 강의 </SubLecture>
-              <Lecture> - 다음 수강 강의 </Lecture>
-              <SubLecture> 구체적인 다음 수강 강의 </SubLecture>
             </Progress>}
           </CurrentProgress>
           <ProgressName> ㅇ 미션/업적 진행 상황 </ProgressName>
@@ -212,6 +158,81 @@ function Study_theory() {
               </MissionContent>
             </Mission>
           </CurrentProgress>
+
+          {!testValid && <Progress>
+                  <Lecture> - 초기 테스트 미응시 </Lecture>
+                  <SubLecture onClick={enterExam}> 초기 테스트 바로가기 </SubLecture>
+                </Progress>}
+                {testValid && <Progress></Progress>}
+          */
+
+  return (
+    <TestSection>
+      <PrivateInfoJsx />
+      <SectionBarJsx />
+      <Content>
+        <MypageNavSectionJsx height={height} l1={true} l2={false} l3={false} />
+        <ContentSection width={width}>
+          <SubContentSection>
+            <SubContentTopLeft>
+              <ProgressName> 교육 과정 진행 상황 </ProgressName>
+              <CurrentProgress>
+                <ProgressImg>
+                  <svg viewBox="0 0 200 200">
+                    <Circle></Circle>
+                    <CircleCur strokeDasharray={processPass?`${2 * Math.PI * 87.5 * processPass / process} ${2 * Math.PI * 87.5 * (process - processPass) / process}`:"0 1"}
+                               transform={`rotate(-90, 100, 100)`}>
+                    </CircleCur>
+                  </svg>
+                  <Progress>
+                    {!testValid && <>
+                      <Lecture> 초기 테스트 미응시 </Lecture>
+                      <SubLecture onClick={enterExam}> 초기 테스트 바로가기 </SubLecture>
+                    </>}
+                    {testValid  && <Percentage> {isNaN(Math.round(processPass / process * 100))?"":Math.round(processPass / process * 100) + "%"} </Percentage>}
+                  </Progress>
+                </ProgressImg>
+              </CurrentProgress>
+            </SubContentTopLeft>
+            <SubContentBottomLeft>
+              <Mission>
+                <Term> 일간 </Term>
+                <MissionContent>
+                  {missionDaily.map(item => (
+                  <SubMissionContent>
+                    <SubMission key={item.id}> {item.text} </SubMission>
+                    <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
+                  </SubMissionContent>
+                  ))}
+                </MissionContent>
+              </Mission>
+            </SubContentBottomLeft>
+          </SubContentSection>
+          <SubContentSection>
+            <SubContentTopRight>
+              <Mission>
+                <Term> 업적 </Term>
+                <MissionContent>
+                {challenge.map(item => (item.missionStatus === "COMPLETED" && (
+                  <SubMission_ key={item.id} style={{color:"black"}}> {item.text} </SubMission_>
+                )))}
+                </MissionContent>
+              </Mission>
+            </SubContentTopRight>
+            <SubContentBottomRight>
+              <Mission>
+                <Term> 주간 </Term>
+                <MissionContent>
+                  {missionWeekly.map(item => (
+                  <SubMissionContent>
+                    <SubMission key={item.id}> {item.text}  </SubMission>
+                    <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
+                  </SubMissionContent>
+                  ))}
+                </MissionContent>
+              </Mission>
+            </SubContentBottomRight>
+          </SubContentSection>
         </ContentSection>
       </Content>
     </TestSection>
@@ -225,178 +246,152 @@ export default Study_theory;
 const TestSection = styled.div`
   height : 100vh;
 `
-const SectionBar = styled.div`
-  width : 100vw;
-  display : flex;
-  background : #008BFF;
-`
-
-const Logo = styled.div`
-  img {
-    height : 2rem;
-    width : 7.82rem;
-    margin : 1rem 4rem;
-  }
-`
 
 const Content = styled.div`
   display : flex;
 `
 
-const NavSection = styled.div`
-  display : flex;
-  min-width : 15rem;
-  flex-direction : column;
-  border-right : 0.125rem solid rgba(0, 0, 0, 0.125);
-  height : ${(props) => `${(props.height - 68) / 16}rem`};
-`
-
-const Static = styled.div`
-  padding : 0.625rem;
-  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.125);
-`
-
-const Info = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.125);
-`
-
-const InfoNav = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-
-  p {
-    margin : 0;
-    text-align : right;
-  }
-`
-
-const Nav = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-
-  &:hover {
-    color : #008BFF;
-    background : rgba(0, 139, 255, 0.25);
-  }
-`
-
-const Dynamic = styled.div`
-  overflow : scroll;
-  padding : 0.625rem;
-
-  &::-webkit-scrollbar {
-    display : none;
-  }
-`
-
 const ContentSection = styled.div`
-  margin : 2rem;
-  padding : 2rem;
+  display : flex;
+  padding : 1rem;
+  flex-wrap : wrap;
+  margin : 1rem 0rem 1rem 1rem;
+  border : 0.125rem solid #008BFF;
+  border-radius : 1rem 0rem 0rem 1rem;
+  border-right-style : none;
+  width : ${(props) => `${(props.width - 291.5) / 16}rem`};
+`
+
+const SubContentSection = styled.div`
+  width : 50%;  
+  display : flex;
+  flex-direction : column;
+`
+
+const SubContentTopLeft = styled.div`
+  height : 50%;
+  width : 97.5%;
+  display : flex;
   border-radius : 1rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 370) / 16}rem`};
+  flex-direction : column;
+  margin : 0rem 0.5rem 0.5rem 0rem;
+  border-left : 0.25rem solid #008BFF;
+  border-right : 0.25rem solid #008BFF;
+`
+
+const SubContentBottomLeft = styled.div`
+  height : 50%;
+  width : 97.5%;
+  border-radius : 1rem;
+  margin : 0.5rem 0.5rem 0rem 0rem;
+  border-left : 0.25rem solid #008BFF;
+  border-right : 0.25rem solid #008BFF;
+`
+
+const SubContentTopRight = styled.div`
+  height : 50%;
+  width : 97.5%;
+  border-radius : 1rem;
+  margin : 0rem 0rem 0.5rem 0.5rem;
+  border-left : 0.25rem solid #008BFF;
+  border-right : 0.25rem solid #008BFF;
+`
+
+const SubContentBottomRight = styled.div`
+  height : 50%;
+  width : 97.5%;
+  border-radius : 1rem;
+  margin : 0.5rem 0rem 0rem 0.5rem;
+  border-left : 0.25rem solid #008BFF;
+  border-right : 0.25rem solid #008BFF;
 `
 
 const ProgressName = styled.p`
-  margin : 0;
   font-weight : bold;
   font-size : 1.05rem;
+  text-align : center;
+  margin : 0rem 0rem 0.5rem;
   color : rgba(0, 0, 0, 0.5);
 `
 
 const CurrentProgress = styled.div`
-  width : 72.5rem;
+  width : 100%;
+  height : 100%;
   display : flex;
-  margin : 1rem auto 0rem;
 `
 
 const ProgressImg = styled.div`
-  width : 12.5rem;
-  height : 12.5rem;
-  padding : 1.25rem;
+  height : 93.775%;
+  aspect-ratio: 1 / 1;
+  margin : 0.5rem auto;
 `
 
 const Circle = styled.circle`
-  r : 75;
+  r : 87.5;
   cx : 100;
   cy : 100;
   fill : none;
-  stroke-width : 37.5;
+  stroke-width : 25;
   stroke : rgba(0, 0, 0, 0.125);
 `
 
 const CircleCur = styled.circle`
-  r : 75;
+  r : 87.5;
   cx : 100;
   cy : 100;
   fill : none;
   stroke : #008BFF;
-  stroke-width : 37.5; 
+  stroke-width : 25; 
 `
 
-const Percentage = styled.div`
-  top : -7.25rem;
-  left : 5.25rem;
+const Percentage = styled.p`
+  color : #008BFF;
+  font-weight : bold;
+  font-size : 1.25rem;
+  text-align : center;
+`
+
+const Progress = styled.div`
+  top : -9.625rem;
   color : #008BFF;
   font-weight : bold;
   position : relative;
   font-size : 1.25rem;
 `
 
-const Progress = styled.div`
-`
-
 const Lecture = styled.p`
+  margin : 0rem;
   font-weight : bold;
-  margin : 1.5rem 1rem 0rem;
+  text-align : center;
   color : rgba(0, 0, 0, 0.5);
 `
 
 const SubLecture = styled.p`
+  margin : 0rem;
   cursor : pointer;
   font-weight : bold;
-  margin : 0.25rem 1.75rem;
+  text-align : center;
   color : rgba(0, 0, 0, 0.75);
 `
 
 const Mission = styled.div`
-  width : 21.25rem;
+  width : 93.5%;
   display : flex;
-  color : #FFFFFF;
-  height : 12.5rem;
+  padding : 1rem;
+  height : 88.75%;
   font-weight : bold;
-  margin : 1rem auto 0rem;
   flex-direction : column;
-  padding : 0rem 1rem 1rem;
-  border-radius : 1.25rem 0rem 1.25rem 0rem;
 `
 
 const Term = styled.p`
+  margin : 0rem 0rem 1rem;
+  color : #008BFF;
   font-size : 1.25rem;
-  margin-bottom : 1rem;
 `
 
 const MissionContent = styled.div`
-  height : 10rem;
   display : flex;
-  width : 23.75rem;
+  width : 100%;
   overflow : scroll;
   flex-direction : column;
 
@@ -407,20 +402,20 @@ const MissionContent = styled.div`
 
 const SubMissionContent = styled.div`
   display : flex;
-  width : 21.25rem;
-  margin : 0.15rem 0rem;
+  width : 100%;
+  margin : 0.25rem 0rem;
 `
 
 const SubMission = styled.div`
-  width : 18.5rem;
+  width : 90%;
 `
 
 const SubMission_ = styled.div`
-  width : 21.25rem;
-  margin : 0.15rem 0rem;
+  width : 100%;
+  margin : 0.25rem 0rem;
 `
 
 const SubMissionCount = styled.div`
-  width : 2.75rem;
+  width : 10%;
   text-align : right;
 `

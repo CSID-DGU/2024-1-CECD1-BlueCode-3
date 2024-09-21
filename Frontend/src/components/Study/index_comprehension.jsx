@@ -1,16 +1,16 @@
-import NavJsx from '../NavSection';
+import NavJsx from '../StudyNavSection';
 import styled from 'styled-components';
 import LOADING from '../../loading.png';
 import SectionBarJsx from '../SectionBar';
+import Editor from '@monaco-editor/react';
+import StudyNavSectionJsx from '../StudyNavSection';
+import AlertJsx from '../../Window/index_alert';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
-import { useRef, useState, useEffect } from 'react';
-import NavSectionJsx from '../NavSection';
-import Editor from '@monaco-editor/react';
-import AlertJsx from '../../Window/index_alert';
-import ConfirmJsx from '../../Window/index_confirm';
 import OptionJsx from '../../Window/index_confirm';
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import ConfirmJsx from '../../Window/index_confirm';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import "highlight.js/styles/a11y-dark.css";
 import ReactMarkdown from 'react-markdown';
@@ -64,11 +64,14 @@ function Study_training() {
 
   }, []);
 
+  /*
   useEffect(()=>{
     if (res) {
+      setTime(300);
       console.log(res);
     }
   }, [res]);
+  */
 
   const { chapter, chaptersid, chapterLevel, chapterPass, subChapter, subChapterId, currentChapter } = useChapterData();
   const [type, setType] = useState('');
@@ -96,7 +99,7 @@ function Study_training() {
   const submitAnswer = async () => {
     var response;
 
-    if (answer) {
+    //if (answer || answer === '') {
       const userid = localStorage.getItem('userid');
       const TestAnswerCallDto = {
         'userId': userid,
@@ -107,7 +110,6 @@ function Study_training() {
       
       try {
         // 문제 타입 객관식
-        
         if (qtype === "NUM") {
           response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
           // console.log("객관식 정답 요청 " + response.data.passed);
@@ -121,6 +123,7 @@ function Study_training() {
           // console.log("서술식 정답 요청 " + response.data.passed);
         }
         
+        setAnswer('');
         if(response.data.passed === true) {
           setDataPassed(true);
           if (order === 0) {
@@ -178,11 +181,28 @@ function Study_training() {
       } catch (err) {
         console.log(err);
       }
-    }
+    //}
   }
 
   const handleAlert = () => {
     setIsAlertOpen(false);
+    if (dataPassed) {
+      if (order === 0) {
+        setOrder(1);
+      } else if (order === 1) {
+        setOrder(2);
+      } else {
+
+      }
+    } else {
+      if (order === 0) {
+        navigate('/mypage/lecture');
+      } else if (order === 1) {
+        postChapterPass(chapId, "EASY");
+      } else {
+
+      }
+    }
   }
 
   const handleConfirm = (confirm) => {
@@ -224,46 +244,45 @@ function Study_training() {
     }
   }
 
-  const [menu, setMenu] = useState(false);
-  const showMenu = () => {
-    if (menu) {
-      setMenu(false);
-    } else {
-      setMenu(true);
-    }
-  }
-
-  const [time, setTime] = useState(300);
+  const [time, setTime] = useState(null);
   const [min, setMin] = useState('');
   const [sec, setSec] = useState('');
 
   useEffect(()=>{
-    const tick = () => {
-      if(time >= 0) {
-        setTime(time - 1);
+    if (res) {
+      setTime(300);
+      console.log(res);
+    }
+  }, [res]);
+
+  useEffect(() => {
+    if (time !== null && time >= -1) {
+      const tick = () => {
+        setTime(prev => prev - 1);
         
         const minute = time / 60;
         setMin('0' + parseInt(minute).toString());
-        
+
         const second = time % 60;
-        if(second < 10)
-          setSec('0' + second);
-        else
-          setSec(second);
-      }
-    };
-
-    const timerId = setInterval(tick, 1000);
-
-    return ()=>clearInterval(timerId);
+        setSec(second < 10 ? '0' + second : second.toString());
+      };
+  
+      const timerId = setInterval(tick, 1000);
+  
+      return () => clearInterval(timerId);
+    }
   }, [time]);
 
+  useEffect(() => {
+    if (res && time === -1) {
+      submitAnswer();
+    }
+  }, [time, res, order, qtype, answer]);
 
 
   return (
     <TestSection>
-      {menu && <NavSectionJsx />}
-      <MenuButton onClick={showMenu}> ≡ </MenuButton>
+      <StudyNavSectionJsx />
       <SectionBarJsx />
       <Content>
         <ContentSection>
@@ -334,19 +353,6 @@ export default Study_training;
 
 const TestSection = styled.div`
   height : 100vh;
-`
-
-const MenuButton = styled.button`
-  border : none;
-  top : 0.825rem;
-  left : 0.75rem;
-  width : 2.5rem;
-  color : #FFFFFF;
-  cursor : pointer;
-  position : fixed;
-  font-size : 2rem;
-  border-radius : 1.25rem;
-  background-color : #008BFF;
 `
 
 const Content = styled.div`

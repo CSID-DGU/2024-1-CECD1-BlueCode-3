@@ -4,7 +4,7 @@ import Input from '../../input.png';
 import styled from 'styled-components';
 import LOADING from '../../loading.png';
 import TerminalJsx from '../../Terminal';
-import NavSectionJsx from '../NavSection';
+import StudyNavSectionJsx from '../StudyNavSection';
 import SectionBarJsx from '../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import ChatbotSectionJsx from '../ChatbotSection';
@@ -136,20 +136,9 @@ function Study_training() {
     }
   }
 
-  const [menu, setMenu] = useState(false);
-  const showMenu = () => {
-    if (menu) {
-      setMenu(false);
-    } else {
-      setMenu(true);
-    }
-  }
-
-  // <CodeArea height={height} width={contentWidth} value={code} onChange={(e)=>setCode(e.target.value)}></CodeArea>
   return (
     <TestSection>
-      {menu && <NavSectionJsx />}
-      <MenuButton onClick={showMenu}> ≡ </MenuButton>
+      <StudyNavSectionJsx />
       <SectionBarJsx />
       <Content>
         <ContentSection gptValue={gptValue}>
@@ -171,8 +160,8 @@ function Study_training() {
           </Train>
           {isConfirmOpen &&
           <ConfirmJsx message={text === "CODE"?"심화 코드 학습으로 넘어가시겠습니까?":"해당 서브 챕터 학습을 마치시겠습니까?"}
-                    onConfirm={()=>handleConfirm(true)}
-                    onCancel={()=>handleConfirm(false)}>
+                      onConfirm={()=>handleConfirm(true)}
+                      onCancel={()=>handleConfirm(false)}>
           </ConfirmJsx>}
           
         </ContentSection>
@@ -187,19 +176,6 @@ export default Study_training;
 
 
 const TestSection = styled.div`
-`
-
-const MenuButton = styled.button`
-  border : none;
-  top : 0.825rem;
-  left : 0.75rem;
-  width : 2.5rem;
-  color : #FFFFFF;
-  cursor : pointer;
-  position : fixed;
-  font-size : 2rem;
-  border-radius : 1.25rem;
-  background-color : #008BFF;
 `
 
 const Content = styled.div`
@@ -242,7 +218,7 @@ const InstructionLoading = styled.div`
 const Buttons = styled.div`
   display : flex;
   justify-content : right;
-  padding : 0rem 0rem 0.75rem;
+  padding : 0.375rem 0rem 0.625rem;
 `
 
 const Before = styled.button`

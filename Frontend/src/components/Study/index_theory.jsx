@@ -2,7 +2,7 @@ import Left from '../../left.png';
 import Right from '../../right.png';
 import styled from 'styled-components';
 import LOADING from '../../loading.png';
-import NavSectionJsx from '../NavSection';
+import StudyNavSectionJsx from '../StudyNavSection';
 import SectionBarJsx from '../SectionBar';
 import axiosInstance from '../../axiosInstance';
 import ChatbotSectionJsx from '../ChatbotSection';
@@ -88,20 +88,10 @@ function Study_theory() {
     }
     setIsConfirmOpen(false);
   }
-
-  const [menu, setMenu] = useState(false);
-  const showMenu = () => {
-    if (menu) {
-      setMenu(false);
-    } else {
-      setMenu(true);
-    }
-  }
  
   return (
     <TestSection>
-      {menu && <NavSectionJsx />}
-      <MenuButton onClick={showMenu}> ≡ </MenuButton>
+      <StudyNavSectionJsx />
       <SectionBarJsx />
       <Content>
         <ContentSection gptValue={gptValue}>
@@ -113,16 +103,16 @@ function Study_theory() {
           <InstructionLoading height={height}>
             <img src={LOADING} alt="loading"></img>
           </InstructionLoading>}
-          {isConfirmOpen &&
-          <ConfirmJsx message="예제 코드 학습으로 넘어가시겠습니까?"
-                      onConfirm={()=>handleConfirm(true)}
-                      onCancel={()=>handleConfirm(false)}>
-          </ConfirmJsx>}
           <Buttons>
             <Before> <img src={Left}></img> </Before>
             <After onClick={goToTraining}> <img src={Right}></img> </After>
             <GPT onClick={ShowGpt}> GPT </GPT>
           </Buttons>
+          {isConfirmOpen &&
+          <ConfirmJsx message="예제 코드 학습으로 넘어가시겠습니까?"
+                      onConfirm={()=>handleConfirm(true)}
+                      onCancel={()=>handleConfirm(false)}>
+          </ConfirmJsx>}
         </ContentSection>
         {gptValue && <ChatbotSectionJsx height={height} subChapId={subChapId}/>}
       </Content>
@@ -136,19 +126,6 @@ export default Study_theory;
 
 const TestSection = styled.div`
   height : 100vh;
-`
-
-const MenuButton = styled.button`
-  border : none;
-  top : 0.825rem;
-  left : 0.75rem;
-  width : 2.5rem;
-  color : #FFFFFF;
-  cursor : pointer;
-  position : fixed;
-  font-size : 2rem;
-  border-radius : 1.25rem;
-  background-color : #008BFF;
 `
 
 const Content = styled.div`

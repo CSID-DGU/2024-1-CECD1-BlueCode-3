@@ -13,7 +13,7 @@ import rehypeHighlight from "rehype-highlight";
 
 
 function Study_theory() {
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState(' ');
 
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
@@ -33,31 +33,6 @@ function Study_theory() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  
-  const [time, setTime] = useState(300);
-  const [min, setMin] = useState('');
-  const [sec, setSec] = useState('');
-
-  useEffect(()=>{
-    const tick = () => {
-      if(time >= 0) {
-        setTime(time - 1);
-        
-        const minute = time / 60;
-        setMin('0' + parseInt(minute).toString());
-        
-        const second = time % 60;
-        if(second < 10)
-          setSec('0' + second);
-        else
-          setSec(second);
-      }
-    };
-
-    const timerId = setInterval(tick, 1000);
-
-    return ()=>clearInterval(timerId);
-  }, [time]);
 
   useEffect(() => {
 
@@ -172,7 +147,7 @@ const getChapterQuiz2 =  async () =>{
 const navigate = useNavigate();
 const submitAnswer = async () => {
   var response;
-  if (answer) {
+  //if (answer) {
     const userid = localStorage.getItem('userid');
     const TestAnswerCallDto = {
       'userId': userid,
@@ -280,8 +255,43 @@ const submitAnswer = async () => {
         } catch (err) {
       console.log(err);
     }
-  }
+  //}
 }
+
+const [time, setTime] = useState(null);
+const [min, setMin] = useState('');
+const [sec, setSec] = useState('');
+
+useEffect(()=>{
+  if (data) {
+    setTime(300);
+    console.log(data);
+  }
+}, [data]);
+
+useEffect(() => {
+  if (time !== null && time >= -1) {
+    const tick = () => {
+      setTime(prev => prev - 1);
+      
+      const minute = time / 60;
+      setMin('0' + parseInt(minute).toString());
+
+      const second = time % 60;
+      setSec(second < 10 ? '0' + second : second.toString());
+    };
+
+    const timerId = setInterval(tick, 1000);
+
+    return () => clearInterval(timerId);
+  }
+}, [time]);
+
+useEffect(() => {
+  if (data && time === -1) {
+    submitAnswer();
+  }
+}, [time, data, order, qtype, answer]);
 
 
 const handleProcess = async () => {
@@ -395,16 +405,16 @@ useEffect(()=>{
                   <Label for="fourth"> {data[order].q4} </Label>
                 </Selection>
               </SelectionArea>)}
-              {qtype === 'WORD' && (<WritingArea onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
+              {qtype === 'WORD' && (<WritingArea value={answer} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
               {(qtype === 'NUM' || qtype === 'WORD') && <Submit onClick={submitAnswer}> 제출 </Submit>}
             </>}
           </Instruction>  
           <Train height={height}>
             {qtype === 'CODE' &&
             <><Editor height="100%"
-                    theme="tomorrow"
-                    defaultLanguage="python"
-                    value={answer} onChange={(value)=>setAnswer(value)}>
+                      theme="tomorrow"
+                      defaultLanguage="python"
+                      value={answer} onChange={(value)=>setAnswer(value)}>
             </Editor>
             <Submit onClick={submitAnswer}> 제출 </Submit></>
           }
@@ -426,19 +436,6 @@ export default Study_theory;
 
 const TestSection = styled.div`
   height : 100vh;
-`
-
-const MenuButton = styled.button`
-  border : none;
-  top : 0.825rem;
-  left : 0.75rem;
-  width : 2.5rem;
-  color : #FFFFFF;
-  cursor : pointer;
-  position : fixed;
-  font-size : 2rem;
-  border-radius : 1.25rem;
-  background-color : #008BFF;
 `
 
 const Content = styled.div`
