@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import LOADING from '../../loading.png';
 import SectionBarJsx from '../SectionBar';
 import Editor from '@monaco-editor/react';
-import StudyNavSectionJsx from '../StudyNavSection';
+import { useState, useEffect } from 'react';
 import AlertJsx from '../../Window/index_alert';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
 import OptionJsx from '../../Window/index_confirm';
-import { useState, useEffect } from 'react';
 import ConfirmJsx from '../../Window/index_confirm';
+import StudyNavSectionJsx from '../StudyNavSection';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import "highlight.js/styles/a11y-dark.css";
@@ -92,6 +92,7 @@ function Study_training() {
 
   
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [dataPassed, setDataPassed] = useState(false);
@@ -100,109 +101,83 @@ function Study_training() {
     var response;
 
     //if (answer || answer === '') {
-      const userid = localStorage.getItem('userid');
-      const TestAnswerCallDto = {
-        'userId': userid,
-        'testId': res[order].testId,
-        'quizId': res[order].quizId,
-        'answer': answer
-      };
-      
-      try {
-        // 문제 타입 객관식
-        if (qtype === "NUM") {
-          response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
-          // console.log("객관식 정답 요청 " + response.data.passed);
-        }
-        else if (qtype === "WORD") {
-          response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
-          // console.log("주관식 정답 요청 " + response.data.passed);
-        }
-        else if (qtype === "CODE") {
-          response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
-          // console.log("서술식 정답 요청 " + response.data.passed);
-        }
-        
-        setAnswer('');
-        if(response.data.passed === true) {
-          setDataPassed(true);
-          if (order === 0) {
-            //입문자 문제 맞출 경우
-            setIsAlertOpen(true);
-            alert("입문자 문제를 맞추셨습니다.");
-            setOrder(1);
-          }
-          else if (order === 1) {
-            setIsAlertOpen(true);
-            alert("초급자 문제를 맞추셨습니다.");
-            setOrder(2);
-          }
-          else if (order === 2) {
-            //중급자 문제 맞출 경우
-            /*alert("중급자 문제를 맞추셨습니다.");
+    const userid = localStorage.getItem('userid');
+    const TestAnswerCallDto = {
+      'userId': userid,
+      'testId': res[order].testId,
+      'quizId': res[order].quizId,
+      'answer': answer
+    };
     
-            // 사용자의 level: easy / normal / hard(다음챕터레벨설정용) 입력을 받음 (수정필요)
-            const prompt = window.prompt("EASY / NORMAL / HARD 중 택 1");
-            postChapterPass(chapId, prompt);
-
-            
-            navigate('/mypage/lecture');*/
-          }
-        }
-        else {
-          setDataPassed(false);
-          if (order === 0) {
-            //입문자 문제 틀렸을 경우
-            setIsAlertOpen(true);
-            alert("입문자 문제를 틀리셨습니다.");
-            alert("전반적인 학습을 다시 하세요.");
-            navigate('/mypage/lecture');
-          }
-          else if (order === 1) {
-            setIsAlertOpen(true);
-            alert("초급자 문제를 틀리셨습니다.");
-            alert("입문자 난이도로 다음 챕터가 설정되었습니다.");
-            postChapterPass(chapId, "EASY");
-
-            // 해당 챕터 재학습 선지 제시, 재학습 원할시 해당 챕터를 재학습 아닐경우 마이페이지로
-            //subChapterId , chaptersid
-            setIsConfirmOpen(true);
-          }
-          else if (order === 2) {
-            setIsOptionOpen(true);
-            /*alert("중급자 문제를 틀리셨습니다.");
-            // 사용자의 level: easy / normal / hard(다음챕터레벨설정용) 입력을 받음 (수정필요)
-            const prompt = window.prompt("EASY / NORMAL 중 택 1")
-            postChapterPass(chapId, prompt);
-
-            navigate('/mypage/lecture');*/
-          }
-        }
-      } catch (err) {
-        console.log(err);
+    try {
+      // 문제 타입 객관식
+      if (qtype === "NUM") {
+        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+        // console.log("객관식 정답 요청 " + response.data.passed);
       }
+      else if (qtype === "WORD") {
+        response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        // console.log("주관식 정답 요청 " + response.data.passed);
+      }
+      else if (qtype === "CODE") {
+        response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
+        // console.log("서술식 정답 요청 " + response.data.passed);
+      }
+        
+      setAnswer('');
+      if(response.data.passed === true) {
+        setDataPassed(true);
+        if (order === 0) {
+          //입문자 문제 맞출 경우
+          setAlertMessage("입문자 문제를 맞추셨습니다.");
+          setIsAlertOpen(true);
+        }
+        else if (order === 1) {
+          setAlertMessage("초급자 문제를 맞추셨습니다.");
+          setIsAlertOpen(true);
+        }
+        else if (order === 2) {
+          setIsOptionOpen(true);
+        }
+      }
+      else {
+        setDataPassed(false);
+        if (order === 0) {
+          //입문자 문제 틀렸을 경우
+          setAlertMessage("입문자 문제를 틀렸기에, 내 강의 정보로 돌아갑니다.");
+          setIsAlertOpen(true);
+        }
+        else if (order === 1) {
+          setAlertMessage("초급자 문제를 틀렸기에, 다음 챕터가 입문자 난이도로 설정되었습니다.");
+          setIsAlertOpen(true);
+        }
+        else if (order === 2) {
+          setIsOptionOpen(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
     //}
   }
 
   const handleAlert = () => {
-    setIsAlertOpen(false);
     if (dataPassed) {
       if (order === 0) {
         setOrder(1);
       } else if (order === 1) {
         setOrder(2);
-      } else {
-
       }
     } else {
       if (order === 0) {
         navigate('/mypage/lecture');
       } else if (order === 1) {
         postChapterPass(chapId, "EASY");
-      } else {
-
+        setIsConfirmOpen(true);
       }
     }
+      
+    setIsAlertOpen(false);
   }
 
   const handleConfirm = (confirm) => {
@@ -312,7 +287,7 @@ function Study_training() {
                   <Label for="fourth"> {res[order].q4} </Label>
                 </Selection>
               </SelectionArea>)}
-              {qtype === 'WORD' && (<WritingArea placeholder={"O".repeat(res[order].wordCount)} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
+              {qtype === 'WORD' && (<WritingArea value={answer} placeholder={"O".repeat(res[order].wordCount)} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
               {(qtype === 'NUM' || qtype === 'WORD') && <Submit onClick={submitAnswer}> 제출 </Submit>}
             </>}
           </Instruction>  
@@ -330,6 +305,7 @@ function Study_training() {
           <InstructionLoading>
             <img src={LOADING} alt="loading"></img>
           </InstructionLoading>}
+          {isAlertOpen && <AlertJsx message={alertMessage} onAlert={()=>handleAlert()}></AlertJsx>}
           {isConfirmOpen &&
           <ConfirmJsx message="해당 챕터를 재학습하시겠습니까?"
                     onConfirm={()=>handleConfirm(true)}
@@ -431,6 +407,7 @@ const Selection = styled.div`
 `
 
 const Label = styled.label`
+  white-space: pre;
   margin-top : 0.2rem;
   padding-left : 0.375rem;
 `

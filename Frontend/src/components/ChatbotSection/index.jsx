@@ -21,10 +21,19 @@ function ChatbotSectionJsx({ height, subChapId }) {
         setDialogs((pre) => [...pre, <Dialog_server> <div> 태그를 선택해주세요 </div> </Dialog_server>]);
       }
       else {
-        setDialogs((pre) => [...pre, <Dialog_client> <div> {dialog} </div> </Dialog_client>]);
+        // setDialogs((pre) => [...pre, <Dialog_client> <div> {dialog} </div> </Dialog_client>]);
+        const formattedDialog = dialog.split('\n').map((line, index) => (
+          <span key={index}>
+            {line}
+            {index < dialog.split('\n').length - 1 && <br />} {/* 마지막 줄이 아닐 때만 <br /> 추가 */}
+          </span>
+        ));
+        
+        setDialogs((pre) => [...pre, <Dialog_client> <div> {formattedDialog} </div> </Dialog_client>]);
+
         try {
           const res = await getChatResponse(dialog, divValue);
-          
+
           setDialogs((pre) => [...pre, <Dialog_server> <div> <ReactMarkdown>{res.answerList[0]}</ReactMarkdown> </div> </Dialog_server>]);
           if (divValue === "CODE" || divValue === "ERRORS") {
             //console.log("1로바꿈")
@@ -129,6 +138,7 @@ function ChatbotSectionJsx({ height, subChapId }) {
     const NextLevelChatCallDto = {
       'chatId': chatId
     };
+
     try {
       const response = await axiosInstance.post('/chat/chat/next', NextLevelChatCallDto);
       console.log(response);
@@ -153,10 +163,23 @@ function ChatbotSectionJsx({ height, subChapId }) {
   }, [dialogs]);
     
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.shiftKey && e.key === 'Enter') {
+      e.preventDefault();
+      setDialog(prev => prev + '\n');
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
       AddDialog();
     }
   }
+
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      const textarea = textareaRef.current;
+      textarea.scrollTop = textarea.scrollHeight;
+    }
+  }, [dialog]);
     
   return (
     <ChatbotSection>
@@ -174,7 +197,7 @@ function ChatbotSectionJsx({ height, subChapId }) {
         <Type style={divValue === "ERRORS"?borderStyle:{}} onClick={()=>getDivValue("ERRORS")}> #오류 </Type>
       </ChatType>}
       <ChatInput>
-        <InputArea value={dialog} onChange={(e)=>setDialog(e.target.value)} onKeyDown={handleKeyDown}></InputArea>
+        <InputArea ref={textareaRef} value={dialog} onChange={(e)=>setDialog(e.target.value)} onKeyDown={handleKeyDown}></InputArea>
         <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>
       </ChatInput>
     </ChatbotSection>
@@ -271,14 +294,21 @@ const ChatInput = styled.div`
   border-radius : 0rem 0rem 0rem 1rem;
 `
 
-const InputArea = styled.input`
+const InputArea = styled.textarea`
+  resize : none;
   border : none;
+  height : 2rem;
   width : 78.75%;
-  height : 2.5rem;
   font-size : 1rem;
-  padding : 0rem 1rem;
+  font-weight : bold;
+  line-height : 2rem;
+  padding : 0.25rem 1rem;
   border-radius : 1.25rem;
   margin : 0.375rem 0.75rem;
+
+  &::-webkit-scrollbar {
+    display : none;
+  }
 `
 
 const InputButton = styled.button`

@@ -3,7 +3,9 @@ import LOADING from '../../loading.png';
 import Editor from '@monaco-editor/react';
 import SectionBarJsx from '../SectionBar';
 import { useNavigate } from 'react-router-dom';
+import AlertJsx from '../../Window/index_alert';
 import axiosInstance from '../../axiosInstance';
+import ConfirmJsx from '../../Window/index_confirm';
 import React, { useEffect, useState } from 'react';
 
 import "highlight.js/styles/a11y-dark.css";
@@ -144,6 +146,12 @@ const getChapterQuiz2 =  async () =>{
   }
 }
 
+const [isAlertOpen, setIsAlertOpen] = useState(false);
+const [alertMessage, setAlertMessage] = useState('');
+const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+const [next, setNext] = useState(true);
+const [nextAlert, setNextAlert] = useState(false);
+const [dataPassed, setDataPassed] = useState(false);
 const navigate = useNavigate();
 const submitAnswer = async () => {
   var response;
@@ -159,7 +167,7 @@ const submitAnswer = async () => {
     console.log(answer);
     try {
       // 문제 타입 객관식
-      const confirm = window.confirm("");
+      //const confirm = window.confirm("");
       if (qtype === "NUM") {
         response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto)
         //console.log("객관식 정답 요청 " + response.data.passed);
@@ -173,111 +181,123 @@ const submitAnswer = async () => {
         //console.log("서술식 정답 요청 " + response.data.passed);
       }
       
-  
-      
-      if(response.data.passed === true) {
+      // response.data.passed === true
+      setDataPassed(response);
+      //setDataPassed(confirm);
+      setAnswer('');
+      if(dataPassed) {
         if (order === 0) {
-          alert("중급자 문제를 맞추셨습니다.");
-          alert("다음 챕터의 문제로 넘어갑니다.");
-          setOrder(0);
-          setQnumber(qnumber + 1);
-          //handleProcess();
-          updateInitPass("HARD");
-          getChapterQuiz2();
+          setIsAlertOpen(true);
+          setAlertMessage("중급자 문제르 맞췄기에, 다음 챕터의 문제로 넘어갑니다.");
         }
         else if (order === 1) {
-          alert("초급자 문제를 맞추셨습니다.");
-          alert("두번째 중급자 문제를 제시합니다.");
-          setOrder(3);
+          setIsAlertOpen(true);
+          setAlertMessage("초급자 문제를 맞췄기에, 두 번째 중급자 문제로 넘어갑니다.");
         }
         else if (order === 2) {
-          alert("입문자 문제를 맞추셨습니다.");
-          alert("학습 시작 챕터가 설정되었습니다.");
-          setOrder(0);
-          updateInitComplete("EASY").then(
-            ()=>{
-            navigate('/mypage/todo');
-            }
-          );
+          setIsAlertOpen(true);
+          setAlertMessage("입문자 문제를 맞췄기에, 학습 시작 챕터가 설정되었습니다.");
         }
         else if (order === 3) {
-          alert("두번째 중급자 문제를 맞추셨습니다.");
-          alert("다음 챕터의 문제로 넘어갑니다.");
-          setOrder(0);
-          setQnumber(qnumber + 1);
-          //handleProcess();
-          updateInitPass("HARD");
-          getChapterQuiz2();
-
+          setIsAlertOpen(true);
+          setAlertMessage("두 번째 중급자 문제를 맞췄기에, 다음 챕터의 문제로 넘어갑니다.");
         }
       }
       else {
         if (order === 0) {
-          alert("첫 번째 중급자 문제를 틀리셨습니다.");
-          alert("초급자 문제로 넘어갑니다.");
-          setOrder(1);
+          setIsAlertOpen(true);
+          setAlertMessage("첫 번째 중급자 문제를 틀렸기에, 초급자 문제로 넘어갑니다.");
         }
         else if (order === 1) {
-          alert("초급자 문제를 틀리셨습니다.");
-          alert("입문자 문제로 넘어갑니다.");
-          setOrder(2);
+          setIsAlertOpen(true);
+          setAlertMessage("초급자 문제를 틀렸기에, 입문자 문제로 넘어갑니다.");
         }
         else if (order === 2) {
-          alert("입문자 문제를 틀리셨습니다.");
-          alert("학습 시작 챕터가 설정되었습니다.");
-          setOrder(0);
-          updateInitComplete("EASY").then(
-            ()=>{
-            navigate('/mypage/todo');
-            }
-          );
+          setIsAlertOpen(true);
+          setAlertMessage("입문자 문제를 틀렸기에, 학습 시작 챕터가 설정되었습니다.");
         }
         else if (order === 3) {
-          alert("두 번째 중급자 문제를 틀리셨습니다.");
-          const userConfirm = window.confirm("다음 챕터의 문제로 넘어가시겠습니까?");
-          if (userConfirm) {
-            alert("다음 챕터의 문제로 넘어갑니다.");
-            setQnumber(qnumber + 1);
-            //handleProcess();
-          updateInitPass("HARD");
-          getChapterQuiz2();
-
-          } else {
-            alert("시작 챕터가 설정되었습니다.");
-            updateInitComplete("NORMAL").then(
-              ()=>{
-              navigate('/mypage/todo');
-              }
-            );
-          }
-          setOrder(0);
+          setIsAlertOpen(true);
+          setAlertMessage("두 번째 중급자 문제를 틀리셨습니다.");
         }
       }
-      setAnswer('');
-        } catch (err) {
+    } catch (err) {
       console.log(err);
     }
   //}
+  }
+
+const handleAlert = (next) => {
+  if (next) {
+    if (dataPassed) {
+      if (order === 0) {
+        setOrder(0);
+        setQnumber(qnumber + 1);
+        updateInitPass("HARD");
+        getChapterQuiz2();
+      } else if (order === 1) {
+        setOrder(3);
+      } else if (order === 2) {
+        setOrder(0);
+        updateInitComplete("EASY").then(
+          ()=>{
+          navigate('/mypage/todo');
+          }
+        );
+      } else if (order === 3) {
+        setOrder(0);
+        setQnumber(qnumber + 1);
+        updateInitPass("HARD");
+        getChapterQuiz2();
+      }
+    } else {
+      if (order === 0) {
+        setOrder(1);
+      } else if (order === 1) {
+        setOrder(2);
+      } else if (order === 2) {
+        setOrder(0);
+        updateInitComplete("EASY").then(
+          ()=>{
+          navigate('/mypage/todo');
+          }
+        );
+      } else if (order === 3) {
+        setIsConfirmOpen(true);
+      }
+    }
+  } else {
+    if (nextAlert) {
+      setQnumber(qnumber + 1);
+      updateInitPass("HARD");
+      getChapterQuiz2();
+    } else {
+      updateInitComplete("NORMAL").then(
+        ()=>{
+          navigate('/mypage/todo');
+        }
+      );
+    }
+  }
+  
+  setNext(true);
+  setIsAlertOpen(false);
 }
 
-
-const handleProcess = async () => {
-  try {
-    // 첫 번째로 updateInitPass 실행
-    await updateInitPass("HARD");
-
-    // 두 번째로 currentcurriculumId를 증가
-    await setcurrentcurriculumId(prev => prev + 1);  // 상태 변경은 바로 처리되지 않기 때문에 nextId를 변수로 저장해둠
-
-    // 세 번째로 getChapterQuiz 실행
-    await getChapterQuiz();
-
-  } catch (err) {
-    console.error("Error during process: ", err);
+const handleConfirm = (confirm) => {
+  if (confirm) {
+    setNextAlert(true);
+    setAlertMessage("다음 챕터의 문제로 넘어갑니다.");
+  } else {
+    setNextAlert(false);
+    setAlertMessage("시작 챕터가 설정되었습니다.");
   }
-};
 
-
+  setOrder(0);
+  setNext(false);
+  setIsConfirmOpen(false);
+  setIsAlertOpen(true);
+}
 
 // chapter 초기 테스트 내 챕터 통과 완료 처리 요청
 const updateInitPass = async (levelType) => {
@@ -374,15 +394,6 @@ useEffect(() => {
   }
 }, [time, data, order, qtype, answer]);
 
-const placeholderWord = () => {
-  var word = '1';
-  for (var i = 0; i < data[order].wordCount; i++) {
-    word += 'O';
-  }
-  console.log(word);
-  return word;
-}
-
   return (
     <TestSection>
       <SectionBarJsx />
@@ -432,6 +443,12 @@ const placeholderWord = () => {
           <InstructionLoading>
             <img src={LOADING} alt="loading"></img>
           </InstructionLoading>}
+          {isAlertOpen && <AlertJsx message={alertMessage} onAlert={()=>handleAlert(next)}></AlertJsx>}
+          {isConfirmOpen &&
+          <ConfirmJsx message="다음 챕터의 문제로 넘어가시겠습니까?"
+                    onConfirm={()=>handleConfirm(true)}
+                    onCancel={()=>handleConfirm(false)}>
+          </ConfirmJsx>}
         </ContentSection>
       </Content>
     </TestSection>
@@ -523,6 +540,7 @@ const Selection = styled.div`
 `
 
 const Label = styled.label`
+  white-space: pre;
   margin-top : 0.2rem;
   padding-left : 0.375rem;
 `

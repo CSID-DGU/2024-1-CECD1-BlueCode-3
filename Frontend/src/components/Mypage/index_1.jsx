@@ -106,65 +106,7 @@ function Study_theory() {
     navigate('/test');
   }
 
-  /*
-  <ProgressName> 교육 과정 진행 상황 </ProgressName>
-          <CurrentProgress>
-            <ProgressImg>
-              <svg viewBox="0 0 200 200">
-                <Circle></Circle>
-                <CircleCur strokeDasharray={processPass?`${2 * Math.PI * 87.5 * processPass / process} ${2 * Math.PI * 87.5 * (process - processPass) / process}`:"0 1"}
-                           transform={`rotate(-90, 100, 100)`}>
-                </CircleCur>
-              </svg>
-              <Percentage> {isNaN(Math.round(processPass / process * 100))?"":Math.round(processPass / process * 100) + "%"} </Percentage>
-            </ProgressImg>
-            {!testValid && <Progress>
-              <Lecture> - 초기 테스트 미응시 </Lecture>
-              <SubLecture onClick={enterExam}> 초기 테스트 바로가기 </SubLecture>
-            </Progress>}
-            {testValid && <Progress>
-            </Progress>}
-          </CurrentProgress>
-          <ProgressName> ㅇ 미션/업적 진행 상황 </ProgressName>
-          <CurrentProgress>
-            <Mission style={{backgroundColor : "#00E5BA"}}>
-              <Term> 일간 </Term>
-              <MissionContent>
-                {missionDaily.map(item => (
-                <SubMissionContent>
-                  <SubMission key={item.id}> {item.text} </SubMission>
-                  <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
-                </SubMissionContent>
-                ))}
-              </MissionContent>
-            </Mission>
-            <Mission style={{backgroundColor : "#00CFEE"}}>
-              <Term> 주간 </Term>
-              <MissionContent>
-                {missionWeekly.map(item => (
-                <SubMissionContent>
-                  <SubMission key={item.id}> {item.text}  </SubMission>
-                  <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
-                </SubMissionContent>
-                ))}
-              </MissionContent>
-            </Mission>
-            <Mission style={{backgroundColor : "#00B2FF"}}>
-              <Term> 업적 </Term>
-              <MissionContent>
-                {challenge.map(item => (item.missionStatus === "COMPLETED" && (
-                  <SubMission_ key={item.id} style={{color:"black"}}> {item.text} </SubMission_>
-                )))}
-              </MissionContent>
-            </Mission>
-          </CurrentProgress>
 
-          {!testValid && <Progress>
-                  <Lecture> - 초기 테스트 미응시 </Lecture>
-                  <SubLecture onClick={enterExam}> 초기 테스트 바로가기 </SubLecture>
-                </Progress>}
-                {testValid && <Progress></Progress>}
-          */
 
   return (
     <TestSection>
@@ -212,10 +154,14 @@ function Study_theory() {
             <SubContentTopRight>
               <Mission>
                 <Term> 업적 </Term>
-                <MissionContent>
-                {challenge.map(item => ((
-                  <SubMission_ key={item.id} style={{color:"black"}}> {item.title} {item.text} {item.currentCount} / {item.missionCount} </SubMission_>
-                )))}
+                <MissionContent height={height}>
+                {challenge.map(item => (<>
+                  <SubMission_ key={item.id}> {item.title} </SubMission_>
+                  <SubMissionContent>
+                    <SubMission key={item.id}> {item.text}  </SubMission>
+                    <SubMissionCount key={item.id}>{item.currentCount} / {item.missionCount} </SubMissionCount>
+                  </SubMissionContent>
+                  </>))}
                 </MissionContent>
               </Mission>
             </SubContentTopRight>
@@ -388,13 +334,13 @@ const Term = styled.p`
   color : #008BFF;
   font-size : 1.25rem;
 `
-
+// height : ${(props) => `${(props.height - 400) / 16}rem`};
 const MissionContent = styled.div`
-  display : flex;
   width : 100%;
-  height : 20rem;
+  display : flex;
   overflow : scroll;
   flex-direction : column;
+  height : ${(props) => `${(props.height - 400) / 16}rem`};
 
   &::-webkit-scrollbar {
     display : none;
@@ -402,8 +348,8 @@ const MissionContent = styled.div`
 `
 
 const SubMissionContent = styled.div`
-  display : flex;
   width : 100%;
+  display : flex;
   margin : 0.25rem 0rem;
 `
 
@@ -417,6 +363,6 @@ const SubMission_ = styled.div`
 `
 
 const SubMissionCount = styled.div`
-  width : 10%;
+  width : 11.25%;
   text-align : right;
 `
