@@ -62,7 +62,7 @@ public class EmailService {
         return "<html>" +
                 "<body>" +
                 "<h3>안녕하세요 !</h3><br>" +
-                "<p>인증 번호는 <b>"+code+"</b> 입니다.</p><br>" +
+                "<p>인증 번호는 <b>"+code+"</b>입니다.</p><br>" +
                 "<p>인증 번호의 유효시간은 3분입니다</p>" +
                 "</body>" +
                 "</html>";
