@@ -605,7 +605,7 @@ public class StudyService {
         studyRepository.saveAll(totalStudy);
 
         // 만약 이전 챕터가 testable = false일 경우, 연쇄적으로 pass 처리 필요
-        if (!chapterStudy.getCurriculum().getBefore().isTestable()) {
+        if (chapterStudy.getCurriculum().getBefore()!=null && !chapterStudy.getCurriculum().getBefore().isTestable()) {
             initPassByBeforeChapter(user, chapterStudy.getCurriculum().getBefore());
         }
 
