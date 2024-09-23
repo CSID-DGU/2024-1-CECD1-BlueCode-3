@@ -64,7 +64,7 @@ const TerminalJsx = () => {
 
     term.clear();
     term.write("Connecting to server...\r\n");
-    const socket = new WebSocket(`ws://localhost:5000/terminal`);
+    const socket = new WebSocket(`ws://http://3.37.159.243/:5000/terminal`);
     console.log(socket !== null)
     socket.onopen = () => {
       term.write("Connected.\r\nPlease wait...\r\n");
