@@ -1,16 +1,13 @@
-import { remove } from '../../remove';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import getUserInfo from '../../getUserInfo';
 import SectionBarJsx from '../SectionBar';
+import PrivateInfoJsx from '../PrivateInfo';
 import axiosInstance from '../../axiosInstance';
 import useChapterData from '../../useChapterData';
-import getChapterPass from '../../getChapterPass';
 import React, { useState, useEffect } from 'react';
+import MypageNavSectionJsx from '../MypageNavSection';
 
 import "highlight.js/styles/a11y-light.css";
 import ReactMarkdown from 'react-markdown';
-import rehypeHighlight from "rehype-highlight";
 
 
 
@@ -31,39 +28,7 @@ function Study_theory() {
     };
   }, []);
 
-  const [contentWidth, setContentWidth] = useState(width);
-
-  const [point, setPoint] = useState(0);
-
-  const [process, setProcess] = useState(0);
-  const [processPass, setProcessPass] = useState(0);
-
-  useEffect(() => {
-    getUserInfo()
-      .then(data => {
-        // 데이터 가져오기 성공 시 상태 업데이트
-        setPoint(data.exp);
-      })
-      .catch(error => {
-        // 데이터 가져오기 실패 시 에러 처리
-        console.error('Error fetching data:', error);
-      });
-
-      getChapterPass()
-      .then(data => {
-          // 데이터 가져오기 성공 시 상태 업데이트
-          setProcess(data.length);
-          setProcessPass(data.filter(element => element === true).length);
-      })
-        .catch(error => {
-          // 데이터 가져오기 실패 시 에러 처리
-        console.error('Error fetching data:', error);
-      });  
-  }, []);
-
-
   const color = {color : "#008BFF"};
-  const textDeco = { textDecoration : "none" };
 
   const [date, setDate] = useState(true);
   const [curriculum, setCurriculum] = useState(false);
@@ -105,57 +70,6 @@ function Study_theory() {
   const [groupedDataByTag, setGroupedByTag] = useState({});
 
   useEffect(() => {
-    /*
-    const fetchDataByDate = async () => {
-      try {
-        const data = await getChatHistoryByRoot();
-        const groupedByDate = data.list.reduce((acc, item) => {
-          const date = item.chatDate.split('T')[0]; // 날짜만 추출
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(item);
-          return acc;
-        }, {});
-
-        setGroupedDataByDate(groupedByDate);
-    
-      } catch (err) {
-        console.error(err);
-      } 
-    };
-  */
-    
-   /*
-    const fetchDataByTag= async () => {
-      try {
-        const data = await getChatHistoryByRoot();
-        console.log(data);
-        const groupedByTag = data.list.reduce((acc, item) => {
-          let tag = "";
-          if (item.questionType === "DEF"){
-             tag = "이론";
-          } else if (item.questionType === "CODE") {
-             tag = "코드";
-          } else if(item.questionType === "ERRORS"){
-             tag = "오류";        
-          }
-
-          if (!acc[tag]) {
-            acc[tag] = [];
-          }
-          acc[tag].push(item);
-          return acc;
-        }, {});
-
-        setGroupedByTag(groupedByTag);
-      } catch (err) {
-        console.error(err);
-      } 
-    };
-*/
-
-
     const fetchDataByDate = async () => {
       const data = await getChatHistoryByRoot();
       if(data){
@@ -171,39 +85,33 @@ function Study_theory() {
       }
       else{
         setGroupedDataByDate({});
-       
-      }
-      
+      }    
     };
 
     const fetchDataByTag= async () => {
-      
-        const data = await getChatHistoryByRoot();
-        if(data){
-       
+      const data = await getChatHistoryByRoot();
+      if(data){
         const groupedByTag = data.list.reduce((acc, item) => {
-          let tag = "";
-          if (item.questionType === "DEF"){
-             tag = "이론";
-          } else if (item.questionType === "CODE") {
-             tag = "코드";
-          } else if(item.questionType === "ERRORS"){
-             tag = "오류";        
-          }
-
-          if (!acc[tag]) {
-            acc[tag] = [];
-          }
-          acc[tag].push(item);
-          return acc;
-        }, {});
-
-        setGroupedByTag(groupedByTag);
+        let tag = "";
+        if (item.questionType === "DEF") {
+          tag = "이론";
+        } else if (item.questionType === "CODE") {
+          tag = "코드";
+        } else if(item.questionType === "ERRORS") {
+          tag = "오류";        
         }
-        else{
-          setGroupedByTag({});
+
+        if (!acc[tag]) {
+          acc[tag] = [];
         }
-        
+        acc[tag].push(item);
+        return acc;
+      }, {});
+
+      setGroupedByTag(groupedByTag);
+      } else{
+        setGroupedByTag({});
+      }
     };
 
     fetchDataByDate();
@@ -270,48 +178,15 @@ function Study_theory() {
      }
   }
 
-  const getChatHistoryByTag = async (chapterId) => {
-    try {
-      const userid = localStorage.getItem('userid');
-
-      const QuestionCallDto = {
-        'userId' : userid,
-        'curriculumId':chapterId
-      };
-      
-      const res = await axiosInstance.post('/chat/chat/historyByChapter', QuestionCallDto);
-      console.log(res);
-      return res.data;
-     }
-     catch (err){
-      console.error(err); 
-     }
-  }
-
 
 
   return (
     <TestSection>
+      <PrivateInfoJsx />
       <SectionBarJsx />
       <Content>
-        <NavSection height={height}>
-          <Static>
-            <NavLink style={textDeco} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
-            <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
-          </Static>
-          <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
-            <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
-          </Info>
-          <Dynamic>
-            <NavLink style={textDeco} to="/mypage/todo"><Nav> ㅇ 내 할일 관련 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/lecture"><Nav> ㅇ 내 강의 정보 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/question"><Nav style={color}> ㅇ 내 질문 정보 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
-          </Dynamic>
-        </NavSection>
-        <ContentSection width={contentWidth}>
+        <MypageNavSectionJsx height={height} l1={false} l2={false} l3={true} />
+        <ContentSection width={width}>
           <Order>
             <OrderType style={date?color:{}} onClick={selectDate}> ㅇ 날짜별 </OrderType>
             <OrderType style={curriculum?color:{}} onClick={selectCurriculum}> ㅇ 과정별 </OrderType>
@@ -320,18 +195,18 @@ function Study_theory() {
           <QuestionRecord height={height}> 
             {date && <QuestionInfo>
               {JSON.stringify(groupedDataByDate) === '{}'?
-              (<QuestionList>
-                  <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
-                </QuestionList>)
+              (<div>
+                <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
+              </div>)
               :
               (<>{Object.keys(groupedDataByDate).map(date => (
                 <div key={date}>
                   <QuestionTitle> {date.substr(5, 2) + '월 ' + date.substr(8, 2) + '일'} </QuestionTitle>
-                  <QuestionList>
+                  <div>
                     {groupedDataByDate[date].map((item, index) => (
-                      <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
+                    <QuestionListSub key={index} onClick={() => setQNA(item)}> ❝ {item.question} ❞ </QuestionListSub>
                     ))}
-                  </QuestionList>
+                  </div>
                 </div>
                 ))}</>)}
               </QuestionInfo>}
@@ -340,41 +215,41 @@ function Study_theory() {
               <div key={curr}>
                 <QuestionTitle> {curr} </QuestionTitle>
                 {groupedDataByChapter[curr].length > 0?
-                (<QuestionList>
+                (<div>
                   {groupedDataByChapter[curr].map((item, index) => (
-                    <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
+                    <QuestionListSub key={index} onClick={() => setQNA(item)}> ❝ {item.question} ❞ </QuestionListSub>
                   ))}
-                </QuestionList>)
+                </div>)
                 :
-                <QuestionList>
+                <div>
                   <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
-                </QuestionList>}
+                </div>}
               </div>
               ))}
             </QuestionInfo>}
             {tag && <QuestionInfo>
               {JSON.stringify(groupedDataByTag) === '{}'?
-              (<QuestionList>
+              (<div>
                 <QuestionListSub> 질문 내역이 없습니다. </QuestionListSub>
-              </QuestionList>)
+              </div>)
               :
               (<>{Object.keys(groupedDataByTag).map(tag => (
                 <div key={tag}>
                   <QuestionTitle> {tag} </QuestionTitle>
-                  <QuestionList>
+                  <div>
                     {groupedDataByTag[tag].map((item, index) => (
-                      <QuestionListSub key={index} onClick={() => setQNA(item)} style={{cursor: 'pointer'}}> {item.question}</QuestionListSub>
+                      <QuestionListSub key={index} onClick={() => setQNA(item)}> ❝ {item.question} ❞ </QuestionListSub>
                     ))}
-                  </QuestionList>
+                  </div>
                 </div>
                 ))}</>)}
             </QuestionInfo>}
             <QuestionContent height={height}>
               {selectedDialog === null ? "":<Dialog_client> <div> {selectedDialog.question} </div> </Dialog_client>} 
-              {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (<Dialog_server> 
-                  <div key={ansIndex}><ReactMarkdown>{ans}</ReactMarkdown></div>
-              </Dialog_server>
-              ))}
+              {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (
+              <Dialog_server> 
+                <div key={ansIndex}><ReactMarkdown>{ans}</ReactMarkdown></div>
+              </Dialog_server>))}
             </QuestionContent>
           </QuestionRecord>
         </ContentSection>
@@ -391,93 +266,17 @@ const TestSection = styled.div`
   height : 100vh;
 `
 
-const SectionBar = styled.div`
-  width : 100vw;
-  display : flex;
-  background : #008BFF;
-`
-
-const Logo = styled.div`
-  img {
-    height : 2rem;
-    width : 7.82rem;
-    margin : 1rem 4rem;
-  }
-`
-
 const Content = styled.div`
   display : flex;
 `
 
-const NavSection = styled.div`
-  display : flex;
-  min-width : 15rem;
-  flex-direction : column;
-  border-right : 0.125rem solid rgba(0, 0, 0, 0.125);
-  height : ${(props) => `${(props.height - 68) / 16}rem`};
-`
-
-const Static = styled.div`
-  padding : 0.625rem;
-  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.125);
-`
-
-const Info = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.125);
-`
-
-const InfoNav = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-
-  p {
-    margin : 0;
-    text-align : right;
-  }
-`
-
-const Nav = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-
-  &:hover {
-    color : #008BFF;
-    background : rgba(0, 139, 255, 0.25);
-  }
-`
-
-const Dynamic = styled.div`
-  overflow : scroll;
-  padding : 0.625rem;
-
-  &::-webkit-scrollbar {
-    display : none;
-  }
-`
-
 const ContentSection = styled.div`
-  margin : 2rem;
-  padding : 2rem;
-  border-radius : 1rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 370) / 16}rem`};
+  padding : 1rem;
+  margin : 1rem 0rem 1rem 1rem;
+  border : 0.125rem solid #008BFF;
+  border-radius : 1rem 0rem 0rem 1rem;
+  border-right-style : none;
+  width : ${(props) => `${(props.width - 291.5) / 16}rem`};
 `
 
 const Order = styled.div`
@@ -496,14 +295,13 @@ const OrderType = styled.div`
 const QuestionRecord = styled.div`
   display : flex;
   margin-top : 1rem;
-  height : ${(props) => `${(props.height - 265) / 16}rem`};
+  height : ${(props) => `${(props.height - 176) / 16}rem`};
 `
 
 const QuestionInfo = styled.div`
-  width : 32.5rem;
-  padding : 0.75rem 3.75rem 1.25rem 1.25rem;
+  width : 50%;
   overflow : scroll;
-  height : 30.375rem;
+  padding : 0rem 1rem;
 
   &::-webkit-scrollbar {
     display : none;
@@ -512,16 +310,13 @@ const QuestionInfo = styled.div`
 
 const QuestionTitle = styled.h3`
   font-weight : bold;
-  margin : 0.5rem 0rem;
- `
-
- const QuestionList = styled.div`
-  margin : 0.5rem 0rem 1.5rem 1rem;
+  margin : 1.75rem 0rem 0.75rem;
  `
 
  const QuestionListSub = styled.div`
   color : grey;
-  padding : 0.125rem;
+  cursor : pointer;
+  margin : 0.25rem 0rem;
 
   &:hover {
     font-weight : bold;
@@ -529,15 +324,14 @@ const QuestionTitle = styled.h3`
  `
 
 const QuestionContent = styled.div`
+  width : 50%;
   display : flex;
-  width : 75rem;
-  padding : 1.25rem;
+  padding : 1rem;
   overflow : scroll;
-  align-item : right;
   border-radius : 1rem;
   flex-direction : column;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  height : ${(props) => `${(props.height - 265) / 16}rem`};
+  border-top : 0.375rem solid #008BFF;
+  border-bottom : 0.375rem solid #008BFF;
 
   &::-webkit-scrollbar {
     display : none;
@@ -569,7 +363,6 @@ const Dialog_server = styled.div`
     word-break : break-word;
     overflow-wrap : break-word;
     background : rgba(0, 139, 255, 0.75);
-    border : 0.05rem solid rgba(0, 0, 0, 0.5);
     border-radius : 1.5rem 1.5rem 1.5rem 0rem;
   }
 `

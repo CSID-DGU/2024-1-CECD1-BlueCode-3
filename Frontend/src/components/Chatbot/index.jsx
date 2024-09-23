@@ -61,6 +61,11 @@ function Study_theory() {
     setDivValue(divVal);
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      AddDialog();
+    }
+  }
 
   return (
     <TestSection>
@@ -94,7 +99,7 @@ function Study_theory() {
               <Type style={divValue === "오류"?borderStyle:{}} onClick={()=>getDivValue("오류")}> #오류 </Type>
             </ChatType>
             <ChatInput>
-              <InputArea width={width} value={dialog} onChange={(e)=>setDialog(e.target.value)}></InputArea>
+              <InputArea width={width} value={dialog} onChange={(e)=>setDialog(e.target.value)} onKeyDown={handleKeyDown}></InputArea>
               <InputButton onClick={AddDialog}> <img src={Input}></img> </InputButton>          
             </ChatInput>
         </ContentSection>
