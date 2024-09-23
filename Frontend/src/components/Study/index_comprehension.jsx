@@ -112,15 +112,15 @@ function Study_training() {
     try {
       // 문제 타입 객관식
       if (qtype === "NUM") {
-        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/num', TestAnswerCallDto);
         // console.log("객관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "WORD") {
-        response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/word', TestAnswerCallDto);
         // console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/code', TestAnswerCallDto);
         // console.log("서술식 정답 요청 " + response.data.passed);
       }
         

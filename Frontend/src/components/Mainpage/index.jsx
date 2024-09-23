@@ -234,7 +234,7 @@ function Mainpage() {
                 'birth' : ''
               };
               
-              const res = await axios.post(process.env.REACT_APP_SPRING + "/user/user/findId", UserAddCallDto);
+              const res = await axios.post(process.env.REACT_APP_SPRING + "/user/findId", UserAddCallDto);
 
               setId(res.data);
 
