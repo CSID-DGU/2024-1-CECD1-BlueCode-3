@@ -136,7 +136,6 @@ public class UserService implements UserDetailsService {
             // 연속 로그인 미션 처리
             eventPublisher.publishEvent(new UserActionEvent(this, user, ServiceType.USER, MissionConst.createConstByUserStreakDay(user.getStreakCount())));
 
-
         } else if(!lastLoginDate.isEqual(today)){
             // 하루 이상 차이나면 1로 초기화
             user.setStreakCount(1);

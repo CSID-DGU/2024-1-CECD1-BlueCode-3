@@ -85,7 +85,7 @@ function Study_theory() {
       }
       else{
         setGroupedDataByDate({});
-      }    
+      }
     };
 
     const fetchDataByTag= async () => {
@@ -98,7 +98,7 @@ function Study_theory() {
         } else if (item.questionType === "CODE") {
           tag = "코드";
         } else if(item.questionType === "ERRORS") {
-          tag = "오류";        
+          tag = "오류";
         }
 
         if (!acc[tag]) {
@@ -151,7 +151,7 @@ function Study_theory() {
         'curriculumId':rootid
       };
       
-      const res = await axiosInstance.post('/chat/chat/historyByRoot', QuestionCallDto);
+      const res = await axiosInstance.post('/chat/historyByRoot', QuestionCallDto);
       //console.log(res);
       return res.data;
      }
@@ -169,7 +169,7 @@ function Study_theory() {
         'curriculumId':chapterId
       };
       
-      const res = await axiosInstance.post('/chat/chat/historyByChapter', QuestionCallDto);
+      const res = await axiosInstance.post('/chat/historyByChapter', QuestionCallDto);
       console.log(res);
       return res.data;
      }
@@ -247,7 +247,7 @@ function Study_theory() {
             <QuestionContent height={height}>
               {selectedDialog === null ? "":<Dialog_client> <div> {selectedDialog.question} </div> </Dialog_client>} 
               {selectedDialog === null ? "":selectedDialog.answer.map((ans, ansIndex) => (
-              <Dialog_server> 
+              <Dialog_server>
                 <div key={ansIndex}><ReactMarkdown>{ans}</ReactMarkdown></div>
               </Dialog_server>))}
             </QuestionContent>

@@ -55,13 +55,13 @@ function Study_training() {
     console.log(text);
   }, []);
 
-  
+
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const navigate = useNavigate();
   const goToNext = () => {
     // quiz 에서 다음 누르면 해당 서브챕터 pass 요청
     setIsConfirmOpen(true);
-    
+
   }
 
   const handleConfirm = (confirm) => {
@@ -69,7 +69,7 @@ function Study_training() {
       if (confirm) {
         postSubchapterPass(subChapId).then(
           () => {
-            navigate('/mypage/lecture'); 
+            navigate('/mypage/lecture');
           }
         );
         // navigate('/mypage/lecture');
@@ -86,7 +86,7 @@ function Study_training() {
 
   const goBack = ()=> {
     //이전페이지로 이동
-    
+
     if(text==='QUIZ'){
       window.location.replace(`/study/training/${subChapId}/CODE`);
     }
@@ -110,7 +110,7 @@ function Study_training() {
         'textType': textType
       };
         
-      const res = await axiosInstance.post('/curriculum/curriculum/text', CurriculumTextCallDto);
+      const res = await axiosInstance.post('/curriculum/text', CurriculumTextCallDto);
       console.log("학습데이터호출");
       setTraining(res.data.text);
     }
@@ -128,7 +128,7 @@ function Study_training() {
         'userId': userId,
         'curriculumId': subChapterid
       };
-      const res = await axiosInstance.post('/curriculum/curriculum/subChapter/pass', CurriculumPassCallDto);
+      const res = await axiosInstance.post('/curriculum/subChapter/pass', CurriculumPassCallDto);
       console.log(res);
     }
     catch (err){
@@ -163,7 +163,7 @@ function Study_training() {
                       onConfirm={()=>handleConfirm(true)}
                       onCancel={()=>handleConfirm(false)}>
           </ConfirmJsx>}
-          
+
         </ContentSection>
         {gptValue && <ChatbotSectionJsx height={height} subChapId={subChapId}/>}
       </Content>

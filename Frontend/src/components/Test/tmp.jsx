@@ -59,7 +59,7 @@ function App() {
     }
   };
   const accestTokenRecallTestApiClick = () => {
-    axios.post('/api/api/token',refresh_token_json,config)
+    axios.post(process.env.REACT_APP_SPRING + '/api/token',refresh_token_json,config)
       .then((res) => {
         console.log(res.data);
       })
@@ -75,7 +75,7 @@ function App() {
       'id' : loginData.id,
       'password' : hash_password
     };
-    axios.post('/api/api/auth/login', LoginCallDto, config)
+    axios.post(process.env.REACT_APP_SPRING + '/api/auth/login', LoginCallDto, config)
       .then((response) => {
         const accessToken = response.data.accessToken;
         localStorage.setItem("userid",response.data.userid);
@@ -94,7 +94,7 @@ function App() {
       'id' : loginData.id,
       'password' : loginData.password
     };
-    axios.post('/api/api/auth/login', LoginCallDto, config)
+    axios.post(process.env.REACT_APP_SPRING + '/api/auth/login', LoginCallDto, config)
       .then((response) => {
         const accessToken = response.data.accessToken;
         localStorage.setItem("userid",response.data.userid);
@@ -118,14 +118,14 @@ function App() {
       'birth' :createUserData.create_birth
     };
     
-    const res=await axios.post("/user/user/create", UserAddCallDto);
+    const res=await axios.post(process.env.REACT_APP_SPRING + "/user/create", UserAddCallDto);
     const userTableId=res.data;
     //초기 미션 할당
     try {
       const UserMissionDataCallDto = {
         'userId' : userTableId
         };
-      await axios.post('/mission/mission/init', UserMissionDataCallDto);
+      await axios.post(process.env.REACT_APP_SPRING + '/mission/init', UserMissionDataCallDto);
     }
     catch(err){
       console.log(err);
@@ -179,7 +179,7 @@ const getCurriculumInfoWithAuth = async () => {
         'curriculumId': "3"
       };
       try {
-        const res = await axiosInstance.post('/test/test/create/init', DataCallDto);
+        const res = await axiosInstance.post('/test/create/init', DataCallDto);
         console.log(res);
       } catch (err) {
         console.error(err);

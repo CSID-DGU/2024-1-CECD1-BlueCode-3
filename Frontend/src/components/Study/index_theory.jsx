@@ -46,7 +46,7 @@ function Study_theory() {
     // 네비게이션 부분이 변동하지 않도록 추가적인 코드가 필요함.
   }
 
-  
+
 
   const { subChapId, text } = useParams();
 
@@ -68,7 +68,7 @@ function Study_theory() {
         'textType': textType
       };
       
-      const res = await axiosInstance.post('/curriculum/curriculum/text', CurriculumTextCallDto);
+      const res = await axiosInstance.post('/curriculum/text', CurriculumTextCallDto);
       setTheory(res.data.text);
     }
     catch (err){

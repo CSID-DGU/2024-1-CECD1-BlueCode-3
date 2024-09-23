@@ -60,8 +60,7 @@ function Study_theory() {
         'userId' : userid
         };
 
-        const res = await axiosInstance.post('/mission/mission/find', UserMissionDataCallDto);
-        console.log(res.data);
+        const res = await axiosInstance.post('/mission/find', UserMissionDataCallDto);
         
         setMissionDaily(res.data.listDaily);
         setMissionWeekly(res.data.listWeekly);
@@ -76,7 +75,7 @@ function Study_theory() {
     const getChapters = async () => {
       try {
         const rootid = localStorage.getItem('rootid');
-        const res = await axiosInstance.get(`/curriculum/curriculum/${rootid}`);
+        const res = await axiosInstance.get(`/curriculum/${rootid}`);
         localStorage.setItem("chapters", JSON.stringify(res.data.list));
       }
       catch (err){

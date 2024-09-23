@@ -1,5 +1,6 @@
 import axiosInstance from './axiosInstance'
 
+const URL = "http://3.37.159.243:8080"
 
 const getUserInfo = async () => {
     try {
@@ -7,7 +8,7 @@ const getUserInfo = async () => {
         const UserIdDto = {
             'userId' : userid
         };
-        const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo', UserIdDto);
+        const res= await axiosInstance.post('/checkAuth/getUserInfo', UserIdDto)
         return res.data;
     }
     catch (err) {

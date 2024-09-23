@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from './axiosInstance'
 
+const URL = "http://3.37.159.243:8080"
 
 const useChapterData = () => {
     const [chapter, setChapter] = useState([]);
@@ -87,7 +88,7 @@ const useChapterData = () => {
             curriculumId: rootid,
           };
   
-          const res = await axiosInstance.post('/curriculum/curriculum/chapters', datacalldto);
+          const res = await axiosInstance.post('/curriculum/chapters', datacalldto);
           const chaptersData = res.data.list;
           console.log(chaptersData);
           

@@ -51,7 +51,7 @@ function Study_training() {
 
     try {
       //이해도 테스트용 3 문제 호출 api
-      const response = await axiosInstance.post('/test/test/create/normal', DataCallDto);
+      const response = await axiosInstance.post('/test/create/normal', DataCallDto);
       setRes(response.data.tests);
       console.log(response);
     } catch (err) {
@@ -90,7 +90,7 @@ function Study_training() {
   })
   
 
-  
+
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -108,7 +108,7 @@ function Study_training() {
       'quizId': res[order].quizId,
       'answer': answer
     };
-    
+
     try {
       // 문제 타입 객관식
       if (qtype === "NUM") {
@@ -176,7 +176,7 @@ function Study_training() {
         setIsConfirmOpen(true);
       }
     }
-      
+
     setIsAlertOpen(false);
   }
 
@@ -212,7 +212,7 @@ function Study_training() {
 
     try {
       //chapter 이해도 테스트 통과 완료 처리 요청
-      const response = await axiosInstance.post('/curriculum/curriculum/chapter/pass', CurriculumPassCallDto);
+      const response = await axiosInstance.post('/curriculum/chapter/pass', CurriculumPassCallDto);
       console.log(response);
     } catch (err) {
       console.error(err);
@@ -234,16 +234,16 @@ function Study_training() {
     if (time !== null && time >= -1) {
       const tick = () => {
         setTime(prev => prev - 1);
-        
+
         const minute = time / 60;
         setMin('0' + parseInt(minute).toString());
 
         const second = time % 60;
         setSec(second < 10 ? '0' + second : second.toString());
       };
-  
+
       const timerId = setInterval(tick, 1000);
-  
+
       return () => clearInterval(timerId);
     }
   }, [time]);
@@ -290,7 +290,7 @@ function Study_training() {
               {qtype === 'WORD' && (<WritingArea value={answer} placeholder={"O".repeat(res[order].wordCount)} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
               {(qtype === 'NUM' || qtype === 'WORD') && <Submit onClick={submitAnswer}> 제출 </Submit>}
             </>}
-          </Instruction>  
+          </Instruction>
           <Train height={height}>
             {qtype === 'CODE' &&
             <><Editor height="100%"
@@ -311,7 +311,7 @@ function Study_training() {
                     onConfirm={()=>handleConfirm(true)}
                     onCancel={()=>handleConfirm(false)}>
           </ConfirmJsx>}
-          {isOptionOpen && 
+          {isOptionOpen &&
           <OptionJsx message={dataPassed?"중급자 문제를 맞추셨습니다.":"중급자 문제를 틀리셨습니다."}
                      onOption1={()=>handleOption('EASY')}
                      onOption2={()=>handleOption('NORMAL')}

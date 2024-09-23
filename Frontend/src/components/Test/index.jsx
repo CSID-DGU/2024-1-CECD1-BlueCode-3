@@ -64,7 +64,7 @@ function Study_theory() {
           'curriculumId' : rootid,
         };
   
-        const res = await axiosInstance.post('/curriculum/curriculum/create', datacalldto);
+        const res = await axiosInstance.post('/curriculum/create', datacalldto);
       }
       catch (err){
         console.error(err); 
@@ -109,7 +109,7 @@ const getChapterQuiz =  async () =>{
     try {
       //초기 테스트용 4 문제 호출 api
       setData([]);
-      const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
+      const response = await axiosInstance.post('/test/create/init', DataCallDto);
       setData(response.data.tests); //4 문제를 Data에 저장
       console.log(response);
     } catch (err) {
@@ -295,7 +295,7 @@ const handleAlert = (next) => {
       );
     }
   }
-  
+
   setNext(true);
   setIsAlertOpen(false);
 }
@@ -325,7 +325,7 @@ const updateInitPass = async (levelType) => {
   };
   
   try {
-    const res = await axiosInstance.post('/curriculum/curriculum/init/pass', initChapterPassRequestDto);
+    const res = await axiosInstance.post('/curriculum/init/pass', initChapterPassRequestDto);
     console.log("curi id "+ curriculumIds[currentcurriculumId]+"에 레벨타입 "+ levelType+ "으로 패스 요청");
   } catch (err) {
     console.error(err);
@@ -341,8 +341,8 @@ const updateInitComplete = async (levelType) => {
   };
 
   try {
-    const res = await axiosInstance.post('/curriculum/curriculum/init/complete', initChapterPassRequestDto);
-    await axiosInstance.get(`/test/test/complete/init/${userId}`);
+    const res = await axiosInstance.post('/curriculum/init/complete', initChapterPassRequestDto);
+    await axiosInstance.get(`/test/complete/init/${userId}`);
   } catch (err) {
     console.error(err);
   }
@@ -390,7 +390,7 @@ useEffect(() => {
   if (time !== null && time >= -1) {
     const tick = () => {
       setTime(prev => prev - 1);
-      
+
       const minute = time / 60;
       setMin('0' + parseInt(minute).toString());
 
@@ -444,7 +444,7 @@ useEffect(() => {
               {qtype === 'WORD' && (<WritingArea value={answer} placeholder={"O".repeat(data[order].wordCount)} onChange={(e)=>setAnswer(e.target.value)}></WritingArea>)}
               {(qtype === 'NUM' || qtype === 'WORD') && <Submit onClick={submitAnswer}> 제출 </Submit>}
             </>}
-          </Instruction>  
+          </Instruction>
           <Train height={height}>
             {qtype === 'CODE' &&
             <><Editor height="100%"

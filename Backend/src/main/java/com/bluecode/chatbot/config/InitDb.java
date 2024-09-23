@@ -1159,16 +1159,16 @@ public class InitDb {
             missions.add(createMission(50, MissionType.WEEKLY, ServiceType.USER, MissionConst.USER_LOGIN, "7일 로그인하기", 7));
 
             // User 도전과제 미션
-            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "1일 연속 로그인하기", 1));
-            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "2일 연속 로그인하기", 2));
-            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "4일 연속 로그인하기", 4));
-            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "8일 연속 로그인하기", 8));
-            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "16일 연속 로그인하기", 16));
-            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "32일 연속 로그인하기", 32));
-            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "64일 연속 로그인하기", 64));
-            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "128일 연속 로그인하기", 128));
-            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "256일 연속 로그인하기", 256));
-            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.USER, MissionConst.USER_STREAK, "512일 연속 로그인하기", 512));
+            missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(1), "1일 연속 로그인하기", 1));
+            missions.add(createMission(20, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(2), "2일 연속 로그인하기", 1));
+            missions.add(createMission(40, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(4), "4일 연속 로그인하기", 1));
+            missions.add(createMission(80, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(8), "8일 연속 로그인하기", 1));
+            missions.add(createMission(160, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(16), "16일 연속 로그인하기", 1));
+            missions.add(createMission(320, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(32), "32일 연속 로그인하기", 1));
+            missions.add(createMission(640, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(64), "64일 연속 로그인하기", 1));
+            missions.add(createMission(1280, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(128), "128일 연속 로그인하기", 1));
+            missions.add(createMission(2560, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(256), "256일 연속 로그인하기", 1));
+            missions.add(createMission(5120, MissionType.CHALLENGE, ServiceType.USER, MissionConst.createConstByUserStreakDay(512), "512일 연속 로그인하기", 1));
 
             // mission 도전과제 미션
             missions.add(createMission(10, MissionType.CHALLENGE, ServiceType.MISSION, MissionConst.MISSION_DAILY_COMPLETE, "일일 미션 전체 1회 완료하기", 1));
