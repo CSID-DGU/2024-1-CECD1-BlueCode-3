@@ -134,6 +134,7 @@ const getChapterQuiz2 =  async () =>{
     try {
       //초기 테스트용 4 문제 호출 api
       setData([]);
+      setOrder(0);
       const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
       setData(response.data.tests); //4 문제를 Data에 저장
       setcurrentcurriculumId(prev => prev + 1);
@@ -169,38 +170,38 @@ const submitAnswer = async () => {
       // 문제 타입 객관식
       //const confirm = window.confirm("");
       if (qtype === "NUM") {
-        //response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
-        await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto).then(
-          (res)=>{
-            setDataPassed(res.data.passed);
-          }
-        );
+        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+        //await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto).then(
+        //  (res)=>{
+        //    setDataPassed(res.data.passed);
+        //  }
+        //);
         //console.log("객관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "WORD") {
-        //response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
-        await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto).then(
-          (res)=>{
-            setDataPassed(res.data.passed);
-          }
-        );
+        response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        //await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto).then(
+        //  (res)=>{
+        //    setDataPassed(res.data.passed);
+        //  }
+        //);
         //console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        //response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
-        await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto).then(
-          (res)=>{
-            setDataPassed(res.data.passed);
-          }
-        );
+        response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
+        //await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto).then(
+        //  (res)=>{
+        //    setDataPassed(res.data.passed);
+        //  }
+        //);
         //console.log("서술식 정답 요청 " + response.data.passed);
       }
       
       // response.data.passed === true
-      //setDataPassed(response.data.passed);
+      setDataPassed(response.data.passed);
       //setDataPassed(confirm);
       setAnswer('');
-      if(dataPassed) {
+      if(response.data.passed === true) {
         if (order === 0) {
           setIsAlertOpen(true);
           setAlertMessage("중급자 문제르 맞췄기에, 다음 챕터의 문제로 넘어갑니다.");
@@ -308,7 +309,7 @@ const handleConfirm = (confirm) => {
     setAlertMessage("시작 챕터가 설정되었습니다.");
   }
 
-  setOrder(0);
+  //setOrder(0);
   setNext(false);
   setIsConfirmOpen(false);
   setIsAlertOpen(true);
