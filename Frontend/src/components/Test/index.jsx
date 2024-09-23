@@ -169,20 +169,35 @@ const submitAnswer = async () => {
       // 문제 타입 객관식
       //const confirm = window.confirm("");
       if (qtype === "NUM") {
-        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto)
+        //response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+        await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto).then(
+          (res)=>{
+            setDataPassed(res.data.passed);
+          }
+        );
         //console.log("객관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "WORD") {
-        response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        //response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto).then(
+          (res)=>{
+            setDataPassed(res.data.passed);
+          }
+        );
         //console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
+        //response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
+        await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto).then(
+          (res)=>{
+            setDataPassed(res.data.passed);
+          }
+        );
         //console.log("서술식 정답 요청 " + response.data.passed);
       }
       
       // response.data.passed === true
-      setDataPassed(response);
+      //setDataPassed(response.data.passed);
       //setDataPassed(confirm);
       setAnswer('');
       if(dataPassed) {
