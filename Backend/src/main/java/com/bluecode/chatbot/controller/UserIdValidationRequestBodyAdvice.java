@@ -34,7 +34,7 @@ public class UserIdValidationRequestBodyAdvice extends RequestBodyAdviceAdapter 
     @Override
     public Object afterBodyRead(Object body, HttpInputMessage inputMessage,MethodParameter parameter,
                                 Type targetType,Class<? extends HttpMessageConverter<?>> converterType){
-       /* String userIdFromObject;
+       String userIdFromObject;
         String userIdFromJwt;
         try{
             // body 를 jsonNode 로 변환 후 userid 추출
@@ -56,7 +56,7 @@ public class UserIdValidationRequestBodyAdvice extends RequestBodyAdviceAdapter 
                 throw new AccessDeniedException("JWT 토큰 ID와 Body ID가 일치하지 않음");
             }
         }
-*/
+
         return super.afterBodyRead(body, inputMessage, parameter, targetType, converterType);
     }
 

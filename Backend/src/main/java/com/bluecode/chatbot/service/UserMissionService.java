@@ -87,6 +87,7 @@ public class UserMissionService {
         // dto mapping
         for (UserMissions um : daily) {
             UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setTitle(um.getMission().getTitle());
             element.setText(um.getMission().getText());
             element.setMissionCount(um.getMission().getMissionCount());
             element.setCurrentCount(um.getCurrentCount());
@@ -98,6 +99,7 @@ public class UserMissionService {
         // dto mapping
         for (UserMissions um : weekly) {
             UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setTitle(um.getMission().getTitle());
             element.setText(um.getMission().getText());
             element.setMissionCount(um.getMission().getMissionCount());
             element.setCurrentCount(um.getCurrentCount());
@@ -109,6 +111,7 @@ public class UserMissionService {
         // dto mapping
         for (UserMissions um : challenge) {
             UserMissionDataElementDto element = new UserMissionDataElementDto();
+            element.setTitle(um.getMission().getTitle());
             element.setText(um.getMission().getText());
             element.setMissionCount(um.getMission().getMissionCount());
             element.setCurrentCount(um.getCurrentCount());

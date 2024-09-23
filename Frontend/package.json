@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@monaco-editor/react": "^4.6.0",
+    "@mui/icons-material": "^6.0.1",
+    "@mui/material": "^6.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -11,6 +16,8 @@
     "highlight.js": "^11.10.0",
     "http-proxy-middleware": "^3.0.0",
     "indent-textarea": "^4.0.0",
+    "monaco-editor": "^0.51.0",
+    "monaco-themes": "^0.4.4",
     "pyodide": "^0.26.1",
     "react": "^18.3.1",
     "react-cookies": "^0.1.1",
@@ -23,7 +30,9 @@
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "styled-components": "^6.1.11",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xterm": "^5.3.0",
+    "xterm-addon-fit": "^0.8.0"
   },
   "scripts": {
     "start": "react-scripts start",

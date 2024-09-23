@@ -52,7 +52,7 @@ const useChapterData = () => {
 
     useEffect(() => {  
       if (currentChapter.length > 0) {
-        //console.log(currentChapter);
+        console.log(currentChapter);
       }
     }, [currentChapter]);
   
@@ -90,7 +90,7 @@ const useChapterData = () => {
   
           const res = await axiosInstance.post('/curriculum/chapters', datacalldto);
           const chaptersData = res.data.list;
-          //console.log(chaptersData);
+          console.log(chaptersData);
           
           if (!chaptersData)
             return;
@@ -100,12 +100,10 @@ const useChapterData = () => {
           setChapterLevel(chapterLevels);
           setChapterPass(chapterPassed);
 
-
           chaptersData.forEach((chapter) => {
             const currentChapters = chapter.subChapters.map(subChapter => subChapter.passed);
             setCurrentChapter(prev => [...prev, currentChapters]);
           });
-        
         } catch (err) {
           console.error(err);
         }
@@ -113,6 +111,7 @@ const useChapterData = () => {
   
       getChapters();
       getCurrentChapters();
+
     }, []);
   
     return {
