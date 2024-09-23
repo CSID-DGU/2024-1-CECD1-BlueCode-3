@@ -400,14 +400,11 @@ function Mainpage() {
     }
   };
 
-  const getStatusR = (text, textValid, textDup) => {
-    if (text === '') {
-      return 'default';
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      SignIn();
     }
-    else {
-      return textValid && textDup ? 'valid' : 'invalid';
-    }
-  };
+  }
 
   return (
     <MainpageSection>
@@ -418,8 +415,8 @@ function Mainpage() {
         <SectionName id="SectionName"> 로그인 </SectionName>
         
         {SignInValue && (<ChangingSection>
-          <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)}></InputArea>
-          <InputArea type="password" placeholder="비밀번호" value={passwd} onChange={(e)=>setPasswd(e.target.value)}></InputArea>
+          <InputArea type="text" placeholder="아이디" value={id} onChange={(e)=>setId(e.target.value)} onKeyDown={handleKeyDown}></InputArea>
+          <InputArea type="password" placeholder="비밀번호" value={passwd} onChange={(e)=>setPasswd(e.target.value)} onKeyDown={handleKeyDown}></InputArea>
           <Button onClick={SignIn}> 로 그 인 </Button>
           <Others>
             <p onClick={ChangeToFindId}> 아이디 찾기 </p>
@@ -538,8 +535,8 @@ const Logo = styled.div`
 
 const SectionName = styled.p`
   display : flex;
-  margin : 1rem auto ;
   color : #008BFF;
+  margin : 1rem auto;
   font-weight : bold;
   font-size : 1.125rem;
   justify-content : center;
@@ -594,14 +591,15 @@ const ButtonArea = styled.div`
 
 const Btn = styled.button`
   border : none;
+  height : 3rem;
   width : 9.5rem;
   color : #FFFFFF;
-  height : 3rem;
+  cursor : pointer;
   font-weight : bold;
   font-size : 1.25rem;
   background : #008BFF;
-  border-radius : 0.5rem;
   margin : auto 0.25rem;
+  border-radius : 0.5rem;
 `
 
 const Button = styled.button`
@@ -609,6 +607,7 @@ const Button = styled.button`
   border : none;
   width : 20rem;
   color : #FFFFFF;
+  cursor : pointer;
   font-weight : bold;
   font-size : 1.25rem;
   background : #008BFF;
@@ -623,6 +622,7 @@ const Others = styled.div`
 
   p {
     opacity : 0.5;
+    cursor : pointer;
     font-weight : bold;
     font-size : 0.875rem;
     display : inline-block;

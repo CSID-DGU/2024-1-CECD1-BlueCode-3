@@ -77,19 +77,18 @@ public class InitDb {
             curriculumRepository.save(root);
 
             // 챕터
-            Curriculums chap1 = Curriculums.createCurriculum(root, root, null, null, "파이썬 환경", false, 1, 0, 1, false, false, LangType.PYTHON);
-            Curriculums chap2 = Curriculums.createCurriculum(root, root, null, null, "변수와 자료형", true, 2, 0, 13, false, false, LangType.PYTHON);
-            Curriculums chap3 = Curriculums.createCurriculum(root, root, null, null, "문자열 처리", true, 3, 0, 9, false, false, LangType.PYTHON);
-            Curriculums chap4 = Curriculums.createCurriculum(root, root, null, null, "조건문", true, 4, 0, 2, false, false, LangType.PYTHON);
-            Curriculums chap5 = Curriculums.createCurriculum(root, root, null, null, "반복문", true, 5, 0, 5, false, false, LangType.PYTHON);
-            Curriculums chap6 = Curriculums.createCurriculum(root, root, null, null, "함수", true, 6, 0, 12, false, false, LangType.PYTHON);
-            Curriculums chap7 = Curriculums.createCurriculum(root, root, null, null, "자료구조", true, 7, 0, 6, false, false, LangType.PYTHON);
-            Curriculums chap8 = Curriculums.createCurriculum(root, root, null, null, "파일 처리", false, 8, 0, 6, false, false, LangType.PYTHON);
-            Curriculums chap9 = Curriculums.createCurriculum(root, root, null, null, "예외 처리", true, 9, 0, 4, false, false, LangType.PYTHON);
-            Curriculums chap10 = Curriculums.createCurriculum(root, root, null, null, "클래스와 객체", false, 10, 0, 10, false, false, LangType.PYTHON);
-            Curriculums chap11 = Curriculums.createCurriculum(root, root, null, null, "모듈과 패키지", false, 11, 0, 2, false, false, LangType.PYTHON);
+            Curriculums chap1 = Curriculums.createCurriculum(root, root, null, null, "변수와 자료형", true, 2, 0, 13, false, false, LangType.PYTHON);
+            Curriculums chap2 = Curriculums.createCurriculum(root, root, null, null, "문자열 처리", true, 3, 0, 9, false, false, LangType.PYTHON);
+            Curriculums chap3 = Curriculums.createCurriculum(root, root, null, null, "조건문", true, 4, 0, 2, false, false, LangType.PYTHON);
+            Curriculums chap4 = Curriculums.createCurriculum(root, root, null, null, "반복문", true, 5, 0, 5, false, false, LangType.PYTHON);
+            Curriculums chap5 = Curriculums.createCurriculum(root, root, null, null, "함수", true, 6, 0, 12, false, false, LangType.PYTHON);
+            Curriculums chap6 = Curriculums.createCurriculum(root, root, null, null, "자료구조", true, 7, 0, 6, false, false, LangType.PYTHON);
+            Curriculums chap7 = Curriculums.createCurriculum(root, root, null, null, "파일 처리", false, 8, 0, 6, false, false, LangType.PYTHON);
+            Curriculums chap8 = Curriculums.createCurriculum(root, root, null, null, "예외 처리", true, 9, 0, 4, false, false, LangType.PYTHON);
+            Curriculums chap9 = Curriculums.createCurriculum(root, root, null, null, "클래스와 객체", false, 10, 0, 10, false, false, LangType.PYTHON);
+            Curriculums chap10 = Curriculums.createCurriculum(root, root, null, null, "모듈과 패키지", false, 11, 0, 2, false, false, LangType.PYTHON);
 
-            List<Curriculums> chapters = Arrays.asList(chap1, chap2, chap3, chap4, chap5, chap6, chap7, chap8, chap9, chap10, chap11);
+            List<Curriculums> chapters = Arrays.asList(chap1, chap2, chap3, chap4, chap5, chap6, chap7, chap8, chap9, chap10);
             curriculumRepository.saveAll(chapters);
 
             // before 설정
@@ -103,7 +102,6 @@ public class InitDb {
             chap8.setBefore(chap7);
             chap9.setBefore(chap8);
             chap10.setBefore(chap9);
-            chap11.setBefore(chap10);
 
             // next 설정
             chap1.setNext(chap2);
@@ -115,93 +113,90 @@ public class InitDb {
             chap7.setNext(chap8);
             chap8.setNext(chap9);
             chap9.setNext(chap10);
-            chap10.setNext(chap11);
-            chap11.setNext(null);
+            chap10.setNext(null);
             curriculumRepository.saveAll(chapters);
 
             // 서브 챕터
             List<Curriculums> sub = new ArrayList<>();
 
-            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "파이썬 설치", false, 1, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "변수 선언과 활용", false, 1, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "정수와 실수", false, 1, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "문자와 문자열", false, 1, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "불리언", false, 1, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "입력 input()과 출력 print()", false, 1, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "int(), float()", false, 1, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "str(), bool()", false, 1, 7, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "list(), tuple()", false, 1, 8, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "set(), dict()", false, 1, 9, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "chr(), ord()", false, 1, 10, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "산술 연산자 - '+', '-', '*', '/', '//', '%', '**'", false, 1, 11, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "비교 연산자 - '==', '!=', '>', '<', '>=', '<='", false, 1, 12, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap1, root, null, null, "논리 연산자 - 'and', 'or', 'not'", false, 1, 13, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "변수 선언과 활용", false, 2, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "정수와 실수", false, 2, 2, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "문자와 문자열", false, 2, 3, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "불리언", false, 2, 4, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "입력 input()과 출력 print()", false, 2, 5, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "int(), float()", false, 2, 6, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "str(), bool()", false, 2, 7, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "list(), tuple()", false, 2, 8, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "set(), dict()", false, 2, 9, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "chr(), ord()", false, 2, 10, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "산술 연산자 - '+', '-', '*', '/', '//', '%', '**'", false, 2, 11, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "비교 연산자 - '==', '!=', '>', '<', '>=', '<='", false, 2, 12, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "논리 연산자 - 'and', 'or', 'not'", false, 2, 13, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "인덱싱 및 슬라이싱", false, 2, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "upper(), lower()", false, 2, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "strip(), lstrip(), rstrip()", false, 2, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "replace(), split(), join()", false, 2, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "find(), count()", false, 2, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "isalpha(), isdigit(), isalnum()", false, 2, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "startswith(), endswith()", false, 2, 7, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "capitalize(), title(), swapcase()", false, 2, 8, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap2, root, null, null, "포맷 - '%', format(), f-string, Template", false, 2, 9, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "인덱싱 및 슬라이싱", false, 3, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "upper(), lower()", false, 3, 2, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "strip(), lstrip(), rstrip()", false, 3, 3, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "replace(), split(), join()", false, 3, 4, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "find(), count()", false, 3, 5, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "isalpha(), isdigit(), isalnum()", false, 3, 6, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "startswith(), endswith()", false, 3, 7, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "capitalize(), title(), swapcase()", false, 3, 8, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "포맷 - '%', format(), f-string, Template", false, 3, 9, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "if, elif, else", false, 3, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap3, root, null, null, "조건문 중첩", false, 3, 2, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap4, root, null, null, "if, elif, else", false, 4, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap4, root, null, null, "조건문 중첩", false, 4, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap4, root, null, null, "for", false, 4, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap4, root, null, null, "while", false, 4, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap4, root, null, null, "break, continue, else", false, 4, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap4, root, null, null, "반복문 중첩", false, 4, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap4, root, null, null, "리스트 컴프리헨션", false, 4, 5, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "for", false, 5, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "while", false, 5, 2, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "break, continue, else", false, 5, 3, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "반복문 중첩", false, 5, 4, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "리스트 컴프리헨션", false, 5, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "def", false, 5, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "매개변수와 반환값", false, 5, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "위치 인자와 키워드 인자", false, 5, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "가변 인자", false, 5, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "재귀 함수", false, 5, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "람다 함수", false, 5, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "len(), sum()", false, 5, 7, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "min(), max()", false, 5, 8, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "sorted(), zip()", false, 5, 9, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "range(), enumerate()", false, 5, 10, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "abs(), round()", false, 5, 11, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap5, root, null, null, "map(), filter(), reduce()", false, 5, 12, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "def", false, 6, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "매개변수와 반환값", false, 6, 2, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "위치 인자와 키워드 인자", false, 6, 3, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "가변 인자", false, 6, 4, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "재귀 함수", false, 6, 5, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "람다 함수", false, 6, 6, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "len(), sum()", false, 6, 7, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "min(), max()", false, 6, 8, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "sorted(), zip()", false, 6, 9, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "range(), enumerate()", false, 6, 10, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "abs(), round()", false, 6, 11, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "map(), filter(), reduce()", false, 6, 12, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "리스트와 리스트 메서드", false, 6, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "튜플과 튜플 불변성", false, 6, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "딕셔너리와 딕셔너리 메서드", false, 6, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "집합과 집합 연산", false, 6, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "큐와 스택", false, 6, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap6, root, null, null, "링크드 리스트", false, 6, 6, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "리스트와 리스트 메서드", false, 7, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "튜플과 튜플 불변성", false, 7, 2, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "딕셔너리와 딕셔너리 메서드", false, 7, 3, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "집합과 집합 연산", false, 7, 4, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "큐와 스택", false, 7, 5, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "링크드 리스트", false, 7, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "파일 열기 모드('r', 'w', 'a', 'x', 바이너리, 추가 옵션)", false, 7, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "파일 읽기 - read(), readline(), readlines()", false, 7, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "파일 쓰기 - write(), writelines()", false, 7, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "csv 파일 처리", false, 7, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "json 파일 처리", false, 7, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap7, root, null, null, "json 데이터 파싱 및 생성", false, 7, 6, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "파일 열기 모드('r', 'w', 'a', 'x', 바이너리, 추가 옵션)", false, 8, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "파일 읽기 - read(), readline(), readlines()", false, 8, 2, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "파일 쓰기 - write(), writelines()", false, 8, 3, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "csv 파일 처리", false, 8, 4, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "json 파일 처리", false, 8, 5, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "json 데이터 파싱 및 생성", false, 8, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "예외 발생 원리", false, 8, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "try, except, else, finally", false, 8, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "다양한 종류의 예외", false, 8, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap8, root, null, null, "사용자 정의 예외", false, 8, 4, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "예외 발생 원리", false, 9, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "try, except, else, finally", false, 9, 2, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "다양한 종류의 예외", false, 9, 3, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "사용자 정의 예외", false, 9, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "객체 지향 프로그래밍의 개념", false, 9, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "클래스", false, 9, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "객체 생성", false, 9, 3, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "생성자(__init__)", false, 9, 4, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "소멸자(__del__)", false, 9, 5, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "상속", false, 9, 6, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "메서드 오버라이딩(오버로딩과의 차이점)", false, 9, 7, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "다형성", false, 9, 8, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "접근 제어자", false, 9, 9, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap9, root, null, null, "게터와 세터", false, 9, 10, 1, true, false, LangType.PYTHON));
 
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "객체 지향 프로그래밍의 개념", false, 10, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "클래스", false, 10, 2, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "객체 생성", false, 10, 3, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "생성자(__init__)", false, 10, 4, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "소멸자(__del__)", false, 10, 5, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "상속", false, 10, 6, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "메서드 오버라이딩(오버로딩과의 차이점)", false, 10, 7, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "다형성", false, 10, 8, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "접근 제어자", false, 10, 9, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "게터와 세터", false, 10, 10, 1, true, false, LangType.PYTHON));
-
-            sub.add(Curriculums.createCurriculum(chap11, root, null, null, "모듈의 개념과 import", false, 11, 1, 1, true, false, LangType.PYTHON));
-            sub.add(Curriculums.createCurriculum(chap11, root, null, null, "표준 라이브러리 - math, datetime, os", false, 11, 2, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "모듈의 개념과 import", false, 10, 1, 1, true, false, LangType.PYTHON));
+            sub.add(Curriculums.createCurriculum(chap10, root, null, null, "표준 라이브러리 - math, datetime, os", false, 10, 2, 1, true, false, LangType.PYTHON));
 
             curriculumRepository.saveAll(sub);
         }
@@ -438,36 +433,6 @@ public class InitDb {
                     "오류가 발생하여 프로그램이 종료됩니다.",
                     "사용자 정의 예외 발생\n프로그램 종료", QuizLevel.NORMAL,0));
 
-            // 챕터 10
-//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
-//                    "다음 설명에 해당하는 객체지향 프로그래밍의 특징은 무엇일까요?\n\n- 서로 다른 클래스의 객체를 동일한 타입으로 취급하여 공통된 인터페이스를 통해 다양한 객체를 사용할 수 있습니다.\n- 예를 들어, 동물 클래스의 메서드를 호출하여 다양한 동물 객체의 울음소리를 들을 수 있습니다.",
-//                    "상속",
-//                    "다형성",
-//                    "캡슐화",
-//                    "추상화",
-//                    "다형성", QuizLevel.EASY,0));
-//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
-//                    "클래스의 생성자 (init) 메서드의 주된 역할은 무엇일까요?",
-//                    "객체가 소멸될 때 자동으로 호출되어 자원을 해제하는 역할",
-//                    "객체가 생성될 때 초기화 작업을 수행하는 역할",
-//                    "클래스의 속성 값을 변경하는 역할",
-//                    "클래스의 메서드를 호출하는 역할",
-//                    "객체가 생성될 때 초기화 작업을 수행하는 역할", QuizLevel.EASY,0));
-//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
-//                    "```\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n\n    def sound(self):\n        print(\"동물의 소리\")\n\nclass Dog(Animal):\n    def sound(self):\n        print(\"멍멍\")\n\ndog = Dog(\"멍멍이\")\ndog.sound()\n```\n\n위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",
-//                    "동물의 소리",
-//                    "멍멍",
-//                    "오류 발생",
-//                    "아무것도 출력되지 않음",
-//                    "멍멍", QuizLevel.NORMAL,0));
-//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.NUM,
-//                    "```\nclass Person:\n    def __init__(self, name, age):\n        self.__name = name\n        self.__age = age\n\n    def get_name(self):\n        return self.__name\n\nperson = Person(\"홍길동\", 30)\nprint(person.name)\n```\n\n위 파이썬 코드를 실행했을 때 출력 결과로 알맞은 것을 고르세요.",
-//                    "홍길동",
-//                    "30",
-//                    "오류 발생",
-//                    "아무것도 출력되지 않음",
-//                    "오류 발생", QuizLevel.NORMAL,0));
-
             // 답답형
             // 챕터 2
             quizList.add(Quiz.createQuiz(chapter.get(1), QuizType.WORD,
@@ -679,38 +644,7 @@ public class InitDb {
                     null,
                     "THIS IS A CUSTOM ERROR - Error handled.", QuizLevel.NORMAL,39));
 
-            // 챕터 10
-//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
-//                    "다음 괄호 안에 들어갈 알맞은 답을 적으세요.\n\n- 클래스 내에서 객체가 생성될 때 자동으로 호출되는 특별한 메서드로, 이 메서드는 객체의 초기화를 담당하며 ' __(        )__'으로 정의된다.",
-//                    null,
-//                    null,
-//                    null,
-//                    null,
-//                    "init", QuizLevel.EASY,4));
-//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
-//                    "",
-//                    null,
-//                    null,
-//                    null,
-//                    null,
-//                    "", QuizLevel.EASY,0));
-//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
-//                    "```\nclass MyClass:\n    def __init__(self, value):\n        self.__value = value\n\n    def get_value(self):\n        return self.__value\n\n    def set_value(self, value):\n        if value > 0:\n            self.__value = value\n        else:\n            raise ValueError(\"Value must be positive\")\n\nobj = MyClass(10)\nobj.set_value(20)\nprint(obj.get_value())\n\ntry:\n    obj.set_value(-5)\nexcept ValueError as e:\n    print(e)\n```\n\n위 파이썬 코드의 실행 결과를 적으시오.",
-//                    null,
-//                    null,
-//                    null,
-//                    null,
-//                    "20 Value must be positive", QuizLevel.NORMAL,25));
-//            quizList.add(Quiz.createQuiz(chapter.get(9), QuizType.WORD,
-//                    "```\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n\n    def speak(self):\n        return f\"{self.name} makes a sound\"\n\nclass Dog(Animal):\n    def speak(self):\n        return f\"{self.name} barks\"\n\nanimals = [Animal(\"Generic Animal\"), Dog(\"Buddy\")]\n\nfor animal in animals:\n    print(animal.speak())\n```\n\n위 파이썬 코드의 실행 결과를 적으시오.",
-//                    null,
-//                    null,
-//                    null,
-//                    null,
-//                    "Generic Animal makes a sound Buddy barks", QuizLevel.NORMAL,41));
-
             quizRepository.saveAll(quizList);
-
 
             // 코드작성형
             List<Quiz> quizListCode = new ArrayList<>();
@@ -770,15 +704,6 @@ public class InitDb {
             quizListCode.add(Quiz.createQuiz(chapter.get(8), QuizType.CODE,
                     "예외 처리와 사용자 정의 예외 구현하기\n\n당신은 예외 처리를 이용해 안정적인 프로그램을 작성해야 하는 개발자입니다. 주어진 함수 \'process_data\'는 두 개의 정수를 입력받아 다음의 규칙에 따라 처리합니다:\n\n1. 첫 번째 정수를 두 번째 정수로 나누어 그 결과를 반환합니다.\n2. 두 번째 정수가 0일 경우, \'ZeroDivisionError\' 예외를 발생시킵니다.\n3. 두 번째 정수가 음수일 경우, \'NegativeValueError\'라는 사용자 정의 예외를 발생시킵니다.\n4. 이 외의 예외가 발생하면, 이를 처리하여 \"\"Error occurred\"\" 메시지를 출력합니다.\n5. 나눗셈이 성공적으로 완료되면, 결과를 출력하고, 마지막으로 \"\"Process complete\"\"라는 메시지를 출력합니다.\n\n사용자 정의 예외 \'NegativeValueError\'를 직접 구현하고, 위의 요구 사항을 만족하는 \'process_data\' 함수를 작성하세요.\n\n입력:\n\n- 두 개의 정수 \'a\'와 \'b\'가 공백으로 구분되어 한 줄로 주어집니다.\n\n출력:\n\n- 나눗셈 결과가 성공적으로 계산되면 그 결과를 출력합니다.\n- 예외가 발생할 경우, 해당 예외에 맞는 메시지를 출력합니다.\n- 항상 마지막에는 \"\"Process complete\"\" 메시지를 출력합니다.\n\n입력 예제 1:\n```\n10 2\n```\n\n출력 예제 1:\n```\n5.0\nProcess complete\n```\n\n입력 예제 2:\n```\n10 0\n```\n\n출력 예제 2:\n```\ndivision by zero\nProcess complete\n```",
                     null, null, null, null, null, QuizLevel.HARD,0));
-
-            // 챕터 10
-//            quizListCode.add(Quiz.createQuiz(chapter.get(9), QuizType.CODE,
-//                    "차량 관리 시스템\n\n자동차를 관리하는 프로그램을 작성하세요. 자동차는 Car라는 클래스로 표현되며, 각 자동차는 브랜드(brand), 모델(model), 연식(year)을 속성으로 가집니다. 이때, 다음 요구사항을 충족해야 합니다.\n\n1. Car 클래스는 __init__ 생성자를 통해 객체를 초기화할 수 있어야 합니다.\n2. 모든 자동차 객체는 기본적으로 연료(fuel)가 100으로 시작하며, fuel 속성은 외부에서 직접 접근할 수 없고, get_fuel() 메서드를 통해 접근할 수 있습니다.\n3. 연료를 감소시키는 drive() 메서드를 구현하세요. 이 메서드는 주행 거리를 입력받아 그에 비례하여 연료를 감소시킵니다. 연료는 10km당 1씩 감소합니다. 연료가 부족할 경우, 주행을 중단하고 \"연료가 부족합니다.\"라는 메시지를 출력합니다.\n4. 연료를 충전하는 refuel() 메서드를 구현하세요. 이 메서드는 연료를 입력받아 현재 연료에 더해줍니다. 단, 연료는 100을 초과할 수 없습니다.\n5. Car 클래스를 상속받은 ElectricCar 클래스를 구현하세요. 이 클래스는 Car 클래스와 동일한 속성을 가지되, 연료 대신 배터리(battery) 속성을 가지며, 배터리도 외부에서 직접 접근할 수 없고, get_battery() 메서드를 통해 접근할 수 있습니다.\n6. ElectricCar 클래스의 drive() 메서드는 배터리를 1km당 2씩 감소시키며, 배터리가 부족할 경우 \"배터리가 부족합니다.\"라는 메시지를 출력합니다.\n\n입력 예제 1:\n```\nmy_car = Car(\"Toyota\", \"Camry\", 2022)\nmy_car.drive(50)\nmy_car.get_fuel()\nmy_car.refuel(30)\nmy_car.get_fuel()\n\nmy_electric_car = ElectricCar(\"Tesla\", \"Model S\", 2022)\nmy_electric_car.drive(30)\nmy_electric_car.get_battery()\nmy_electric_car.refuel(50)\nmy_electric_car.get_battery()\n```\n\n출력 예제 1:\n```\n연료가 부족합니다.\n50\n80\n배터리가 부족합니다.\n40\n```",
-//                    null, null, null, null, null, QuizLevel.HARD,0));
-//            quizListCode.add(Quiz.createQuiz(chapter.get(9), QuizType.CODE,
-//                    "도형 클래스 설계\n\n다양한 도형을 표현할 수 있는 클래스를 설계하세요. 각 도형은 Shape라는 기본 클래스로부터 상속받으며, 다음과 같은 요구사항을 만족해야 합니다.\n\n1. Shape 클래스는 면적(area)을 계산하는 calculate_area() 메서드를 포함하며, 기본적으로 \"Not implemented\" 메시지를 출력하는 메서드입니다.\n2. Circle, Rectangle, Triangle 클래스는 각각 Shape 클래스를 상속받으며, 자신의 도형에 맞는 면적 계산 메서드를 오버라이딩합니다.\n3. 각 클래스는 생성자에서 도형의 특성을 초기화하며, 예를 들어 Circle은 반지름, Rectangle은 가로와 세로, Triangle은 밑변과 높이를 초기화해야 합니다.\n4. 각각의 클래스에서 면적을 계산하는 메서드 calculate_area()를 구현하세요.\n- 원의 면적: 𝜋 × 반지름**2 \n- 사각형의 면적: 가로 × 세로\n- 삼각형의 면적: ½ × 밑변 × 높이\n\n입력 예제 1:\n```\ncircle = Circle(5)\nrectangle = Rectangle(4, 6)\ntriangle = Triangle(3, 4)\n\nprint(circle.calculate_area())\nprint(rectangle.calculate_area())\nprint(triangle.calculate_area())\n```\n\n출력 예제 1:\n```\n78.5\n24\n6.0\n```",
-//                    null, null, null, null, null, QuizLevel.HARD,0));
-
 
             quizRepository.saveAll(quizListCode);
 
@@ -872,19 +797,19 @@ public class InitDb {
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
                     "google",
-                    "큐: [\'g\', \'o\', \'l\', \'e\']\n스택: [\'e\', \'l\', \'o\', \'g\']"));
+                    "큐: ['g', 'o', 'l', 'e']\n스택: ['e', 'l', 'o', 'g']"));
 
             quizCases.add(QuizCase.createQuizCase(quizCode,
                     "mississippi",
-                    "큐: [\'m\', \'i\', \'s\', \'p\']\n스택: [\'p\', \'s\', \'i\', \'m\']"));
+                    "큐: ['m', 'i', 's', 'p']\n스택: ['p', 's', 'i', 'm']"));
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "Python is a programming language. Python is fun! Isn\'t it?",
-                    "[(\'python\', 2), (\'is\', 3), (\'a\', 1), (\'programming\', 1), (\'language\', 1), (\'fun\', 1), (\'isn\', 1), (\'it\', 1)]"));
+                    "Python is a programming language. Python is fun! Isn't it?",
+                    "[('python', 2), ('is', 3), ('a', 1), ('programming', 1), ('language', 1), ('fun', 1), ('isn', 1), ('it', 1)]"));
             quizCases.add(QuizCase.createQuizCase(quizCode,
-                    "To be or not to be, that is the question. Whether \'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take arms against a sea of troubles, And by opposing end them? To die: to sleep; No more; and by a sleep to say we end The heart-ache and the thousand natural shocks That flesh is heir to, \'tis a consummation Devoutly to be wish\'d. To die, to sleep; To sleep: perchance to dream: ay, there\'s the rub; For in that sleep of death what dreams may come When we have shuffled off this mortal coil, Must give us pause: there\'s the respect That makes calamity of so long life",
-                    "[(\'to\', 6), (\'the\', 3), (\'and\', 3), (\'be\', 3), (\'of\', 3), (\'a\', 2), (\'in\', 2), (\'sleep\', 2), (\'that\', 2), (\'is\', 2), (\'or\', 2), (\'for\', 1), (\'not\', 1), (\'whether\', 1), (\'tis\', 1), (\'nobler\', 1), (\'mind\', 1), (\'suffer\', 1), (\'slings\', 1), (\'arrows\', 1), (\'outrageous\', 1), (\'fortune\', 1), (\'take\', 1), (\'arms\', 1), (\'against\', 1), (\'sea\', 1), (\'troubles\', 1), (\'by\', 1), (\'opposing\', 1), (\'end\', 1), (\'them\', 1), (\'die\', 2), (\'more\', 1), (\'say\', 1), (\'we\', 1), (\'heart\', 1), (\'ache\', 1), (\'thousand\', 1), (\'natural\', 1), (\'shocks\', 1), (\'flesh\', 1), (\'heir\', 1), (\'consummation\', 1), (\'devoutly\', 1), (\'wishd\', 1), (\'perchance\', 1), (\'dream\', 1), (\'ay\', 1), (\'theres\', 2), (\'rub\', 1), (\'when\', 1), (\'have\', 1), (\'shuffled\', 1), (\'off\', 1), (\'this\', 1), (\'mortal\', 1), (\'coil\', 1), (\'must\', 1), (\'give\', 1), (\'us\', 1), (\'pause\', 1), (\'respect\', 1), (\'makes\', 1), (\'calamity\', 1), (\'so\', 1), (\'long\', 1), (\'life\', 1)]"));
+                    "To be or not to be, that is the question. Whether 'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take arms against a sea of troubles, And by opposing end them? To die: to sleep; No more; and by a sleep to say we end The heart-ache and the thousand natural shocks That flesh is heir to, 'tis a consummation Devoutly to be wish'd. To die, to sleep; To sleep: perchance to dream: ay, there's the rub; For in that sleep of death what dreams may come When we have shuffled off this mortal coil, Must give us pause: there's the respect That makes calamity of so long life",
+                    "[('to', 6), ('the', 3), ('and', 3), ('be', 3), ('of', 3), ('a', 2), ('in', 2), ('sleep', 2), ('that', 2), ('is', 2), ('or', 2), ('for', 1), ('not', 1), ('whether', 1), ('tis', 1), ('nobler', 1), ('mind', 1), ('suffer', 1), ('slings', 1), ('arrows', 1), ('outrageous', 1), ('fortune', 1), ('take', 1), ('arms', 1), ('against', 1), ('sea', 1), ('troubles', 1), ('by', 1), ('opposing', 1), ('end', 1), ('them', 1), ('die', 2), ('more', 1), ('say', 1), ('we', 1), ('heart', 1), ('ache', 1), ('thousand', 1), ('natural', 1), ('shocks', 1), ('flesh', 1), ('heir', 1), ('consummation', 1), ('devoutly', 1), ('wishd', 1), ('perchance', 1), ('dream', 1), ('ay', 1), ('theres', 2), ('rub', 1), ('when', 1), ('have', 1), ('shuffled', 1), ('off', 1), ('this', 1), ('mortal', 1), ('coil', 1), ('must', 1), ('give', 1), ('us', 1), ('pause', 1), ('respect', 1), ('makes', 1), ('calamity', 1), ('so', 1), ('long', 1), ('life', 1)]"));
 
             quizCode = quizListCode.get(idx++);
             quizCases.add(QuizCase.createQuizCase(quizCode,
@@ -923,11 +848,6 @@ public class InitDb {
             }
 
             for (Curriculums curriculums : subChapter) {
-//                studies.add(Studies.createStudy(user2, curriculums, false,
-//                        String.format("챕터 %d - 서브챕터 %d: DEF 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
-//                        String.format("챕터 %d - 서브챕터 %d: CODE 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()),
-//                        String.format("챕터 %d - 서브챕터 %d: QUIZ 학습 자료", curriculums.getChapterNum(), curriculums.getSubChapterNum()), null));
-
                 if (curriculums.getChapterNum() <= 2) {
                     if (curriculums.isTestable()) {
                         studies.add(Studies.createStudy(user2, curriculums, false,

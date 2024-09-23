@@ -1,13 +1,15 @@
 import PASS from '../../pass.png';
-import BCODE from '../../logo_w.png';
-import { remove } from '../../remove';
 import styled from 'styled-components';
-import getUserInfo from '../../getUserInfo';
-import SectionBarJsx from '../../SectionBar';
+import SectionBarJsx from '../SectionBar';
+import PrivateInfoJsx from '../PrivateInfo';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance';
 import React, { useState, useEffect} from 'react';
 import useChapterData from '../../useChapterData';
-import getChapterPass from '../../getChapterPass';
-import { NavLink, useNavigate } from 'react-router-dom';
+import MypageNavSectionJsx from '../MypageNavSection';
+import getChapterTestable from '../../getChapterTestable';
+
+
 
 function Study_theory() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -26,42 +28,31 @@ function Study_theory() {
     };
   }, []);
 
-  const [contentWidth, setContentWidth] = useState(width);
+  const [chapterTestable, setChaptherTestable] = useState([]);
 
-  const [point, setPoint] = useState(0);
-  const [process, setProcess] = useState(0);
-  const [processPass, setProcessPass] = useState(0);
-
+  
   useEffect(() => {
-    getChapterPass()
+    getChapterTestable()
     .then(data => {
-        // 데이터 가져오기 성공 시 상태 업데이트
-        setProcess(data.length);
-        setProcessPass(data.filter(element => element === true).length);
+      // 데이터 가져오기 성공 시 상태 업데이트'
+      setChaptherTestable(data);
     })
-      .catch(error => {
-        // 데이터 가져오기 실패 시 에러 처리
+    .catch(error => {
+      // 데이터 가져오기 실패 시 에러 처리
       console.error('Error fetching data:', error);
     });
-
-    getUserInfo()
-      .then(data => {
-        // 데이터 가져오기 성공 시 상태 업데이트
-        setPoint(data.exp);
-      })
-      .catch(error => {
-        // 데이터 가져오기 실패 시 에러 처리
-        console.error('Error fetching data:', error);
-      });
   }, []);
 
 
-  const color = { color : "#008BFF", fontWeight : "bold" };
   const passColor = { color : "#0053B7" };
+  const color = { color : "#008BFF", fontWeight : "bold" };
   const nullColor = { color : "grey", fontWeight : "bold" };
-  const textDeco = { textDecoration : "none" };
 
   const { chapter, chaptersid, chapterLevel, chapterPass, subChapter, subChapterId, currentChapter } = useChapterData();
+
+  useEffect(()=>{
+    //console.log("7개 중에 데이터가 바뀜");
+  }, [chapter, chaptersid, chapterLevel, chapterPass, subChapter, subChapterId, currentChapter]);
 
   const chapterColor = (index) => {
     var chColor;
@@ -107,29 +98,33 @@ function Study_theory() {
     navigate(`/study/comprehension/${chapId}`);
   } 
 
+  const postChapterPass =  async (chapterid, level) =>{
+    const userid = localStorage.getItem('userid');
+
+    const CurriculumPassCallDto = {
+      'userId': userid,
+      'curriculumId': chapterid,
+      'levelType': level
+    };
+
+    try {
+      //chapter 이해도 테스트 통과 완료 처리 요청
+      const response = await axiosInstance.post('/curriculum/curriculum/chapter/pass', CurriculumPassCallDto);
+      window.location.replace('/mypage/lecture');
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }
   
+
 
   return (
     <TestSection>
+      <PrivateInfoJsx />
       <SectionBarJsx />
       <Content>
-        <NavSection height={height}>
-          <Static>
-            <NavLink style={textDeco} to="/chatbot"><Nav> ㅇ 챗봇에 질문하기 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/todo"><Nav style={color}> ㅇ 마이페이지 </Nav></NavLink>
-            <NavLink style={textDeco} to="/"><Nav onClick={remove}> ㅇ 로그아웃 </Nav></NavLink>
-          </Static>
-          <Info>
-            <InfoNav> ㅇ 현재 진행률 <p> {isNaN(Math.round(processPass / process * 100))?"- %":Math.round(processPass / process * 100) + " %"} </p> </InfoNav>
-            <InfoNav> ㅇ 현재 포인트 <p> {point} p </p> </InfoNav>
-          </Info>
-          <Dynamic>
-            <NavLink style={textDeco} to="/mypage/todo"><Nav> ㅇ 내 할일 관련 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/lecture"><Nav style={color}> ㅇ 내 강의 정보 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/question"><Nav> ㅇ 내 질문 정보 </Nav></NavLink>
-            <NavLink style={textDeco} to="/mypage/info"><Nav> ㅇ 내 정보 수정 </Nav></NavLink>
-          </Dynamic>
-        </NavSection>
+        <MypageNavSectionJsx height={height} l1={false} l2={true} l3={false} />
         <ContentSection width={width}>
           <LectureInfo> ㅇ 이전 교육 복습 </LectureInfo>
           <LectureContent height={height}>
@@ -161,7 +156,10 @@ function Study_theory() {
                 </SubLecture>
               ))}
               </SubLectureInfo>
-              {(!chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
+              {(!chapterTestable[index] && !chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
+                <CompreTest onClick={()=> postChapterPass(chaptersid[index],"EASY")}> 다음 챕터 학습하기 </CompreTest>
+              )}
+              {(chapterTestable[index] && !chapterPass[index] && currentChapter[index] && currentChapter[index].every(item => item === true)) && (
                 <CompreTest onClick={() => goToCompre(chaptersid[index])}> 이해도 테스트 </CompreTest>
               )}
             </Lecture>
@@ -181,99 +179,23 @@ const TestSection = styled.div`
   height : 100vh;
 `
 
-const SectionBar = styled.div`
-  width : 100vw;
-  display : flex;
-  background : #008BFF;
-`
-
-const Logo = styled.div`
-  img {
-    height : 2rem;
-    width : 7.82rem;
-    margin : 1rem 4rem;
-  }
-`
-
 const Content = styled.div`
   display : flex;
 `
 
-const NavSection = styled.div`
-  display : flex;
-  min-width : 15rem;
-  flex-direction : column;
-  border-right : 0.125rem solid rgba(0, 0, 0, 0.125);
-  height : ${(props) => `${(props.height - 68) / 16}rem`};
-`
-
-const Static = styled.div`
-  padding : 0.625rem;
-  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.125);
-`
-
-const Info = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-  border-bottom : 0.125rem solid rgba(0, 0, 0, 0.125);
-`
-
-const InfoNav = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-
-  p {
-    margin : 0;
-    text-align : right;
-  }
-`
-
-const Nav = styled.div`
-  display : flex;
-  padding : 0.625rem;
-  font-weight : bold;
-  align-items : left;
-  flex-direction : column;
-  justify-content : center;
-  color : rgba(0, 0, 0, 0.25);
-
-  &:hover {
-    color : #008BFF;
-    background : rgba(0, 139, 255, 0.25);
-  }
-`
-
-const Dynamic = styled.div`
-  overflow : scroll;
-  padding : 0.625rem;
-
-  &::-webkit-scrollbar {
-    display : none;
-  }
-`
-
 const ContentSection = styled.div`
-  margin : 2rem;
-  padding : 2rem;
-  border-radius : 1rem;
-  border : 0.05rem solid rgba(0, 0, 0, 0.5);
-  width : ${(props) => `${(props.width - 370) / 16}rem`};
+  padding : 1rem;
+  margin : 1rem 0rem 1rem 1rem;
+  border : 0.125rem solid #008BFF;
+  border-radius : 1rem 0rem 0rem 1rem;
+  border-right-style : none;
+  width : ${(props) => `${(props.width - 291.5) / 16}rem`};
 `
 
 const LectureInfo = styled.p`
   font-weight : bold;
   font-size : 1.05rem;
-  margin : 0rem 0rem 1.5rem;
+  margin : 0rem 0rem 1rem;
   color : rgba(0, 0, 0, 0.5);
 `
 
@@ -281,8 +203,8 @@ const LectureContent = styled.div`
   display : flex;
   overflow :scroll;
   flex-wrap : wrap;
-  padding : 0rem 0.75rem;
-  height : ${(props) => `${(props.height - 250) / 16}rem`};
+  padding : 0rem 1rem;
+  height : ${(props) => `${(props.height - 174) / 16}rem`};
   
   &::-webkit-scrollbar {
     display : none;
@@ -290,14 +212,13 @@ const LectureContent = styled.div`
 `
 
 const Lecture = styled.div`
-  width : 32.5rem;
+  width : 31.25%;
   padding : 0rem 0.75rem;
-  margin : 1rem 0rem;
 `
 
 const LectureTitle = styled.h3`
   font-weight : bold;
-  margin : 0rem 0rem 0.75rem;
+  margin : 1.75rem 0rem 0.75rem;
 
   img {
     width : 1rem;
@@ -314,7 +235,7 @@ const CompreTest = styled.div`
   text-align : right;
   font-weight : bold;
   font-size : 1.125rem;
-  padding-right : 1.125rem;
+  padding-right : 0.2rem;
 
   &:hover {
     color : black;
@@ -332,6 +253,7 @@ const SubLectureTitle = styled.div`
 
 const LectureData = styled.div`
   display : flex;
+  white-space: nowrap;
 `
 
 const Data = styled.div`
