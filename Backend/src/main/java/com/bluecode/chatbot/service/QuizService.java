@@ -126,49 +126,53 @@ public class QuizService {
 
     private String explanationQuiz(QuizLevel level, QuizType type) {
         if (level == QuizLevel.EASY && type == QuizType.NUM) {
-            return "1. 객관식 문제로 quizLevel은 'EASY', quizType은 'NUM'으로 설정\n" +
-                    "2. 문제 전체 내용은 'text'에 표기할 것\n" +
-                    "3. 문제 보기는 각각 'q1', 'q2', 'q3', 'q4'에 넣을 것\n" +
-                    "4. 2-3줄의 이론과 관련한 내용으로 문제를 낼 것\n" +
-                    "5. 보기 번호가 아닌 정답 내용을 마지막에 'ans'에 넣을 것\n" +
-                    "6. 그 외의 값은 모두 null로 표기\n" +
-                    "7. 단, 'wordCount'는 0으로 표기\n\n";
+            return "1. This is a multiple-choice question with quizLevel set to 'EASY' and quizType set to 'NUM'.\n" +
+                    "2. The entire content of the question should be placed in 'text'.\n" +
+                    "3. Each option should be placed in 'q1', 'q2', 'q3', and 'q4'.\n" +
+                    "4. The question should be related to theoretical content and should be 2-3 sentences long.\n" +
+                    "5. Instead of the option number, the correct answer should be placed in 'ans'.\n" +
+                    "6. All other values should be set to null.\n" +
+                    "7. 'wordCount' should be set to 0.\n" +
+                    "8. All above contents should be generated in Korean.\n\n";
         } else if (level == QuizLevel.NORMAL && type == QuizType.WORD) {
-            return "1. 주관식 문제로 quizLevel은 'NORMAL', quizType은 'WORD'으로 설정\n" +
-                    "2. 간단한 실습 예제 코드를 보여주고 실행 결과를 맞추도록 할 것\n" +
-                    "3. 문제 전체 내용은 'text'에 예시 코드와 문제 내용을 한 번에 표기할 것\n" +
-                    "4. 정답은 마지막에 'ans'에 넣을 것\n" +
-                    "5. 정답은 하나의 단어로 이루어지도록 할 것\n" +
-                    "6. 정답의 글자 수는 'wordCount'에 표기할 것\n" +
-                    "7. 그 외의 값은 모두 null로 표기\n\n";
+            return "1. This is a short-answer question with quizLevel set to 'NORMAL' and quizType set to 'WORD'.\n" +
+                    "2. Present a simple code example and have the user predict the result.\n" +
+                    "3. The entire question, including the example code, should be placed in 'text'.\n" +
+                    "4. The correct answer should be placed in 'ans'.\n" +
+                    "5. The answer should consist of a single word.\n" +
+                    "6. The number of characters in the answer should be placed in 'wordCount'.\n" +
+                    "7. All other values should be set to null.\n" +
+                    "8. All above contents should be generated in Korean.\n\n";
         } else if (level == QuizLevel.EASY && type == QuizType.WORD) {
-            return "1. 주관식 문제로 quizLevel은 'EASY', quizType은 'WORD'으로 설정\n" +
-                    "2. 문제 전체 내용은 'text'에 한 번에 표기할 것\n" +
-                    "3. 2-3줄의 이론으로 '()' 괄호 안에 들어갈 단어를 맞추는 형식의 문제를 낼 것\n" +
-                    "4. 정답은 마지막에 'ans'에 넣을 것\n" +
-                    "5. 정답은 하나의 단어로 이루어지도록 할 것\n" +
-                    "6. 정답의 글자 수는 'wordCount'에 표기할 것\n" +
-                    "7. 그 외의 값은 모두 null로 표기\n\n";
+            return "1. This is a short-answer question with quizLevel set to 'EASY' and quizType set to 'WORD'.\n" +
+                    "2. The entire content of the question should be placed in 'text'.\n" +
+                    "3. Create a theoretical question of 2-3 sentences where the user has to guess the word that fits inside the parentheses '(  )'.\n" +
+                    "4. The correct answer should be placed in 'ans'.\n" +
+                    "5. The answer should consist of a single word.\n" +
+                    "6. The number of characters in the answer should be placed in 'wordCount'.\n" +
+                    "7. All other values should be set to null.\n" +
+                    "8. All above contents should be generated in Korean.\n\n";
         } else if (level == QuizLevel.NORMAL && type == QuizType.NUM) {
-            return "1. 객관식 문제로 quizLevel은 'NORMAL', quizType은 'NUM'으로 설정\n" +
-                    "2. 간단한 실습 예제 코드를 보여주고 실행 결과를 맞추도록 할 것\n" +
-                    "3. 문제 전체 내용은 'text'에 예시 코드와 문제 내용을 한 번에 표기할 것\n" +
-                    "4. 문제 보기는 각각 'q1', 'q2', 'q3', 'q4'에 넣을 것\n" +
-                    "5. 보기 번호가 아닌 정답 내용을 마지막에 'ans'에 넣을 것\n" +
-                    "6. 그 외의 값은 모두 null로 표기\n" +
-                    "7. 단, 'wordCount'는 0으로 표기\n\n";
+            return "1. This is a multiple-choice question with quizLevel set to 'NORMAL' and quizType set to 'NUM'.\n" +
+                    "2. Present a simple code example and have the user predict the result.\n" +
+                    "3. The entire question, including the example code, should be placed in 'text'.\n" +
+                    "4. Each option should be placed in 'q1', 'q2', 'q3', and 'q4'.\n" +
+                    "5. Instead of the option number, the correct answer should be placed in 'ans'.\n" +
+                    "6. All other values should be set to null.\n" +
+                    "7. 'wordCount' should be set to 0.\n" +
+                    "8. All above contents should be generated in Korean.\n\n";
         } else if (level == QuizLevel.HARD && type == QuizType.CODE) {
-            return "1. 심화 코딩 테스트 문제로 quizLevel은 'HARD', quizType은 'CODE'으로 설정\n" +
-                    "2. 문제 전체 내용은 문제 제목, 문제 설명, 입력 내용 설명, 출력 내용 설명, 예제 입력(2개에서 5개 사이), 예제 출력(2개에서 5개 사이)으로 구성할 것\n" +
-                    "3. 생성한 문제 내용 전체를 'text' 안에 모두 표기되게 할 것\n" +
-                    "4. 문제 내용이 참고 예시 문제와 같이 'text'외에 입력되지 않도록 주의할 것\n" +
-                    "5. 'text' 안에 출력한 예제 입력과 예제 출력과는 다른 내용으로 'examples'에 리스트 형태로 " +
-                    "각각 예제 입력은 'input'에 넣고, 예제 출력은 'output'에 넣을 것(서로 대응하는 입력과 출력을 묶어서 리스트 형태로 구현)\n" +
-                    "6. 그 외의 값은 모두 null로 표기\n" +
-                    "7. 단, 'wordCount'는 0으로 표기\n" +
-                    "8. 또한 랜덤과 관련된 문제는 출제 금지\n" +
-                    "9. 그리고 파일 입출력 관련된 문제도 출제 금지\n" +
-                    "10. 마지막으로 입출력 예제는 각각 입력값 및 출력값만 작성\n\n";
+            return "1. This is an advanced coding test question with quizLevel set to 'HARD' and quizType set to 'CODE'.\n" +
+                    "2. The question should consist of the problem title, problem description, input description, output description, and 2 to 5 example inputs and outputs.\n" +
+                    "3. The entire content of the question should be placed in 'text'.\n" +
+                    "4. Ensure that only the content inside 'text' is used, similar to reference questions.\n" +
+                    "5. The example inputs and outputs in the question should be placed in 'text', but create **different** example inputs and outputs from 'text' for 'examples'. Each example input should be placed in 'input' and its corresponding output in 'output', and they should be paired as lists.\n" +
+                    "6. All other values should be set to null.\n" +
+                    "7. 'wordCount' should be set to 0.\n" +
+                    "8. Do not include questions related to random values.\n" +
+                    "9. Avoid file input/output-related questions.\n" +
+                    "10. In input/output examples, include only the input and output values.\n" +
+                    "11. All above contents should be generated in Korean.\n\n";
         } else {
             return ""; // 해당하지 않는 경우 빈 문자열 반환
         }
