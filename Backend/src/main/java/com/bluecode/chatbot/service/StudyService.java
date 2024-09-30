@@ -605,7 +605,7 @@ public class StudyService {
         studyRepository.saveAll(totalStudy);
 
         // 만약 이전 챕터가 testable = false일 경우, 연쇄적으로 pass 처리 필요
-        if (!chapterStudy.getCurriculum().getBefore().isTestable()) {
+        if (chapterStudy.getCurriculum().getBefore()!=null && !chapterStudy.getCurriculum().getBefore().isTestable()) {
             initPassByBeforeChapter(user, chapterStudy.getCurriculum().getBefore());
         }
 
@@ -703,7 +703,7 @@ public class StudyService {
         // 예시: 챕터1(testable = false) - 챕터2(testable = false) - 챕터3(testable = true) 이고, 챕터 3에서 해당 method 호출 시,
         // 결과: 챕터1(testable = false, passed = false, leve = EASY) - 챕터2(testable = false, passed = false, leve = null) - 챕터3(testable = false, passed = false, leve = null)
         // 즉, 1챕터의 level만 설정이 되어야 함.
-        if (chapterStudy.getCurriculum().getBefore().isTestable() == false) {
+        if (chapterStudy.getCurriculum().getBefore() != null && chapterStudy.getCurriculum().getBefore().isTestable() == false) {
             initCompleteForBefore(user, chapterStudy.getCurriculum().getBefore());
         } else {
             // passed = true & dto에서 전달한 level로 저장(null --> dto.getLevel())

@@ -22,6 +22,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
 
     private final TokenProvider tokenProvider;
+    /*
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -30,8 +31,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated());
         return http.build();
-    }
-    /*
+    }*/
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -45,7 +46,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated());
         return http.build();
     }
-*/
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
@@ -56,11 +57,11 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    /*
+
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter(){
         return new TokenAuthenticationFilter(tokenProvider);
     }
-    */
+
 
 }
