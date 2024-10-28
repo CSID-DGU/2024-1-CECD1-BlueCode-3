@@ -296,6 +296,7 @@ const handleAlert = (next) => {
     }
   }
   
+  setTime(300);
   setNext(true);
   setIsAlertOpen(false);
 }
@@ -310,6 +311,7 @@ const handleConfirm = (confirm) => {
   }
 
   //setOrder(0);
+  setTime(300);
   setNext(false);
   setIsConfirmOpen(false);
   setIsAlertOpen(true);
@@ -387,7 +389,7 @@ useEffect(()=>{
 }, [data]);
 
 useEffect(() => {
-  if (time !== null && time >= -1) {
+  if (time !== null && time >= 0) {
     const tick = () => {
       setTime(prev => prev - 1);
       
