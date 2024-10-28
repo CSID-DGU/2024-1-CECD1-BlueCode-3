@@ -177,6 +177,7 @@ function Study_training() {
       }
     }
       
+    setTime(300);
     setIsAlertOpen(false);
   }
 
@@ -191,6 +192,7 @@ function Study_training() {
       navigate('/mypage/lecture');
     }
 
+    setTime(300);
     setIsConfirmOpen(false);
   }
 
@@ -231,7 +233,7 @@ function Study_training() {
   }, [res]);
 
   useEffect(() => {
-    if (time !== null && time >= -1) {
+    if (time !== null && time >= 0) {
       const tick = () => {
         setTime(prev => prev - 1);
         
