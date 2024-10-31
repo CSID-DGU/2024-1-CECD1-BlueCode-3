@@ -30,7 +30,7 @@ function PrivateInfoJsx() {
     }
     else if (emailRegex.test(newEmail)) {
       try{
-        const res = await axios.get(`/user/user/exists/email/${newEmail}`);
+        const res = await axios.get(`/user/exists/email/${newEmail}`);
 
         if (res.data) {  
           setEmailValid(false);
@@ -58,7 +58,7 @@ function PrivateInfoJsx() {
           'userId' : userid,
           'email': newEmail
         };
-        const res = await axiosInstance.post('/checkAuth/checkAuth/updateEmail', email_data);
+        const res = await axiosInstance.post('/checkAuth/updateEmail', email_data);
         alert(res.data);
       }
       catch (err) {
@@ -100,7 +100,7 @@ function PrivateInfoJsx() {
           'userId' : userid,
           'password': hash_passwd
         };
-        const res = await axiosInstance.post('/checkAuth/checkAuth/updatePassword', password_data);
+        const res = await axiosInstance.post('/checkAuth/updatePassword', password_data);
         alert(res.data);
       }
       catch (err) {
@@ -118,7 +118,7 @@ function PrivateInfoJsx() {
           'userId' : userid
         };
 
-        const res = await axiosInstance.post('/checkAuth/checkAuth/getUserInfo', UserIdDto);
+        const res = await axiosInstance.post('/checkAuth/getUserInfo', UserIdDto);
         setId(res.data.id);
         setEmail(res.data.email);
         setBirthday(setFormat(res.data.birth));

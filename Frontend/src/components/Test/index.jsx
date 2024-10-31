@@ -135,7 +135,7 @@ const getChapterQuiz2 =  async () =>{
       //초기 테스트용 4 문제 호출 api
       setData([]);
       setOrder(0);
-      const response = await axiosInstance.post('/test/test/create/init', DataCallDto);
+      const response = await axiosInstance.post('/test/create/init', DataCallDto);
       setData(response.data.tests); //4 문제를 Data에 저장
       setcurrentcurriculumId(prev => prev + 1);
       console.log(response);
@@ -170,7 +170,7 @@ const submitAnswer = async () => {
       // 문제 타입 객관식
       //const confirm = window.confirm("");
       if (qtype === "NUM") {
-        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/num', TestAnswerCallDto);
         //await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto).then(
         //  (res)=>{
         //    setDataPassed(res.data.passed);
@@ -179,7 +179,7 @@ const submitAnswer = async () => {
         //console.log("객관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "WORD") {
-        response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/word', TestAnswerCallDto);
         //await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto).then(
         //  (res)=>{
         //    setDataPassed(res.data.passed);
@@ -188,7 +188,7 @@ const submitAnswer = async () => {
         //console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/code', TestAnswerCallDto);
         //await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto).then(
         //  (res)=>{
         //    setDataPassed(res.data.passed);
@@ -296,6 +296,7 @@ const handleAlert = (next) => {
     }
   }
 
+  setTime(300);
   setNext(true);
   setIsAlertOpen(false);
 }
@@ -310,6 +311,7 @@ const handleConfirm = (confirm) => {
   }
 
   //setOrder(0);
+  setTime(300);
   setNext(false);
   setIsConfirmOpen(false);
   setIsAlertOpen(true);
@@ -387,7 +389,7 @@ useEffect(()=>{
 }, [data]);
 
 useEffect(() => {
-  if (time !== null && time >= -1) {
+  if (time !== null && time >= 0) {
     const tick = () => {
       setTime(prev => prev - 1);
 
