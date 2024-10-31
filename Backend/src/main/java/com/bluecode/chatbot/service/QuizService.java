@@ -51,7 +51,7 @@ public class QuizService {
                 .limit(count)
                 .toList();
 
-        log.info("Selected quizzes: {}", selectedQuizzes);
+        log.debug("Selected quizzes: {}", selectedQuizzes);
         return selectedQuizzes;
     }
 
@@ -313,7 +313,7 @@ public class QuizService {
         gptResponse = gptResponse.replace("json", "").replace(root, "")
                 .replaceAll("(?<=\\w):\\s*[\r\n\t]+", ": ");
 
-        log.info("GPT Response: {}", gptResponse); // gpt 응답 원문 확인 로그
+        log.debug("GPT Response: {}", gptResponse); // gpt 응답 원문 확인 로그
 
         return parseGeneratedQuiz(gptResponse, chapter, type, level);
     }

@@ -30,7 +30,7 @@ public class UserActionEventListener {
         for (UserMissions userMission : userMissions) {
             if (userMission.getMission().getServiceType().equals(event.getServiceType())) {
                 try {
-                    log.info("미션 수행 여부 체크: userId: {}, Mission 내 ServiceType: {}, event 내 ServiceType: {}, ActionType: {}, userMissionId: {}", event.getUser().getUserId(), userMission.getMission().getServiceType(), event.getServiceType(), event.getActionType(), userMission.getUserMissionId());
+                    log.debug("미션 수행 여부 체크: userId: {}, Mission 내 ServiceType: {}, event 내 ServiceType: {}, ActionType: {}, userMissionId: {}", event.getUser().getUserId(), userMission.getMission().getServiceType(), event.getServiceType(), event.getActionType(), userMission.getUserMissionId());
                     userMissionService.checkAndCompleteMission(event.getUser(), userMission.getMission().getActionType(), userMission.getUserMissionId());
                 } catch (Exception e) {
                     log.error("handleUserActionEvent 에러 발생: " + e.getMessage());

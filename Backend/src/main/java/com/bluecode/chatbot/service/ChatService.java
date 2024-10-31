@@ -67,7 +67,7 @@ public class ChatService {
 
         conversationHistory.add(userMessage);
 
-        log.info("convHist: {}", conversationHistory);
+        log.debug("convHist: {}", conversationHistory);
 
         String response = continueConversation(questionType, conversationHistory, curriculumId);
         String content;

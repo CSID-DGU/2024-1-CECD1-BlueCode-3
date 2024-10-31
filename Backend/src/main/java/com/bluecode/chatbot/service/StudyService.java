@@ -177,9 +177,6 @@ public class StudyService {
         List<Studies> subChapters = studies.stream().filter(i -> i.getCurriculum().isLeafNode()).toList();
         Deque<Studies> deque = new ArrayDeque<>(subChapters);
 
-        log.info("chapters={}, subChapters={}", chapters, subChapters);
-        log.info("deque={}", deque.size());
-
         List<CurriculumPassedElementDto> list = new ArrayList<>();
 
         for (Studies chapter : chapters) {
@@ -263,7 +260,6 @@ public class StudyService {
         boolean flag = true;
 
         for (Studies childStudy : childStudyList) {
-            log.info("child 확인: {} flag: {}", childStudy.getCurriculum().getCurriculumName(), childStudy.isPassed());
             if (!childStudy.isPassed()) {
                 flag = false;
                 break;
@@ -459,9 +455,9 @@ public class StudyService {
                 String subChapterKeyword = study.getCurriculum().getCurriculumName();
                 log.info("subChapterKeyword: {}", subChapterKeyword);
                 String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId(), textType); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
-                log.info("generatedResponse: {}", generatedResponse);
+                log.debug("generatedResponse: {}", generatedResponse);
                 String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
-                log.info("generatedText: {}", generatedText);
+                log.debug("generatedText: {}", generatedText);
                 study.setTextDef(generatedText);
             }
             return study.getTextDef();
@@ -479,9 +475,9 @@ public class StudyService {
                 String subChapterKeyword = study.getCurriculum().getCurriculumName();
                 log.info("subChapterKeyword: {}", subChapterKeyword);
                 String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId(), textType); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
-                log.info("generatedResponse: {}", generatedResponse);
+                log.debug("generatedResponse: {}", generatedResponse);
                 String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
-                log.info("generatedText: {}", generatedText);
+                log.debug("generatedText: {}", generatedText);
                 study.setTextCode(generatedText);
             }
             return study.getTextCode();
@@ -492,9 +488,9 @@ public class StudyService {
                 String subChapterKeyword = study.getCurriculum().getCurriculumName();
                 log.info("subChapterKeyword: {}", subChapterKeyword);
                 String generatedResponse = requestGptText(subChapterKeyword, study.getCurriculum().getCurriculumId(), textType); // 커리큘럼 ID로 루트 커리큘럼 이름을 조회
-                log.info("generatedResponse: {}", generatedResponse);
+                log.debug("generatedResponse: {}", generatedResponse);
                 String generatedText = apiService.extractContentFromResponse(generatedResponse); // json 형식 응답을 text로 추출
-                log.info("generatedText: {}", generatedText);
+                log.debug("generatedText: {}", generatedText);
                 study.setTextQuiz(generatedText);
             }
             return study.getTextQuiz();
@@ -529,7 +525,7 @@ public class StudyService {
         // API 호출
         List<Map<String, String>> messages = new ArrayList<>();
         messages.add(Map.of("role", "user", "content", prompt));
-        log.info("studyTextPrompt: {}", prompt);
+        log.debug("studyTextPrompt: {}", prompt);
         return apiService.sendPostRequest(messages, curriculumId);
     }
 
