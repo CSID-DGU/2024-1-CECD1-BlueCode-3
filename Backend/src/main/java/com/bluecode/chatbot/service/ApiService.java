@@ -34,7 +34,7 @@ public class ApiService {
     // gpt API에 응답을 요청
     public String sendPostRequest(List<Map<String, String>> messages, Long curriculumId) {
         String rules = loadRules(curriculumId); // 규칙 로드
-        log.info("rules: {}", rules);
+        log.debug("rules: {}", rules);
         messages.add(Map.of("role", "system", "content", rules));
         Map<String, Object> body = Map.of(
                 "model", "gpt-4o",

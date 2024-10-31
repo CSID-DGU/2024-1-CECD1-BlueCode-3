@@ -45,8 +45,6 @@ public class CurriculumService {
         List<Curriculums> subChapters = child.stream().filter(Curriculums::isLeafNode).toList();
         Deque<Curriculums> deque = new ArrayDeque<>(subChapters);
 
-        log.info("deque={}", deque);
-
         // 챕터 리스트를 DTO로 변환
         List<CurriculumChapElementDto> chapterList = new ArrayList<>();
 
