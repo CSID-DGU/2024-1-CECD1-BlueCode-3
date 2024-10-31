@@ -109,7 +109,7 @@ function Study_theory() {
 
     try {
       //chapter 이해도 테스트 통과 완료 처리 요청
-      const response = await axiosInstance.post('/curriculum/curriculum/chapter/pass', CurriculumPassCallDto);
+      const response = await axiosInstance.post('/curriculum/chapter/pass', CurriculumPassCallDto);
       window.location.replace('/mypage/lecture');
       console.log(response);
     } catch (err) {

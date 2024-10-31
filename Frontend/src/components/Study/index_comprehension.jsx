@@ -112,15 +112,15 @@ function Study_training() {
     try {
       // 문제 타입 객관식
       if (qtype === "NUM") {
-        response = await axiosInstance.post('/test/test/submit/num', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/num', TestAnswerCallDto);
         // console.log("객관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "WORD") {
-        response = await axiosInstance.post('/test/test/submit/word', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/word', TestAnswerCallDto);
         // console.log("주관식 정답 요청 " + response.data.passed);
       }
       else if (qtype === "CODE") {
-        response = await axiosInstance.post('/test/test/submit/code', TestAnswerCallDto);
+        response = await axiosInstance.post('/test/submit/code', TestAnswerCallDto);
         // console.log("서술식 정답 요청 " + response.data.passed);
       }
         
@@ -177,6 +177,7 @@ function Study_training() {
       }
     }
 
+    setTime(300);
     setIsAlertOpen(false);
   }
 
@@ -191,6 +192,7 @@ function Study_training() {
       navigate('/mypage/lecture');
     }
 
+    setTime(300);
     setIsConfirmOpen(false);
   }
 
@@ -231,7 +233,7 @@ function Study_training() {
   }, [res]);
 
   useEffect(() => {
-    if (time !== null && time >= -1) {
+    if (time !== null && time >= 0) {
       const tick = () => {
         setTime(prev => prev - 1);
 
